@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二篇：Codex + HyperFrames 正在吃掉剪辑行业 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第二篇：Codex + HyperFrames 正在吃掉剪辑行业</span><span class="lang-content jp">第2回：Codex + HyperFrames が編集業界を飲み込む</span></h1>
+  <div class="meta">✏️ @Saccc_c · 2026-05-06</div>
+  <div class="source">📎 <a href="https://x.com/Saccc_c/status/2051852464400261429" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn">
+
+<div class="quote">📎 **来源：** [@Saccc_c 原帖](https://x.com/Saccc_c/status/2051852464400261429)</div>
+<p>></p>
+<div class="quote">**一句话：** 用 Codex + HyperFrames 组合，1 小时搞定视频剪辑和动画，全程不用传统剪辑软件。</div>
+
+<div class="quote">🎬 **成品视频（桌面文件）：**</div>
+<div class="quote">- 视频1（9秒 开场动画）→ `C:\Users\jding\Desktop\saccc_video1.mp4`</div>
+<div class="quote">- 视频2（14秒 片段）→ `C:\Users\jding\Desktop\saccc_video2.mp4`</div>
+<div class="quote">- 视频3（1分38秒 苹果手机进化史完整视频）→ `C:\Users\jding\Desktop\saccc_video3.mp4`</div>
+
+<hr class="divider">
+
+<h2>核心工具：HyperFrames 是什么？</h2>
+
+<p>HyperFrames 是 [@HeyGen](https://x.com/HeyGen) 开源的一个**代码驱动的视频制作框架**。有了它，你不用打开任何剪辑软件，直接写代码就能生成视频。</p>
+
+<p>为什么配合 Codex 特别合适？两个原因：</p>
+
+<li>**写代码是 AI Agent 最擅长的事**，Codex 又是目前 T0 级别的超级工具。你只管描述想要的画面，代码的事交给它。</li>
+<p>2. **HyperFrames 直接用 HTML 编写**，天然为 Agent 设计。AI 写 HTML 比写任何其他格式都顺，出错少，迭代快。</p>
+
+<p>因此这套组合搭配起来就是为视频创作而生。你描述清楚想要的画面，Codex 负责写代码，HyperFrames 渲染成片。</p>
+
+<hr class="divider">
+
+<h2>Step 1：在 Codex 里配置 HyperFrames</h2>
+
+<h3>安装 Codex App</h3>
+
+<p>下载地址：[https://chatgpt.com/codex/](https://chatgpt.com/codex/)</p>
+
+<h3>安装 HyperFrames Plugin</h3>
+
+<p>进入 Codex App → 左侧栏点击 **Plugins** → 搜索 **HyperFrames** → 点击 **「+」** 添加即可。</p>
+
+<p>配置完成，就可以开始视频创作了。</p>
+
+<hr class="divider">
+
+<h2>Step 2：写提示词——越具体越好</h2>
+
+<p>一份好的提示词，核心就是把你脑里的详细画面翻译成文字。写清楚以下内容：</p>
+
+<table>
+<tr><th>要素</th><th>说明</th></tr>
+<tr><td>**动画类型/视频类型**</td><td>功能演示、数据可视化、发布会预告、社媒短片等</td></tr>
+<tr><td>**时长和画幅**</td><td>例如 10 秒、9:16 抖音画幅等</td></tr>
+<tr><td>**视频目标**</td><td>一句话说明这个视频要讲什么、让观众理解什么</td></tr>
+<tr><td>**视觉风格**</td><td>例如 Apple 风格、真实软件界面、极简科技感、电影感等</td></tr>
+<tr><td>**关键元素**</td><td>必须出现的文字、图标、产品、数据、人物、素材路径等</td></tr>
+<tr><td>**动效要求**</td><td>例如流式打字、淡入淡出、缩放转场、卡片展开、镜头推进等</td></tr>
+<tr><td>**声音要求**</td><td>例如配乐、打字声、点击声、旁白、音效同步等</td></tr>
+</table>
+
+<h3>实战示例（苹果手机进化史开场动画）</h3>
+
+<pre>用 [@HyperFrames] 做一个能说明 "Codex 调用 HyperFrames 生成视频" 的开场动画，默认画幅，时间不超过 10s。
+
+目标是展示"我在 Codex 里用 HyperFrames 生成视频"的过程。
+
+画面从真实感的 Codex 深色聊天首页开始，中央是 "What should we work on?"，下方是大号输入框。输入框里从第一个字开始像真人打字一样流式输入： "帮我用 HyperFrames by HeyGen 做一个 iPhone 历代机型的展示动画" 其中 "HyperFrames by HeyGen" 要像插件 mention/chip 一样显示，带小图标，并和普通输入文字有明显区分。
+
+输入完成后点击发送，进入生成状态：画面中央出现 Codex 图标 × HyperFrames 图标，下方显示 "GENERATING ..."。这个阶段要有轻微的生成中动效，比如图标轻微呼吸、跳动或震动，点点闪烁，但整体要克制、有产品感。
+
+生成完成后回到 Codex 聊天界面，出现一个视频预览卡片。卡片封面是 Apple 风格的深色产品预览，中央有 Apple 标志和播放按钮。鼠标点击播放按钮后，视频卡片丝滑放大到全屏，像正式视频被打开一样，作为进入后续视频的转场。
+
+整体风格要拟真、克制、高级，接近真实 Codex 产品界面和 Apple 发布片里的软件操作镜头。界面切换用平滑的 fade in / fade out，所有动效都要清爽、利落、自然。
+
+请使用 HyperFrames 实现，并确保可以稳定 render 成 MP4。打字、点击和 generating 的声音要作为真实音轨接入，不能只用浏览器实时音效。
+</pre>
+
+<div class="tip">**微调技巧：** 第一版大概率不会完美，直接告诉 Agent 哪里要改就行。注意一次改动不要太多，改完及时预览，不满意再继续微调。**必要的时候直接截图，在图上标注出问题位置，比纯文字反馈高效得多。**</div>
+
+<hr class="divider">
+
+<h2>Step 3：用 Image Gen 生成关键素材</h2>
+
+<p>做视频通常会花很多时间在准备视觉素材上——产品图、封面图、关键帧画面等。</p>
+
+<p>Codex **内置了 GPT Image 2**，可以直接在项目里生成你需要的素材，效果精美，风格可控。</p>
+
+<p>**触发方法：** 输入 `$image-gen`</p>
+
+<p>**示例：**</p>
+<div class="quote">用 `$image-gen` 的 gpt image 2 帮我分别生成一个 iPhone 初代的正面图和背面图，可以参考官方手机图片素材，尽可能模拟真实手机模样。注意图片最好是透明的，好随意融入任意背景。</div>
+
+<hr class="divider">
+
+<h2>Step 4：用 AI 生成背景音乐</h2>
+
+<p>推荐 [Suno](https://suno.com) 这个 AI 配乐生成网站，每天有免费额度，一次生成提供 2 个不同版本，质量不错。</p>
+
+<p>提示词建议写清楚想要的风格和情绪，比如「有节奏感、史诗感、不要人声」。</p>
+
+<p>**示例：**</p>
+<div class="quote">现代电影预告片风格，开头用清脆利落的打击乐（响指、拍掌），搭配简约钢琴旋律，逐步加入电子贝斯和层叠节奏。</div>
+<div class="quote">副歌部分用合成器和弦层层推进，高潮段落加入完整管弦乐冲击和驱动感节奏。</div>
+<div class="quote">整体质感高级、干净，类似苹果发布会的能量感，118 BPM，纯音乐无人声。</div>
+
+<hr class="divider">
+
+<h2>这个工作流适合谁</h2>
+
+<li>✅ 想用 AI 做视频的自媒体人，没学过剪辑</li>
+<li>✅ 想做产品演示、数据可视化、社媒短片</li>
+<li>✅ 会描述画面就够了，代码交给 AI</li>
+
+<p>**核心心法：** 用代码手搓视频真的很爽，视频创作的门槛已经被 AI 大幅拉低。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 **原文作者：** Sac，关注 [@Saccc_c](https://x.com/Saccc_c)，持续分享 AI 干货和实战玩法。</div>
+<p>></p>
+<div class="quote">📅 发布时间：2026-05-06</div>
+
+  </div>
+  <div class="lang-content jp">
+
+<div class="quote">📎 **出典：** [@Saccc_c 元ポスト](https://x.com/Saccc_c/status/2051852464400261429)</div>
+<p>></p>
+<div class="quote">**一言で言えば：** Codex + HyperFrames の組み合わせで、1時間で動画編集とアニメーションを完了。従来の編集ソフトは一切使いません。</div>
+
+<div class="quote">🎬 **完成動画（デスクトップファイル）：**</div>
+<div class="quote">- 動画1（9秒 オープニングアニメーション）→ `C:\Users\jding\Desktop\saccc_video1.mp4`</div>
+<div class="quote">- 動画2（14秒 クリップ）→ `C:\Users\jding\Desktop\saccc_video2.mp4`</div>
+<div class="quote">- 動画3（1分38秒 iPhone 進化史フル動画）→ `C:\Users\jding\Desktop\saccc_video3.mp4`</div>
+
+<hr class="divider">
+
+<h2>核心ツール：HyperFrames とは？</h2>
+
+<p>HyperFrames は [@HeyGen](https://x.com/HeyGen) がオープンソース化した**コード駆動型動画制作フレームワーク**です。これを使えば、編集ソフトを開くことなく、コードを書くだけで動画を生成できます。</p>
+
+<p>なぜ Codex との組み合わせが特別に適しているのか？2つの理由があります：</p>
+
+<li>**コードを書くことは AI Agent が最も得意とすることであり**、Codex は現在 T0 レベルのスーパーツールです。あなたは希望する画面を説明するだけでよく、コードはすべて Codex に任せられます。</li>
+<p>2. **HyperFrames は HTML で直接記述され**、本来 Agent 向けに設計されています。AI は HTML を他のどの形式よりもスムーズに書き、エラーも少なく、反復も高速です。</p>
+
+<p>したがって、この組み合わせは動画制作のために生まれたと言えます。希望する画面を明確に説明すれば、Codex がコードを書き、HyperFrames が映像としてレンダリングします。</p>
+
+<hr class="divider">
+
+<h2>Step 1：Codex で HyperFrames を設定する</h2>
+
+<h3>Codex App のインストール</h3>
+
+<p>ダウンロード先：[https://chatgpt.com/codex/](https://chatgpt.com/codex/)</p>
+
+<h3>HyperFrames Plugin のインストール</h3>
+
+<p>Codex App を開く → 左側のサイドバーで **Plugins** をクリック → **HyperFrames** を検索 → **「+」** をクリックして追加します。</p>
+
+<p>設定が完了すれば、動画制作を開始できます。</p>
+
+<hr class="divider">
+
+<h2>Step 2：プロンプトを書く——具体的であればあるほど良い</h2>
+
+<p>良いプロンプトの核心は、頭の中にある詳細な画面を文字に翻訳することです。以下の内容を明確に書きましょう：</p>
+
+<table>
+<tr><th>要素</th><th>説明</th></tr>
+<tr><td>**アニメーションの種類／動画の種類**</td><td>機能デモ、データ可視化、発表会予告、SNS ショート動画など</td></tr>
+<tr><td>**長さと画面サイズ**</td><td>例：10秒、9:16 TikTok 形式など</td></tr>
+<tr><td>**動画の目的**</td><td>この動画が何を伝え、視聴者に何を理解してもらうかを一文で説明</td></tr>
+<tr><td>**ビジュアルスタイル**</td><td>例：Apple スタイル、実際のソフトウェアインターフェース、ミニマルなテクノロジー感、映画感など</td></tr>
+<tr><td>**キー要素**</td><td>必ず表示するテキスト、アイコン、製品、データ、人物、素材パスなど</td></tr>
+<tr><td>**動効果の要件**</td><td>例：ストリーミングタイピング、フェードイン・フェードアウト、ズームトランジション、カード展開、カメラの押し出しなど</td></tr>
+<tr><td>**サウンドの要件**</td><td>例：BGM、タイピング音、クリック音、ナレーション、効果音の同期など</td></tr>
+</table>
+
+<h3>実戦例（iPhone 進化史オープニングアニメーション）</h3>
+
+<pre>用 [@HyperFrames] 做一个能说明 "Codex 调用 HyperFrames 生成视频" 的开场动画，默认画幅，时间不超过 10s。
+
+目标是展示"我在 Codex 里用 HyperFrames 生成视频"的过程。
+
+画面从真实感的 Codex 深色聊天首页开始，中央是 "What should we work on?"，下方是大号输入框。输入框里从第一个字开始像真人打字一样流式输入： "帮我用 HyperFrames by HeyGen 做一个 iPhone 历代机型的展示动画" 其中 "HyperFrames by HeyGen" 要像插件 mention/chip 一样显示，带小图标，并和普通输入文字有明显区分。
+
+输入完成后点击发送，进入生成状态：画面中央出现 Codex 图标 × HyperFrames 图标，下方显示 "GENERATING ..."。这个阶段要有轻微的生成中动效，比如图标轻微呼吸、跳动或震动，点点闪烁，但整体要克制、有产品感。
+
+生成完成后回到 Codex 聊天界面，出现一个视频预览卡片。卡片封面是 Apple 风格的深色产品预览，中央有 Apple 标志和播放按钮。鼠标点击播放按钮后，视频卡片丝滑放大到全屏，像正式视频被打开一样，作为进入后续视频的转场。
+
+整体风格要拟真、克制、高级，接近真实 Codex 产品界面和 Apple 发布片里的软件操作镜头。界面切换用平滑的 fade in / fade out，所有动效都要清爽、利落、自然。
+
+请使用 HyperFrames 实现，并确保可以稳定 render 成 MP4。打字、点击和 generating 的声音要作为真实音轨接入，不能只用浏览器实时音效。
+</pre>
+
+<div class="tip">**微調整のコツ：** 最初のバージョンはほぼ完璧ではありません。どこを修正したいかを Agent に直接伝えましょう。一度に多くの変更を加えすぎないように注意し、修正後はすぐにプレビューし、満足いかなければさらに微調整を続けます。**必要な場合はスクリーンショットを撮り、画像上で問題の箇所を指摘する方が、テキストだけのフィードバックよりはるかに効率的です。**</div>
+
+<hr class="divider">
+
+<h2>Step 3：Image Gen でキー素材を生成</h2>
+
+<p>動画制作では、ビジュアル素材（製品画像、カバー画像、キーフレーム画面など）の準備に多くの時間を費やすことがよくあります。</p>
+
+<p>Codex には **GPT Image 2 が内蔵**されており、プロジェクト内で直接必要な素材を生成できます。品質は精美で、スタイルもコントロール可能です。</p>
+
+<p>**トリガー方法：** `$image-gen` と入力</p>
+
+<p>**例：**</p>
+<div class="quote">`$image-gen` の gpt image 2 を使って、iPhone 初代の正面図と背面図をそれぞれ生成してください。公式のスマホ画像素材を参考に、できるだけ実際のスマホの外観をシミュレートしてください。画像はできれば透明にし、任意の背景に自由に溶け込めるようにしてください。</div>
+
+<hr class="divider">
+
+<h2>Step 4：AI で BGM を生成</h2>
+
+<p>おすすめは [Suno](https://suno.com) という AI 作曲サイトです。毎日無料枠があり、1回の生成で2つの異なるバージョンが提供され、品質も良好です。</p>
+
+<p>プロンプトには希望するスタイルと感情を明確に書きましょう。例：「リズミカルで、壮大な感じ、ボーカルなし」。</p>
+
+<p>**例：**</p>
+<div class="quote">現代の映画予告編スタイル。冒頭はクリアでキレのある打楽器（指パッチン、拍手）で始まり、シンプルなピアノのメロディーが添えられ、徐々にエレクトリックベースと重なるリズムが加わります。</div>
+<div class="quote">サビ部分はシンセサイザーのコードが層になって盛り上がり、クライマックスではフルオーケストラの衝撃とドライブ感のあるリズムが加わります。</div>
+<div class="quote">全体的な質感は高級でクリーン、Apple の発表会のようなエネルギー感。118 BPM、インストゥルメンタル、ボーカルなし。</div>
+
+<hr class="divider">
+
+<h2>このワークフローに向いている人</h2>
+
+<li>✅ AI で動画を作りたい自媒体（インフルエンサー）、編集を学んだことがない人</li>
+<li>✅ 製品デモ、データ可視化、SNS ショート動画を作りたい人</li>
+<li>✅ 画面を説明できれば十分、コードは AI に任せる</li>
+
+<p>**核心の心得：** コードで動画を手作りするのは本当に気持ちいい。動画制作のハードルは AI によって大幅に引き下げられました。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 **原文著者：** Sac。フォローは [@Saccc_c](https://x.com/Saccc_c)。AI の実践的なノウハウを継続的に発信中。</div>
+<p>></p>
+<div class="quote">📅 公開日：2026-05-06</div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="links">
+    <a href="../index.html"><span class="lang-content cn">文章列表</span><span class="lang-content jp">記事一覧</span></a>
+    <a href="../prompts/"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a>
+    <a href="../index.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a>
+    <a href="../index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

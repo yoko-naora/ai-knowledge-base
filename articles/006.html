@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第六篇：个人 Agent 自建实战：EvoPaw · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第六篇：个人 Agent 自建实战：EvoPaw</span><span class="lang-content jp">第6回：個人エージェント構築実践：EvoPaw</span></h1>
+  <div class="meta">✏️ @XudongHan · 2026-05-06</div>
+  <div class="source">📎 <a href="https://x.com/Xudong07452910/status/2051891753821556976" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn">
+
+<div class="quote">📎 **来源：** [@Xudong07452910 原帖](https://x.com/Xudong07452910/status/2051891753821556976)</div>
+<p>></p>
+<div class="quote">**一句话：** 用 Vibe Coding + 借开源轮子，15 天从零搭出个人 Agent「EvoPaw」的完整方法论——选基座→装 Claude Code→建脚手架→对话逼 spec→每功能配测试。</div>
+
+<hr class="divider">
+
+<h2>核心思路</h2>
+
+<p>**不要一上来就从零写，也别直接上功能堆很重的框架。** 选代码少、可读性强、核心循环一目了然的项目，才看得懂、改得动、长得久。</p>
+
+<p>**整体五步流程：**</p>
+<li>选轻量基座</li>
+<p>2. 装 Claude Code + 跑通飞书</p>
+<p>3. 建脚手架文件（CLAUDE.md + docs/）</p>
+<p>4. 用对话把模糊需求逼成具体 spec</p>
+<p>5. 每加功能必须配测试</p>
+
+<p>上手第一周会有点笨拙，但一旦跑顺，后面每加新功能的速度指数级上升。</p>
+
+<hr class="divider">
+
+<h2>Step 1：选一个轻量好扩展的基础项目</h2>
+
+<h3>推荐基座</h3>
+
+<table>
+<tr><th>项目</th><th>特点</th><th>适合</th></tr>
+<tr><td>**Pi-mono**</td><td>非常干净的 Agent 基础包，极简风格</td><td>喜欢极简的同学起手</td></tr>
+<tr><td>**Nanobot ✅（最终选）**</td><td>ultra-lightweight，几千行核心代码跑完整 Agent 循环，自带 memory/skills/multi-provider，内置飞书/Slack/Telegram/Discord</td><td>扩展性极强，省三个月工程脚手架时间</td></tr>
+</table>
+
+<h3>判断标准</h3>
+<li>代码行数 ≤ 8000 行</li>
+<li>Agent loop 一眼看明白</li>
+<li>能比较容易加进飞书或微信</li>
+<li>能自由切换不同模型厂商的 API</li>
+
+<hr class="divider">
+
+<h2>Step 2：用 Claude Code 装上，把飞书也跑通</h2>
+
+<h3>快速安装</h3>
+
+<p>把项目地址丢给 Claude Code：</p>
+<pre>请fork https://github.com/HKUDS/nanobot 到本地，帮我安装好，要求能正常运行，一步步告诉我需要做什么。
+</pre>
+
+<div class="tip">**API Key 安全：** 不要直接在命令行贴出 key。问 Claude Code「这个 Key 应该放在哪个文件、写成什么格式」，它告诉格式后自己手动填。</div>
+
+<h3>配置飞书通道</h3>
+
+<p>飞书是主力通道，不需要公网 IP（Nanobot 支持长连接！）。</p>
+
+<p>**飞书开放平台 4 步：**</p>
+<li>创建「企业自建应用」</li>
+<p>2. 启用「机器人」能力，申请权限：`im:message`、`im:message.p2p_msg:readonly`、`cardkit:card:write`</p>
+<p>3. 事件订阅选 **长连接模式**——不用公网 IP、不用配 webhook</p>
+<p>4. **点「版本管理与发布」把应用发版**，否则权限不生效（90% 的人卡在这步）</p>
+
+<p>搞完后跟 Claude Code 说：</p>
+<pre>帮我运行Nanobot。
+</pre>
+<p>就能在飞书上跟自己的 Agent 聊天了。</p>
+
+<hr class="divider">
+
+<h2>Step 3：先建脚手架文件</h2>
+
+<p>不要一跑通飞书就喊 Claude Code 加功能。先花 **30 分钟建好这套文件**，让 Claude Code 跨会话也能秒进入状态。</p>
+
+<h3>项目结构</h3>
+
+<pre>nanobot/
+├── CLAUDE.md          ← 项目说明书（自动注入）
+├── docs/
+│   ├── spec.md        ← 需求规格
+│   ├── prompt_plan.md ← 分步执行计划
+│   └── todo.md        ← 跨会话 checklist
+└── tests/             ← 已有（nanobot自带）
+</pre>
+
+<h3>CLAUDE.md（核心）</h3>
+
+<p>相当于 Claude Code 的项目说明书，每次启动自动读。**控制在 200 行以内**（社区共识不超过 300 行），只留推不出来的非显然信息：</p>
+
+<li>**WHAT**：项目干嘛的，一句话</li>
+<li>**WHY**：哪些设计选择不能动</li>
+<li>**HOW**：build/test/调试入口/已知坑</li>
+<li>**个人偏好**：用中文回复、commit 前先问、改代码前先读现有文件</li>
+<li>**测试规则**（最常用）：</li>
+
+<pre>## 测试规则
+修改任何代码时必须：
+- 同步加或改 tests 下对应的 test_*.py
+- 外部依赖用 MagicMock 替换，不发真请求
+- 至少覆盖正常、空输入、出错三种情况
+- 写完跑 pytest -v，全绿才算完
+</pre>
+
+<div class="tip">**不要往 CLAUDE.md 塞的东西：** 格式化规则、代码风格、命名规范。linter 能干的事就别让 Claude 干。"Never send an LLM to do a linter's job."</div>
+
+<h3>docs/ 目录（三件套）</h3>
+
+<p>来自 Harper Reed 定型的「LLM codegen 三件套」：</p>
+
+<li>**`docs/spec.md`**：功能需求规格（场景、痛点、期望、优先级、约束）</li>
+<li>**`docs/prompt_plan.md`**：把 spec 拆成分步可执行的 prompt 序列</li>
+<li>**`docs/todo.md`**：跨会话粗粒度 checklist</li>
+
+<p>开工第一句永远是：</p>
+<pre>读CLAUDE.md和docs/todo.md，告诉我下一步要做什么。
+</pre>
+
+<hr class="divider">
+
+<h2>Step 4：用对话把模糊需求逼成具体 spec</h2>
+
+<div class="quote">不要自己闷头写需求文档。**让 AI 来逼问你。**</div>
+
+<h3>四小步流程</h3>
+
+<p>**1. 先用一张表列模糊需求**</p>
+
+<table>
+<tr><th>场景</th><th>痛点</th><th>期望</th><th>优先级</th></tr>
+<tr><td>例：群里有人发 PDF</td><td>不能直接解析</td><td>自动提取文字+表格</td><td>P0</td></tr>
+</table>
+
+<p>逼自己用一行字说清楚每个场景的痛点和期望。</p>
+
+<p>**2. Brainstorm → `docs/spec.md`**</p>
+
+<p>挑表里优先级最高的，开 Claude Code 切 plan mode：</p>
+<pre>我想给nanobot加一个PDF解析能力。先不要写任何代码，用对话方式反复追问我，
+直到把功能边界、输入输出格式、错误处理、性能上限、是否持久化到记忆、
+跟现有skill的边界都问清楚，最后写到docs/spec.md。
+</pre>
+
+<p>模型五分钟就能抛出你拍脑袋想半天也想不全的问题。</p>
+
+<p>**3. Plan → `docs/prompt_plan.md` + `docs/todo.md`**</p>
+
+<pre>读docs/spec.md，拆成5-10个可独立实现、可独立测试的小步骤，
+每一步配一段prompt，写到docs/prompt_plan.md，同时维护docs/todo.md。
+</pre>
+
+<p>**4. 把需求映射到架构层**</p>
+
+<table>
+<tr><th>需求类型</th><th>落点</th></tr>
+<tr><td>需要强隐私</td><td>强化本地记忆模块</td></tr>
+<tr><td>需要多模型</td><td>完善 Provider 层</td></tr>
+<tr><td>需要稳定性</td><td>加测试和定时任务</td></tr>
+<tr><td>需要新能力</td><td>写 SKILL.md 或 MCP server ✅ **最常见**</td></tr>
+<tr><td>只是规则约束</td><td>改 CLAUDE.md，**不用写代码**</td></tr>
+</table>
+
+<div class="tip">最后这条最容易被忽视。很多需求加几行 markdown 规则就够了。能用 markdown 配置解决的绝不写代码，能写 skill/MCP server 解决的绝不改框架核心。</div>
+
+<hr class="divider">
+
+<h2>Step 5：每加一个功能，必须配一组测试</h2>
+
+<p>写完跑通就走人？两周后换模型改 provider，整个功能静默挂掉都没人知道。</p>
+
+<p>**标准 prompt：**</p>
+<pre>我刚加的功能帮我写一组测试，要求：
+1. 凡是要真连网络或调用外部接口的，用假数据顶替
+2. 至少跑三种情况：正常使用、没有数据、出错
+3. 风格参照项目里已有的测试文件
+4. 写完直接 pytest -v 跑一遍，全绿才算完
+</pre>
+
+<div class="tip">**测试真正的价值不是防 bug**，而是给你换模型、改底层、做大重构的胆量。没测试，你的 Agent 就长不大。</div>
+
+<hr class="divider">
+
+<h2>进阶：从别的项目「偷」好设计</h2>
+
+<p>看到别人成熟项目（Hermes Agent / OpenClaw）的好设计，**别整套搬**。按三层判断：</p>
+
+<table>
+<tr><th>层级</th><th>做法</th><th>例子</th></tr>
+<tr><td>**思想级**</td><td>重写不拷贝</td><td>OpenHands 的 event-stream 设计</td></tr>
+<tr><td>**模块级**</td><td>独立抄一个模块</td><td>Hermes 的 Curator（自动重构 skill）、execute_code tool（多步压成一步）、SOUL.md（性格档案）</td></tr>
+<tr><td>**文件级**</td><td>原样复用</td><td>`.claude/skills/skill-creator/` 的 SKILL.md 文件直接塞进 `skills/` 就能跑</td></tr>
+</table>
+
+<div class="tip">看到好设计先问自己「这到底是思想、模块、还是文件哪一层」，再决定怎么搬。</div>
+
+<hr class="divider">
+
+<h2>进阶玩法：Codex 给 Claude Code 当 Reviewer</h2>
+
+<h3>配置 3 步</h3>
+
+<li>装好 Codex CLI 并登录</li>
+<p>2. 注册成 MCP server：`claude mcp add codex -- codex mcp`</p>
+<p>3. 重启会话</p>
+
+<h3>使用</h3>
+
+<pre>用codex review一下docs/spec.md和docs/prompt_plan.md，
+重点看需求歧义、边界情况、跟nanobot现有架构的冲突。
+</pre>
+
+<p>两套不同训练分布的模型互相挑刺，免费 QA。</p>
+
+<hr class="divider">
+
+<h2>踩坑要点</h2>
+
+<li>**API Key 不要直接贴命令行**，问格式手动填</li>
+<li>**飞书必须发版**才能生效，90% 人卡在这</li>
+<li>**CLAUDE.md 不要超 300 行**，太多挤占上下文</li>
+<li>**spec 写不清楚**，后面每一轮都在误解上空转</li>
+<li>**测试第一周觉得麻烦**，两周后才知道真正的杠杆在哪</li>
+<li>**别整套依赖搬过来**（70 多个包冲突修一晚），按层级判断怎么搬</li>
+
+<hr class="divider">
+
+<h2>这个工作流适合谁</h2>
+
+<li>✅ **想自己搭个人 Agent 但不知从哪开始的人** — 看完就去 fork Nanobot</li>
+<li>✅ **想摆脱被框架牵着的** — 用现成框架永远是用户，自己搭才能成主人</li>
+<li>✅ **需要飞书深度集成的** — 长连接方案省去公网 IP</li>
+<li>✅ **做学术场景/数据长期主权的** — 强化本地记忆模块</li>
+
+<p>**核心心法：** 碰见问题→理解问题→用 AI Coding 解决问题，这条路基本一定能走通。重点不是你立刻就懂，而是你愿不愿意把它拆成看得懂的部分。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 **原文作者：** Xudong Han @Xudong07452910</div>
+<p>></p>
+<div class="quote">📅 发布时间：2026-05-06</div>
+<p>></p>
+<div class="quote">🔗 EvoPaw 项目：https://github.com/hxdflying/EvoPaw</div>
+
+  </div>
+  <div class="lang-content jp">
+
+<div class="quote">📎 **出典：** [@Xudong07452910 元ポスト](https://x.com/Xudong07452910/status/2051891753821556976)</div>
+<p>></p>
+<div class="quote">**一言でいうと：** Vibe Coding ＋ オープンソースの車輪の活用で、15日でゼロから個人エージェント「EvoPaw」を構築する完全な方法論——基盤選定→Claude Codeインストール→スキャフォールド構築→対話でspecを詰める→機能ごとにテストを実装。</div>
+
+<hr class="divider">
+
+<h2>核心となる考え方</h2>
+
+<p>**いきなりゼロから書こうとしないでください。また、いきなり重いフレームワークに機能を詰め込もうとしないでください。** コードが少なく、可読性が高く、コアループが一目でわかるプロジェクトを選ぶことで、理解でき、修正でき、長く育てられるものになります。</p>
+
+<p>**全体の5ステップフロー：**</p>
+<li>軽量な基盤を選ぶ</li>
+<p>2. Claude Codeをインストール + 飛書（Feishu）を通す</p>
+<p>3. スキャフォールドファイルを構築する（CLAUDE.md + docs/）</p>
+<p>4. 対話で曖昧な要件を具体のspecに落とし込む</p>
+<p>5. 機能追加ごとにテストを実装する</p>
+
+<p>最初の1週間は少しぎこちないですが、一度軌道に乗れば、新しい機能を追加するスピードは指数関数的に向上します。</p>
+
+<hr class="divider">
+
+<h2>Step 1：軽量で拡張しやすいベースプロジェクトを選ぶ</h2>
+
+<h3>推奨ベース</h3>
+
+<table>
+<tr><th>プロジェクト</th><th>特徴</th><th>向いている人</th></tr>
+<tr><td>**Pi-mono**</td><td>非常にクリーンなAgent基本パッケージ、ミニマル設計</td><td>ミニマル志向の方の入門に</td></tr>
+<tr><td>**Nanobot ✅（最終選定）**</td><td>ultra-lightweight、数千行のコアコードで完全なAgentループを実行、memory/skills/multi-providerを内蔵、飛書/Slack/Telegram/Discord対応</td><td>拡張性が非常に高く、3ヶ月分のエンジニアリングスキャフォールド作業を削減</td></tr>
+</table>
+
+<h3>判断基準</h3>
+<li>コード行数 ≤ 8000行</li>
+<li>Agentループが一目で理解できる</li>
+<li>飛書やWeChatに比較的簡単に組み込める</li>
+<li>異なるモデルベンダーのAPIを自由に切り替えられる</li>
+
+<hr class="divider">
+
+<h2>Step 2：Claude Codeでインストールし、飛書も通す</h2>
+
+<h3>クイックインストール</h3>
+
+<p>プロジェクトのアドレスをClaude Codeに渡します：</p>
+<pre>リポジトリ https://github.com/HKUDS/nanobot をローカルにforkして、インストールしてください。正常に動作するように段階的に教えてください。
+</pre>
+
+<div class="tip">**API Keyのセキュリティ：** コマンドラインに直接Keyを貼り付けないでください。Claude Codeに「このKeyはどのファイルに、どのような形式で書けばいいですか？」と聞いて、指示された形式で手動で記入してください。</div>
+
+<h3>飛書チャネルの設定</h3>
+
+<p>飛書がメインチャネルです。パブリックIPは不要です（Nanobotは長連接続に対応しています！）。</p>
+
+<p>**飛書開放プラットフォームの4ステップ：**</p>
+<li>「企業自建應用（企業内製アプリ）」を作成する</li>
+<p>2. 「ロボット」機能を有効にし、権限を申請：`im:message`、`im:message.p2p_msg:readonly`、`cardkit:card:write`</p>
+<p>3. イベント購読は**長連接続モード**を選択——パブリックIP不要、webhookの設定不要</p>
+<p>4. **「バージョン管理とリリース」からアプリをリリースする**、そうしないと権限が有効になりません（90％の人がここで詰まります）</p>
+
+<p>完了したらClaude Codeに伝えます：</p>
+<pre>Nanobotを起動してください。
+</pre>
+<p>飛書で自分のAgentと会話できるようになります。</p>
+
+<hr class="divider">
+
+<h2>Step 3：先にスキャフォールドファイルを構築する</h2>
+
+<p>飛書が通ったからといって、すぐにClaude Codeに機能追加を依頼しないでください。まず **30分かけてこのファイル群を構築**し、Claude Codeがセッションをまたいですぐに状態に入れるようにしましょう。</p>
+
+<h3>プロジェクト構造</h3>
+
+<pre>nanobot/
+├── CLAUDE.md          ← プロジェクト説明書（自動注入）
+├── docs/
+│   ├── spec.md        ← 要件仕様
+│   ├── prompt_plan.md ← 分割実行計画
+│   └── todo.md        ← セッション間のchecklist
+└── tests/             ← 既存（nanobot標準装備）
+</pre>
+
+<h3>CLAUDE.md（核心）</h3>
+
+<p>Claude Codeのプロジェクト説明書であり、起動時に自動で読み込まれます。**200行以内**に収め（コミュニティの合意として300行を超えない）、推論で導き出せない非自明な情報だけを残します：</p>
+
+<li>**WHAT**：プロジェクトの目的を一言で</li>
+<li>**WHY**：変更してはいけない設計上の選択</li>
+<li>**HOW**：build/test/デバッグの入口/既知のハマりポイント</li>
+<li>**個人の好み**：日本語での返答、commit前に確認、コード修正前に既存ファイルを読む</li>
+<li>**テストルール**（最もよく使う）：</li>
+
+<pre>## テストルール
+コードを修正する際は必ず：
+- 対応する tests 配下の test_*.py を追加または更新する
+- 外部依存は MagicMock で置き換え、実際のリクエストは送らない
+- 少なくとも正常系、空入力、エラー系の3ケースをカバーする
+- 完了後 pytest -v を実行し、すべてパスしてから完了とする
+</pre>
+
+<div class="tip">**CLAUDE.mdに入れるべきでないもの：** フォーマットルール、コードスタイル、命名規則。linterにできることはClaudeにやらせないでください。"Never send an LLM to do a linter's job."</div>
+
+<h3>docs/ ディレクトリ（三種の神器）</h3>
+
+<p>Harper Reedが確立した「LLM codegen 三種の神器」：</p>
+
+<li>**`docs/spec.md`**：機能要件仕様（シナリオ、課題、期待、優先順位、制約）</li>
+<li>**`docs/prompt_plan.md`**：specを分割可能な実行可能なprompt列に分解</li>
+<li>**`docs/todo.md`**：セッション間の粗粒度checklist</li>
+
+<p>作業開始の最初の一言は常に：</p>
+<pre>CLAUDE.mdとdocs/todo.mdを読んで、次に何をすべきか教えてください。
+</pre>
+
+<hr class="divider">
+
+<h2>Step 4：対話で曖昧な要件を具体のspecに落とし込む</h2>
+
+<div class="quote">自分で要件文書を黙々と書かないでください。**AIに問い詰めさせましょう。**</div>
+
+<h3>4つの小さなステップ</h3>
+
+<p>**1. まず表で曖昧な要件をリストアップする**</p>
+
+<table>
+<tr><th>シナリオ</th><th>課題</th><th>期待</th><th>優先度</th></tr>
+<tr><td>例：グループで誰かがPDFを送信</td><td>直接解析できない</td><td>テキスト+表を自動抽出</td><td>P0</td></tr>
+</table>
+
+<p>各行で各シナリオの課題と期待を一言で明確にします。</p>
+
+<p>**2. Brainstorm → `docs/spec.md`**</p>
+
+<p>表の中で最も優先度の高いものを選び、Claude Codeをplan modeで起動します：</p>
+<pre>nanobotにPDF解析機能を追加したいと考えています。まずコードは一切書かずに、対話形式で質問を重ねて、
+機能の境界、入出力形式、エラーハンドリング、パフォーマンス上限、メモリへの永続化の有無、
+既存のskillとの境界まで明確にした上で、docs/spec.mdに書き出してください。
+</pre>
+
+<p>モデルは5分であなたが頭を悩ませて考えても出てこないような質問を次々と投げかけてきます。</p>
+
+<p>**3. Plan → `docs/prompt_plan.md` + `docs/todo.md`**</p>
+
+<pre>docs/spec.mdを読んで、5〜10個の独立して実装・テスト可能な小さなステップに分割し、
+各ステップにpromptを付けてdocs/prompt_plan.mdに書き、同時にdocs/todo.mdも更新してください。
+</pre>
+
+<p>**4. 要件をアーキテクチャ層にマッピングする**</p>
+
+<table>
+<tr><th>要件タイプ</th><th>対応箇所</th></tr>
+<tr><td>強固なプライバシーが必要</td><td>ローカルメモリモジュールを強化</td></tr>
+<tr><td>マルチモデルが必要</td><td>Provider層を拡充</td></tr>
+<tr><td>安定性が必要</td><td>テストと定期タスクを追加</td></tr>
+<tr><td>新しい能力が必要</td><td>SKILL.mdまたはMCP serverを作成 ✅ **最も一般的**</td></tr>
+<tr><td>単なるルールの制約</td><td>CLAUDE.mdを修正、**コードは書かない**</td></tr>
+</table>
+
+<div class="tip">最後のポイントが最も見落とされがちです。多くの要件は数行のmarkdownルールで十分です。markdownの設定で解決できるものには絶対にコードを書かず、skill/MCP serverで解決できるものにはフレームワークのコアを絶対に修正しないでください。</div>
+
+<hr class="divider">
+
+<h2>Step 5：機能を追加するたびに、必ずテストをセットで実装する</h2>
+
+<p>書いて動いたら終わり？2週間後にモデルを変更してproviderを変えたら、機能が黙って壊れていても誰も気づきません。</p>
+
+<p>**標準prompt：**</p>
+<pre>今追加した機能に対してテストを書いてください。要件：
+1. 実際にネットワーク接続や外部APIを呼び出す必要があるものは、すべてダミーデータで代用する
+2. 少なくとも3ケース実行する：正常使用、データなし、エラー発生
+3. スタイルはプロジェクト内の既存のテストファイルに準拠する
+4. 書き終えたら直接 pytest -v を実行し、すべてパスしてから完了とする
+</pre>
+
+<div class="tip">**テストの本当の価値はバグ防止ではなく**、モデルを変更したり、基盤を書き換えたり、大規模なリファクタリングを行う勇気を与えてくれることです。テストがなければ、あなたのAgentは成長しません。</div>
+
+<hr class="divider">
+
+<h2>応用：他のプロジェクトから良い設計を「盗む」</h2>
+
+<p>他の成熟したプロジェクト（Hermes Agent / OpenClaw）の良い設計を見つけたら、**全部を丸ごとコピーしないでください**。3つの階層で判断します：</p>
+
+<table>
+<tr><th>階層</th><th>方法</th><th>例</th></tr>
+<tr><td>**思想レベル**</td><td>書き直してコピーしない</td><td>OpenHandsのevent-stream設計</td></tr>
+<tr><td>**モジュールレベル**</td><td>モジュール単位で独立して移植</td><td>HermesのCurator（自動リファクタリングskill）、execute_code tool（複数ステップを1つに圧縮）、SOUL.md（性格プロファイル）</td></tr>
+<tr><td>**ファイルレベル**</td><td>そのまま再利用</td><td>`.claude/skills/skill-creator/` のSKILL.mdファイルをそのまま `skills/` に入れれば動作</td></tr>
+</table>
+
+<div class="tip">良い設計を見つけたら、まず「これは思想レベルか、モジュールレベルか、ファイルレベルか」を自問し、それからどう移植するかを決めてください。</div>
+
+<hr class="divider">
+
+<h2>応用：CodexにClaude CodeのReviewerをさせる</h2>
+
+<h3>設定3ステップ</h3>
+
+<li>Codex CLIをインストールしてログインする</li>
+<p>2. MCP serverとして登録：`claude mcp add codex -- codex mcp`</p>
+<p>3. セッションを再起動する</p>
+
+<h3>使い方</h3>
+
+<pre>codexを使ってdocs/spec.mdとdocs/prompt_plan.mdをレビューしてください。
+要件の曖昧さ、境界ケース、nanobotの既存アーキテクチャとの競合を重点的に確認してください。
+</pre>
+
+<p>異なる訓練分布を持つ2種類のモデルが互いに批判し合う、無料のQAです。</p>
+
+<hr class="divider">
+
+<h2>ハマりポイント</h2>
+
+<li>**API Keyはコマンドラインに直接貼らない**、形式を聞いて手動で記入</li>
+<li>**飛書は必ずリリースしないと**有効にならない、90％の人がここで詰まる</li>
+<li>**CLAUDE.mdは300行を超えない**、多すぎるとコンテキストを圧迫</li>
+<li>**specが不明確だと**、以降のすべての作業が誤解の上で空転する</li>
+<li>**テストは最初の1週間は面倒だが**、2週間後に真のレバレッジポイントが分かる</li>
+<li>**依存関係を丸ごとコピーしない**（70以上のパッケージの競合修正で一晩潰れる）、階層に応じてどう移植するか判断する</li>
+
+<hr class="divider">
+
+<h2>このワークフローに向いている人</h2>
+
+<li>✅ **自分で個人Agentを構築したいが、どこから始めればいいか分からない人** — 読んだらすぐにNanobotをfork</li>
+<li>✅ **フレームワークに縛られたくない人** — 既存のフレームワークを使い続ける限りユーザーのままで、自分で構築してこそ主人になれる</li>
+<li>✅ **飛書との深い連携が必要な人** — 長連接続方式でパブリックIPが不要</li>
+<li>✅ **学術シナリオやデータの長期的な主権が必要な人** — ローカルメモリモジュールを強化</li>
+
+<p>**核心の心構え：** 問題に直面する→問題を理解する→AI Codingで問題を解決する、この道筋は基本的に必ず通じます。重要なのはあなたがすぐにすべてを理解することではなく、理解可能な部分に分解しようとする意志です。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 **原文著者：** Xudong Han @Xudong07452910</div>
+<p>></p>
+<div class="quote">📅 公開日：2026-05-06</div>
+<p>></p>
+<div class="quote">🔗 EvoPaw プロジェクト：https://github.com/hxdflying/EvoPaw</div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="links">
+    <a href="../index.html"><span class="lang-content cn">文章列表</span><span class="lang-content jp">記事一覧</span></a>
+    <a href="../prompts/"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a>
+    <a href="../index.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a>
+    <a href="../index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

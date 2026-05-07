@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI知识库 · 大神分享</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">文章</a></li>
+    <li><a href="prompts/">最新提示词</a></li>
+    <li><a href="#tools">推荐工具</a></li>
+    <li><a href="#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="lang-content cn">
+    <h1>X上的<span>大神分享</span></h1>
+    <p>精选全球 AI 创作者的实战经验，每篇中日双语。<br>从工具教学到变现方法，帮你少走弯路。</p>
+  </div>
+  <div class="lang-content jp">
+    <h1>Xの<span>達人シェア</span></h1>
+    <p>世界中のAIクリエイターの実践的ノウハウを厳選、毎回中日バイリンガル。<br>ツールの使い方から収益化まで、近道をお届けします。</p>
+  </div>
+  <a href="#" class="cta-btn" onclick="document.getElementById('articles').scrollIntoView({behavior:'smooth'});return false;">
+    <span class="lang-content cn">浏览全部文章 →</span>
+    <span class="lang-content jp">全記事を見る →</span>
+  </a>
+</section>
+
+<!-- Articles -->
+<div class="section-header" id="articles">
+  <div class="sub lang-content cn">ARTICLES</div>
+  <div class="sub lang-content jp">ARTICLES</div>
+  <h2><span class="lang-content cn">最新文章 6/30</span><span class="lang-content jp">最新記事 6/30</span></h2>
+</div>
+<div class="article-grid">
+  <a class="article-card" href="articles/001.html">
+    <div class="thumb">📱</div>
+    <div class="body">
+      <div class="num"><span class="lang-content cn">第一篇</span><span class="lang-content jp">第1回</span></div>
+      <h3><span class="lang-content cn">Codex + GPT-Image-2 视频产出工作流</span><span class="lang-content jp">Codex + GPT-Image-2 動画制作ワークフロー</span></h3>
+      <div class="author">✏️ @Formulasearch</div>
+      <div class="meta">2026-05-06</div>
+    </div>
+  </a>
+  <a class="article-card" href="articles/002.html">
+    <div class="thumb">🎬</div>
+    <div class="body">
+      <div class="num"><span class="lang-content cn">第二篇</span><span class="lang-content jp">第2回</span></div>
+      <h3><span class="lang-content cn">Codex + HyperFrames 正在吃掉剪辑行业</span><span class="lang-content jp">Codex + HyperFrames が編集業界を飲み込む</span></h3>
+      <div class="author">✏️ @Saccc_c</div>
+      <div class="meta">2026-05-06</div>
+    </div>
+  </a>
+  <a class="article-card" href="articles/003.html">
+    <div class="thumb">🗺️</div>
+    <div class="body">
+      <div class="num"><span class="lang-content cn">第三篇</span><span class="lang-content jp">第3回</span></div>
+      <h3><span class="lang-content cn">Google Maps + Claude 本地商家获客方法</span><span class="lang-content jp">Google Maps + Claude 地元ビジネス集客術</span></h3>
+      <div class="author">✏️ @timbidefi</div>
+      <div class="meta">2026-05-05</div>
+    </div>
+  </a>
+  <a class="article-card" href="articles/004.html">
+    <div class="thumb">🎨</div>
+    <div class="body">
+      <div class="num"><span class="lang-content cn">第四篇</span><span class="lang-content jp">第4回</span></div>
+      <h3><span class="lang-content cn">提示词不是咒语，是审美决策系统</span><span class="lang-content jp">プロンプトは呪文じゃない、美的判断システム</span></h3>
+      <div class="author">✏️ @AdrianPunk115</div>
+      <div class="meta">2026-05-06</div>
+    </div>
+  </a>
+  <a class="article-card" href="articles/005.html">
+    <div class="thumb">🖼️</div>
+    <div class="body">
+      <div class="num"><span class="lang-content cn">第五篇</span><span class="lang-content jp">第5回</span></div>
+      <h3><span class="lang-content cn">GPT-Image-2 + XCrawl AI 主图自动化</span><span class="lang-content jp">GPT-Image-2 + XCrawl AI画像自動化</span></h3>
+      <div class="author">✏️ @zstmfhy</div>
+      <div class="meta">2026-05-06</div>
+    </div>
+  </a>
+  <a class="article-card" href="articles/006.html">
+    <div class="thumb">🤖</div>
+    <div class="body">
+      <div class="num"><span class="lang-content cn">第六篇</span><span class="lang-content jp">第6回</span></div>
+      <h3><span class="lang-content cn">个人 Agent 自建实战：EvoPaw</span><span class="lang-content jp">個人エージェント構築実践：EvoPaw</span></h3>
+      <div class="author">✏️ @XudongHan</div>
+      <div class="meta">2026-05-06</div>
+    </div>
+  </a>
+</div>
+
+<!-- Latest Prompts (Orange) -->
+<section class="featured">
+  <div class="featured-inner">
+    <div class="sub lang-content cn">LATEST PROMPTS</div>
+    <div class="sub lang-content jp">LATEST PROMPTS</div>
+    <h2><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></h2>
+    <p style="opacity:0.85; margin-bottom:32px; max-width:600px;">
+      <span class="lang-content cn">来自 X 上顶级提示词创作者的精选图库</span>
+      <span class="lang-content jp">Xのトッププロンプトクリエイター厳選ギャラリー</span>
+    </p>
+    <div class="featured-grid">
+      <a class="featured-item" href="prompts/">
+        <div class="icon">🎨</div>
+        <span class="lang-content cn">AI 绘画提示词<br><small>89 条</small></span>
+        <span class="lang-content jp">AI イラスト<br><small>89 件</small></span>
+      </a>
+      <a class="featured-item" href="prompts/">
+        <div class="icon">🎬</div>
+        <span class="lang-content cn">视频生成提示词<br><small>45 条</small></span>
+        <span class="lang-content jp">動画生成<br><small>45 件</small></span>
+      </a>
+      <a class="featured-item" href="prompts/">
+        <div class="icon">✍️</div>
+        <span class="lang-content cn">文案写作提示词<br><small>32 条</small></span>
+        <span class="lang-content jp">ライティング<br><small>32 件</small></span>
+      </a>
+      <a class="featured-item" href="prompts/">
+        <div class="icon">🛠️</div>
+        <span class="lang-content cn">工具调用提示词<br><small>28 条</small></span>
+        <span class="lang-content jp">ツール連携<br><small>28 件</small></span>
+      </a>
+      <a class="featured-item" href="prompts/">
+        <div class="icon">📊</div>
+        <span class="lang-content cn">数据分析提示词<br><small>18 条</small></span>
+        <span class="lang-content jp">データ分析<br><small>18 件</small></span>
+      </a>
+      <a class="featured-item" href="prompts/">
+        <div class="icon">🌐</div>
+        <span class="lang-content cn">双语对照模板<br><small>24 条</small></span>
+        <span class="lang-content jp">バイリンガル<br><small>24 件</small></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Tools -->
+<section class="tools" id="tools">
+  <div class="tools-inner">
+    <div class="sub lang-content cn">YANGZI PICKS</div>
+    <div class="sub lang-content jp">YANGZI PICKS</div>
+    <h2><span class="lang-content cn">阳子推荐工具</span><span class="lang-content jp">陽子おすすめツール</span></h2>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">🤖</div>
+        <h3>Claude Code</h3>
+        <span class="lang-content cn"><p>AI 编程助手，读懂整个项目按指令改代码。</p></span>
+        <span class="lang-content jp"><p>プロジェクト全体を理解して指示通りにコードを修正するAIコーディングアシスタント。</p></span>
+        <span class="tool-tag lang-content cn">开发效率</span><span class="tool-tag lang-content jp">開発効率</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🎨</div>
+        <h3>GPT-Image-2</h3>
+        <span class="lang-content cn"><p>OpenAI 新一代生图模型，一句话出图。</p></span>
+        <span class="lang-content jp"><p>OpenAI次世代画像生成モデル、一言で出力。</p></span>
+        <span class="tool-tag lang-content cn">AI绘图</span><span class="tool-tag lang-content jp">AI画像</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🧩</div>
+        <h3>XCrawl MCP</h3>
+        <span class="lang-content cn"><p>自动化网页数据提取，接进 Claude Code。</p></span>
+        <span class="lang-content jp"><p>Webデータ自動抽出、Claude Codeと連携。</p></span>
+        <span class="tool-tag lang-content cn">数据采集</span><span class="tool-tag lang-content jp">データ収集</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📦</div>
+        <h3>Nanobot</h3>
+        <span class="lang-content cn"><p>超轻量 Agent 框架，自带飞书通道。</p></span>
+        <span class="lang-content jp"><p>超軽量Agentフレームワーク、Feishu連携内蔵。</p></span>
+        <span class="tool-tag lang-content cn">Agent搭建</span><span class="tool-tag lang-content jp">Agent構築</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">✂️</div>
+        <h3>CapCut / 剪映</h3>
+        <span class="lang-content cn"><p>免费剪辑神器，自动字幕+配音。</p></span>
+        <span class="lang-content jp"><p>無料編集ツール、自動字幕+ナレーション。</p></span>
+        <span class="tool-tag lang-content cn">视频剪辑</span><span class="tool-tag lang-content jp">動画編集</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🌐</div>
+        <h3>HyperFrames</h3>
+        <span class="lang-content cn"><p>Codex + HTML 动画框架，浏览器做视频。</p></span>
+        <span class="lang-content jp"><p>Codex + HTMLアニメーション、ブラウザで動画制作。</p></span>
+        <span class="tool-tag lang-content cn">视频制作</span><span class="tool-tag lang-content jp">動画制作</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="sub lang-content cn">PRICING</div>
+    <div class="sub lang-content jp">PRICING</div>
+    <h2><span class="lang-content cn">选择你的方案</span><span class="lang-content jp">プランを選ぶ</span></h2>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h3><span class="lang-content cn">月付</span><span class="lang-content jp">月額</span></h3>
+        <div class="price">¥980 <span>/<span class="lang-content cn">月</span><span class="lang-content jp">月</span></span></div>
+        <ul class="features">
+          <li class="lang-content cn">全部文章中日双语</li><li class="lang-content jp">全記事中日バイリンガル</li>
+          <li class="lang-content cn">最新提示词无限访问</li><li class="lang-content jp">最新プロンプト見放題</li>
+          <li class="lang-content cn">每周更新 2-3 篇</li><li class="lang-content jp">毎週2-3本更新</li>
+          <li class="lang-content cn">阳子推荐工具详解</li><li class="lang-content jp">陽子おすすめツール解説</li>
+        </ul>
+        <a href="#" class="btn"><span class="lang-content cn">订阅 →</span><span class="lang-content jp">購読 →</span></a>
+      </div>
+      <div class="pricing-card featured">
+        <h3><span class="lang-content cn">年付</span><span class="lang-content jp">年額</span></h3>
+        <div class="price">¥9,800 <span>/<span class="lang-content cn">年</span><span class="lang-content jp">年</span></span></div>
+        <ul class="features">
+          <li class="lang-content cn">全部月付功能</li><li class="lang-content jp">月額機能すべて</li>
+          <li class="lang-content cn">≈ 2 个月免费</li><li class="lang-content jp">約2ヶ月無料</li>
+          <li class="lang-content cn">优先选题权</li><li class="lang-content jp">優先テーマ提案権</li>
+          <li class="lang-content cn">专属社群入口</li><li class="lang-content jp">専用コミュニティ</li>
+        </ul>
+        <a href="#" class="btn"><span class="lang-content cn">订阅 →</span><span class="lang-content jp">購読 →</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="links">
+    <a href="index.html"><span class="lang-content cn">文章列表</span><span class="lang-content jp">記事一覧</span></a>
+    <a href="prompts/"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a>
+    <a href="#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a>
+    <a href="#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库 · Designed for 阳子</div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
