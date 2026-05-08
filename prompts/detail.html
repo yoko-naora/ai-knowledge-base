@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提示词详情 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+/* Detail page styles */
+.detail-container { max-width: 900px; margin: 64px auto 0; padding: 40px 24px 80px; }
+.detail-nav { margin-bottom: 24px; }
+.detail-nav a { color: #FF6B35; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+.detail-nav a:hover { text-decoration: underline; }
+
+.detail-header { margin-bottom: 32px; }
+.detail-cat { display: inline-block; background: #f0f0f0; color: #666; font-size: 0.75rem; padding: 3px 12px; border-radius: 12px; margin-bottom: 12px; }
+.detail-title { font-size: 1.6rem; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
+.detail-meta { font-size: 0.82rem; color: #999; display: flex; gap: 16px; align-items: center; }
+
+/* Media section */
+.detail-media { margin-bottom: 40px; }
+.detail-media img, .detail-media video { max-width: 100%; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); display: block; margin-bottom: 16px; }
+.detail-media video { background: #000; }
+
+/* Prompt section */
+.prompt-block { margin-bottom: 32px; }
+.prompt-label { font-size: 0.78rem; font-weight: 600; color: #FF6B35; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase; border-bottom: 2px solid #FF6B35; padding-bottom: 4px; display: inline-block; }
+.prompt-content {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px 24px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #333;
+  font-family: -apple-system, "Noto Sans SC", "Noto Sans JP", monospace, sans-serif;
+}
+.prompt-content.empty {
+  border: 2px dashed #ddd;
+  background: #fafafa;
+  color: #bbb;
+  text-align: center;
+  padding: 40px;
+  font-size: 0.9rem;
+}
+.prompt-content.empty em { font-style: italic; }
+
+/* Text-only type */
+.text-only-content {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 28px 32px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Author link at bottom */
+.detail-footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #eee; text-align: center; }
+.detail-footer a { color: #FF6B35; text-decoration: none; font-weight: 500; }
+.detail-footer a:hover { text-decoration: underline; }
+
+/* Loading & Error */
+.detail-loading { text-align: center; padding: 80px 20px; color: #888; }
+.detail-loading .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #eee; border-top-color: #FF6B35; border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.detail-error { text-align: center; padding: 80px 20px; color: #999; }
+.detail-error a { color: #FF6B35; }
+
+/* Image grid for multiple images */
+.image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.image-grid img { width: 100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); cursor: zoom-in; transition: .2s; }
+.image-grid img:hover { transform: scale(1.02); }
+
+/* Image container with max height */
+.single-image { margin-bottom: 16px; }
+.single-image img { max-height: 500px; width: auto; margin: 0 auto; border-radius: 12px; }
+
+/* Video wrapper */
+.video-wrapper { margin: 24px 0; position: relative; }
+.video-wrapper video { width: 100%; border-radius: 12px; background: #000; }
+.video-wrapper .video-placeholder {
+  width: 100%; aspect-ratio: 16/9;
+  background: #f0f0f0; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: #ccc; font-size: 3rem;
+}
+
+/* Multiple images mixed */
+.multi-image { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="index.html">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<div class="detail-container" id="detailRoot">
+  <div class="detail-loading" id="loading">
+    <div class="spinner"></div>
+    <div>加载中...</div>
+  </div>
+</div>
+
+<footer>
+  <div class="links">
+    <a href="../index.html">文章列表</a>
+    <a href="index.html">最新提示词</a>
+    <a href="../index.html#tools">推荐工具</a>
+    <a href="../index.html#pricing">定价</a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库</div>
+</footer>
+
+<script>
+// Language switch (copy from main.js)
+function switchLang(lang) {
+  document.querySelectorAll('.lang-content').forEach(function(el) { el.style.display = el.classList.contains(lang) ? 'block' : 'none'; });
+  document.querySelectorAll('.lang-switch button').forEach(function(btn) { btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語')); });
+  localStorage.setItem('kb-lang', lang);
+}
+
+function getLang() { return localStorage.getItem('kb-lang') || 'cn'; }
+
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  var d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr.slice(0, 10);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+// Get URL param
+function getParam(name) {
+  var match = location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+// Main render
+(function() {
+  var root = document.getElementById('detailRoot');
+  var loading = document.getElementById('loading');
+  var id = getParam('id');
+  if (id === null || id === '') {
+    loading.innerHTML = '<div class="detail-error">缺少参数，<a href="index.html">返回提示词列表</a></div>';
+    return;
+  }
+
+  fetch('data.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var idx = parseInt(id, 10);
+      if (isNaN(idx) || idx < 0 || idx >= data.length) {
+        loading.innerHTML = '<div class="detail-error">未找到该提示词，<a href="index.html">返回列表</a></div>';
+        return;
+      }
+
+      var p = data[idx];
+      var lang = getLang();
+      var isCn = lang === 'cn';
+
+      var text = isCn ? (p.text || '') : (p.text_ja || p.text || '');
+      var imagePrompt = isCn ? (p.image_prompt || '') : (p.image_prompt_ja || p.image_prompt || '');
+      var videoPrompt = isCn ? (p.video_prompt || '') : (p.video_prompt_ja || p.video_prompt || '');
+      var realPrompt = isCn ? (p.real_prompt || '') : (p.real_prompt_ja || p.real_prompt || '');
+
+      var hasImages = p.images && p.images.length > 0;
+      var hasVideo = p.video ? true : false;
+      var hasTextOnly = !hasImages && !hasVideo;
+
+      // Determine type
+      var typeLabel = '';
+      if (hasImages && hasVideo) typeLabel = 'A (图+视频)';
+      else if (hasImages && !hasVideo) typeLabel = 'B (图)';
+      else typeLabel = 'C (纯文本)';
+
+      // Build image path
+      function imgPath(name) {
+        if (name.startsWith('http')) return name;
+        var clean = name.replace(/^images\\//, '');
+        return 'images/' + clean;
+      }
+
+      // Build video path
+      function videoPath(name) {
+        var clean = name.replace(/^videos\\//, '');
+        return 'videos/' + clean;
+      }
+
+      // Build HTML
+      var html = '';
+
+      // Nav back
+      html += '<div class="detail-nav"><a href="index.html">← 返回提示词列表</a></div>';
+
+      // Header
+      html += '<div class="detail-header">';
+      html += '<div class="detail-cat">' + (p.cat || '未分类') + '</div>';
+      html += '<h1 class="detail-title">' + text.split('\\n')[0].substring(0, 80) + '</h1>';
+      html += '<div class="detail-meta">';
+      html += '<span>' + (p.author || '@MrLarus') + '</span>';
+      html += '<span>' + formatDate(p.date || p.title || '') + '</span>';
+      html += '</div></div>';
+
+      if (hasTextOnly) {
+        // === Type C: Text only ===
+        html += '<div class="text-only-content">' + escapeHtml(text) + '</div>';
+      } else if (hasImages && hasVideo) {
+        // === Type A: Image + Video ===
+        // 1. Image (storyboard)
+        if (hasImages) {
+          html += '<div class="detail-media">';
+          if (p.images.length === 1) {
+            html += '<img src="' + imgPath(p.images[0]) + '" alt="故事板" loading="lazy">';
+          } else {
+            html += '<div class="image-grid">';
+            p.images.forEach(function(img) {
+              html += '<img src="' + imgPath(img) + '" alt="" loading="lazy">';
+            });
+            html += '</div>';
+          }
+          html += '</div>';
+        }
+
+        // 2. Image Prompt
+        if (imagePrompt) {
+          html += '<div class="prompt-block"><div class="prompt-label">📷 图片提示词</div><div class="prompt-content">' + escapeHtml(imagePrompt) + '</div></div>';
+        }
+
+        // 3. Video
+        html += '<div class="video-wrapper">';
+        html += '<video controls preload="metadata"><source src="' + videoPath(p.video) + '" type="video/mp4">您的浏览器不支持视频播放</video>';
+        html += '</div>';
+
+        // 4. Video Prompt
+        if (videoPrompt) {
+          html += '<div class="prompt-block"><div class="prompt-label">🎬 视频提示词</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div></div>';
+        }
+
+        // Also show the full text (social caption) at the end
+        if (text) {
+          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div></div>';
+        }
+
+      } else if (hasImages && !hasVideo) {
+        // === Type B: Image only ===
+        // 1. Images
+        html += '<div class="detail-media">';
+        if (p.images.length === 1) {
+          html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="提示词成品图" loading="lazy"></div>';
+        } else {
+          html += '<div class="image-grid">';
+          p.images.forEach(function(img) {
+            html += '<img src="' + imgPath(img) + '" alt="" loading="lazy">';
+          });
+          html += '</div>';
+        }
+        html += '</div>';
+
+        // 2. Social caption
+        if (text) {
+          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div></div>';
+        }
+
+        // 3. Real prompt (may be empty - user will fill in later)
+        if (realPrompt) {
+          html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content">' + escapeHtml(realPrompt) + '</div></div>';
+        } else {
+          html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content empty"><em>提示词待补充，可联系 @MrLarus 提供番号</em></div></div>';
+        }
+      }
+
+      // Footer - link to X
+      html += '<div class="detail-footer">';
+      html += '☝️ <a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener">查看 X 原贴 →</a>';
+      html += '</div>';
+
+      loading.style.display = 'none';
+      root.innerHTML = html;
+    })
+    .catch(function(err) {
+      loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a></div>';
+      console.error('Detail load error:', err);
+    });
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function escapeAttr(str) {
+    return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+})();
+</script>
+</body>
+</html>

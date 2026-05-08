@@ -215,13 +215,14 @@
       var author = p.author || '@MrLarus';
       var link = p.link || '#';
 
-      html += '<div class="prompt-card">';
+      var realIndex = prompts.indexOf(filtered[idx]);
+      html += '<div class="prompt-card" data-id="' + realIndex + '" onclick="location.href=\'detail.html?id=' + realIndex + '\'" style="cursor:pointer;">';
       html += imgHtml;
       html += '<div class="card-body">';
       html += '<div class="card-cat">' + (p.cat || '未分类') + '</div>';
       html += '<div class="card-text">' + desc.replace(/"/g,'&quot;') + '</div>';
       html += '<div class="card-meta">';
-      html += '<span class="card-author">☝️ <a href="' + link + '" target="_blank" rel="noopener" style="color:#FF6B35;text-decoration:none;">' + author.replace(/"/g,'&quot;') + '</a></span>';
+      html += '<span class="card-author">☝️ <a href="' + link + '" target="_blank" rel="noopener" style="color:#FF6B35;text-decoration:none;" onclick="event.stopPropagation();">' + author.replace(/"/g,'&quot;') + '</a></span>';
       html += '<span class="card-date">' + formatDate(date) + '</span>';
       html += '</div></div></div>';
     });
