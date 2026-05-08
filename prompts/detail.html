@@ -193,13 +193,13 @@ function getParam(name) {
       // Build image path
       function imgPath(name) {
         if (name.startsWith('http')) return name;
-        var clean = name.replace(/^images\\//, '');
+        var clean = name.replace(/^images\//, '');
         return 'images/' + clean;
       }
 
       // Build video path
       function videoPath(name) {
-        var clean = name.replace(/^videos\\//, '');
+        var clean = name.replace(/^videos\//, '');
         return 'videos/' + clean;
       }
 
@@ -212,7 +212,7 @@ function getParam(name) {
       // Header
       html += '<div class="detail-header">';
       html += '<div class="detail-cat">' + (p.cat || '未分类') + '</div>';
-      html += '<h1 class="detail-title">' + text.split('\\n')[0].substring(0, 80) + '</h1>';
+      html += '<h1 class="detail-title">' + text.split('\n')[0].substring(0, 80) + '</h1>';
       html += '<div class="detail-meta">';
       html += '<span>' + (p.author || '@MrLarus') + '</span>';
       html += '<span>' + formatDate(p.date || p.title || '') + '</span>';
