@@ -33,11 +33,11 @@
 <div class="article-content">
   <div class="lang-content cn">
 
-<div class="quote">📎 **来源：** [@Formulasearch 原帖](https://x.com/Formulasearch/status/2051491008378974303)</div>
+<div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/Formulasearch/status/2051491008378974303" target="_blank">@Formulasearch 原帖</a></div>
 <p>></p>
-<div class="quote">**一句话：** 先用 GPT-Image-2 出分镜预览图，再把图交给 Codex 复刻成动画，浏览器录屏交付。全程不用 AE/Premiere。</div>
+<div class="quote"><strong>一句话：</strong> 先用 GPT-Image-2 出分镜预览图，再把图交给 Codex 复刻成动画，浏览器录屏交付。全程不用 AE/Premiere。</div>
 
-<div class="quote">🎬 **成品视频：**</div>
+<div class="quote">🎬 <strong>成品视频：</strong></div>
 
 <figure style="margin:24px 0; text-align:center;">
   <video controls style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
@@ -57,11 +57,11 @@
 
 <h2>核心原则：为什么要先出图</h2>
 
-<p>用 Codex 写界面，**没有图**，就像让人画画但不告诉他画什么——能动笔，但结果全靠运气。</p>
+<p>用 Codex 写界面，<strong>没有图</strong>，就像让人画画但不告诉他画什么——能动笔，但结果全靠运气。</p>
 
 <p>做视频也一样。「深色调、有科技感、简洁大气」AI 能理解这些词，但落到实际画面，十次有七次不是你想要的。</p>
 
-<p>**所以：** 结合生图软件，先生成一张预览图，AI 就有了可视化的参考。从「帮我做一个有科技感的场景」变成「按照这张图的布局、颜色、层级，复刻成动画」。</p>
+<p><strong>所以：</strong> 结合生图软件，先生成一张预览图，AI 就有了可视化的参考。从「帮我做一个有科技感的场景」变成「按照这张图的布局、颜色、层级，复刻成动画」。</p>
 
 <p>视觉目标从模糊变成可执行。这一步，是整个工作流能跑通的原因。</p>
 
@@ -71,10 +71,10 @@
 
 <p>每个场景确认四件事：</p>
 
-<li>**画面里有什么**（元素、位置、数字）</li>
-<li>**情绪基调**（紧张感、讽刺感、转折感）</li>
-<li>**需要出现哪些文字和标注卡**</li>
-<li>**动效的出现顺序**</li>
+<li><strong>画面里有什么</strong>（元素、位置、数字）</li>
+<li><strong>情绪基调</strong>（紧张感、讽刺感、转折感）</li>
+<li><strong>需要出现哪些文字和标注卡</strong></li>
+<li><strong>动效的出现顺序</strong></li>
 
 <p>不需要任何工具，写文档就行。几个场景，就写几份分镜描述，这是之后所有东西的地基。</p>
 
@@ -95,7 +95,7 @@ Floating annotation card · [位置] · semi-transparent dark background
 Overall tone: [情绪基调，如 clinical and quietly wasteful]
 </pre>
 
-<p>**实战示例（数据看板场景）：**</p>
+<p><strong>实战示例（数据看板场景）：</strong></p>
 
 <pre>A clean dark analytics dashboard in 16:9 landscape format.
 Left: large donut chart, 68% muted red "Answered in docs", 32% dark gray.
@@ -107,7 +107,7 @@ Floating annotation card lower-right · semi-transparent dark background
 Overall tone: clinical and quietly wasteful.
 </pre>
 
-<div class="tip">**原则：** 每张图只问一件事——这个视觉方向对不对？对了才进下一步。</div>
+<div class="tip"><strong>原则：</strong> 每张图只问一件事——这个视觉方向对不对？对了才进下一步。</div>
 
 <h3>模板 B：人物插图型（透明背景，叠在代码 UI 上方）</h3>
 
@@ -126,7 +126,7 @@ No patterns, no icons, no text, no focal point.
 1920×1080. Zero distracting elements.
 </pre>
 
-<div class="tip">**核心分工原则：** 纹理和插图用生图解决，文字、数字、布局、动效全在代码里重建。各司其职。</div>
+<div class="tip"><strong>核心分工原则：</strong> 纹理和插图用生图解决，文字、数字、布局、动效全在代码里重建。各司其职。</div>
 
 <hr class="divider">
 
@@ -138,11 +138,11 @@ No patterns, no icons, no text, no focal point.
 
 <table>
 <tr><th>层</th><th>内容</th><th>实现方式</th></tr>
-<tr><td>**代码层**</td><td>文字、数字、卡片、气泡、按钮、所有动效</td><td>代码里重建，不依赖图片</td></tr>
-<tr><td>**图片层**</td><td>背景纹理、人物插图</td><td>静态资源 import 进来，代码不负责生成</td></tr>
+<tr><td><strong>代码层</strong></td><td>文字、数字、卡片、气泡、按钮、所有动效</td><td>代码里重建，不依赖图片</td></tr>
+<tr><td><strong>图片层</strong></td><td>背景纹理、人物插图</td><td>静态资源 import 进来，代码不负责生成</td></tr>
 </table>
 
-<p>这层分工**要写进 Codex 的 prompt 里**：</p>
+<p>这层分工<strong>要写进 Codex 的 prompt 里</strong>：</p>
 
 <div class="quote">「文字和布局用代码实现，背景图我会手动 import，你不需要生成图片内容。」</div>
 <p>></p>
@@ -162,13 +162,13 @@ No patterns, no icons, no text, no focal point.
 - 只做这一个场景，不要碰其他文件
 </pre>
 
-<div class="quote">⚠️ **关键：** 「先分析，再写代码」这一句很重要。跳过它，Codex 会直接开写，容易写歪。</div>
+<div class="quote">⚠️ <strong>关键：</strong> 「先分析，再写代码」这一句很重要。跳过它，Codex 会直接开写，容易写歪。</div>
 
 <hr class="divider">
 
 <h2>Step 4：对照预览图检查，逐场景微调</h2>
 
-<p>每个场景单独跑，对照原图。有偏差就说**具体**的：</p>
+<p>每个场景单独跑，对照原图。有偏差就说<strong>具体</strong>的：</p>
 
 <li>❌ 「再好看一点」→ ✅ 「标注卡片出现得太早，改成主内容 fade-in 完成后再 slide-in」</li>
 <li>❌ 「颜色不对」→ ✅ 「donut chart 颜色偏橙，改成 #b44040」</li>
@@ -182,7 +182,7 @@ No patterns, no icons, no text, no focal point.
 <p>四个场景全跑通之后，浏览器直接预览，系统自带录屏。</p>
 <p>不需要 After Effects，不需要 Premiere，不需要任何视频软件。</p>
 
-<p>美化一下然后配个 BGM，就完成了。推荐结合 [@FocuSeeHQ](https://x.com/FocuSeeHQ) 录屏工具效果更好。</p>
+<p>美化一下然后配个 BGM，就完成了。推荐结合 <a href="https://x.com/FocuSeeHQ" target="_blank">@FocuSeeHQ</a> 录屏工具效果更好。</p>
 
 <hr class="divider">
 
@@ -192,22 +192,22 @@ No patterns, no icons, no text, no focal point.
 <li>✅ 不需要懂剪辑，不需要懂动效工程</li>
 <li>✅ 需要的是：知道每个场景要长什么样，然后用一张图把这件事说清楚</li>
 
-<p>**核心心法：** 先确认视觉，再执行工程。把两个判断拆开，效率会更高。</p>
+<p><strong>核心心法：</strong> 先确认视觉，再执行工程。把两个判断拆开，效率会更高。</p>
 
 <hr class="divider">
 
-<div class="quote">🥳 **原文作者：** Phil，前建筑师 → AI 产品。关注 [@Formulasearch](https://x.com/Formulasearch)</div>
+<div class="quote">🥳 <strong>原文作者：</strong> Phil，前建筑师 → AI 产品。关注 <a href="https://x.com/Formulasearch" target="_blank">@Formulasearch</a></div>
 <p>></p>
 <div class="quote">📅 发布时间：2026-05-05</div>
 
   </div>
   <div class="lang-content jp">
 
-<div class="quote">📎 **出典：** [@Formulasearch 元ポスト](https://x.com/Formulasearch/status/2051491008378974303)</div>
+<div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/Formulasearch/status/2051491008378974303" target="_blank">@Formulasearch 元ポスト</a></div>
 <p>></p>
-<div class="quote">**一言で言えば：** まず GPT-Image-2 で絵コンテのプレビュー画像を生成し、その画像を Codex に渡してアニメーションとして再現、ブラウザで画面収録して納品。AE や Premiere は一切使いません。</div>
+<div class="quote"><strong>一言で言えば：</strong> まず GPT-Image-2 で絵コンテのプレビュー画像を生成し、その画像を Codex に渡してアニメーションとして再現、ブラウザで画面収録して納品。AE や Premiere は一切使いません。</div>
 
-<div class="quote">🎬 **完成動画：**</div>
+<div class="quote">🎬 <strong>完成動画：</strong></div>
 <figure style="margin:24px 0; text-align:center;">
   <video controls style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
     <source src="../articles/videos/formulasearch_video1_full.mp4" type="video/mp4">
@@ -226,11 +226,11 @@ No patterns, no icons, no text, no focal point.
 
 <h2>核心理念：なぜ先に画像を生成するのか</h2>
 
-<p>Codex でインターフェースを書く際、**画像がない**というのは、絵を描くように頼むのに何を描くべきかを伝えないのと同じです——描くことはできても、結果は運任せになります。</p>
+<p>Codex でインターフェースを書く際、<strong>画像がない</strong>というのは、絵を描くように頼むのに何を描くべきかを伝えないのと同じです——描くことはできても、結果は運任せになります。</p>
 
 <p>動画でも同じです。「ダークトーンで、テクノロジー感があり、シンプルで洗練された」——AI はこれらの言葉を理解できますが、実際の画面に落とし込むと、10回中7回は望んだものになりません。</p>
 
-<p>**そこで：** 画像生成ツールと組み合わせて、先にプレビュー画像を生成すれば、AI は視覚的な参照を得られます。「テクノロジー感のあるシーンを作って」という曖昧な指示から、「この画像のレイアウト、色、階層に従ってアニメーションとして再現して」という明確な指示に変わります。</p>
+<p><strong>そこで：</strong> 画像生成ツールと組み合わせて、先にプレビュー画像を生成すれば、AI は視覚的な参照を得られます。「テクノロジー感のあるシーンを作って」という曖昧な指示から、「この画像のレイアウト、色、階層に従ってアニメーションとして再現して」という明確な指示に変わります。</p>
 
 <p>視覚的な目標が曖昧から実行可能へと変わります。この一段階こそが、このワークフローが機能する理由です。</p>
 
@@ -240,10 +240,10 @@ No patterns, no icons, no text, no focal point.
 
 <p>各シーンで4つのことを確認します：</p>
 
-<li>**画面に何があるか**（要素、位置、数字）</li>
-<li>**感情のトーン**（緊張感、皮肉、転換感）</li>
-<li>**表示すべきテキストと注釈カード**</li>
-<li>**動効果の出現順序**</li>
+<li><strong>画面に何があるか</strong>（要素、位置、数字）</li>
+<li><strong>感情のトーン</strong>（緊張感、皮肉、転換感）</li>
+<li><strong>表示すべきテキストと注釈カード</strong></li>
+<li><strong>動効果の出現順序</strong></li>
 
 <p>特別なツールは必要ありません。ドキュメントを書くだけで十分です。シーンの数だけ絵コンテの説明を書き、それがすべての土台となります。</p>
 
@@ -264,7 +264,7 @@ Floating annotation card · [位置] · semi-transparent dark background
 Overall tone: [情绪基调，如 clinical and quietly wasteful]
 </pre>
 
-<p>**実戦例（データダッシュボードシーン）：**</p>
+<p><strong>実戦例（データダッシュボードシーン）：</strong></p>
 
 <pre>A clean dark analytics dashboard in 16:9 landscape format.
 Left: large donut chart, 68% muted red "Answered in docs", 32% dark gray.
@@ -276,7 +276,7 @@ Floating annotation card lower-right · semi-transparent dark background
 Overall tone: clinical and quietly wasteful.
 </pre>
 
-<div class="tip">**原則：** 各画像で確認することは一つだけ——このビジュアルの方向性は正しいか？正しければ次のステップに進みます。</div>
+<div class="tip"><strong>原則：</strong> 各画像で確認することは一つだけ——このビジュアルの方向性は正しいか？正しければ次のステップに進みます。</div>
 
 <h3>テンプレート B：人物イラスト型（透明背景、コード UI の上に重ねる）</h3>
 
@@ -295,7 +295,7 @@ No patterns, no icons, no text, no focal point.
 1920×1080. Zero distracting elements.
 </pre>
 
-<div class="tip">**核心の役割分担：** テクスチャとイラストは画像生成で対応し、テキスト、数字、レイアウト、動効果はすべてコード内で再構築します。それぞれの役割を明確にします。</div>
+<div class="tip"><strong>核心の役割分担：</strong> テクスチャとイラストは画像生成で対応し、テキスト、数字、レイアウト、動効果はすべてコード内で再構築します。それぞれの役割を明確にします。</div>
 
 <hr class="divider">
 
@@ -307,11 +307,11 @@ No patterns, no icons, no text, no focal point.
 
 <table>
 <tr><th>レイヤー</th><th>内容</th><th>実装方法</th></tr>
-<tr><td>**コードレイヤー**</td><td>テキスト、数字、カード、吹き出し、ボタン、すべての動効果</td><td>コード内で再構築、画像に依存しない</td></tr>
-<tr><td>**画像レイヤー**</td><td>背景テクスチャ、人物イラスト</td><td>静的リソースとして import、コードは生成しない</td></tr>
+<tr><td><strong>コードレイヤー</strong></td><td>テキスト、数字、カード、吹き出し、ボタン、すべての動効果</td><td>コード内で再構築、画像に依存しない</td></tr>
+<tr><td><strong>画像レイヤー</strong></td><td>背景テクスチャ、人物イラスト</td><td>静的リソースとして import、コードは生成しない</td></tr>
 </table>
 
-<p>この役割分担は**Codex のプロンプトに明記する必要があります**：</p>
+<p>この役割分担は<strong>Codex のプロンプトに明記する必要があります</strong>：</p>
 
 <div class="quote">「テキストとレイアウトはコードで実装し、背景画像は手動で import します。画像コンテンツを生成する必要はありません。」</div>
 <p>></p>
@@ -331,13 +331,13 @@ No patterns, no icons, no text, no focal point.
 - 只做这一个场景，不要碰其他文件
 </pre>
 
-<div class="quote">⚠️ **重要：** 「先分析，再写代码」という一文が非常に重要です。これを飛ばすと、Codex がすぐに書き始めてしまい、方向性を誤る可能性があります。</div>
+<div class="quote">⚠️ <strong>重要：</strong> 「先分析，再写代码」という一文が非常に重要です。これを飛ばすと、Codex がすぐに書き始めてしまい、方向性を誤る可能性があります。</div>
 
 <hr class="divider">
 
 <h2>Step 4：プレビュー画像と照らし合わせて、シーンごとに微調整</h2>
 
-<p>各シーンを個別に実行し、元の画像と照らし合わせます。ズレがあれば**具体的に**伝えます：</p>
+<p>各シーンを個別に実行し、元の画像と照らし合わせます。ズレがあれば<strong>具体的に</strong>伝えます：</p>
 
 <li>❌ 「もっと良くして」→ ✅ 「注釈カードの出現が早すぎます。メインコンテンツのフェードインが完了してからスライドインするように変更してください」</li>
 <li>❌ 「色が違う」→ ✅ 「ドーナツチャートの色がオレンジ寄りです。#b44040 に変更してください」</li>
@@ -351,7 +351,7 @@ No patterns, no icons, no text, no focal point.
 <p>4つのシーンすべてが問題なく動作したら、ブラウザでプレビューし、OS 標準の画面収録ツールで録画します。</p>
 <p>After Effects も Premiere も、任何の動画ソフトも必要ありません。</p>
 
-<p>美化して BGM を追加すれば完了です。[@FocuSeeHQ](https://x.com/FocuSeeHQ) の画面収録ツールと組み合わせるとさらに効果的です。</p>
+<p>美化して BGM を追加すれば完了です。<a href="https://x.com/FocuSeeHQ" target="_blank">@FocuSeeHQ</a> の画面収録ツールと組み合わせるとさらに効果的です。</p>
 
 <hr class="divider">
 
@@ -361,11 +361,11 @@ No patterns, no icons, no text, no focal point.
 <li>✅ 編集や動効果エンジニアリングの知識は不要</li>
 <li>✅ 必要なのは：各シーンがどのように見えるべきかを把握し、一枚の画像でそれを明確に伝えられること</li>
 
-<p>**核心の心得：** まずビジュアルを確定し、それからエンジニアリングを実行する。この二つの判断を分離することで、効率が格段に向上します。</p>
+<p><strong>核心の心得：</strong> まずビジュアルを確定し、それからエンジニアリングを実行する。この二つの判断を分離することで、効率が格段に向上します。</p>
 
 <hr class="divider">
 
-<div class="quote">🥳 **原文著者：** Phil（元建築家 → AI プロダクト）。フォローは [@Formulasearch](https://x.com/Formulasearch)</div>
+<div class="quote">🥳 <strong>原文著者：</strong> Phil（元建築家 → AI プロダクト）。フォローは <a href="https://x.com/Formulasearch" target="_blank">@Formulasearch</a></div>
 <p>></p>
 <div class="quote">📅 公開日：2026-05-05</div>
 
