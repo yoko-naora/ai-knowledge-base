@@ -37,6 +37,11 @@
 <p>></p>
 <div class="quote">**一句话：** 用 Vibe Coding + 借开源轮子，15 天从零搭出个人 Agent「EvoPaw」的完整方法论——选基座→装 Claude Code→建脚手架→对话逼 spec→每功能配测试。</div>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_01.jpg" alt="个人 Agent 自建实战" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">2026 个人 Agent 自建实战：选基座→装工具→建脚手架→逼 spec→配测试</figcaption>
+</figure>
+
 <hr class="divider">
 
 <h2>核心思路</h2>
@@ -76,6 +81,11 @@
 
 <h3>快速安装</h3>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_02.png" alt="Claude Code v2.1.116 界面" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Claude Code — AI 编程助手界面</figcaption>
+</figure>
+
 <p>把项目地址丢给 Claude Code：</p>
 <pre>请fork https://github.com/HKUDS/nanobot 到本地，帮我安装好，要求能正常运行，一步步告诉我需要做什么。
 </pre>
@@ -83,6 +93,11 @@
 <div class="tip">**API Key 安全：** 不要直接在命令行贴出 key。问 Claude Code「这个 Key 应该放在哪个文件、写成什么格式」，它告诉格式后自己手动填。</div>
 
 <h3>配置飞书通道</h3>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_03.jpg" alt="飞书开放平台" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">飞书开放平台 — 创建企业自建应用</figcaption>
+</figure>
 
 <p>飞书是主力通道，不需要公网 IP（Nanobot 支持长连接！）。</p>
 
@@ -114,8 +129,13 @@
 └── tests/             ← 已有（nanobot自带）
 </pre>
 
-<h3>CLAUDE.md（核心）</h3>
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_04.jpg" alt="项目脚手架5个关键文件" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">项目脚手架 — 5 个关键文件让 Claude Code 跨会话也能秒进入状态</figcaption>
+</figure>
 
+<h3>CLAUDE.md（核心）</h3>
+<p>相当于 Claude Code 的项目说明书
 <p>相当于 Claude Code 的项目说明书，每次启动自动读。**控制在 200 行以内**（社区共识不超过 300 行），只留推不出来的非显然信息：</p>
 
 <li>**WHAT**：项目干嘛的，一句话</li>
@@ -156,6 +176,11 @@
 
 <p>**1. 先用一张表列模糊需求**</p>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_05.jpg" alt="需求场景-痛点-功能-优先级表" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">用表格把模糊需求逼成具体场景→痛点→期望→优先级</figcaption>
+</figure>
+
 <table>
 <tr><th>场景</th><th>痛点</th><th>期望</th><th>优先级</th></tr>
 <tr><td>例：群里有人发 PDF</td><td>不能直接解析</td><td>自动提取文字+表格</td><td>P0</td></tr>
@@ -195,6 +220,11 @@
 <hr class="divider">
 
 <h2>Step 5：每加一个功能，必须配一组测试</h2>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_06.jpg" alt="测试=你敢换的胆量" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">测试 ≠ 防 bug，测试 = 你敢换的胆量</figcaption>
+</figure>
 
 <p>写完跑通就走人？两周后换模型改 provider，整个功能静默挂掉都没人知道。</p>
 
@@ -352,11 +382,16 @@
 │   ├── spec.md        ← 要件仕様
 │   ├── prompt_plan.md ← 分割実行計画
 │   └── todo.md        ← セッション間のchecklist
-└── tests/             ← 既存（nanobot標準装備）
+└── tests/             ← 已有（nanobot自带）
 </pre>
 
-<h3>CLAUDE.md（核心）</h3>
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/006/img_04.jpg" alt="项目脚手架5个关键文件" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">项目脚手架 — 5 个关键文件让 Claude Code 跨会话也能秒进入状态</figcaption>
+</figure>
 
+<h3>CLAUDE.md（核心）</h3>
+<p>相当于 Claude Code 的项目说明书
 <p>Claude Codeのプロジェクト説明書であり、起動時に自動で読み込まれます。**200行以内**に収め（コミュニティの合意として300行を超えない）、推論で導き出せない非自明な情報だけを残します：</p>
 
 <li>**WHAT**：プロジェクトの目的を一言で</li>

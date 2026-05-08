@@ -45,7 +45,17 @@
 
 <p>GPT-Image-2 的美学基础已经足够强（比 DALLE-3 能打），继续卷 prompt 的边际收益在下降。真正要卷的是 **怎么给模型更好的视觉样本**。</p>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_01.jpg" alt="AI主图自动化工作流流程图" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">GPT-Image-2 + XCrawl 主图自动化工作流总览</figcaption>
+</figure>
+
 <p>**同一个 prompt 的对比：**</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_10.jpg" alt="裸prompt vs 参考图对比表" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">裸 prompt 反复调 vs 参考图驱动 (XCrawl + GPT-Image-2) 多维度对比</figcaption>
+</figure>
 
 <li>**裸 prompt：**「日式天然蜂蜜玻璃瓶包装，黑熊吉祥物」→ 能用，但像超市十几块钱的普通货</li>
 <li>**prompt + 5 张 Behance 参考图：** → 接近设计师交付的品牌稿，有溢价感</li>
@@ -107,6 +117,11 @@
 
 <p>XCrawl **只抓公开页面**。登录态后、付费墙后、私密内容不碰。</p>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_04.jpg" alt="XCrawl MCP 集成界面" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">XCrawl MCP 在 Claude Code 中的集成状态</figcaption>
+</figure>
+
 <hr class="divider">
 
 <h2>Step 4：完整工作流 — Behance 参考图 → GPT-Image-2 主图</h2>
@@ -135,6 +150,16 @@ images: 21 张高清原图 URL
 tools: Adobe Photoshop / Illustrator / After Effects
 </pre>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_05.jpg" alt="Chikuma 蜂蜜品牌素材网格" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Chikuma 品牌项目 — 18 张品牌视觉素材</figcaption>
+</figure>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_07.jpg" alt="Chikuma 三款蜂蜜" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Chikuma 蜂蜜系列 — Wild-flower / Apple / Acacia 三款产品</figcaption>
+</figure>
+
 <p>单页消耗：**5 credits**（base 1 + json_extract 4）</p>
 
 <div class="tip">**真踩坑 1：** xcrawl_scrape 默认开 js_render.enabled=true，但对 Behance 这种 SPA 站点，必须显式加 `wait_until: networkidle` 才能等到图片懒加载完成——一次拿全 21 张，不需要二次重跑。</div>
@@ -161,6 +186,11 @@ tools: Adobe Photoshop / Illustrator / After Effects
 <li>Ramenoya</li>
 <li>FISHI Japanese Restaurant</li>
 
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_06.jpg" alt="Fuji Coffee 项目文件" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Fuji Coffee House — 日系咖啡品牌项目素材</figcaption>
+</figure>
+
 <div class="tip">**注意：** Behance 搜索结果有 20-30% 噪声（promoted 广告位、通用 mockup 模板等）。让 Claude Code 再过一道筛选：根据标题、描述、设计师、标签，只保留相关项目。</div>
 
 <h3>4.3 把参考图变成 GPT-Image-2 的输入</h3>
@@ -182,6 +212,16 @@ AI 奶爸 · 北海道天然はちみつ。
 </pre>
 
 <p>附上 3-5 张同一项目里筛出来的参考图 URL。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_02.jpg" alt="AI 奶爸蜂蜜成品图" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">最终产出 — AI 奶爸 · 北海道天然蜂蜜成品包装</figcaption>
+</figure>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/005/img_03.jpg" alt="AI 奶爸蜂蜜瓶特写" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">AI 奶爸蜂蜜瓶特写 — 100%纯粹·非加热·無添加</figcaption>
+</figure>
 
 <div class="tip">**关键：** 同一个项目里挑出来的参考图，视觉语言一致。再加上抽出来的设计标签、品牌信息、输出规格，稳定性比手工乱丢参考高很多。</div>
 

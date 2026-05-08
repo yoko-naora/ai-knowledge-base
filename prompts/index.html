@@ -6,8 +6,27 @@
 <title>最新提示词 · AI知识库</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <style>
-.author-section { margin: 32px 0; }
-.author-section h2 { font-size: 1.3rem; margin-bottom: 16px; color: #FF6B35; }
+.prompt-gallery { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+.filter-btn { padding: 6px 16px; border: 1px solid #ddd; border-radius: 20px; background: #fff; cursor: pointer; font-size: 0.85rem; transition: .2s; }
+.filter-btn:hover { border-color: #FF6B35; color: #FF6B35; }
+.filter-btn.active { background: #FF6B35; color: #fff; border-color: #FF6B35; }
+.stats-bar { color: #888; font-size: 0.85rem; margin: 12px 0 20px; }
+.prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.prompt-card { border: 1px solid #eee; border-radius: 12px; overflow: hidden; transition: .25s; background: #fff; cursor: pointer; }
+.prompt-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+.prompt-card .card-img { width: 100%; height: 200px; object-fit: cover; background: #f5f5f5; display: block; }
+.prompt-card .card-img-placeholder { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 3rem; background: #f5f5f5; color: #ccc; }
+.prompt-card .card-body { padding: 14px 16px; }
+.prompt-card .card-cat { display: inline-block; background: #f0f0f0; color: #666; font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; }
+.prompt-card .card-text { font-size: 0.85rem; color: #333; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.prompt-card .card-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 0.75rem; color: #999; }
+.prompt-card .card-author { color: #FF6B35; font-weight: 500; }
+.prompt-card .card-date { color: #aaa; }
+.loading { text-align: center; padding: 60px 20px; color: #888; }
+.loading .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #eee; border-top-color: #FF6B35; border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-state { text-align: center; padding: 60px 20px; color: #999; font-size: 1rem; }
 </style>
 </head>
 <body>
@@ -31,64 +50,28 @@
   <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
   <h1><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></h1>
   <p style="color:#666; margin-top:12px;">
-    <span class="lang-content cn">来自 X 上顶级提示词创作者 @MrLarus、@AIwithSynthia 的结构化图库</span>
-    <span class="lang-content jp">Xのトッププロンプトクリエイター @MrLarus、@AIwithSynthia の厳選ギャラリー</span>
+    <span class="lang-content cn">来自 X 上顶级提示词创作者 @MrLarus 的结构化提示词图库，每张图下方附完整 prompt</span>
+    <span class="lang-content jp">Xのトッププロンプトクリエイター @MrLarus の厳選ギャラリー、各画像に完全なプロンプト付き</span>
   </p>
 </section>
 
-<div class="section-header">
-  <div class="sub"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></div>
-  <h2><span class="lang-content cn">全部提示词共 236 条</span><span class="lang-content jp">全プロンプト 236 件</span></h2>
-</div>
-
-<div class="prompt-grid">
-  <div class="prompt-card">
-    <div style="height:200px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;">🎨</div>
-    <div class="info">
-      <div class="author">@MrLarus</div>
-      <div style="font-weight:500;">AI 绘画 · 人物肖像</div>
-      <div style="color:#999; font-size:0.75rem; margin-top:4px;">12 张 · 2026-04</div>
-    </div>
+<div class="prompt-gallery">
+  <div class="lang-content cn">
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="stats-bar" id="statsBar">加载中...</div>
   </div>
-  <div class="prompt-card">
-    <div style="height:200px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;">🎬</div>
-    <div class="info">
-      <div class="author">@MrLarus</div>
-      <div style="font-weight:500;">视频生成 · 运镜提示词</div>
-      <div style="color:#999; font-size:0.75rem; margin-top:4px;">8 张 · 2026-04</div>
-    </div>
+  <div class="lang-content jp" style="display:none;">
+    <div class="filter-bar" id="filterBarJp"></div>
+    <div class="stats-bar" id="statsBarJp">読み込み中...</div>
   </div>
-  <div class="prompt-card">
-    <div style="height:200px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;">✍️</div>
-    <div class="info">
-      <div class="author">@MrLarus</div>
-      <div style="font-weight:500;">文案写作 · 爆款结构</div>
-      <div style="color:#999; font-size:0.75rem; margin-top:4px;">15 张 · 2026-04</div>
-    </div>
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div><span class="lang-content cn">正在加载提示词...</span><span class="lang-content jp">プロンプトを読み込み中...</span></div>
   </div>
-  <div class="prompt-card">
-    <div style="height:200px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;">🏞️</div>
-    <div class="info">
-      <div class="author">@MrLarus</div>
-      <div style="font-weight:500;">风景摄影 · 光线提示词</div>
-      <div style="color:#999; font-size:0.75rem; margin-top:4px;">10 张 · 2026-04</div>
-    </div>
-  </div>
-  <div class="prompt-card">
-    <div style="height:200px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;">🛠️</div>
-    <div class="info">
-      <div class="author">@AIwithSynthia</div>
-      <div style="font-weight:500;">AI 工具 · 工作流提示词</div>
-      <div style="color:#999; font-size:0.75rem; margin-top:4px;">6 张 · 2026-04</div>
-    </div>
-  </div>
-  <div class="prompt-card">
-    <div style="height:200px; background:#f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; color:#ccc;">🎭</div>
-    <div class="info">
-      <div class="author">@AIwithSynthia</div>
-      <div style="font-weight:500;">角色设计 · 一致性提示词</div>
-      <div style="color:#999; font-size:0.75rem; margin-top:4px;">4 张 · 2026-04</div>
-    </div>
+  <div class="prompt-grid" id="promptGrid" style="display:none;"></div>
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <span class="lang-content cn">暂无匹配的提示词</span>
+    <span class="lang-content jp">該当するプロンプトがありません</span>
   </div>
 </div>
 
@@ -104,5 +87,150 @@
 </footer>
 
 <script src="../assets/js/main.js"></script>
+<script>
+(function() {
+  var currentLang = 'cn';
+  var prompts = [];
+  var currentFilter = 'all';
+
+  function switchLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-content.cn').forEach(function(el) { el.style.display = lang === 'cn' ? '' : 'none'; });
+    document.querySelectorAll('.lang-content.jp').forEach(function(el) { el.style.display = lang === 'jp' ? '' : 'none'; });
+    document.querySelectorAll('.lang-switch button').forEach(function(b) { b.classList.toggle('active', b.textContent.includes(lang === 'cn' ? '中文' : '日本語')); });
+    renderGallery();
+  }
+  window.switchLang = switchLang;
+
+  function fetchPrompts() {
+    fetch('data.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        prompts = data;
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('promptGrid').style.display = '';
+        initFilterBar();
+        renderGallery();
+      })
+      .catch(function(err) {
+        document.getElementById('loading').innerHTML = '<span class="lang-content cn">加载失败，请刷新重试</span><span class="lang-content jp">読み込み失敗しました。再読み込みしてください</span>';
+        console.error('Prompt load error:', err);
+      });
+  }
+
+  function getCategories() {
+    var cats = {};
+    prompts.forEach(function(p) {
+      if (p.cat) cats[p.cat] = (cats[p.cat] || 0) + 1;
+    });
+    var sorted = Object.keys(cats).sort();
+    return { categories: sorted, counts: cats };
+  }
+
+  function initFilterBar() {
+    var info = getCategories();
+    var cats = info.categories;
+    var counts = info.counts;
+
+    function renderFilter(barId, statsId) {
+      var bar = document.getElementById(barId);
+      var html = '<button class="filter-btn active" data-cat="all">全' + prompts.length + '条</button>';
+      cats.forEach(function(c) {
+        html += '<button class="filter-btn" data-cat="' + c.replace(/"/g, '&quot;') + '">' + c + ' (' + counts[c] + ')</button>';
+      });
+      bar.innerHTML = html;
+
+      bar.querySelectorAll('.filter-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          bar.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+          currentFilter = btn.getAttribute('data-cat');
+          renderGallery();
+        });
+      });
+      updateStats(statsId);
+    }
+
+    renderFilter('filterBar', 'statsBar');
+    renderFilter('filterBarJp', 'statsBarJp');
+  }
+
+  function updateStats(statsId) {
+    var el = document.getElementById(statsId);
+    if (!el) return;
+    var filtered = currentFilter === 'all' ? prompts : prompts.filter(function(p) { return p.cat === currentFilter; });
+    el.textContent = currentFilter === 'all'
+      ? '共 ' + prompts.length + ' 条提示词'
+      : currentFilter + ' · ' + filtered.length + ' 条';
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    var d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr.slice(0, 10);
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  function renderGallery() {
+    var filtered = currentFilter === 'all' ? prompts : prompts.filter(function(p) { return p.cat === currentFilter; });
+
+    var grid = document.getElementById('promptGrid');
+    var empty = document.getElementById('emptyState');
+
+    if (filtered.length === 0) {
+      grid.style.display = 'none';
+      empty.style.display = '';
+      return;
+    }
+    grid.style.display = '';
+    empty.style.display = 'none';
+
+    var html = '';
+    var descKey = currentLang === 'cn' ? 'text' : 'text_ja';
+    var titleKey = currentLang === 'cn' ? 'title' : 'title_ja';
+
+    filtered.forEach(function(p, idx) {
+      var desc = p[descKey] || p.text || '';
+      desc = desc.replace(/\\n/g, ' ').substring(0, 100);
+      if (desc.length >= 100) desc += '…';
+
+      var title = p[titleKey] || '';
+      var imgHtml = '';
+      var hasImage = false;
+
+      if (p.images && p.images.length > 0 && p.images[0]) {
+        var imgPath = p.images[0];
+        if (!imgPath.startsWith('http')) {
+          imgPath = imgPath.replace(/^images\//, '');
+          imgPath = 'images/' + imgPath;
+        }
+        imgHtml = '<img class="card-img" src="' + imgPath + '" alt="' + (desc.replace(/"/g,'&quot;').substring(0,60)) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="card-img-placeholder" style="display:none">🎨</div>';
+        hasImage = true;
+      } else {
+        imgHtml = '<div class="card-img-placeholder">🎨</div>';
+      }
+
+      var date = p.date || p.title || '';
+      var author = p.author || '@MrLarus';
+      var link = p.link || '#';
+
+      html += '<a href="' + link + '" target="_blank" rel="noopener" class="prompt-card" style="text-decoration:none;color:inherit;">';
+      html += imgHtml;
+      html += '<div class="card-body">';
+      html += '<div class="card-cat">' + (p.cat || '未分类') + '</div>';
+      html += '<div class="card-text">' + desc.replace(/"/g,'&quot;') + '</div>';
+      html += '<div class="card-meta">';
+      html += '<span class="card-author">' + author.replace(/"/g,'&quot;') + '</span>';
+      html += '<span class="card-date">' + formatDate(date) + '</span>';
+      html += '</div></div></a>';
+    });
+
+    grid.innerHTML = html;
+    updateStats(currentLang === 'cn' ? 'statsBar' : 'statsBarJp');
+  }
+
+  fetchPrompts();
+})();
+</script>
 </body>
 </html>
