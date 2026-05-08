@@ -221,9 +221,9 @@ function getParam(name) {
       if (hasTextOnly) {
         // === Type C: Text only ===
         html += '<div class="text-only-content">' + escapeHtml(text) + '</div>';
-      } else if (hasImages && hasVideo) {
-        // === Type A: Image + Video ===
-        // 1. Image (storyboard)
+      } else if (hasVideo) {
+        // === Video (with or without images) ===
+        // 1. Image (storyboard) if available
         if (hasImages) {
           html += '<div class="detail-media">';
           if (p.images.length === 1) {
