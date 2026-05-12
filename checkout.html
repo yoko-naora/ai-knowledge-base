@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>購読 · AI知識庫</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .checkout-container { max-width: 700px; margin: 80px auto 60px; padding: 0 20px; }
+  .checkout-container h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  .checkout-container .subtitle { color: #888; margin-bottom: 40px; }
+  .checkout-step { background: #f9f9f9; border-radius: 12px; padding: 28px; margin-bottom: 24px; }
+  .checkout-step h3 { margin-bottom: 16px; font-size: 1.1rem; }
+  .plan-option { border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; cursor: pointer; transition: border .2s; display: flex; justify-content: space-between; align-items: center; }
+  .plan-option:hover { border-color: #FF8C42; }
+  .plan-option.selected { border-color: #FF8C42; background: #FFF7F0; }
+  .plan-option .plan-name { font-weight: 700; font-size: 1.05rem; }
+  .plan-option .plan-price { font-size: 1.3rem; font-weight: 700; color: #FF8C42; }
+  .plan-option .plan-price small { font-size: 0.85rem; color: #888; font-weight: 400; }
+  .stripe-btn { display: block; width: 100%; padding: 16px; background: #FF8C42; color: #fff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; margin-top: 24px; }
+  .stripe-btn:hover { background: #e67a35; }
+  .back-home { display: inline-block; margin-top: 32px; color: #FF8C42; text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知識庫</span></div>
+  <ul class="nav-links">
+    <li><a href="index.html">記事一覧</a></li>
+    <li><a href="prompts/">最新プロンプト</a></li>
+    <li><a href="index.html#tools">おすすめツール</a></li>
+    <li><a href="index.html#pricing">料金</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+</nav>
+
+<div class="checkout-container">
+  <h1>購読プランを選択</h1>
+  <p class="subtitle">お支払いはStripeで安全に処理されます</p>
+
+  <div class="checkout-step">
+    <h3>1. プランを選ぶ</h3>
+    <label class="plan-option selected" id="plan-monthly">
+      <div>
+        <div class="plan-name">月額プラン</div>
+        <div style="color:#888;font-size:0.9rem;">全記事読み放題・毎週更新</div>
+      </div>
+      <div class="plan-price">¥980 <small>/ 月</small></div>
+    </label>
+    <label class="plan-option" id="plan-yearly">
+      <div>
+        <div class="plan-name">年額プラン</div>
+        <div style="color:#888;font-size:0.9rem;">約2ヶ月無料・優先テーマ提案権・専用コミュニティ</div>
+      </div>
+      <div class="plan-price">¥9,800 <small>/ 年</small></div>
+    </label>
+  </div>
+
+  <div class="checkout-step">
+    <h3>2. お支払い</h3>
+    <p style="color:#888;font-size:0.9rem;margin-bottom:16px;">以下のボタンからStripeの安全な決済ページに移動します。クレジットカード情報はStripeが処理し、当サイトでは一切保存しません。</p>
+    <a href="#" class="stripe-btn" id="pay-btn">Stripeで支払う →</a>
+  </div>
+
+  <a href="index.html" class="back-home">← トップページに戻る</a>
+</div>
+
+<footer style="margin-top:0;">
+  <div class="links">
+    <a href="index.html">記事一覧</a>
+    <a href="prompts/">最新プロンプト</a>
+    <a href="index.html#tools">おすすめツール</a>
+    <a href="index.html#pricing">料金</a>
+    <a href="tokushoho.html">特定商取引法に基づく表記</a>
+  </div>
+  <div class="copyright">© 2026 AI知識庫 · Designed for 陽子</div>
+</footer>
+
+<script>
+const monthly = document.getElementById('plan-monthly');
+const yearly = document.getElementById('plan-yearly');
+const payBtn = document.getElementById('pay-btn');
+
+let selected = 'monthly';
+const links = {
+  monthly: '#',  // Stripe Payment Link URL を入れる
+  yearly: '#'    // Stripe Payment Link URL を入れる
+};
+
+monthly.addEventListener('click', () => { monthly.classList.add('selected'); yearly.classList.remove('selected'); selected = 'monthly'; });
+yearly.addEventListener('click', () => { yearly.classList.add('selected'); monthly.classList.remove('selected'); selected = 'yearly'; });
+payBtn.addEventListener('click', (e) => {
+  const url = links[selected];
+  if (url === '#') { e.preventDefault(); alert('決済リンクを準備中です。しばらくお待ちください。'); return; }
+  window.location.href = url;
+});
+</script>
+
+</body>
+</html>
