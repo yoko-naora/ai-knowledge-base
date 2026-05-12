@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第八篇：Seedance 2.0 过脸方法合集 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第八篇：Seedance 2.0 过脸方法合集</span><span class="lang-content jp">第8回：Seedance 2.0 顔認証回避方法集</span></h1>
+  <div class="meta">✏️ @MrLarus · 2026-05-10</div>
+  <div class="source">📎 <a href="https://x.com/MrLarus/status/2053327334636208446" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn">
+
+<div class="quote">📎 **来源：** [@MrLarus 原帖](https://x.com/MrLarus/status/2053327334636208446)</div>
+<p>></p>
+<div class="quote">**一句话：** Seedance 2.0 很好用，但上传 AI 仿真人的素材，很容易被拦。这两周我被问得最多的就是一句话：Seedance 怎么过脸？我把能找到的14种方法都跑了一遍。</div>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5IaB6WEAEFE2w.jpg" alt="Seedance 2.0 过脸方法合集" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Seedance 2.0 过脸方法 — 14种方法实测，7条能用</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>正文</h2>
+
+<p>Seedance 2.0 很好用，但上传 AI 仿真人的素材，很容易被拦。这两周我被问得最多的就是一句话：Seedance 怎么过脸？</p>
+
+<p>我把能找到的14种方法都跑了一遍，整理成下面这一篇：</p>
+
+<ul>
+  <li>4 条官方合规路径（可以商用）</li>
+  <li>3 条个人实测可用的方法</li>
+  <li>7 条已经废了的避坑清单</li>
+  <li>3 条跑下来的实践小建议</li>
+</ul>
+
+<p>具体方法都附步骤 + 可直接复制的提示词，看完就能上手。</p>
+
+<div class="tip"><strong>声明：</strong> 本文讨论的是自己生成的 AI 虚拟人物形象在 即梦 Seedance2.0（非API） 中被误判为真人时的处理方式。不涉及他人真人肖像、明星脸、网红脸、知名动漫角色等，也不鼓励绕过平台审核，所有非官方方法仅限个人非商用测试，商用场景请直接走官方合规通道。</div>
+
+<hr class="divider">
+
+<h2>一、4 个官方合规路径</h2>
+
+<p>能走官方就走官方：稳定性更高，商用合规性也更清楚。先一张图速览：</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5god9XsAc5PTC.jpg" alt="官方合规路径概览" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">官方合规路径速览 — 4 条官方通道</figcaption>
+</figure>
+
+<h3>（一）本人数字分身</h3>
+
+<p>做一次本人活体认证，建个属于自己的数字分身，之后用这个分身生成视频就不会再被拦：</p>
+
+<ol>
+  <li>打开即梦APP（网页版没有）→ 我的形象 / 数字分身</li>
+  <li>跟着提示做活体认证，1 分钟搞定</li>
+  <li>创作页选这个分身就行，口播、剧情、对口型都能跑</li>
+</ol>
+
+<p>做个人 IP 或长期账号的，先把这一步弄好。</p>
+
+<h3>（二）同账号二创豁免</h3>
+
+<p>自己账号下、由 Seedance 生成的含人脸视频，再拿去延长、改分镜，误判概率很低，但必须是 Seedance 自己生成的视频，外部导入素材不适用：</p>
+
+<ol>
+  <li>用数字分身或下面的虚拟人像跑一段 5 秒基础视频</li>
+  <li>把这段视频当参考，做延长、改分镜、切场景都可以</li>
+</ol>
+
+<h3>（三）火山方舟虚拟人像库</h3>
+
+<p>跑口播、电商、剧情这种不在乎人物是谁的内容，直接用官方虚拟人像最省事，可商用：</p>
+
+<ol>
+  <li>打开火山方舟体验中心，开通 Seedance 2.0</li>
+  <li>进「虚拟人像库」，挑个适合的形象</li>
+  <li>在视频生成页引用它，写提示词，直接出片</li>
+</ol>
+
+<h3>（四）真人人像授权通道</h3>
+
+<p>要批量用某个真人肖像（带货达人、代言人、矩阵号统一形象），得走火山方舟的真人人像录入。流程：</p>
+
+<ol>
+  <li>火山方舟体验中心生成人像录入邀约二维码</li>
+  <li>把二维码发给授权方本人，对方手机扫码自助完成认证 + 上传素材 + 授权</li>
+  <li>授权完了，形象就进了你账号下的素材库，商用就这一条路。</li>
+</ol>
+
+<p>如果你自己生成的AI人脸或人物形象，被平台误判为真人无法过审，上面四条都不行，可以尝试下面的方法！</p>
+
+<hr class="divider">
+
+<h2>二、电影级角色设计板法（最新）</h2>
+
+<p>思路：先做一张足够完整的角色设计板，让 Seedance 直接把它当成角色参考总表来理解。</p>
+
+<p>这种方法比较新，使用了GPT-Image2生图的能力，尤其适合：短剧、长期 IP、系列视频、口播角色、电商人物场景等。</p>
+
+<h3>Step 1：先用 GPT-Image 2 做角色设计板</h3>
+
+<p>在 GPT-Image 2 使用完整 Prompt 生成一张电影级角色设计板。</p>
+
+<p>这张板里最好有：主立像、多角度全身图、头部研究图、表情参考、服装拆解、一张电影感肖像。</p>
+
+<p>核心是做一张信息更完整、更像影视开发资料的角色卡。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5VevMWQAIoiNo.jpg" alt="电影级角色设计板示例" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">GPT-Image 2 生成的电影级角色设计板</figcaption>
+</figure>
+
+<p><strong>角色设计板参考提示词：</strong></p>
+
+<pre>请创作一张高完成度的「电影级角色设定板」。
+
+角色名称：【填写名字】
+年龄：【填写】
+身高：【填写】
+体型：【填写】
+风格方向：【电影级风格化写实 / 半写实 / 动画电影感 / 东方角色设计等】
+性格关键词：【填写3—5个】
+外貌特征：【脸型、眼睛、发型、肤色、独特记忆点】
+服装设定：【上装、下装、外层、鞋子、配件、道具】
+场景气质：【角色属于什么环境 / 职业 / 社会身份】
+
+要求生成一张像影视或动画项目开发用的高级角色提案板，而不是普通三视图。
+
+版面结构必须包含：
+1. 一张主视觉角色立像
+2. 一组全身多角度转面图（正面、3/4、侧面、背面、3/4背面）
+3. 一组头部研究图（正面、3/4、侧面、低头、抬头、动态角度）
+4. 一张电影感情绪肖像
+5. 一组服装与配件拆解说明
+6. 少量专业标注信息（角色名、身高刻度、材质备注、性格关键词）
+
+排版要求：
+- 横版大画幅
+- 不要规则网格，不要机械对称
+- 构图要像美术指导设计过，略带不对称感
+- 背景为中性灰或浅灰提案板质感
+- 画面高级、清晰、专业、具备电影提案板气质
+
+表现要求：
+- 角色像真实演员在镜头中被捕捉，而不是摆拍模特
+- 五官、身材比例、发型、服装在所有角度中必须严格一致
+- 皮肤、布料、金属、皮革等材质必须真实
+- 整张图要有电影感、角色感、故事感和高一致性</pre>
+
+<h3>Step 2：把整张角色设计板上传到 Seedance</h3>
+
+<p>把这张设计板直接当主参考图上传，搭配提示词：</p>
+
+<pre>参考上传的电影级角色设计板，生成超写实真人摄影质感视频，真实细腻皮肤纹理，电影级光影和质感，严格保持人物五官、发型、身材比例、服装细节完全一致，自然面部表情和肢体动作，画面稳定无闪烁，高清电影质感。</pre>
+
+<p>角色设定越具体，一致性越稳，特别适合长期做同一个人物。</p>
+
+<hr class="divider">
+
+<h2>三、彩铅 + 多视图法</h2>
+
+<p>思路：彩铅把真人皮肤抹掉，三视图把人脸细节补回来。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5XLCHXQAcEEBV.jpg" alt="彩铅三视图效果" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">彩铅化三视图 — 抹掉真人皮肤质感，保留五官轮廓</figcaption>
+</figure>
+
+<h3>Step 1：准备原图和三视图</h3>
+
+<p>一张AI人物的高清正面图，用任意生图工具（GPT-image-2 / 即梦 / Midjourney），出正面 + 45° 左侧 + 45° 右侧三张图，横着拼成一张长图。三张图里五官、发型、衣服要完全一致，然后做彩铅处理。</p>
+
+<h3>Step 2：把脸做成彩铅（关键步）</h3>
+
+<p>使用AI进行局部重绘，只对三视图里所有人物的脸做彩铅化，身体和背景保留原图质感。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5VbziWIAE32Z8.jpg" alt="彩铅化处理前后对比" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">局部重绘 — 脸部彩铅化，身体保留原质感</figcaption>
+</figure>
+
+<h3>Step 3：彩铅化的三视图当参考图上传 Seedance 出片</h3>
+
+<p><strong>提示词：</strong></p>
+
+<pre>参考上传的角色设定图，生成超写实真人摄影质感视频，真实细腻皮肤纹理，电影级光影，保持人物五官、发型、服装完全一致，自然面部表情和肢体动作，画面稳定无闪烁。</pre>
+
+<p><strong>核心：</strong> 上传的是彩铅图，提示词让模型出真人质感，意思就是让它「以这张彩铅图当骨架，最后给我出真人」。</p>
+
+<hr class="divider">
+
+<h2>四、局部遮挡法</h2>
+
+<p>彩铅法在多人出镜、复杂动态这种场景下还原度会吃力，这时候换这个。</p>
+
+<p>思路：每张图都不提供完整脸部信息，但组合后能补足五官参考，让 AI 更容易还原同一个虚拟角色。两种方法按场景选一个：</p>
+
+<h3>流派 1：模糊主图 + 五官特写（单人）</h3>
+
+<p>准备两张图：</p>
+<ul>
+  <li>图 A：完整原图，脸部重度高斯模糊，只留脸型和头部轮廓</li>
+  <li>图 B：单独把眼睛、鼻子、嘴巴拼成一张小图，纯白背景</li>
+</ul>
+
+<p>图 A 放第一位作主参考图，同时上传图 B，提示词用 @ 引用：</p>
+
+<pre>参考 @图片1 的人物位置、服装、身体动作，参考 @图片2 的人物五官特征，补全清晰自然的完整人脸，保持人物脸型、发型完全一致，超写实真人质感，高清画质，画面稳定</pre>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5CaH-XEAExI60.jpg" alt="面部模糊+五官参考图" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">流派1：模糊主图 + 五官特写组合</figcaption>
+</figure>
+
+<h3>流派 2：三视图差异化遮挡（多人 / 高辨识度）</h3>
+
+<p>出正面 + 左侧 + 右侧三视图，拼成横向长图，然后做差异化遮挡：</p>
+
+<ul>
+  <li>正面：挡鼻子 + 嘴巴，留眼睛</li>
+  <li>左侧：挡左眼 + 嘴巴，留鼻子</li>
+  <li>右侧：挡右眼 + 鼻子，留嘴巴</li>
+</ul>
+
+<p>单张图都没完整人脸，三张拼起来反而把五官全覆盖了，AI 出片时会自己从三张里抽信息补全。上传拼好的图，提示词补一段：</p>
+
+<pre>补全完整对称的人物五官，保持面部特征完全一致，超写实真人质感，画面稳定无闪烁。</pre>
+
+<hr class="divider">
+
+<h2>五、已经废了的 7 种方法</h2>
+
+<p>这些方法现在基本都不行，通过率没有上面的方法高。</p>
+
+<ol>
+  <li><strong>轻微马赛克 / 半透明网格：</strong> 太轻微的遮挡和马赛克无效</li>
+  <li><strong>单张脸三图切割：</strong> 也会触发识别真人，AI 拼碎片还容易脸崩</li>
+  <li><strong>单纯降质模糊：</strong> 低清、加噪点挡不住识别，过了审画质也不行</li>
+  <li><strong>单纯三视图：</strong> AI 生图工具生成的三视图脸部太真实也一样直接被拒</li>
+  <li><strong>跨账号二创：</strong> 二创豁免只算自己账号下、Seedance 自己生成的视频，外部素材一律走完整审核</li>
+  <li><strong>单纯美颜 / 换背景：</strong> 也消不掉真人脸的特征，基本无效</li>
+  <li><strong>单纯提示词写"虚拟人物"：</strong> 审核看的是上传素材，不是提示词里写了什么</li>
+</ol>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH4-6_UWQAIPz31.jpg" alt="避坑方法对比" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">7种已废方法 — 避坑清单</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>六、3个小建议</h2>
+
+<ol>
+  <li><strong>失败记录要及时清理：</strong> 人脸审核不通过的记录都删掉，图片经过处理后再重新上传，不要反复用同一张图。</li>
+  <li><strong>脸占画面越小越容易过：</strong> 中景、全身景比大头照过得多。</li>
+  <li><strong>公众人物 / 明星脸 / 知名动漫角色是红线：</strong> 版权风险极高，下架、限流、封号都可能，不要尝试。</li>
+</ol>
+
+<hr class="divider">
+
+<h2>七、写在最后</h2>
+
+<p>平台对人脸的审查是合理且必须的，每个人都有自己的肖像权，AI生成的越拟真，人脸就越容易被侵犯。所以我分享的方法都是基于 AI 生成的仿真人脸去做内容，重点在于如何避免被平台误判，而不是去侵犯别人的肖像权。</p>
+
+<p>个人做内容可以用好官方的数字分身功能，一次的投入，省后面一堆事。</p>
+
+<p>觉得有用就转发+收藏，点个免费关注 @MrLarus 👍 我继续分享 Seedance/GPT-Image 2.0 爆款工作流和提示词！</p>
+
+<p>很多细节和经验受限于篇幅无法详述，也可以加入交流群一起学习！</p>
+
+<hr class="divider">
+
+<h2>这个工作流适合谁</h2>
+
+<ul>
+  <li>✅ <strong>用 Seedance 2.0 做 AI 视频但总被卡脸的人</strong> — 看完就去试试上面的方法</li>
+  <li>✅ <strong>做 AI 短剧、口播、电商视频的创作者</strong> — 电影级角色板法尤其适合长期 IP</li>
+  <li>✅ <strong>需要批量生成同一个人物形象的团队</strong> — 数字分身或授权通道最稳妥</li>
+  <li>✅ <strong>想做长期 IP 但被平台审核困扰的人</strong> — 彩铅法和遮挡法值得一试</li>
+</ul>
+
+<p><strong>核心心法：</strong> 能走官方就走官方，商用场景老老实实走数字分身或授权通道。非官方方法仅限个人测试，不要挑战平台底线。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>原文作者：</strong> @MrLarus</div>
+<p>></p>
+<div class="quote">📅 发布时间：2026-05-10</div>
+
+  </div>
+  <div class="lang-content jp">
+
+<div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/MrLarus/status/2053327334636208446" target="_blank">@MrLarus 元ポスト</a></div>
+<p>></p>
+<div class="quote"><strong>一言で言うと：</strong> 14の方法を全て試しました。4つの公式準拠ルート＋3つの個人検証済み有効ルート＋7つの廃止・回避すべきルートです。</div>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5IaB6WEAEFE2w.jpg" alt="Seedance 2.0 顔認証回避方法" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Seedance 2.0 — 14の方法を検証、7つが有効</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>一、4つの公式準拠ルート</h2>
+
+<h3>(一)本人のデジタル分身</h3>
+<p>即夢APP→マイイメージ／デジタル分身→生体認証1分→作成ページでこの分身を選択</p>
+
+<h3>(二)同一アカウントでの二次創作免除</h3>
+<p>自分のアカウントでSeedanceが生成した顔入り動画であれば、延長やカット割りの変更で誤判定される確率が低くなります。必ずSeedance自身が生成したものである必要があり、外部からのインポートは適用外です。</p>
+
+<h3>(三)火山方舟バーチャル人像ライブラリ</h3>
+<p>人物が誰であるかを気にしないコンテンツであれば、公式のバーチャル人像をそのまま使用できます。商用利用も可能です。</p>
+
+<h3>(四)実在人物の肖像権使用許可ルート</h3>
+<p>火山方舟→QRコード生成→権利者にスキャンして認証してもらう→商用利用唯一の正規ルートです。</p>
+
+<hr class="divider">
+
+<h2>二、映画級キャラクターデザインボード法（最新）</h2>
+
+<p>考え方：まず完全なキャラクターデザインボードを作成し、Seedanceにキャラクター参照マスター表として活用させる。</p>
+
+<h3>Step1：GPT-Image2でキャラクターデザインボード作成</h3>
+<p>完全なPromptで映画級キャラクター設定ボードを生成：メイン立ち絵＋多角度全身図＋頭部研究図＋表情参考＋服装分解＋映画的肖像。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5VevMWQAIoiNo.jpg" alt="映画級キャラクターデザインボード" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">GPT-Image 2 で生成した映画級キャラクターデザインボード</figcaption>
+</figure>
+
+<h3>Step2：Seedanceにアップロード</h3>
+<p>Prompt：映画級キャラクターデザインボードを参照し、超リアルな実写風写真クオリティの動画を生成してください。五官と服装の一貫性を厳密に保ってください。</p>
+
+<hr class="divider">
+
+<h2>三、色鉛筆＋マルチビュー法</h2>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5XLCHXQAcEEBV.jpg" alt="色鉛筆マルチビュー" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">色鉛筆化した三面図</figcaption>
+</figure>
+
+<p>Step1：正面＋左45°＋右45°の3枚の画像を1枚の長い画像に合成</p>
+<p>Step2：部分再描写（局部重绘）で、顔部分のみを色鉛筆タッチに加工</p>
+<p>Step3：色鉛筆の三面図＋超リアルPromptをアップロード</p>
+
+<p><strong>核心：</strong> 色鉛筆画をアップロードし、Promptでモデルに実写風質感を出させる。</p>
+
+<hr class="divider">
+
+<h2>四、部分遮蔽法</h2>
+
+<h3>流派1：ぼかしメイン画像＋五官クローズアップ</h3>
+<p>図A：完全なオリジナル画像の顔部分に強いGaussian Blur（ガウスぼかし）を適用</p>
+<p>図B：目・鼻・口を切り抜いて小さな画像に合成</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/008/HH5CaH-XEAExI60.jpg" alt="ぼかし+五官クローズアップ" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">流派1：ぼかし＋五官クローズアップ</figcaption>
+</figure>
+
+<h3>流派2：三面図による差別化遮蔽</h3>
+<ul>
+  <li>正面：鼻＋口を遮蔽</li>
+  <li>左側：左目＋口を遮蔽</li>
+  <li>右側：右目＋鼻を遮蔽</li>
+</ul>
+
+<hr class="divider">
+
+<h2>五、廃止された7つの方法</h2>
+
+<ol>
+  <li>軽度モザイク／グリッド加工 → 効果なし</li>
+  <li>単一顔画像を3分割 → 顔崩れ</li>
+  <li>単純な画質低下・ぼかし → 回避できない</li>
+  <li>単純な三面図 → リアルすぎて拒否される</li>
+  <li>異なるアカウントでの二次創作 → 適用外</li>
+  <li>美顔／背景変更 → 消せない</li>
+  <li>Promptに「バーチャルキャラクター」と記述 → 審査は素材を確認する</li>
+</ol>
+
+<hr class="divider">
+
+<h2>六、3つの小さなアドバイス</h2>
+
+<ol>
+  <li><strong>失敗記録はこまめに削除しましょう</strong></li>
+  <li><strong>顔が画面に占める割合が小さいほど通過しやすくなります</strong></li>
+  <li><strong>有名人／芸能人の顔は絶対に避けてください（レッドライン）</strong></li>
+</ol>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>@MrLarus</strong></div>
+<p>></p>
+<div class="quote">📅 2026-05-10</div>
+
+  </div>
+</div>
+
+<script>
+function switchLang(lang) {
+  document.querySelectorAll('.lang-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.lang-content.' + lang).forEach(el => el.style.display = 'block');
+  document.querySelectorAll('.lang-switch button').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.lang-switch button').forEach(btn => {
+    if (btn.getAttribute('onclick').includes("'" + lang + "'")) {
+      btn.classList.add('active');
+    }
+  });
+}
+// Initialize: show Chinese by default
+document.addEventListener('DOMContentLoaded', function() {
+  switchLang('cn');
+});
+</script>
+
+</body>
+</html>

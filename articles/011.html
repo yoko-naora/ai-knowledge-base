@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第11篇：Kimi K2.6 替代 Opus 省钱指南 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第11篇：Kimi K2.6 替代 Opus 省钱指南</span><span class="lang-content jp">第11回：Kimi K2.6 で Opus を代替する節約ガイド</span></h1>
+  <div class="meta">✏️ @shmidtqq · 2026-05-12</div>
+  <div class="source">📎 <a href="https://x.com/shmidtqq/status/2053877955512709323" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn">
+
+<div class="quote">📎 **来源：** [@shmidtqq 原帖](https://x.com/shmidtqq/status/2053877955512709323)</div>
+<p>></p>
+<div class="quote">**一句话：** 打开你的 Hermes 账单，看看上个月。大部分调用不是推理，而是"总结这个 PDF""润色这段文字""提取会议待办事项"——全都跑在 Claude Opus 4.7 上。Kimi K2.6 四月底发布，Hermes 原生支持，成本是 Opus 的十分之一。</div>
+
+<hr class="divider">
+
+<h2>PART 1. KIMI K2.6 到底是什么</h2>
+
+<p>发布三周。已在 Kilo Code、Augment Code、Vercel、Factory.ai 生产环境中使用。</p>
+
+<li>开源（Modified MIT 许可）</li>
+<li>总参数 1 万亿，每次激活 32B（MoE 混合专家）</li>
+<li>推理成本像 32B 模型，能力像 1T 模型</li>
+
+<p><strong>关键数据：</strong></p>
+<li>输入 $0.60 / 输出 $2.50 每百万 token（Moonshot API），缓存输入低至 $0.15</li>
+<li>256K 上下文窗口</li>
+<li>SWE-Bench Pro：58.6%（超过 GPT-5.4 的 57.7% 和 Opus 4.6 的 53.4%）</li>
+<li>HLE-Full with tools：54.0%（超过所有西方闭源前沿模型）</li>
+<li>12 小时以上自主会话已是常态</li>
+<li>比 K2.5 少用约 35% 步骤达成相同结果</li>
+
+<p><strong>成本对比（每月 100M 输入 + 10M 输出 token）：</strong></p>
+<li>Opus 4.7：~$2,550/月</li>
+<li>Kimi K2.6：~$85/月</li>
+<li>年差额：$28,560</li>
+
+<p><strong>Kimi 的弱点：</strong> 纯数学计算、不熟悉 API 的模糊规范、大代码库深度跨文件推理。</p>
+
+<hr class="divider">
+
+<h2>PART 2. 实战案例（有凭据的）</h2>
+
+<h3>案例 1：Zig 推理引擎</h3>
+
+<p>只给了一台 Mac 和任务：下载小型 AI 模型，用 Zig（几乎没人用的编程语言）写代码运行它。Kimi 独自工作了 12 小时，14 次尝试，自己修复 bug。最终运行速度比开始时快 13 倍，比行业成熟工具 LM Studio 快 20%。</p>
+
+<h3>案例 2：交易引擎</h3>
+
+<p>Exchange-Core 是 8 年历史的开源交易匹配引擎，已被人类工程师调优到接近极限。Kimi 花了 13 小时，改了 4000 行代码，几乎将引擎速度提升了 3 倍。</p>
+
+<h3>案例 3：KiloClaw</h3>
+
+<p>Kilo Code CEO 公开背书：13 小时无监督，1000+ 工具调用，4000+ 行代码，吞吐量提升 185%。</p>
+
+<p><strong>共同模式：</strong> 14 次迭代，不是一次搞定。15 tok/s 变成 193 tok/s 是因为代理循环、评估、修复、再循环。</p>
+
+<hr class="divider">
+
+<h2>PART 3. 接入 Hermes（90 秒）</h2>
+
+<p>Day-zero 支持。4月20日已可用。</p>
+
+<p><strong>OpenRouter（30 秒）：</strong></p>
+<pre>/model openrouter:moonshotai/kimi-k2.6</pre>
+<p>~$0.75/$3.50，略高于 Moonshot 直连，零配置。</p>
+
+<p><strong>Moonshot 直连（2 分钟）：</strong></p>
+<pre>/model moonshot:kimi-k2.6</pre>
+<p>全球最优定价，缓存命中低至 $0.15/M。</p>
+
+<p><strong>自部署：</strong></p>
+<p>Hugging Face 上开源（Modified MIT），单台 8xH100 节点即可运行。</p>
+
+<hr class="divider">
+
+<h2>PART 4. 辅助模型模式（95% 用户不知道）</h2>
+
+<p>Hermes 不仅主对话用 LLM，还跑辅助模型做上下文压缩、会话摘要、标题生成、视觉识别、嵌入向量。</p>
+
+<p>默认情况下，所有这些都跑在你主模型上。这意味着你在用 Opus 价格生成三个词的标题、压缩永远不会再读的会话、OCR 截图。</p>
+
+<p><strong>正确的路由策略：</strong></p>
+
+<table>
+<tr><th>任务</th><th>推荐模型</th></tr>
+<tr><td>主大脑</td><td>Kimi K2.6（80% 工作量，10% 成本）</td></tr>
+<tr><td>难点逃逸</td><td>Opus 4.7（Kimi 搞不定的 10%）</td></tr>
+<tr><td>压缩/摘要</td><td>Kimi K2.6 instant 或 Haiku 4.5</td></tr>
+<tr><td>标题生成</td><td>Haiku 4.5 或 MiMo</td></tr>
+<tr><td>视觉识别</td><td>Kimi K2.6 原生多模态</td></tr>
+<tr><td>嵌入向量</td><td>最便宜的</td></tr>
+</table>
+
+<p>配置一次，月账单降 70-85%，关键任务质量不受影响。</p>
+
+<hr class="divider">
+
+<h2>PART 5. 两个成本陷阱</h2>
+
+<h3>陷阱一：思考模式膨胀</h3>
+
+<p>Kimi K2.6 思考模式生成的输出 token 比 Opus 或 GPT 多 3.6 倍。虽然每 token 便宜 10 倍，但净优势只有 2.7 倍。长期代理循环中比例还会放大。</p>
+
+<p><strong>解法：</strong> 默认使用非思考模式。<code>/reasoning low</code> 或 <code>/reasoning off</code>。在 <code>/insights</code> 中监控 output:input 比例。</p>
+
+<h3>陷阱二：漂移</h3>
+
+<p>Kimi 又快又便宜，你会放松警惕。当它从"修复 auth 竞态条件"漂移到"顺便重构你的 token 存储"，40 分钟和 80K token 就没了。</p>
+
+<p><strong>解法：</strong> 在每个重要 Prompt 开头贴这段：</p>
+
+<pre>Scope: [exactly which files / modules / behavior].
+Do not modify anything outside this scope.
+If you find a related issue, list it at the end. Do not fix it inline.</pre>
+
+<p>两行文字，多文件工作时节省 15-25% token。</p>
+
+<hr class="divider">
+
+<h2>PART 6. 什么时候用 Kimi，什么时候换</h2>
+
+<p><strong>Kimi K2.6 适合：</strong></p>
+<li>代码生成、单元测试、重构</li>
+<li>长期代理循环</li>
+<li>文档处理、摘要</li>
+<li>数据提取</li>
+<li>UI 原型设计、每天跑 100 次的任务</li>
+
+<p><strong>Opus 4.7 适合：</strong></p>
+<li>不熟悉 API 的多栈集成</li>
+<li>模糊的规范</li>
+<li>大代码库深度跨文件推理</li>
+<li>法律/医疗/金融场景（一个字错比价差贵）</li>
+<li>复杂数学</li>
+
+<p><strong>实际会话示例：</strong></p>
+<pre>/model moonshot:kimi-k2.6
+[起草，迭代，跑循环30次，完成95%]
+
+/branch
+/model anthropic:claude-opus-4-7
+[调试模糊边缘情况，验证架构]
+
+/model moonshot:kimi-k2.6
+[继续，/reasoning off，交付]</pre>
+
+<p>三次切换，三个价格层级，一个会话。状态通过 /branch 延续。</p>
+
+<hr class="divider">
+
+<h2>PART 7. Kimi 优先的技能</h2>
+
+<p><strong>Kimi 优先（设置 <code>/model moonshot:kimi-k2.6</code>）：</strong></p>
+<li><code>/architecture-diagram</code></li>
+<li><code>/excalidraw</code></li>
+<li><code>/linear</code>（CRUD）</li>
+<li><code>/youtube-content</code>（起草）</li>
+<li><code>/test-driven-development</code></li>
+<li><code>/systematic-debugging</code></li>
+<li><code>/manim-video</code></li>
+<li><code>/google-workspace</code></li>
+
+<p><strong>Opus 专用（<code>/model anthropic:claude-opus-4-7</code>）：</strong></p>
+<li>研究论文写作</li>
+<li>深度重构</li>
+<li>涉及金钱/合同/合规的一切</li>
+
+<p><strong>小型模型（Haiku 4.5, MiMo-Lite）：</strong></p>
+<li><code>/classify</code>, <code>/tag</code>, <code>/title-generator</code>, <code>/btw</code></li>
+
+<p>然后构建一个 /sage 风格的升级技能：默认 Kimi，<code>--hard</code> 标志或 Kimi 低置信度时升级到 Opus。</p>
+
+<p><strong>升级技能模板：</strong></p>
+<pre>You are a senior engineer. Default behavior:
+1. Solve the task on Kimi K2.6.
+2. Pass tests / hit thresholds. Stop.
+3. After the solution passes, run one adversarial pass:
+   "Critique your own solution. Find 3 weaknesses."
+4. If thresholds still don't hit after 3 iterations, set
+   confidence=low and surface the blocker.
+5. On confidence=low or --hard flag, escalate to Opus 4.7
+   with full context.
+
+Scope lock: only modify files I explicitly listed.</pre>
+
+<p>这不是选一个模型，而是编排五个模型。跑一个月，账单从"可怕"变成"零头"。</p>
+
+<hr class="divider">
+
+<h2>写在最后</h2>
+
+<p>你接上 Hermes 选了 Opus，说了声"搞定"。然后每个任务——精彩的、无聊的、三个词的标题、"东京现在几点"——都跑在最贵的模型上。</p>
+
+<p>Kimi K2.6 4月20日发布。Day-zero Hermes 集成。代理编码领域最先进水平。大约十分之一的成本。已经在 /model 里等着了。</p>
+
+<p>如果你 2026 年还在把每个任务默认路由到 Opus，你不是在跑代理，你是在开着额外的火焰喷射器烧钱。</p>
+
+<p><strong>转一下那个旋钮吧。</strong></p>
+
+<hr class="divider">
+
+<h2>这个工作流适合谁</h2>
+
+<li>✅ 用 Hermes 但觉得月费太高的开发者</li>
+<li>✅ 想优化 AI 模型成本的人</li>
+<li>✅ 跑大量自动化任务/代理循环的人</li>
+<li>✅ 需要多个模型各司其职的重度用户</li>
+
+<p><strong>核心心法：</strong> 编排五个模型，让每个任务跑在最便宜的、能胜任它的模型上。月度账单能降 70-85%。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>原文作者：</strong> @shmidtqq</div>
+<p>></p>
+<div class="quote">📅 发布时间：2026-05-12</div>
+
+  </div>
+  <div class="lang-content jp">
+
+<div class="quote">📎 <strong>出典：</strong> @shmidtqq 原文ポスト</div>
+<p>></p>
+<div class="quote"><strong>一言でいうと：</strong> Hermes の請求書を開いてみると、ほとんどの呼び出しは推論ではなく単純なタスクで、すべて Opus 上で実行されていました。Kimi K2.6 のコストは Opus のわずか10分の1です。</div>
+
+<hr class="divider">
+
+<h2>PART 1. Kimi K2.6とは</h2>
+
+<p>オープンソースの MoE アーキテクチャ、総パラメータ1T / 毎回のアクティベーション32B。<br>
+SWE-Bench Pro 58.6% で GPT-5.4 と Opus 4.6 を上回ります。<br>
+コスト比較：月間100M入力＋10M出力：Opus $2550 vs Kimi $85。<br>
+年間差額は $28,560 です。</p>
+
+<p>弱点：純粋数学、曖昧なAPI、大規模コードベースにおける深い推論。</p>
+
+<hr class="divider">
+
+<h2>PART 2. 実戦事例</h2>
+
+<p>Zig推論エンジン：12時間で独立稼働、LM Studioより20%高速<br>
+取引エンジン：13時間 / 4000行、速度3倍向上<br>
+KiloClaw：1000+ツール呼び出し / 4000+行、スループット185%向上</p>
+
+<hr class="divider">
+
+<h2>PART 3. Hermesへの接続</h2>
+
+<p><strong>OpenRouter：</strong> <code>/model openrouter:moonshotai/kimi-k2.6</code><br>
+<strong>Moonshot直結：</strong> <code>/model moonshot:kimi-k2.6</code></p>
+
+<hr class="divider">
+
+<h2>PART 4. 補助モデルルーティング</h2>
+
+<table>
+<tr><th>タスク</th><th>推奨モデル</th></tr>
+<tr><td>主脳</td><td>Kimi K2.6（80% 作業量、10% コスト）</td></tr>
+<tr><td>難所</td><td>Opus 4.7（Kimi が苦手な10%）</td></tr>
+<tr><td>圧縮/要約</td><td>Kimi K2.6 instant または Haiku 4.5</td></tr>
+<tr><td>タイトル生成</td><td>Haiku 4.5 または MiMo</td></tr>
+<tr><td>視覚認識</td><td>Kimi K2.6 ネイティブマルチモーダル</td></tr>
+<tr><td>埋め込みベクトル</td><td>最も安いもの</td></tr>
+</table>
+
+<p>月間請求額が70〜85%削減されます。</p>
+
+<hr class="divider">
+
+<h2>PART 5. 二つの落とし穴</h2>
+
+<p><strong>1. 思考モードの膨張：</strong> 出力トークンが3.6倍になります。 <code>/reasoning off</code> で対応。</p>
+<p><strong>2. ドリフト：</strong> 安価であるがゆえに油断してしまう。Scope制約で防止。</p>
+
+<hr class="divider">
+
+<h2>PART 6. いつKimiを、いつOpusを使うか</h2>
+
+<p><strong>Kimi適性：</strong> コード生成 / テスト / ドキュメント処理 / データ抽出</p>
+<p><strong>Opus適性：</strong> 曖昧なAPI / マルチスタック統合 / 法律・金融シナリオ</p>
+
+<hr class="divider">
+
+<h2>PART 7. Kimi優先のスキル</h2>
+
+<p><strong>Kimi：</strong> <code>/architecture-diagram</code> / <code>/excalidraw</code> / TDD / debugging / manim-video</p>
+<p><strong>Opus：</strong> 研究論文 / 深いリファクタリング / 契約コンプライアンス</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 @shmidtqq 📅 2026-05-12</div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="links">
+    <a href="../index.html"><span class="lang-content cn">文章列表</span><span class="lang-content jp">記事一覧</span></a>
+    <a href="../prompts/"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a>
+    <a href="../index.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a>
+    <a href="../index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
