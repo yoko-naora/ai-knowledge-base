@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1A1A2E"/>
+      <stop offset="100%" style="stop-color:#16213E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#FF8C42"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <!-- grid lines -->
+  <g opacity="0.05" stroke="#fff" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="200" x2="800" y2="200"/>
+    <line x1="0" y1="250" x2="800" y2="250"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="350" x2="800" y2="350"/>
+    <line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="100" y1="0" x2="100" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="450"/>
+    <line x1="300" y1="0" x2="300" y2="450"/>
+    <line x1="400" y1="0" x2="400" y2="450"/>
+    <line x1="500" y1="0" x2="500" y2="450"/>
+    <line x1="600" y1="0" x2="600" y2="450"/>
+    <line x1="700" y1="0" x2="700" y2="450"/>
+  </g>
+  <!-- accent bar -->
+  <rect x="0" y="0" width="800" height="6" fill="url(#accent)"/>
+  <!-- code bracket decoration -->
+  <text x="60" y="160" font-family="monospace" font-size="90" fill="#FF6B35" opacity="0.3">&lt;/&gt;</text>
+  <!-- dollar sign -->
+  <text x="660" y="380" font-family="monospace" font-size="140" fill="#FF6B35" opacity="0.15">$</text>
+  <!-- main title -->
+  <text x="400" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#fff">Kimi K2.6</text>
+  <text x="400" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#aaa">替代 Opus 省钱指南</text>
+  <!-- subtitle -->
+  <text x="400" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#666">成本降至 1/10 · Hermes 原生支持</text>
+  <!-- bottom accent -->
+  <rect x="300" y="360" width="200" height="3" fill="#FF6B35" opacity="0.6"/>
+</svg>
