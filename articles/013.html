@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第13篇：产品调研Skill—10分钟搞定竞品调研 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第13篇：产品调研Skill—10分钟搞定竞品调研</span><span class="lang-content jp">第13回：プロダクトリサーチSkill—10分で競合調査を完了</span></h1>
+  <div class="meta">✏️ <span class="lang-content cn">@cnyzgkc（木马人）</span><span class="lang-content jp">@cnyzgkc（木馬人）</span> · 2026-05-12</div>
+  <div class="source">📎 <a href="https://x.com/cnyzgkc/status/2054012383614648555" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn">
+
+<div class="quote">📎 **来源：** [@cnyzgkc 原帖](https://x.com/cnyzgkc/status/2054012383614648555)</div>
+<p>></p>
+<div class="quote">**一句话：** 花10分钟做一个产品调研Skill，让Agent自动完成竞品调研——搜官网→扒定价→看社区评价→竞品对比→输出结构化报告，全程2分钟、不到两毛钱。</div>
+<p>></p>
+<div class="quote">⏱️ 发布时间：10:34 AM · May 12, 2026 · 8,707 Views</div>
+
+<hr class="divider">
+
+<p>前两天，老板想做一个xx产品的竞品调研，然后我们的运营搞了一天，结果最后被老板痛骂，说这个竞品报告写的太烂，一眼AI~</p>
+
+<p>然后他跟我吐槽这事，我说你是不是没有用AI辅助，他说用了，但是结果不太行~</p>
+
+<p>我说你咋用的，他说就用豆包啊，然后跟它说："帮我生成一份XX产品的竞品分析报告"</p>
+
+<p>然后AI一本正经地给他生成了一份500多字竞品分析报告。</p>
+
+<p>但结果就是，里面定价不对，功能不完备，竞品对比也是瞎扯淡。</p>
+
+<p>稍微看下对应产品的官方，就发现数据对不上，不被老板骂就有鬼了。</p>
+
+<p>于是我花10分钟，帮他做了一个产品调研skill。</p>
+
+<p>只要说一句："深扒xxx产品"，他就可以自动输出完整调研报告。</p>
+
+<p>我把这个skill开源在Github上，地址放在最后了，有兴趣可以看看。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_01.jpg" alt="产品调研Skill展示" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">产品调研Skill — 一句话触发完整竞品调研流程</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>这个 Skill 能干嘛</h2>
+
+<p>我做的这个Skill，叫 <strong>ai-product-research</strong>。</p>
+
+<p>功能很简单：输入一个产品名，自动输出完整调研报告。</p>
+
+<p>举个例子：</p>
+<p><strong>深扒一下 Cursor</strong></p>
+
+<p>Agent 会自动做 5 件事：</p>
+<ol>
+<li>搜产品官网，抓取功能和定价</li>
+<li>搜 GitHub 仓库，看技术指标</li>
+<li>搜社区评价（Reddit、X、知乎上的讨论）</li>
+<li>搜竞品对比</li>
+<li>汇总输出结构化报告，附带结论和推荐</li>
+</ol>
+
+<p>全程 2 分钟，我说了一句话。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_02.jpg" alt="Skill工作流程" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Skill 自动化工作流 — 搜索→抓取→分析→输出</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>怎么做到的</h2>
+
+<p>Agent 不能上网，但可以调 API。</p>
+
+<p>我试了好几个方案，最后选了 XCrawl。原因很简单：</p>
+
+<p>它有两个核心能力刚好对上：</p>
+<ul>
+<li><strong>Search API</strong>：输入关键词，返回结构化搜索结果。我用它搜"Cursor official site""Cursor github""Cursor review"，一步拿到相关链接</li>
+<li><strong>Scrape API</strong>：输入 URL，直接返回 Markdown 格式的页面内容。不管页面是 JS 渲染的还是动态加载的，它都能抓</li>
+</ul>
+
+<p>两个 API 配合，就是"先搜再抓"——和人手动调研的逻辑一模一样，但全自动化。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_03.jpg" alt="XCrawl API架构" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">XCrawl — Search API + Scrape API 组合</figcaption>
+</figure>
+
+<h3>为什么不用别的方案？</h3>
+<ul>
+<li>自己写爬虫？JS 渲染、反爬、代理轮换，每个都是坑，我踩了一下午</li>
+<li>用浏览器插件？没法给 Agent 用，只能人手动操作</li>
+<li>XCrawl 内置了住宅代理和浏览器指纹伪装，成功率高，不用自己操心这些</li>
+<li>关键是：返回的格式 Agent 直接就能用，不用二次处理。这对做自动化流程来说太重要了。</li>
+</ul>
+
+<p>我把这两个 API 封装成了一个 Skill，Agent 遇到调研任务时自动调用，就这么解决了。</p>
+
+<hr class="divider">
+
+<h2>跑了一遍 Cursor</h2>
+
+<p>说再多不如实测一把。我直接拿 Cursor 来测试，这个产品够复杂了。</p>
+
+<p><strong>深扒一下 Cursor</strong></p>
+
+<p>4 次搜索 + 3 次抓取，总共 14 credits，约 0.14 美元。不到两毛钱。</p>
+
+<p>2 分钟后，报告出来了。挑几个有意思的点：</p>
+
+<h3>定价策略</h3>
+
+<p>Cursor 有 4 个版本：免费版（有限 Agent 请求）、Pro（$20/月）、Pro+（$60/月）、Ultra（$200/月）。值得注意的是，Pro 版已经支持 MCP、Skills 和 Hooks，这意味着你可以给 Cursor 装扩展。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_04.jpg" alt="Cursor定价策略" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor 定价策略 — 4个版本覆盖不同用户群体</figcaption>
+</figure>
+
+<h3>社区评价</h3>
+
+<p>知乎上有人做了 2026 年 AI 编程 IDE 横评，结论是 Cursor 仍然是"有大脑的 VS Code"领域的标杆，上下文引擎是真正的护城河。但也有人说大仓库索引吃内存，Agent 模式偶尔会抽风。</p>
+
+<p>Reddit 上的评价更直接："历史上增长最快的 SaaS 产品，ARR 突破 20 亿美金。"</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_05.jpg" alt="社区评价截图" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor 社区评价 — 知乎 + Reddit 多方视角</figcaption>
+</figure>
+
+<h3>竞品对比</h3>
+
+<p>和 Windsurf 比，Cursor 在大型代码库的精准控制上更强；和 GitHub Copilot 比，Cursor 的 Agent 能力更完整；和 Cline 比，Cursor 的 IDE 集成度更高。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_06.jpg" alt="竞品对比" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor vs Windsurf vs Copilot vs Cline 竞品对比</figcaption>
+</figure>
+
+<h3>结论</h3>
+
+<p>现阶段最值得用的 AI 编程 IDE。工具链最成熟、插件生态完整、多文件编辑体验精致。顾虑是大仓库吃内存、Agent 模式稳定性有待提升。</p>
+<p>建议：先用免费版试试，觉得 Agent 好用再升级 Pro。</p>
+
+<p>这些信息全是自动抓的，我一个字都没手动输。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_07.png" alt="调研结论" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor 调研结论 — 自动生成的结构化报告</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>顺便扒了一下 AIHOT</h2>
+
+<p>前几天刷到卡兹克分享了一个站：AIHOT，AI 热点聚合站。我也用这个 Skill 跑了一遍：</p>
+
+<p><strong>深扒一下 aihot.virxact.com</strong></p>
+
+<p>结果发现：这是卡兹克免费做的，信源包括 IT之家、HuggingFace、GitHub、X 上的科技 KOL 推文。每条内容有 AI 精选评分（50-86 分），还支持 Agent 接入和飞书群推送。</p>
+
+<p>结论：值得每天看。免费 + 中文 + AI 精选评分，这个组合市面上不多。</p>
+
+<p>连卡兹克是这个站的作者都扒出来了~</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_08.jpg" alt="AIHOT调研" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">AIHOT 热点聚合站调研结果</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>开源了</h2>
+
+<p>目前这个 Skill 开源了，叫 <strong>ai-product-research</strong>。支持 Claude Code、Codex、OpenClaw 等主流 AI Agent。</p>
+
+<p>在 Claude Code 里说一句就能装：</p>
+<pre>我的安装这个 skill：https://github.com/allenGKC/ai-product-research</pre>
+
+<p>另外这个 Skill 需要 XCrawl 的 API Key，目前新人注册送 1,000 免费 credits：</p>
+<ul>
+<li>注册地址：<a href="https://xcrawl.com/?keyword=henitdw4" target="_blank">https://xcrawl.com/?keyword=henitdw4</a></li>
+<li>Skill 开源地址：<a href="https://github.com/allenGKC/ai-product-research" target="_blank">https://github.com/allenGKC/ai-product-research</a></li>
+</ul>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_09.jpg" alt="开源信息" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">ai-product-research 开源项目信息</figcaption>
+</figure>
+
+<p>花 2 分钟深扒一个产品，然后决定要不要用它。这比花 2 小时手动调研，效率高多了~</p>
+
+<p>感谢看到这里，如果对你有帮助，欢迎关注我的 X 账号 <a href="https://x.com/cnyzgkc" target="_blank">@cnyzgkc</a>，我会持续分享 AI 领域相关的内容思考、AI 工具使用体验等内容。</p>
+
+<p>也欢迎关注我的公众号：<strong>木马人AI</strong></p>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>原文作者：</strong> 木马人 @cnyzgkc</div>
+<p>></p>
+<div class="quote">📅 发布时间：2026-05-12</div>
+<p>></p>
+<div class="quote">🔗 ai-product-research 开源：https://github.com/allenGKC/ai-product-research</div>
+
+  </div>
+  <div class="lang-content jp">
+
+<div class="quote">📎 **出典：** [@cnyzgkc 元ポスト](https://x.com/cnyzgkc/status/2054012383614648555)</div>
+<p>></p>
+<div class="quote">**一言でいうと：** たった10分で作ったプロダクトリサーチSkill。Agentが自動で競合調査を実行——公式サイト検索→価格調査→コミュニティ評価→競合比較→構造化レポート出力、全行程2分、コストは約20円未満。</div>
+<p>></p>
+<div class="quote">⏱️ 公開時間：2026年5月12日 10:34 AM · 8,707 Views</div>
+
+<hr class="divider">
+
+<p>先日、上司がXX製品の競合調査をやりたいと言い出し、うちの運営担当が丸一日かけてやった結果、最終的に上司に「この競合レポートは酷すぎる、一目でAI生成だとわかる」と怒鳴られてしまいました。</p>
+
+<p>彼がそのことを愚痴ってきたので、「AI使わなかったの？」と聞くと、「使ったけど、結果がイマイチだった」と。</p>
+
+<p>使い方を聞くと、「豆包（Doubao）に『XX製品の競合分析レポートを生成して』とだけ頼んだ」とのこと。</p>
+
+<p>するとAIは真面目に500字ほどの競合分析レポートを生成したそうです。</p>
+
+<p>しかし結果は、価格設定が間違っている、機能が不完全、競合比較もデタラメ。</p>
+
+<p>対応する製品の公式サイトを少し確認すればデータが合っていないのは明らかで、上司に怒られるのも当然でした。</p>
+
+<p>そこで私は10分かけて、彼のためにプロダクトリサーチSkillを作りました。</p>
+
+<p>「XXX製品を深掘りして」と言うだけで、自動的に完全な調査レポートを出力してくれます。</p>
+
+<p>このSkillはGitHubで公開しています。アドレスは最後に載せてありますので、興味があればご覧ください。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_01.jpg" alt="プロダクトリサーチSkillのデモ" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">プロダクトリサーチSkill — 一言で完全な競合調査フローを起動</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>この Skill でできること</h2>
+
+<p>私が作ったこのSkillの名前は <strong>ai-product-research</strong> です。</p>
+
+<p>機能はとてもシンプル：製品名を入力するだけで、自動的に完全な調査レポートを出力します。</p>
+
+<p>例を挙げましょう：</p>
+<p><strong>Cursor を深掘りする</strong></p>
+
+<p>Agent は自動で次の5つのことを行います：</p>
+<ol>
+<li>製品公式サイトを検索し、機能と価格を取得</li>
+<li>GitHub リポジトリを検索し、技術指標を確認</li>
+<li>コミュニティ評価を検索（Reddit、X、知乎での議論）</li>
+<li>競合比較を検索</li>
+<li>構造化レポートにまとめ、結論と推奨事項を付けて出力</li>
+</ol>
+
+<p>全行程たった2分。私が一言言っただけです。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_02.jpg" alt="Skillのワークフロー" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Skill 自動化ワークフロー — 検索→取得→分析→出力</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>どのように実現したか</h2>
+
+<p>Agent は直接インターネットにアクセスできませんが、API を呼び出すことはできます。</p>
+
+<p>いくつかの方法を試した結果、最終的に <strong>XCrawl</strong> を選びました。理由は単純です：</p>
+
+<p>XCrawl には2つの中核機能がぴったり合致していました：</p>
+<ul>
+<li><strong>Search API</strong>：キーワードを入力すると、構造化された検索結果を返します。"Cursor official site""Cursor github""Cursor review"と検索して、関連リンクを一発で取得</li>
+<li><strong>Scrape API</strong>：URL を入力すると、Markdown 形式のページ内容を直接返します。JS レンダリングや動的読み込みのページでも取得可能</li>
+</ul>
+
+<p>この2つのAPIを組み合わせることで、「まず検索してから取得する」——人間が手動で調査するロジックと全く同じですが、完全に自動化されています。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_03.jpg" alt="XCrawl APIアーキテクチャ" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">XCrawl — Search API + Scrape API の組み合わせ</figcaption>
+</figure>
+
+<h3>なぜ他の方法を選ばなかったのか？</h3>
+<ul>
+<li>自分でクローラーを書く？JS レンダリング、アンチスクレイピング、プロキシローテーション——どれも落とし穴だらけで、半日ハマりました</li>
+<li>ブラウザ拡張機能を使う？Agent には使えず、人間が手動操作する必要がある</li>
+<li>XCrawl は住宅用プロキシとブラウザフィンガープリント偽装を内蔵しており、成功率が高く、自分で気を遣う必要がない</li>
+<li>重要なのは：返される形式が Agent にそのまま使えるので、二次処理が不要。自動化フローにとってこれは非常に重要</li>
+</ul>
+
+<p>これら2つのAPIをSkillとしてカプセル化し、Agentが調査タスクに遭遇したときに自動的に呼び出すようにして、この問題を解決しました。</p>
+
+<hr class="divider">
+
+<h2>Cursor で実際に試してみた</h2>
+
+<p>言葉で説明するより実際に試すのが一番です。Cursor を使ってテストしました。この製品は十分に複雑です。</p>
+
+<p><strong>Cursor を深掘りする</strong></p>
+
+<p>4回の検索 + 3回のスクレイピング、合計14クレジット、約0.14ドル。20円にも満たないコストです。</p>
+
+<p>2分後、レポートが完成しました。いくつか面白いポイントをご紹介します：</p>
+
+<h3>価格戦略</h3>
+
+<p>Cursor には4つのバージョンがあります：無料版（Agentリクエスト制限あり）、Pro（$20/月）、Pro+（$60/月）、Ultra（$200/月）。特筆すべきは、Pro版ですでに MCP、Skills、Hooks をサポートしていることで、Cursor に拡張機能を追加できるということです。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_04.jpg" alt="Cursorの価格戦略" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor の価格戦略 — 4つのバージョンで異なるユーザー層をカバー</figcaption>
+</figure>
+
+<h3>コミュニティ評価</h3>
+
+<p>知乎（Zhihu）で2026年のAIプログラミングIDE比較レビューがあり、Cursor は依然として「脳を持つVS Code」分野のベンチマークであり、コンテキストエンジンが真の堀（モート）であるという結論でした。しかし、大規模リポジトリのインデックス作成でメモリを消費する、Agentモードが時々不安定になるという声もありました。</p>
+
+<p>Reddit での評価はさらに直接的：「歴史上最も急速に成長したSaaS製品、ARRは20億ドルを突破。」</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_05.jpg" alt="コミュニティ評価のスクリーンショット" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor コミュニティ評価 — 知乎 + Reddit の多角的視点</figcaption>
+</figure>
+
+<h3>競合比較</h3>
+
+<p>Windsurf と比較すると、Cursor は大規模コードベースでの精度の高い制御に優れています。GitHub Copilot と比較すると、Cursor のAgent機能はより完全です。Cline と比較すると、Cursor のIDE統合度はより高いです。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_06.jpg" alt="競合比較" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor vs Windsurf vs Copilot vs Cline 競合比較</figcaption>
+</figure>
+
+<h3>結論</h3>
+
+<p>現時点で最も価値のある AI プログラミング IDE。ツールチェーンが最も成熟しており、プラグインエコシステムが完全で、マルチファイル編集体験が洗練されています。懸念点は、大規模リポジトリでのメモリ消費、Agentモードの安定性の向上が必要なこと。</p>
+<p>推奨：まずは無料版を試して、Agentが便利だと感じたらProにアップグレードすることをお勧めします。</p>
+
+<p>これらの情報はすべて自動取得したもので、私は一言も手動で入力していません。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_07.png" alt="調査結論" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Cursor 調査結論 — 自動生成された構造化レポート</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>ついでに AIHOT も深掘り</h2>
+
+<p>先日、カズケ（卡兹克）がシェアしていたサイトを偶然見つけました：<strong>AIHOT</strong>、AIホットトピック集約サイトです。これもこのSkillで試してみました：</p>
+
+<p><strong>aihot.virxact.com を深掘りする</strong></p>
+
+<p>結果：これはカズケが無料で作ったもので、情報源には IT之家、HuggingFace、GitHub、X のテクノロジーKOLのツイートが含まれています。各コンテンツにはAI厳選スコア（50-86点）が付けられており、Agent連携や飛書（Feishu）グループへのプッシュもサポートしています。</p>
+
+<p>結論：毎日見る価値あり。無料 + 中文 + AI厳選スコア、この組み合わせは市場にあまりありません。</p>
+
+<p>カズケがこのサイトの作者であることまで深掘りできました〜</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_08.jpg" alt="AIHOT調査" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">AIHOT ホットトピック集約サイトの調査結果</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>オープンソース化</h2>
+
+<p>現在、このSkillは <strong>ai-product-research</strong> としてオープンソース化されています。Claude Code、Codex、OpenClaw など主要なAI Agentに対応しています。</p>
+
+<p>Claude Code で一言言うだけでインストールできます：</p>
+<pre>このskillをインストールして：https://github.com/allenGKC/ai-product-research</pre>
+
+<p>また、このSkillを使用するには XCrawl の API Key が必要です。現在、新規登録者には1,000クレジットが無料で付与されます：</p>
+<ul>
+<li>登録URL：<a href="https://xcrawl.com/?keyword=henitdw4" target="_blank">https://xcrawl.com/?keyword=henitdw4</a></li>
+<li>Skill 公開URL：<a href="https://github.com/allenGKC/ai-product-research" target="_blank">https://github.com/allenGKC/ai-product-research</a></li>
+</ul>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/013/image_09.jpg" alt="オープンソース情報" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">ai-product-research オープンソースプロジェクト情報</figcaption>
+</figure>
+
+<p>たった2分で製品を深掘りし、それを使うかどうかを判断する。これは2時間かけて手動で調査するよりはるかに効率的です〜</p>
+
+<p>最後までお読みいただきありがとうございます。参考になりましたら、私のXアカウント <a href="https://x.com/cnyzgkc" target="_blank">@cnyzgkc</a> をフォローしてください。AI分野に関する考察やAIツールの使用体験などを継続的にシェアしていきます。</p>
+
+<p>また、WeChat公式アカウント <strong>木馬人AI</strong> もフォローよろしくお願いします。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>原文著者：</strong> 木馬人 @cnyzgkc</div>
+<p>></p>
+<div class="quote">📅 公開日：2026-05-12</div>
+<p>></p>
+<div class="quote">🔗 ai-product-research オープンソース：https://github.com/allenGKC/ai-product-research</div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="links">
+    <a href="../index.html"><span class="lang-content cn">文章列表</span><span class="lang-content jp">記事一覧</span></a>
+    <a href="../prompts/"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a>
+    <a href="../index.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a>
+    <a href="../index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

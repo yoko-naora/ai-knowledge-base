@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12篇：AI时代到底该怎么管一个工程团队 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第12篇：AI时代到底该怎么管一个工程团队</span><span class="lang-content jp">第12回：AI時代におけるエンジニアリングチームの正しいマネジメントとは</span></h1>
+  <div class="meta">✏️ @dotey · 2026-05-12</div>
+  <div class="source">📎 <a href="https://x.com/dotey/status/2054086398328656383" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn">
+
+<div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/dotey/status/2054086398328656383" target="_blank">@dotey 原帖</a></div>
+<p>></p>
+<div class="quote"><strong>作者：</strong> 宝玉 (@dotey)<br><strong>时间：</strong> 3:28 PM · May 12, 2026<br><strong>视频原链接：</strong> <a href="https://www.youtube.com/watch?v=igO8iyca2_g" target="_blank">https://www.youtube.com/watch?v=igO8iyca2_g</a></div>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/01.jpg" alt="AI时代工程团队管理" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Fiona Fung — Anthropic Claude Code & Cowork 工程与产品负责人</figcaption>
+</figure>
+
+<hr class="divider">
+
+<div class="quote">
+  Fiona Fung 在 Anthropic 大会上讲了 28 分钟，聊了聊 AI 时代到底该怎么管一个工程团队。
+  <br><br>
+  她做这套幻灯片时，Anthropic 还没有推出 Routines 功能。
+  <br>
+  三周后，Routines 上线了。这是一个让 Claude Code 在云端按计划自动跑任务的功能，不需要在本地一直开着终端。等到她真正站上 Code with Claude 2026 大会的讲台时，幻灯片里好几张就已经过时了。
+  <br><br>
+  Fiona Fung 是 Anthropic 旗下 Claude Code 和 Cowork 两条产品线的工程与产品负责人。她之前在微软干了十二年（从 Visual Studio 做起），后来去 Meta 带过 Facebook Marketplace 和 Instagram 的工程团队，在 2025 年 9 月加入了 Anthropic。这次演讲不到三十分钟，主题听起来很普通："AI 时代怎么管一个工程团队"，但她讲的全是这一年来在 Claude Code 团队踩过的坑、砸碎的旧规则，以及还没想明白的现实挑战，一点也不讲抽象的空话。
+  <br><br>
+  视频原链接：<a href="https://www.youtube.com/watch?v=igO8iyca2_g" target="_blank">https://www.youtube.com/watch?v=igO8iyca2_g</a>
+</div>
+
+<hr class="divider">
+
+<h2>要点速览</h2>
+
+<li><strong>软件工程的瓶颈</strong>过去是"写代码慢"，现在则转移到了验证、评审、跨职能协作和安全性上。过去的各种流程都是基于"写代码很贵"这个假设设计的，现在既然"写代码几乎免费"，流程就必须全部重构。</li>
+<li><strong>流程极少会自然消亡</strong>，组织只会一层层地往上叠加 SLA、规章制度和评审。用 AI 改造工程团队的第一步，其实就是明确允许大家砍掉陈旧流程。</li>
+<li><strong>技术辩论的方式变了</strong>。过去是把人拉到白板房里画架构图，现在是让 Claude 同时搓出三个 PR，连着对 API 的实际影响范围一起对着代码讨论。</li>
+<li>在 Claude Code 团队，<strong>所有的 PR 都有 Claude 的参与</strong>。"这段代码到底是谁写的？"这个问题已经渐渐失去意义。</li>
+<li><strong>经理必须从一线 IC (个人贡献者) 做起</strong>。Fiona 在招人时死死咬住这一条，负责招聘的同事一开始甚至不能理解："现在哪有经理愿意倒回去先写代码的"。她的回应很干脆："不愿意就趁早好聚好散"。</li>
+<li><strong>组织尽量扁平</strong>、所有小组共享一个团队目标（mission）。理由很简单：目标一变，层级越多越容易产生对齐损耗，扁平意味着灵活。</li>
+<li><strong>代码就是唯一的"事实来源"（source of truth）</strong>，而不是设计文档。如果非要保留 spec，就把 spec 提交进代码库，让 Claude 去校验代码与文档是否一致。</li>
+<li><strong>衡量效果看三个指标</strong>：新人上手时间、PR 的生命周期、Claude 辅助提交的比例。但她也警告，别死盯着"有多少代码是 AI 写的"，那只是虚荣指标，关键要看产品质量和可靠性。</li>
+
+<hr class="divider">
+
+<h2>【1】二十年里，行业被重塑了两次</h2>
+
+<p>演讲一开始，Fiona 把时间线拉回了 2000 年代初。她当时在微软做 Visual Studio 2005——全球主流的开发工具之一。那会儿软件还是靠 CD 发行的（再早点是软盘）。因为软件要送到流水线上刻盘、装盒、铺货到店里，每个版本都有雷打不动的发布主线。</p>
+
+<p>后来互联网来了，把发行方式从 CD 变成了在线分发，工程节奏随之被颠覆。现在轮到 AI，但这次变的不只是发行节奏，而是"写代码"这件事本身。</p>
+
+<p><strong>过去管用的老经验，现在未必行得通了。</strong><br>
+（"What served you prior may not serve you any longer."）</p>
+
+<p>她在演讲里反复回到这一句。多年来工程节奏围绕一个假设搭建：写代码贵、写测试贵、重构贵。从瀑布到敏捷，每一种方法论都是在分配这块稀缺资源。</p>
+
+<p>去年她还在抱怨 vibe coding（凭感觉编程，由 OpenAI 联合创始人 Andrej Karpathy 在 2025 年初提出）："为什么到处用常量，工程实践不好。"一年之后，模型变得能干太多。这种突破已经远超单纯的"提速"范畴，而是整体的吞吐量直接跃升了一个数量级。</p>
+
+<hr class="divider">
+
+<h2>【2】当编码不再是瓶颈，新的卡点出现在哪里</h2>
+
+<p>Claude Code 团队现在的瓶颈是<strong>验证、评审、跨职能协作、安全</strong>。</p>
+
+<p>代码量提升后，她被其他工程负责人问得最多的问题是："这些代码人怎么审得过来？"她也想知道维护成本怎么算。生成代码的成本几乎为零，但维护成本不会跟着归零。</p>
+
+<div class="quote"><strong>注：</strong> 演讲提到的"用 Claude Code 构建 Claude Code"是 Anthropic 公司层面的公开做法。Boris Cherny 此前在多次访谈中讲过，自己用 Claude Code 在 10 天内构建了 Cowork 这个面向非技术用户的桌面 Agent。这是工程现实，不是修辞。</div>
+
+<p>她列出了一份"正在悄然失效"的旧流程清单：长达半年的产品路线图、繁琐的排期会议、对代码的所有权划分、马拉松式的代码评审会议、按部就班的传统团队结构、知识库分享、以及漫长的新人入职培训（onboarding）。这些统统都是因为当初"开发成本太高"而被现实倒逼出来的历史产物。</p>
+
+<p><strong>流程极少会自然消亡。我们习惯的做法是不断地往上叠加新流程。</strong><br>
+（"Rarely do processes kill themselves, we tend to just layer more and more and more processes on."）</p>
+
+<p>她举了个痛点例子：之前在某个团队，SLA（服务级承诺）多到需要拉个大表格强制排序，工程师才能弄清楚哪条需要优先响应。她早就觉得这种过度堆砌该清理了，但真正下决心动手，还是到了 Anthropic 之后。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/02.jpg" alt="流程堆叠" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">流程极少会自然消亡，我们只会不断往上叠加新流程</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【3】少做什么：六个月路线图、设计文档、产品评审</h2>
+
+<p>刚加入 Claude Code 时她还在问："不需要做六个月路线图吗？"</p>
+
+<p>写出来了，前三个月还能用，过完新年再看，已经变了大半。她现在用一个词：<strong>jit planning（即时规划）</strong>，借编程概念里的 just-in-time 编译，意思是什么时候需要再做什么，因为原型成本已经趋零，"提前规划"的杠杆消失了。</p>
+
+<p>设计文档也大量减少。Claude Code 团队的默认讨论媒介从"先写一份 doc"换成了"先发一个 PR"，有想法直接做出来。产品评审会同样开得少，因为产品形态变化太快，与其评审 mock，不如把内部版本推给 Anthropic 全员（她管这个叫 <strong>ant-fooding</strong>，因为公司名 Anthropic 含"ant"），再推给外部用户，听他们怎么用。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/03.jpg" alt="JIT Planning" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">JIT Planning：原型成本趋零，"提前规划"的杠杆消失了</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【4】多做什么：验证，把质量保障往源头推</h2>
+
+<p>她希望团队在验证上加倍投入，叫 <strong>shift left（左移）</strong>。传统软件流水线左是源头右是交付，把质量保障从靠近交付端的人工测试，往靠近源头的自动化推。</p>
+
+<p>为什么这件事变重要？因为角色边界正在模糊。她的设计师同事现在也在提交代码。Fiona 顺带讲了一个真实的小焦虑：她有次修了个跟求职简历相关的 bug，第二天扫了一眼 Boris 的消息流，看到有人在群里 @ 他报新 bug。她形容自己当时的感触是"心跳都漏了半拍"，生怕是自己捅的娄子。</p>
+
+<p>每个人都不希望因为自己的提交把服务搞挂。在这个高吞吐量的环境下，这是非常真实的心理负担。传统的人工 QA 根本接不住这么高的代码产出率，所以质量保障必须更早地依赖自动化机制。</p>
+
+<hr class="divider">
+
+<h2>【5】技术辩论的方式变了：从白板到三个 PR</h2>
+
+<p>刚加入 Claude Code 团队时她想做一次重构，借机熟悉代码库。和 Boris 在技术方案上有分歧，她差点习惯性地拍肩膀说"走，去白板房画一下"。</p>
+
+<p>下一秒她马上意识到，其实完全可以让 Claude 同时搓出三个版本的 PR，直接对比完整的代码实现，甚至能拉出对所有调用方的影响。白板上可画不出这么直观的全局视角，但代码可以。</p>
+
+<p><strong>当写代码变得轻而易举，无休止的争论就显得极其昂贵。</strong><br>
+（"When building is cheap, arguing is expensive."）</p>
+
+<p>抛出这个判断时，她的语气尤为严肃。她随即提醒听众：正因为生成代码的成本趋于零，团队文化和底线共识反而变得越发关键。</p>
+
+<p><strong>决不能沦为"谁最后一个 commit 谁赢"</strong>。比如有人熬夜到凌晨三点偷偷交代码，或者设个定时任务抢在上线前压哨操作，这绝对不行。恰恰是因为代码不值钱了，团队横向对齐反而更需要明确的底线。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/04.jpg" alt="技术辩论方式改变" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">当写代码变得轻而易举，无休止的争论就显得极其昂贵</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【6】代码评审：Claude 接什么，人保留什么</h2>
+
+<p>Cat Wu 在大会上午的 keynote 已经讲了 Claude 自动评审 PR 的能力。Fiona 这里的视角更具体：什么交给 Claude，什么继续留给人。</p>
+
+<div class="quote"><strong>注：</strong> Cat Wu 是 Claude Code 的产品负责人，与 Boris Cherny 同台主理 Claude Code 产品方向。</div>
+
+<p><strong>交给 Claude 去做的：</strong> 风格检查、lint 去重、回应代码评审意见、抓常规 bug，以及补全单元测试。她说 Claude 现在非常擅长"打理"PR，通常在人工接手之前就把大部分脏活累活干完了。</p>
+
+<p><strong>依然需要人工介入的有三类：</strong></p>
+<li>法律和合规层面的审核，因为涉及风险口径；</li>
+<li>安全敏感代码的边界确认，因为出漏洞的代价太高；</li>
+<li>针对产品体验的 sense（直觉）和品味，这也是当前大模型相当难跨越的一道门槛。</li>
+
+<p>第三类她讲了个轻松的例子。她有个小爱好：按节日装饰 Claude 的终端形象。圣诞节那次她想把 Claude 变成雪人，让 Claude 用 ASCII 字符画。她把结果发给设计师同事征求意见，对方一句话："你把它画成了 Mr. Peanut。"</p>
+
+<div class="quote"><strong>注：</strong> Mr. Peanut 是美国知名零食品牌 Planters 的吉祥物，戴礼帽和单片眼镜，长得跟雪人在轮廓上有点像。</div>
+
+<p>她最终采用了简单方案：冰蓝色 + 雪花。这个故事她拿来说明产品 sense 的意义：抽象判断很难自动化。</p>
+
+<hr class="divider">
+
+<h2>【7】代码边界日渐模糊，角色分工也在重新洗牌</h2>
+
+<p>在 Claude Code 团队，几乎所有的 PR 都有 Claude 参与。"这段代码到底是谁写的？"这个问题正在变得荒诞甚至没有意义。</p>
+
+<p>Fiona 建议不要纠结于这种表象，而是深挖你真正想搞懂的是什么：是谁的修改引爆了 bug？谁有足够的背景上下文去跟客户解释技术细节？谁对这块代码模块的来龙去脉更清楚？如果你问的是后面细分的这几个问题，就会发现往往有更好的自动化路径来回答。比如她原来有个习惯：每天早上泡一杯咖啡，用 Claude Code 对接客户反馈频道去跑一遍信息汇总摘要；现在这个动作已经被编排进了 Routines 自动化任务里，连手动敲命令都省了。</p>
+
+<div class="quote"><strong>注：</strong> Routines 是 Claude Code 的一项功能，可以设置定时或触发式的自动化任务。Fiona 在准备这个演讲的一个月期间，这个功能才刚上线，连她自己的幻灯片内容都因此需要更新。</div>
+
+<p>这种角色的模糊化是双向发生的。一面是非技术出身的人员也开始卷起袖子写代码，Claude Code 团队里的 PM 就在实打实地提交 PR。另一面则是让工程师跳出自己的一亩三分地，去抢传统上属于其他岗位的活儿。Fiona 拿自己举了个例子：她原本想优化一下 Claude Code 的用户问卷调查，又找不到内容设计师。过去她可能要拉着内容团队的人反复抠文案字眼，现在她直接用 Claude 作为文案搭档。她自嘲作为一个典型的工程师，"在把文案写得精炼这件事情上可谓是一塌糊涂"。</p>
+
+<p><strong>在招聘上，</strong> Claude Code 团队重点看两类人：</p>
+<li>一类是<strong>有产品感觉的创意建造者</strong>：好奇心强，看到问题就想做产品来解决，会反复打磨体验。</li>
+<li>另一类是<strong>深度系统专家</strong>：团队搭建 Claude Code Remote 时发现缺少有分布式系统经验的人。</li>
+
+<p>她不再看重的是原始编码吞吐量，模型已经把这部分拉平了。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/05.jpg" alt="角色分工重新洗牌" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">代码边界日渐模糊，角色分工也在重新洗牌</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【8】组织形态：尽量扁平，经理从 IC 做起</h2>
+
+<p>Anthropic 招她进 Claude Code 时，对方默认按"10 个 IC 配 1 个经理，再向下嵌套"的结构来招人。Fiona 不要这种。</p>
+
+<p>她想要的是<strong>尽量扁平</strong>。Claude Code 和 Cowork 两条线只共用一个团队 mission，不让每个小组各自定 mission。理由很实在：mission 一变，多层级要花很多时间向下对齐，扁平等于灵活。</p>
+
+<p>她还坚持一条：<strong>Claude Code 团队里所有经理都要先做 IC（individual contributor，一线工程师）</strong>。</p>
+
+<p>招聘官最初的反应是"你疯了"，意思是没有经理愿意先做 IC。</p>
+
+<div class="quote"><strong>我希望 Claude Code 团队的每个经理都从 IC 起步，这是我对团队的期望，不接受就早点分开。</strong><br>
+（"This is what dogfooding on the Claude Code team's about, this is what I expect and if someone's not interested it's better for us to do earlier separation."）</div>
+
+<p>这一条对她自己也是。她的上一次 push 代码到生产环境是 2017 年，加入 Anthropic 之后才重新写起代码。她说自己在 Meta 时每年还试着提交一次 PR，但内部工具变得太快，一年学一个命令第二年就过期了。</p>
+
+<div class="quote"><strong>现在我连 git 命令都不记得了，全靠 Claude 帮我搞定。</strong><br>
+（"Nowadays I don't even remember git commands, I just always ask Claude to help me out with all of that."）</div>
+
+<hr class="divider">
+
+<h2>【9】从文档退位，让代码成为"唯一事实来源"</h2>
+
+<p>Claude Code 团队现在把代码视作最终的 <strong>source of truth（唯一事实来源）</strong>。比如 Fiona 现在是怎么答复技术客诉的？她会直接启动桌面版 Claude Code，挂载本地 repo 后让大模型直接从代码找逻辑去回答。这种做法彻底干掉了软件行业的一个千年遗留问题：开发文档总是不和代码同步。</p>
+
+<p>但她特意补充说明：这条经验并不是放之四海而皆准的。如果你们团队业务要求必须有完备的需求文档，那就顺理成章把 spec 也提到代码库里，让 Claude 交叉校验一下最后跑出来的代码跟文档写的是否吻合。</p>
+
+<p><strong>在推行这些变化时，Fiona 区分了"必须统一"和"交给小组"两层。</strong></p>
+
+<p><strong>必须统一的几条核心准则：</strong></p>
+<li>每个团队成员都要用 Claude Code（包括跨职能伙伴，Cowork 也是）；</li>
+<li>尽可能把能自动化的工作 Claude 化（团队内部叫"claudify everything"）；</li>
+<li>明确允许杀掉已经不服务于人的旧流程。</li>
+
+<p>最后一条她给了个具体例子。Claude Code 团队曾经搞过站会，团队变大后改成在共享表格里填周进度。某天她看着这张大表觉得索然无味：因为信息明明都在 Claude 能读到的地方，其实让 Claude 写个总结脚本丢在那里，任何人随时去拉一下其他人的状态摘要，这不比催人填表高到不知道哪里去了。</p>
+
+<p><strong>不过给小组自行拿捏的空间也非常清晰：</strong> 诸如 bug 的 triage（分诊）机制、排期的节奏、谁值班怎么值，乃至哪些工作流优先级较高需要率先上 Claude，统统放权让小组自己说了算。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/06.jpg" alt="代码是唯一事实来源" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">代码成为"唯一事实来源"，文档不再是 source of truth</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【10】三个可观察的指标，和一个警告</h2>
+
+<p>她没透露具体数字，但点了三个方向：</p>
+
+<li><strong>新人爬坡时间显著下降</strong>。工程师、设计师、PM 在新团队产生有效产出的速度明显更快。</li>
+<li><strong>PR 所需的周期明显变短了</strong>。她顺带一提，这其实是个值得深挖的指标，因为它的变化折射出的不仅仅是你这团队对 AI 工具的接受度，有时也会暴露下游基建拉胯的弊端，比如 CI（持续集成）管线或产品基础设施环境根本吃不消工程师当前暴增的提交速率。</li>
+<li><strong>Claude 介入提交的覆盖比例越来越高</strong>。在 Claude Code 团队的氛围里，每一次 commit 带上 Claude 才是被默认的常规操作：</li>
+
+<div class="quote"><strong>我已经差不多四个月没看到一次非 Claude 辅助的提交了。</strong><br>
+（"I don't think I've seen a non-Cloud assisted commit probably in the last four months or so."）</div>
+
+<p>但她在指标这一段明确加了警告：<strong>不要只看"代码有多少由 AI 生成"</strong>。各家公司新闻稿里这个比例越说越高，但吞吐量本身不是目的，要回头看你究竟在解决什么问题、产品质量和可靠性还守不守得住。</p>
+
+<hr class="divider">
+
+<h2>【11】她自己也没想清楚的三件事</h2>
+
+<p>Fiona 在演讲最后承认，有三个问题她还没答案：</p>
+
+<li>工程师能跨平台流转之后，传统的"iOS 团队 + Android 团队"分队还有没有意义。</li>
+<li>自动化评审要推到多远。"信任但验证"的边界在哪儿，会随模型升级再次移动。她提到当天稍早一场关于模型能力的演讲，意思是评审托管给 Claude 多少，不是一个一次定下来的决定。</li>
+<li>角色模糊之后，怎样让所有人感觉同样有产出感。当工程师能做内容、PM 能写代码、设计师能修 bug，传统的产出归属变模糊了，公平感的设计是新课题。</li>
+
+<hr class="divider">
+
+<h2>总结</h2>
+
+<p>她给听众的最后建议其实非常朴素直接：</p>
+
+<div class="quote"><strong>挑出极其折腾人、尤为啰嗦的那条工作流，重新审视一下它到底还在为谁干活。</strong><br>
+（"Pick your noisiest workflow … is it still really serving, what's the purpose of there."）</div>
+
+<p>她拿自己的亲身经历当了反例。以前在带某个团队时有个雷打不动的周例会，五十多号人挤在一个大屋子里。但 Fiona 细看发现，除了被点到名字起来汇报状态的人会假装抬一下头，其他人全都不约而同在低头敲键盘。后来她只问了一句"我们到底图什么还在开这破会"，瞬间全票通过顺带原地解散了。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>原文作者：</strong> 宝玉 @dotey</div>
+<p>></p>
+<div class="quote">📅 发布时间：2026-05-12</div>
+<p>></p>
+<div class="quote">🔗 视频原链接：<a href="https://www.youtube.com/watch?v=igO8iyca2_g" target="_blank">https://www.youtube.com/watch?v=igO8iyca2_g</a></div>
+
+  </div>
+  <div class="lang-content jp">
+
+<div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/dotey/status/2054086398328656383" target="_blank">@dotey 元ポスト</a></div>
+<p>></p>
+<div class="quote"><strong>著者：</strong> 宝玉 (@dotey)<br><strong>日時：</strong> 2026年5月12日 3:28 PM<br><strong>動画元リンク：</strong> <a href="https://www.youtube.com/watch?v=igO8iyca2_g" target="_blank">https://www.youtube.com/watch?v=igO8iyca2_g</a></div>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/01.jpg" alt="AI時代のエンジニアリングチームマネジメント" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">Fiona Fung — Anthropic Claude Code & Cowork エンジニアリング＆プロダクト責任者</figcaption>
+</figure>
+
+<hr class="divider">
+
+<div class="quote">
+  Fiona Fung が Anthropic カンファレンスで28分間、AI時代におけるエンジニアリングチームのマネジメントについて講演しました。
+  <br><br>
+  彼女がこのスライドを作成した時点では、Anthropic はまだ Routines 機能をリリースしていませんでした。
+  <br>
+  3週間後、Routines がリリースされました。これは Claude Code がクラウド上で定期的に自動タスクを実行できる機能で、ローカルで端末を開きっぱなしにする必要はありません。そして彼女が実際に Code with Claude 2026 カンファレンスの舞台に立った時には、スライドの何枚かはすでに時代遅れになっていました。
+  <br><br>
+  Fiona Fung は Anthropic の Claude Code と Cowork の両プロダクトラインにおけるエンジニアリング＆プロダクト責任者です。彼女は以前、Microsoft で12年間勤務し（Visual Studio からスタート）、その後 Meta で Facebook Marketplace や Instagram のエンジニアリングチームを率い、2025年9月に Anthropic に参入しました。今回の講演は30分弱で、テーマはごく普通の「AI時代におけるエンジニアリングチームのマネジメント」ですが、彼女が語ったのは、この1年間に Claude Code チームで経験した数々の失敗や打ち砕かれた旧来のルール、そしてまだ答えの出ていない現実的な課題であり、抽象的な空論は一切ありません。
+  <br><br>
+  動画元リンク：<a href="https://www.youtube.com/watch?v=igO8iyca2_g" target="_blank">https://www.youtube.com/watch?v=igO8iyca2_g</a>
+</div>
+
+<hr class="divider">
+
+<h2>ポイント一覧</h2>
+
+<li><strong>ソフトウェアエンジニアリングのボトルネック</strong>はかつて「コードを書くのが遅い」ことでしたが、今では検証、レビュー、クロスファンクショナルな協働、そしてセキュリティへと移行しています。従来の各種プロセスはすべて「コードを書くのはコストが高い」という前提で設計されていましたが、今や「コードを書くのはほぼ無料」となった以上、プロセスはすべて再構築されなければなりません。</li>
+<li><strong>プロセスが自然に消滅することはほとんどなく</strong>、組織は SLA、規則、レビューをひたすら積み重ねていくだけです。AI でエンジニアリングチームを変革する第一歩は、時代遅れのプロセスを削除することを明確に許可することです。</li>
+<li><strong>技術的な議論の仕方が変わりました</strong>。かつては人をホワイトボードルームに連れて行きアーキテクチャ図を描いていましたが、今では Claude に3つの PR を同時に作成させ、API への実際の影響範囲も含めてコードベースで議論します。</li>
+<li>Claude Code チームでは、<strong>すべての PR に Claude が関与しています</strong>。「このコードは誰が書いたのか？」という問いは次第に意味を失いつつあります。</li>
+<li><strong>マネージャーは必ず IC（個人貢献者）として現場からスタートしなければなりません</strong>。Fiona は採用においてこの条件を厳格に守っており、採用担当の同僚は当初「今どき、コードを書き直すために逆戻りしたいマネージャーがどこにいるのか」と理解できませんでした。彼女の返答は簡潔でした：「乗り気でなければ、早めにさよならしましょう」。</li>
+<li><strong>組織は可能な限りフラットに</strong>、すべてのサブグループが単一のチーム目標（ミッション）を共有します。その理由は単純です：目標が変わったとき、階層が増えれば増えるほどアラインメントのロスが生じやすくなり、フラットであれば柔軟性が増すからです。</li>
+<li><strong>コードこそが唯一の「事実の源泉（source of truth）」</strong>であり、設計ドキュメントではありません。どうしても spec を残したいのであれば、spec をコードベースにコミットし、Claude にコードとドキュメントの一致を検証させればよいのです。</li>
+<li><strong>効果を測るための3つの指標</strong>：新人の立ち上がり時間、PR のライフサイクル、Claude 支援によるコミットの割合。ただし彼女は、「コードのうちAIが書いた割合」を追いかけすぎないよう警告しています。それは単なる虚栄の指標であり、重要なのはプロダクトの品質と信頼性です。</li>
+
+<hr class="divider">
+
+<h2>【1】20年の間に、業界は2度再構築された</h2>
+
+<p>講演の冒頭で、Fiona は2000年代初頭にまでタイムラインを遡りました。彼女は当時 Microsoft で Visual Studio 2005——世界の主要な開発ツールの1つ——を開発していました。当時、ソフトウェアは CD で配布されていました（さらに遡ればフロッピーディスクです）。ソフトウェアを製造ラインでディスクに焼き、箱詰めし、店舗に配送する必要があったため、各バージョンには絶対的なリリーススケジュールが存在しました。</p>
+
+<p>その後インターネットが登場し、配布方法が CD からオンライン配信へと変わり、エンジニアリングのリズムは一変しました。今度は AI の番ですが、今回変わったのは配布リズムだけではなく、「コードを書く」という行為そのものです。</p>
+
+<p><strong>かつて有効だった経験則は、もはや通用しないかもしれません。</strong><br>
+（"What served you prior may not serve you any longer."）</p>
+
+<p>彼女は講演で繰り返しこの言葉に立ち返りました。長年にわたり、エンジニアリングのリズムはある前提の上に構築されてきました：コードを書くのは高コスト、テストを書くのは高コスト、リファクタリングは高コスト。ウォーターフォールからアジャイルまで、あらゆる方法論はこの希少なリソースをどのように配分するかという問題でした。</p>
+
+<p>昨年、彼女はまだ vibe coding（感覚でプログラミングすること。OpenAI 共同創業者 Andrej Karpathy が2025年初頭に提唱）について不満を述べていました：「なぜ至る所で定数を使っているんだ、エンジニアリングプラクティスが良くない」。1年後、モデルは格段に有能になりました。このブレークスルーは単なる「高速化」の域をはるかに超え、全体的なスループットが直接1桁向上したことを意味します。</p>
+
+<hr class="divider">
+
+<h2>【2】コーディングがボトルネックではなくなったとき、新たな課題はどこに現れるか</h2>
+
+<p>Claude Code チームの現在のボトルネックは<strong>検証、レビュー、クロスファンクショナルな協働、セキュリティ</strong>です。</p>
+
+<p>コード量が増加した後、彼女が他のエンジニアリング責任者から最もよく聞かれた質問は：「このコードを人間がどうやってレビューしきれるのか？」というものでした。彼女自身もメンテナンスコストがどう算出されるのか知りたいと考えていました。コード生成のコストはほぼゼロですが、メンテナンスコストがゼロになるわけではありません。</p>
+
+<div class="quote"><strong>注：</strong> 講演で言及された「Claude Code を使って Claude Code を構築する」は、Anthropic 社として公開されているプラクティスです。Boris Cherny は以前の複数のインタビューで、自身が Claude Code を使って10日間で Cowork（非技術ユーザー向けデスクトップエージェント）を構築したと語っています。これは修辞ではなく、エンジニアリングの現実です。</div>
+
+<p>彼女は「静かに機能しなくなっている」旧来のプロセスのリストを挙げました：半年先のプロダクトロードマップ、煩雑なスケジューリングミーティング、コードの所有権の細分化、マラソンのようなコードレビューミーティング、段階的な従来型チーム構造、ナレッジベースの共有、そして長大な新人オンボーディング。これらはすべて、かつて「開発コストが高すぎる」という現実によって生み出された歴史的産物です。</p>
+
+<p><strong>プロセスが自然に消滅することはほとんどありません。私たちは新しいプロセスをひたすら積み重ねていく習慣があります。</strong><br>
+（"Rarely do processes kill themselves, we tend to just layer more and more and more processes on."）</p>
+
+<p>彼女は痛烈な例を挙げました：以前のチームでは、SLA（サービスレベル契約）が多すぎて、大規模な表に強制的にソートをかけないと、エンジニアがどの SLA を優先的に対応すべきかわからない状態でした。彼女は以前からこの過剰な積み重ねを整理すべきだと感じていましたが、実際に決断して行動に移したのは Anthropic に来てからでした。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/02.jpg" alt="プロセスの積み重ね" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">プロセスが自然に消滅することはほとんどなく、ひたすら積み重ねていくだけ</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【3】減らすべきこと：6ヶ月ロードマップ、設計ドキュメント、プロダクトレビュー</h2>
+
+<p>Claude Code に加わったばかりの頃、彼女はまだ「6ヶ月のロードマップは必要ないの？」と尋ねていました。</p>
+
+<p>作ってみると、最初の3ヶ月は使えましたが、新年を過ぎて見直すと、大半が変わっていました。彼女は今、<strong>jit planning（ジャストインタイム計画）</strong> という言葉を使っています。プログラミングの概念である just-in-time コンパイルから借用したもので、必要なときに必要なことを行うという意味です。プロトタイピングのコストがゼロに近づいている今、「事前計画」のレバレッジは消滅しました。</p>
+
+<p>設計ドキュメントも大幅に削減されました。Claude Code チームのデフォルトの議論メディアは「まず doc を書く」から「まず PR を出す」に変わり、アイデアがあれば直接実装します。プロダクトレビューミーティングも減らしました。プロダクトの形態が変わるスピードが速すぎるため、モックをレビューするよりも、内部バージョンを Anthropic の全社員にプッシュし（彼女はこれを <strong>ant-fooding</strong> と呼んでいます。会社名の Anthropic に"ant"が含まれているからです）、さらに外部ユーザーにプッシュして、彼らがどう使うかを聞く方が有効だからです。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/03.jpg" alt="JIT Planning" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">JIT Planning：プロトタイピングコストがゼロに近づき、「事前計画」のレバレッジは消滅</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【4】増やすべきこと：検証、品質保証を上流へシフト</h2>
+
+<p>彼女はチームが検証への投資を倍増することを望んでいます。これを <strong>shift left（左シフト）</strong> と呼びます。従来のソフトウェアパイプラインでは左が上流（ソース）、右が下流（デリバリー）であり、品質保証をデリバリー側の手動テストから、上流側の自動化へとシフトさせます。</p>
+
+<p>なぜこれが重要になったのでしょうか？ 役割の境界が曖昧になっているからです。彼女のチームのデザイナーも今やコードをコミットしています。Fiona は実際の小さな不安エピソードを話しました：彼女が履歴書関連のバグを修正した後、翌日 Boris のメッセージストリームを見ると、誰かがグループで彼に新しいバグを報告していました。その時の感覚を「心臓が一瞬止まった」と表現し、自分の修正が原因ではないかと心配したといいます。</p>
+
+<p>誰もが自分のコミットでサービスをダウンさせたくはありません。この高スループットの環境では、これは非常に現実的な心理的負担です。従来の手動 QA ではこのような高いコード生成レートに対応できません。したがって、品質保証はより早期に自動化メカニズムに依存する必要があります。</p>
+
+<hr class="divider">
+
+<h2>【5】技術的議論の方法が変わった：ホワイトボードから3つのPRへ</h2>
+
+<p>Claude Code チームに加わったばかりの頃、彼女はコードベースに慣れるためにリファクタリングをしようと考えました。Boris と技術的なアプローチで意見が分かれ、彼女は習慣的に肩を叩いて「さあ、ホワイトボードルームに行って描こう」と言いかけました。</p>
+
+<p>次の瞬間、彼女は気づきました。Claude に3つのバージョンの PR を同時に作成させ、完全なコード実装を直接比較し、さらにすべての呼び出し側への影響まで洗い出すことができると。ホワイトボードではこれほど直感的な全体像を描くことはできませんが、コードなら可能です。</p>
+
+<p><strong>構築が容易になればなるほど、際限のない議論は極めて高コストになる。</strong><br>
+（"When building is cheap, arguing is expensive."）</p>
+
+<p>この判断を述べたとき、彼女の口調は特に厳しいものでした。彼女は聴衆にこう注意を促しました：コード生成のコストがゼロに近づいているからこそ、チーム文化と共通の基盤がますます重要になるのです。</p>
+
+<p><strong>決して「最後にコミットした者が勝ち」になってはいけません</strong>。例えば、誰かが深夜3時まで起きてこっそりコードをコミットしたり、リリース直前に定时タスクを仕掛けて滑り込みで操作したりするのは絶対に許されません。まさにコードの価値が下がったからこそ、チームの横方向のアラインメントには明確な妥協点が必要なのです。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/04.jpg" alt="技術的議論の変化" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">構築が容易になればなるほど、際限のない議論は極めて高コストになる</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【6】コードレビュー：Claude に任せること、人間が残すこと</h2>
+
+<p>Cat Wu がカンファレンス午前中のキーノートで、Claude による自動 PR レビュー機能についてすでに講演しました。Fiona のここでの視点はより具体的です：何を Claude に任せ、何を人間に残すか。</p>
+
+<div class="quote"><strong>注：</strong> Cat Wu は Claude Code のプロダクト責任者であり、Boris Cherny と共に Claude Code のプロダクト方向性を主導しています。</div>
+
+<p><strong>Claude に任せること：</strong> スタイルチェック、lint の重複除去、コードレビューコメントへの応答、通常のバグの発見、そしてユニットテストの補完。彼女によれば、Claude は今や PR の「整理」を非常に得意としており、通常、人間が引き継ぐ前にほとんどの汚れ仕事を終えています。</p>
+
+<p><strong>依然として人間の介入が必要な3つのカテゴリ：</strong></p>
+<li>法律およびコンプライアンス関連のレビュー（リスクの評価が関わるため）</li>
+<li>セキュリティに敏感なコードの境界確認（脆弱性のコストが高すぎるため）</li>
+<li>プロダクト体験に関するセンス（直感）と品味——これも現在の大規模言語モデルが越えるのがかなり難しいハードルの1つです</li>
+
+<p>3つ目のカテゴリについて、彼女は軽妙な例を挙げました。彼女には小さな趣味があります：Claude の端末の見た目を季節ごとに飾ることです。クリスマスには Claude を雪だるまに変えようと、Claude に ASCII アートで描かせました。その結果をデザイナーの同僚に見せて意見を求めたところ、一言：「ミスター・ピーナッツに描けちゃってるよ。」</p>
+
+<div class="quote"><strong>注：</strong> ミスター・ピーナッツはアメリカの有名なスナックブランド Planters のマスコットで、シルクハットとモノクルを着けており、シルエットが雪だると少し似ています。</div>
+
+<p>彼女は最終的にシンプルな案を採用しました：アイスブルーと雪の結晶。この話は、プロダクトセンスの重要性を示しています：抽象的な判断は自動化が難しいのです。</p>
+
+<hr class="divider">
+
+<h2>【7】コードの境界が曖昧になり、役割分担も再編されている</h2>
+
+<p>Claude Code チームでは、ほぼすべての PR に Claude が関与しています。「このコードは誰が書いたのか？」という問いは、荒唐無稽で意味を失いつつあります。</p>
+
+<p>Fiona は、このような表面的なことにこだわるのではなく、本当に知りたいことを深掘りするよう提案しています：誰の変更がバグを引き起こしたのか？ 誰が十分な背景知識を持って顧客に技術的詳細を説明できるのか？ 誰がこのコードモジュールの経緯をよく理解しているのか？ 後者の細分化された質問をするならば、より良い自動化の方法があることがわかるでしょう。例えば、彼女にはかつてこんな習慣がありました：毎朝コーヒーを淹れ、Claude Code を使って顧客フィードバックチャンネルの情報を要約すること。今ではこの作業は Routines の自動化タスクに組み込まれ、手動でコマンドを打つ必要すらなくなりました。</p>
+
+<div class="quote"><strong>注：</strong> Routines は Claude Code の機能で、定期的またはトリガー型の自動化タスクを設定できます。Fiona がこの講演を準備していた1ヶ月の間に、この機能はリリースされたばかりで、彼女自身のスライドの内容もそのために更新が必要でした。</div>
+
+<p>この役割の曖昧化は双方向で進行しています。一方では、非技術出身のメンバーもコードを書き始めており、Claude Code チームの PM も実際に PR を提出しています。もう一方では、エンジニアが自分の担当領域を飛び出して、伝統的に他のポジションの仕事とされていた役割を担うようになっています。Fiona 自身の例を挙げると、彼女は Claude Code のユーザーアンケートを改善したいと思いましたが、コンテンツデザイナーが見つかりませんでした。以前であれば、コンテンツチームと一緒に何度も文案の文言を詰めていたでしょうが、今は Claude をコピーライティングのパートナーとして直接使っています。彼女は典型的なエンジニアとして、「文案を洗練させることに関しては、めちゃくちゃ苦手だ」と自嘲しています。</p>
+
+<p><strong>採用において、</strong> Claude Code チームは2つのタイプの人材に重点を置いています：</p>
+<li>1つ目は<strong>プロダクトセンスのあるクリエイティブビルダー</strong>：好奇心が強く、問題を見つけるとプロダクトで解決しようとし、体験を繰り返し磨き上げます。</li>
+<li>2つ目は<strong>深いシステムの専門家</strong>：Claude Code Remote を構築する際に、分散システムの経験を持つ人材が不足していることに気づきました。</li>
+
+<p>彼女がもはや重視しないのは、生のコーディングスループットです。モデルがすでにその部分を平均化してしまったからです。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/05.jpg" alt="役割分担の再編" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">コードの境界が曖昧になり、役割分担も再編されている</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【8】組織形態：可能な限りフラットに、マネージャーは IC からスタート</h2>
+
+<p>Anthropic が彼女を Claude Code に採用する際、相手側はデフォルトで「IC 10人につきマネージャー1人、さらに下位に階層を設ける」という構造で採用を進めていました。Fiona はそれを拒否しました。</p>
+
+<p>彼女が求めたのは<strong>可能な限りフラット</strong>な組織でした。Claude Code と Cowork の2つのラインは単一のチームミッションのみを共有し、各サブグループが個別にミッションを設定することを許しません。その理由は実に現実的です：ミッションが変わると、多階層では下位へのアラインメントに多くの時間を要しますが、フラットであれば柔軟性が増すからです。</p>
+
+<p>彼女はもう1つ固く主張しました：<strong>Claude Code チームのすべてのマネージャーは、まず IC（個人貢献者、現場のエンジニア）を経験しなければならない</strong>。</p>
+
+<p>採用担当者の最初の反応は「正気ですか？」というもので、マネージャーが IC をやりたがるはずがないという意味でした。</p>
+
+<div class="quote"><strong>Claude Code チームのすべてのマネージャーが IC からスタートすることを望んでいます。これはチームに対する私の期待であり、興味がなければ早めに別れる方がお互いのためです。</strong><br>
+（"This is what dogfooding on the Claude Code team's about, this is what I expect and if someone's not interested it's better for us to do earlier separation."）</div>
+
+<p>このルールは彼女自身にも適用されます。彼女が最後に本番環境にコードをプッシュしたのは2017年で、Anthropic に入ってから再びコードを書き始めました。Meta にいた頃は年に1回 PR を提出しようとしていたそうですが、内部ツールが変わるのが速すぎて、1年間で1つのコマンドを覚えても翌年には陳腐化してしまったとのことです。</p>
+
+<div class="quote"><strong>今では git コマンドさえ覚えていません。すべて Claude に頼っています。</strong><br>
+（"Nowadays I don't even remember git commands, I just always ask Claude to help me out with all of that."）</div>
+
+<hr class="divider">
+
+<h2>【9】ドキュメントから撤退し、コードを「唯一の事実の源泉」に</h2>
+
+<p>Claude Code チームは現在、コードを究極の <strong>source of truth（唯一の事実の源泉）</strong> と見なしています。例えば、Fiona は技術的な顧客クレームにどう対応しているのでしょうか？ 彼女はデスクトップ版 Claude Code を起動し、ローカルリポジトリをマウントして、大規模言語モデルにコードから直接ロジックを探させて回答します。このアプローチは、ソフトウェア業界の千年の課題——開発ドキュメントがコードと同期しない——を完全に解決しました。</p>
+
+<p>ただし彼女は、この経験則がすべての状況に当てはまるわけではないと補足しています。もし皆さんのチームの業務上、完璧な要件ドキュメントが必要であれば、spec もコードベースにコミットし、Claude に最終的なコードとドキュメントの整合性を相互検証させるのが良いでしょう。</p>
+
+<p><strong>これらの変更を推進するにあたり、Fiona は「必ず統一すべきこと」と「チームに委ねること」の2層を区別しています。</strong></p>
+
+<p><strong>必ず統一すべき中核的な原則：</strong></p>
+<li>すべてのチームメンバーが Claude Code を使用すること（クロスファンクショナルメンバーも含む。Cowork も同様）</li>
+<li>自動化可能な作業は可能な限り Claude 化すること（チーム内では"claudify everything"と呼んでいます）</li>
+<li>もはや役に立っていない旧プロセスを削除することを明確に許可すること</li>
+
+<p>最後の点について、彼女は具体例を挙げました。Claude Code チームはかつてスタンドアップミーティングを行っていましたが、チームが大きくなった後は共有スプレッドシートに週次の進捗を記入する方式に変更しました。ある日、彼女はその大きな表を見て味気なさを感じました：情報は明らかに Claude が読める場所にあったからです。実際、Claude に要約スクリプトを書かせてそこに置いておけば、誰でもいつでも他のメンバーのステータス概要を取得できる——表の入力を催促するよりもはるかに優れていると気づいたのです。</p>
+
+<p><strong>一方で、チームに委ねる裁量の範囲も明確です：</strong> バグのトリアージ（振り分け）メカニズム、スケジュールのリズム、当番の割り振り方、さらにはどのワークフローの優先度が高く Claude を先に導入すべきかといったことまで、すべてチームの自主判断に委ねています。</p>
+
+<figure style="margin:24px 0; text-align:center;">
+  <img src="../articles/images/012/06.jpg" alt="コードが唯一の事実の源泉" style="max-width:100%; border-radius:8px; box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+  <figcaption style="color:#666; font-size:0.85rem; margin-top:8px;">コードを「唯一の事実の源泉（source of truth）」に</figcaption>
+</figure>
+
+<hr class="divider">
+
+<h2>【10】3つの観測可能な指標と、1つの警告</h2>
+
+<p>彼女は具体的な数値は明かしませんでしたが、3つの方向性を示しました：</p>
+
+<li><strong>新人の立ち上がり時間が大幅に短縮</strong>。エンジニア、デザイナー、PM が新しいチームで効果的なアウトプットを生み出すまでのスピードが明らかに向上しました。</li>
+<li><strong>PR に要するサイクル時間が明らかに短縮</strong>。彼女はついでに、これは実は深掘りする価値のある指標だと述べています。その変化が示すのは、単にチームの AI ツールへの受容度だけでなく、下流のインフラの問題——例えば CI（継続的インテグレーション）パイプラインやプロダクトインフラ環境が、エンジニアの急増したコミットレートに対応できていない——を露呈することもあるからです。</li>
+<li><strong>Claude が関与したコミットのカバレッジ比率が上昇し続けている</strong>。Claude Code チームの文化では、すべてのコミットに Claude を伴うことがデフォルトの標準操作となっています：</li>
+
+<div class="quote"><strong>この4ヶ月近く、Claude の支援なしのコミットを見たことがないと思います。</strong><br>
+（"I don't think I've seen a non-Cloud assisted commit probably in the last four months or so."）</div>
+
+<p>しかし彼女は指標について明確に警告を加えました：<strong>「コードのうちAIが生成した割合」だけに注目してはいけません</strong>。各企業のプレスリリースでこの割合はますます高くなっていますが、スループット自体が目的ではありません。自分たちが本当にどのような問題を解決しているのか、プロダクトの品質と信頼性が維持されているかに立ち返る必要があります。</p>
+
+<hr class="divider">
+
+<h2>【11】彼女自身もまだ答えを出せていない3つのこと</h2>
+
+<p>Fiona は講演の最後に、まだ答えの出ていない3つの問題があることを認めました：</p>
+
+<li>エンジニアがクロスプラットフォームで流動できるようになった後、従来の「iOS チーム＋Android チーム」という分割にまだ意味があるのか。</li>
+<li>自動化レビューをどこまで推し進めるべきか。「信頼するが検証する」の境界線はどこにあるのか、それはモデルのアップグレードに伴い再び移動するだろう。彼女は、当日の早い時間に行われたモデル性能に関する別の講演に言及し、レビューを Claude にどの程度委託するかは、一度決めたら終わりという性質の決定ではないと述べました。</li>
+<li>役割が曖昧になった後、すべての人が同じように生産性を感じられるようにするにはどうすればいいか。エンジニアがコンテンツを作り、PM がコードを書き、デザイナーがバグを修正できるようになると、従来のアウトプットの帰属が曖昧になります。公平感の設計は新しい課題です。</li>
+
+<hr class="divider">
+
+<h2>まとめ</h2>
+
+<p>彼女が聴衆に贈った最後のアドバイスは、実に素朴で直接的です：</p>
+
+<div class="quote"><strong>最も面倒で、特に煩わしいワークフローを選び出し、それがいったい誰のために機能しているのかを再検討してください。</strong><br>
+（"Pick your noisiest workflow … is it still really serving, what's the purpose of there."）</div>
+
+<p>彼女は自身の経験を反面教師として挙げました。以前あるチームを率いていたとき、絶対に外せない週次ミーティングがあり、50人以上が大きな部屋に詰めかけていました。しかし Fiona がよく観察してみると、名前を呼ばれて状況報告をするように指示された人が申し訳程度に顔を上げる以外は、他の全員が一致団結して下を向いてキーボードを叩いていました。その後、彼女が「一体何のためにこのクソミーティングを続けているんだ」と尋ねたところ、瞬時に全会一致でその場で解散することが決まりました。</p>
+
+<hr class="divider">
+
+<div class="quote">🥳 <strong>原文著者：</strong> 宝玉 @dotey</div>
+<p>></p>
+<div class="quote">📅 公開日：2026-05-12</div>
+<p>></p>
+<div class="quote">🔗 動画元リンク：<a href="https://www.youtube.com/watch?v=igO8iyca2_g" target="_blank">https://www.youtube.com/watch?v=igO8iyca2_g</a></div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="links">
+    <a href="../index.html"><span class="lang-content cn">文章列表</span><span class="lang-content jp">記事一覧</span></a>
+    <a href="../prompts/"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a>
+    <a href="../index.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a>
+    <a href="../index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a>
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  </div>
+  <div class="copyright">© 2026 AI知识库</div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
