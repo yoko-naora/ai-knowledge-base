@@ -60,9 +60,12 @@
 }
 
 /* Author link at bottom */
+/* Footer */
 .detail-footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #eee; text-align: center; }
 .detail-footer a { color: #FF6B35; text-decoration: none; font-weight: 500; }
 .detail-footer a:hover { text-decoration: underline; }
+.next-link { display: inline-block; background: #FF6B35; color: #fff !important; padding: 6px 18px; border-radius: 20px; font-size: 0.9rem; margin-left: 8px; }
+.next-link:hover { background: #e55a2b; text-decoration: none !important; }
 
 /* Loading & Error */
 .detail-loading { text-align: center; padding: 80px 20px; color: #888; }
@@ -284,9 +287,12 @@ function getParam(name) {
         html += '</div></div>';
       }
 
-      // Footer - link to X
+      // Footer - link to X + next page
       html += '<div class="detail-footer">';
-      html += '☝️ <a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener">查看 X 原贴 →</a>';
+      html += '<a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener" style="margin-right:20px;">☝️ 查看 X 原贴 →</a>';
+      if (idx + 1 < data.length) {
+        html += '<a href="?id=' + (idx + 1) + '" class="next-link">👉 去下一页</a>';
+      }
       html += '</div>';
 
       loading.style.display = 'none';
