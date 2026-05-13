@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第17篇：Codex App 边玩边赚钱实战教学 · AI知识库</title>
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="logo">AI<span>知识库</span></div>
+  <ul class="nav-links">
+    <li><a href="../index.html">文章</a></li>
+    <li><a href="../prompts/">最新提示词</a></li>
+    <li><a href="../index.html#tools">推荐工具</a></li>
+    <li><a href="../index.html#pricing">定价</a></li>
+    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <a href="../index.html" class="back-link">← <span class="lang-content cn" style="display: block;">返回首页</span><span class="lang-content jp" style="display: none;">トップに戻る</span></a>
+  <h1><span class="lang-content cn" style="display: block;">第17篇：Codex App 边玩边赚钱实战教学</span><span class="lang-content jp" style="display: none;">第17回：Codex App 边玩边赚钱实战教学</span></h1>
+  <div class="meta">✏️ @gengdaJ（逸尘） · 2026-05-11</div>
+  <div class="source">📎 <a href="https://x.com/gengdaJ/status/2053724702993190917" target="_blank"><span class="lang-content cn" style="display: block;">查看原文</span><span class="lang-content jp" style="display: none;">原文を見る</span></a></div>
+</section>
+
+<div class="article-content">
+  <div class="lang-content cn" style="display: block;">
+
+<div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/gengdaJ/status/2053724702993190917" target="_blank">@gengdaJ 原帖</a></div>
+
+<p>title: "Codex App 边玩边赚钱实战教学：那些不为人知的使用秘诀"</p>
+<p>author: "逸尘 (@gengdaJ)"</p>
+<p>source: "https://x.com/gengdaJ/status/2053724702993190917"</p>
+<p>date: "Mon May 11 06:31:40 +0000 2026"</p>
+<p>上一篇我讲了 Codex App 从 0 到 1 入门，重点是带大家认识 Codex 界面以及进行一些基础配置。</p>
+<p>地基已经搭建好了，就要开始用 Codex App 干一些真正能提效降本的事情，把它全方位地赋能到业务里面。</p>
+<p>今天这篇就带大家进入一些实战场景，体验一下 Codex 那些不为人知的使用秘诀，从基础到略难，从功能到场景，一次性帮你把 Codex 啃透！🔥</p>
+<li>牛马打工人必备：用 Codex 做 Word、PDF、PPT（图片型 VS HTML 型）、Sheets 四件套。</li>
+<li>手搓酷炫 3D 视频：用 Codex + HyperFrames / Remotion（three.js）做《国产动画十大电影》。</li>
+<li>早起早睡身体好：用 Codex 实际制作一个排版精美的分析早睡早起的网站，在 Vercel 上线部署，然后用Codex操控OpenRouter做对比实验，测试新模型Ring的能力。</li>
+<li>自媒体人必备：用 Codex 制作图文长教程——让 Codex 自己操控自己，多对话并行，截图打码一把梭。</li>
+<li>电商选品上架自动化：Codex + Playwright 操控浏览器，无痛实现拼多多商品批量上架。</li>
+<p>边学边玩，再边把钱赚了，是我的目标，也与各位大佬共勉，话不多说，直接开始！</p>
+<p>以前如果你要做一套活动方案、项目汇报、课程交付、咨询报告、员工培训材料，可能要先花几个月熟练使用这些工具。</p>
+<p>但是现在在Codex里面只需要一句提示词，就能生成排版精美、数据准确的Word、PDF、PPT、Sheets。</p>
+<p>我为了展示Codex生成四件套的能力，做了一个demo：</p>
+<blockquote>请在当前对话里做一个办公四件套演示任务，主题是《Codex App 内容生产工作流》。要求：</blockquote>
+<li>生成 Word 文档、PDF 文件、PPTX 演示稿、XLSX 表格四类真实文件；</li>
+<p>2. 每个文件都要有实际内容，不要空文件；</p>
+<p>3. 生成后告诉我每个文件的真实路径；</p>
+<p>4. 尽量生成一个预览或文件清单，方便我截图放进教程；</p>
+<p>5. 最后给出验收清单，确认四个文件都存在、能打开、不是占位内容。</p>
+<p>验收结果：</p>
+<p>1.Word 文档验收截图：</p>
+<p>2.PDF 文件验收截图：</p>
+<p>3.PPT 演示稿验收截图：</p>
+<p>4.Sheets 表格验收截图：</p>
+<p>当然，在我没有给出skill或者优化后的提示词的情况下，能做出这样的效果，已经非常优秀了！</p>
+<p>众所周知，现在X最火的PPT制作方法，绝对是打破传统的HTML绘制PPT，现在相关爆火的Skill也是数不胜数，其次直接生成图片PPT也是一个另辟蹊径的办法。</p>
+<p>下面我将用“进阶版”PPT的操作路径给大家带来一些启发：</p>
+<p>图片型 PPT 的意思是：先让 Codex 生成一张张 16:9 的视觉图片，再把这些图片铺到 PPT 里。</p>
+<p>每一页 PPT 本质上就是一张完整图片。</p>
+<p>效果还是蛮不错的，因为底层是GPT2-imge。</p>
+<p>当然，这种方式生成的PPT并非无法编辑，还是有很多方法滴，如果感兴趣，可以私信找我要文档～</p>
+<p>HTML 型 PPT 是最近非常火的一条路线。</p>
+<p>说白了，就是不用传统 PPT 软件，而是用 HTML、CSS、JS 直接写幻灯片。</p>
+<p>它的好处是：</p>
+<li>可以在浏览器里直接预览；</li>
+<li>可以做动画；</li>
+<li>可以做交互；</li>
+<li>可以用代码控制布局；</li>
+<li>可以方便截图、导出、录屏；</li>
+<li>很适合和 Codex 这种代码执行型工具配合。</li>
+<p>X上面有很多开源火爆的Skill，大家用Grok搜索一下就能让Codex安装一下使用了。</p>
+<p>前面是打工人刚需，下面开始玩一点酷的，主打一个劳逸结合。</p>
+<p>我之前让 Codex + HyperFrames / Remotion (three.js) 做了一个《国产动画十大电影》的 3D 视频：</p>
+<p>核心思路：</p>
+<li>Codex 负责写项目、改代码、跑渲染、排查错误</li>
+<li>three.js 负责 3D 画面</li>
+<li>Minimax负责旁白配音</li>
+<li>yt-dlp下载部分视频</li>
+<li>Remotion / HyperFrames 负责把网页动画变成视频</li>
+<li>本地工具统一音量</li>
+<li>最后输出 MP4 成片</li>
+<p>详细步骤就是：</p>
+<p>1.先把目标视频的需求给Codex说清楚——“我需要一个做《国产动画十大电影》的视频，16:9....（更多描述参考下面的模板），你自己去网上找素材下载。”</p>
+<p>2.和Codex对齐需求——”如果有任何不清楚的地方，或者需要我继续判断的地方，请一定要停下来问我问题，进行信息对齐。“</p>
+<p>3.开启“超高”和“完全访问权限”，让Codex@browser和@computer use自己去操作，当然@chrome也可以（但是我一直超时没成功过）。</p>
+<p>4.得到成片，然后就是把不满意的地方和Codex说，让它修改。</p>
+<p>当初我想要做这么一个视频的思路，很简单，我就是想验证Codex“自动写脚本——搜索素材——自动下载——自动识别高光片段——自动配音——自动剪辑”这条链路跑通。</p>
+<p>然后迁移到商业化就是，调用GPT2-image、seedance2.0、elevenlabs等API，90%自动化地完成上述整个思路，赋能到AI流量变现、AI电商带货、AI前端获客、AI广告宣传等真实场景里面。</p>
+<p>至于怎么写脚本、怎么生成图片、怎么制作视频，这是一门大学问，需要千锤百炼去苦修试错，不是朝夕就能学会的，而且细分到每一个垂直领域所需要掌握的技巧又是完全不同的。</p>
+<p>但是怎么生成一个视频，快速上手玩，有一个通用模板可以给大家快速上手：</p>
+<blockquote>目标：</blockquote>
+<p>受众：</p>
+<p>目标平台：unspecified / YouTube / Shorts / Reels / TikTok / 官网 / 会议现场</p>
+<p>时长：</p>
+<p>比例 / 分辨率 / FPS：</p>
+<p>语言：</p>
+<p>场景数量与每场时长：</p>
+<p>主体 / 角色：</p>
+<p>动作：</p>
+<p>场景 / 背景：</p>
+<p>镜头 / 构图：</p>
+<p>光线 / 色彩 / 风格：</p>
+<p>字幕 / 画面文字：</p>
+<p>音频：旁白 / 语言 / 音色 / 语速 / 音乐 / SFX</p>
+<p>转场：</p>
+<p>关键帧 / 参考图 / 角色一致性资产：</p>
+<p>品牌 / 法务 / 无障碍：</p>
+<p>数据变量 / 占位符：</p>
+<p>输出要求：先给 scene list，再给 final prompt，再给 render metadata JSON</p>
+<p>关于纯AI视频这一块，我之前这篇推文也有分享过我汇总的影视基础知识：</p>
+<p>现在玩 AI 的人，很多都有一个共同问题：作息乱。</p>
+<p>原因可能就是。。。AI太好玩了——本来只是想改一个提示词，然后顺手又刷了一堆X、莫名其妙调用Codex跑一个任务，最后这个任务又停不下来了。。。这就是曾经的我。。。</p>
+<p>我知道用AI很爽，但身体遭不住，健康才是革命的本钱。所以我趁这次写“Codex代码教程“的机会，让 Codex 做了一个网站，主题是“早睡早起身体好”</p>
+<p>让Codex写代码，跑出一个小网站或者小App真的很简单：</p>
+<blockquote>请重新帮我生成一个网站，主题是早睡早起。</blockquote>
+<p>要求：</p>
+<li>页面要排版精美；</li>
+<p>2. 可以有 3D 动画效果；</p>
+<p>3. 分析早睡早起的好处；</p>
+<p>4. 给出普通人能执行的步骤；</p>
+<p>5. 做成真实可运行的网站；</p>
+<p>6. 最后启动本地预览，并部署到 Vercel。</p>
+<p>涉及到上线部署（别人通过链接能访问你的这个网站）这里可能需要你配置一下Vercel插件（“插件”里面搜Vercel就行）：</p>
+<p>Codex 最后做出来的不只是一个静态页面（已经部署到：https://codex-1-html-css-js-2.vercel.app/，大家可以自由访问），他还做了：</p>
+<li>一个 3D 昼夜节律视觉场景；</li>
+<li>早睡早起好处说明；</li>
+<li>晚间关机流程；</li>
+<li>早晨启动流程；</li>
+<li>7 天调整计划；</li>
+<li>自测打分；</li>
+<li>常见误区；</li>
+<li>参考资料和免责声明。</li>
+<p>当然，这只是一个很基础的网站，如果想要做前端后端都完备的网站，那么难度会高一些，但是没关系，Codex都能帮你解决的，记得选择“计划模式”，先有方案，再写代码，效果会好很多。</p>
+<p>除了让Codex自己写项目之外，其实还能白嫖官方网页版AI生成的代码——我直接打开相应的网页版AI，把我的项目需求告诉它，让它返回相应的代码，这一招在测试新模型的时候特别好用。</p>
+<p>Openrouter上面经常会有新的模型，这个时候很多人很懒，只想等着AI博主测试完了看效果，但是这样其实自己永远不清楚模型的真实能力。</p>
+<p>一个一个测确实费时间，其实有一个小技巧——直接让Codex去Openrouter上测试。</p>
+<p>最近 OpenRouter 上又新出现了一个模型：Ring-2.6-1T (free)，是蚂蚁家的第一个推理大模型（）。</p>
+<p>我本来想把 Ring-2.6-1T 接到 Claude Code 里面，然后让 Codex 去操作 Claude Code，看这个模型在 agent 编程场景里的真实表现。但实际操作的时候遇到一个限制：Codex 现在不能直接操控我本机里已经打开的 Ghostty / Claude Code 终端界面，所以这条链路不好测。</p>
+<p>于是我换了一个更直接的办法：让 Codex 打开 OpenRouter 官网，在 Chat Playground 里选择 Ring-2.6-1T (free)，然后把上面那条非常普通的“早睡早起网站”提示词和本地 frontend-design skill 里的审美原则提炼成提示词丢给它，让它直接生成一个单文件 HTML 网站。</p>
+<p>它生成出来的版本，我也部署了一份，大家可以直接打开看效果：</p>
+<p>https://ring-sleep-site.vercel.app/</p>
+<p>老实说，这个结果非常不错吧，简洁美观。白嫖Token成功！</p>
+<p>所以，如果你刚好想用一种高效的办法测试新模型的能力，我建议你可以通过 Codex + OpenRouter 免费试试 Ring 模型。国产大模型现在确实不是只能看参数和榜单，拿来干活也已经很有水平了。</p>
+<p>此外，这个思路其实还可以迁移，Codex里面只能用GPT5.5模型，但是网页端GPT可以用GPT5.5 pro，据说这个模型比Codex写的代码好用，所以我这个思路迁移到GPT5.5pro可以说是非常牛逼！这个秘密别公开出去了，咱自己用就行。。。</p>
+<p>这一节是我自己非常常用的一个场景，我相信会对很多写长文章恐惧症的朋友也会有所帮助。</p>
+<p>自媒体人最痛苦的是什么？不是不会写，而是“搜索素材——找选题——搭结构——写文章——配图片/视频”这套流程花费时间太多了，往往写一篇文章几个小时就过去了。。。</p>
+<p>所以，我直接干脆让Codex来写，我上一篇爆了92W阅读的《Codex App 从0到1完整入门教程：把这个超级APP的每一个细节抽丝剥茧讲清楚》其实80%都是由Codex完成！</p>
+<p>包括文章、截图、打码、配封面图，我做的就是20%的纠正和补充工作。</p>
+<p>但是，为什么很多人用AI写出的就是一坨。。。而我能用Codex写出那么高阅读的文章？这就涉及到“提示词的准确度”和“风格迁移学习”。</p>
+<p>写作，不是给AI一个方向，让它琢磨，而是你要把“自己写这篇文章的思路”告诉它，让它帮你加速这个过程，这篇文章的核心和内容基本和你脑海想的别无二致，只是AI把这个琐碎的过程给自动化了。</p>
+<p>所以，有一篇AI写的好文之前，是这个写作的人脑海里面有画面、有思路。</p>
+<p>我拿我之前的这篇文章举个例子：我知道要介绍Codex的主界面以及Codex的设置，那么我给Codex的指令就是：</p>
+<blockquote>“你来操作Codex APP本身，你挨个分析Codex主界面每个按钮的功能，然后再打开Codex的设置，按照左边导航栏的顺序，一页一页仔细地介绍。注意把隐私的地方打码。@computer use”</blockquote>
+<p>然后是把自己过去写作的经验沉淀为一个Skill，方便Codex了解自己的写作习惯、语言风格，才能写出更贴合自己水平的好文。比如，我自己就沉淀了一个“Yichen tutorial writing”（用过去的长文章提炼的），然后让Codex调用这个skill来帮我写作</p>
+<p>下面是另外一个实战demo，大家可以看看效果：</p>
+<p>还有一个更牛逼的操作，让Codex同时开几个对话跑任务，自己监控自己，比如现在这篇文章的初稿，就是Codex开了五个窗口跑完的，大幅提高了效率！</p>
+<p>最后讲一个真正能降本的业务场景。我之前和一个电商的老板连麦，他现在主要做拼多多，店铺在迅速扩张。</p>
+<p>他们遇到的痛点非常典型：</p>
+<li>链接数量很多；</li>
+<li>一个链接下面有多个 SKU；</li>
+<li>表格里有几千行数据；</li>
+<li>当前在售链接有几百个</li>
+<li>开新店时，需要重新建几百个商品链接；</li>
+<li>每个 SKU 都要填库存、拼单价、规格编码、商品编码、参考价等字段；</li>
+<li>日常还要维护价格和编码变化；</li>
+<li>人工对着表格往后台填，慢，而且容易错。</li>
+<p>这就是非常适合自动化的场景，因为它不是创意判断。</p>
+<p>它本质上是：</p>
+<blockquote>把表格里的结构化数据，稳定地填进网页后台。</blockquote>
+<p>我最开始给他的思路，是用 Codex 的 Computer Use。</p>
+<p>也就是让 Codex 直接看屏幕、操控电脑、打开表格、识别后台字段，然后把内容填进去。</p>
+<p>因为我想着Codex可以操作电脑，之前我跑了相关的数据库任务、X长文章任务都非常丝滑，所以推荐他首先用这个</p>
+<p>只要把表格路径、后台页面、字段对应关系讲清楚，Codex 就可以像一个会看屏幕的人一样操作。</p>
+<p>但是Codex拒绝访问拼多多后台，所以只能换第二条思路——用Codex调用playwright！</p>
+<p>Playwright 是什么？你可以把它理解成“让代码操控浏览器”。</p>
+<p>它不是靠眼睛看屏幕，而是直接识别网页里的按钮、输入框、下拉框。</p>
+<p>这个其实更适合批量任务。因为Computer Use 像一个人坐在电脑前看屏幕操作，Playwright 像一个自动化脚本，直接去找网页元素，不会抢鼠标和屏幕。</p>
+<p>然后这条思路就打通了：</p>
+<blockquote>flowchart LR</blockquote>
+<p>    A["商品底表"] --> B["整理字段映射"]</p>
+<p>    B --> C["Playwright 打开后台"]</p>
+<p>    C --> D["填写商品基础信息"]</p>
+<p>    D --> E["填写 SKU 价格和库存"]</p>
+<p>    E --> F["上传图片和视频"]</p>
+<p>    F --> G["截图暂停人工确认"]</p>
+<p>    G --> H["确认后批量运行"]</p>
+<p>    H --> I["输出成功/失败日志"]</p>
+<p>这个项目里，Codex 不只是调用了一个playwright，它负责了整条链路：</p>
+<li>读取原始 Excel；</li>
+<li>分析哪些列有用；</li>
+<li>重新整理成标准上架表；</li>
+<li>让你确认字段映射；</li>
+<li>写 Playwright 自动化；</li>
+<li>用已登录浏览器打开拼多多后台；</li>
+<li>先跑一个商品；</li>
+<li>截图暂停，让人工确认；</li>
+<li>记录成功、失败和错误截图；</li>
+<li>稳定后批量跑；</li>
+<li>最后把流程沉淀成 Skill。</li>
+<p>把成功的经验沉淀成skill，这就从“一次性帮我填表”，直接升级成“公司可复用的自动化流程”，大大节约了后续的踩坑成本</p>
+<p>跑完这五个场景，我踩过的坑比成功案例多得多😅。下面把最有代表性的几个整理出来，可能会帮你节省大量时间。</p>
+<p>现象：让 Codex 用 Computer Use 操作拼多多后台，直接被拒绝访问。</p>
+<p>根因：部分网站会检测自动化操作（浏览器指纹、WebDriver 标记、无头模式等），拼多多这类平台的反爬机制尤其严格。Computer Use 本质是「看屏幕 + 模拟键鼠」，和真人操作的行为模式依然有差异。</p>
+<p>解法：</p>
+<li>首选 Playwright：它不是模拟键鼠，而是直接走 Chrome DevTools Protocol 操控浏览器内核，配合 `stealth` 伪装更接近真人；</li>
+<li>复用已登录浏览器：让 Playwright 连接你手动登录过的 Chrome 实例（`--remote-debugging-port`），绕过登录态检测；</li>
+<li>Computer Use 和 Playwright 的分工：Computer Use 适合开放网站（Google 搜索、文档编辑、X 发帖），Playwright 适合有反爬保护的后台系统。</li>
+<p>现象：想让 Codex 去操作本机 Ghostty / Claude Code 终端窗口，发现它只能看屏幕，无法接管输入。</p>
+<p>根因：Codex 的 Computer Use 能识别屏幕内容，但不能向外部终端进程发送命令。同时终端类应用的界面元素（光标位置、输入焦点）对自动化来说是黑盒。</p>
+<p>绕路办法：</p>
+<li>如果目标是「用某个网页版 AI 的能力」（如 ChatGPT Pro、Ring），让 Codex 直接打开网页版操作；</li>
+<li>如果目标是「让 Codex 调用 Claude Code」，目前不可行，需要等 Codex 放宽白名单。可以考虑用 Codex 直接完成 Claude Code 能做的事情；</li>
+<li>在 Codex 内置终端里直接执行 CLI 命令 -- 这个是可以的，Codex 对自己的终端有完整控制权。</li>
+<p>现象：跟 Codex 说「帮我写一篇关于 XX 的文章」，输出确实是一坨。</p>
+<p>根因：Codex 不知道你的知识结构、审美偏好、目标读者的认知水平。你给方向，它就自由发挥；你给思路，它就加速执行。</p>
+<p>解法：</p>
+<li>写之前自己搭框架：核心观点 → 文章结构 → 每段要点（一句话就行）；</li>
+<li>把框架作为提示词给 Codex，让它「加速流程」，不是「从零创作」；</li>
+<li>沉淀写作风格 Skill（用你过去的高质量文章提炼），让 Codex 模仿你的语气和排版习惯。</li>
+<p>如果只把 Codex 当聊天助手，对话一下，实在就太浪费了。。。</p>
+<p>你可以用它来生产文字、图片和视频——写图文教程（自媒体）、做精美的hyperframes视频（自媒体）、AI视频带货、接广告商单</p>
+<p>你可以用它来解析微信聊天数据（https://github.com/mcncarl/yichen-skills/tree/main/wechat-local-vault）——赋能私域、提升话术、业务挖掘</p>
+<p>你可以用它来自动化操控浏览器——电商AI提效、自媒体多平台同步</p>
+<p>你可以用它来做AI PK——打开网页，同时调用gemini、chatgpt、claude、grok等网页版AI的最强模型，来帮你深度研究或者思考</p>
+<p>你可以用它来自动测试Openrouter的新模型，看一下每次的神秘模型的能力边界</p>
+<p>你可以用它来调用监督别的AI干活——这一步的潜力是无限大的，但是唯一遗憾的是Codex不能监督别的终端干活，也就是说不能去监督Claude Code，希望以后能够放宽白名单。</p>
+<p>如果你是刚开始用 Codex App，不要一上来就挑战最复杂的电商自动化。</p>
+<p>建议按这个顺序：</p>
+<li>先让它生成几张图片，提示词可以去苍何老师的提示词网站学习（https://gpt-image2.canghe.ai/）；</li>
+<li>再让它生成 Word、PDF、PPT、XLSX；</li>
+<li>再让它做一个 HTML 小网页；</li>
+<li>再让它启动本地预览；</li>
+<li>再让它部署到 Vercel；</li>
+<li>再让它做图文教程；</li>
+<li>再尝试 HTML PPT；</li>
+<li>再尝试视频动画；</li>
+<li>最后再碰业务自动化。</li>
+<p>这个顺序会比较丝滑，因为你会一点点建立和Codex信任——先看到它能生成资料、网站，看到它上线，看到它操作浏览器。</p>
+<p>最后你才会真的理解：哦，原来 Codex App 不是一个聊天框，它是无所不能的超级助手！</p>
+<p>关于Codex的使用方法：免费版两个对话就用完了，所以大家上手一般至少需要充值一个GPT的Plus会员，但是我这种用量比较大的就开了个100刀的，实测下来一周差不多用完。</p>
+<p>如果有需要GPT Plus、pro充值的朋友，可以来找我（yichen10801或yichen365ai），帮大家节省充值时间同时，我会给出几乎成本价，和大家交个朋友。</p>
+<p>如果大家在和Codex对话过程中遇到以下情况：</p>
+<p>解决办法是：</p>
+<blockquote>第一，不要只配置 `HTTP_PROXY`、`HTTPS_PROXY`、`ALL_PROXY`，还要补上 WebSocket 用的 `WSS_PROXY`、`WS_PROXY`，因为新对话可能走的是 `wss://` 连接；</blockquote>
+<p>第二，把这些代理变量写进 `~/.codex/config.toml`，让 Codex 的子进程能用代理；</p>
+<p>第三，再用 `launchctl setenv` 把同样的代理写进 macOS 图形应用启动环境，这样从 Dock/Finder 打开的 Codex Desktop 也能吃到代理；</p>
+<p>第四，设置完成后必须完全退出 Codex 再重新打开，不是只关窗口，因为旧进程不会自动继承新的代理环境。</p>
+<p>核心思路就是：同时覆盖 HTTP 代理、WebSocket 代理，以及 Codex Desktop 自己的启动环境。</p>
+<p>最后，祝大家使用Codex愉快！如果有业务场景繁琐、需要优化的老板，也欢迎联系我。</p>
+
+  </div>
+  <div class="lang-content jp" style="display: none;">
+
+<div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/gengdaJ/status/2053724702993190917" target="_blank">@gengdaJ 原文</a></div>
+
+<p>（日本語訳準備中）</p>
+
+  </div>
+</div>
+
+<footer>
+  <p><a href="../index.html">← 返回首页</a></p>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
