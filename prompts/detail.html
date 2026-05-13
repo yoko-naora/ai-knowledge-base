@@ -270,7 +270,7 @@ function getParam(name) {
         }
 
         // 3. Prompt content with all images inline
-        var promptText = realPrompt || imagePrompt || text;
+        var promptText = realPrompt || imagePrompt;
         html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content">';
         // Show remaining images (skip first which is cover)
         for (var gi = 1; gi < p.images.length; gi++) {
