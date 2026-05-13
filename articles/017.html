@@ -45,12 +45,14 @@
 <p>以前如果你要做一套活动方案、项目汇报、课程交付、咨询报告、员工培训材料，可能要先花几个月熟练使用这些工具。</p>
 <p>但是现在在Codex里面只需要一句提示词，就能生成排版精美、数据准确的Word、PDF、PPT、Sheets。</p>
 <p>我为了展示Codex生成四件套的能力，做了一个demo：</p>
-<blockquote>请在当前对话里做一个办公四件套演示任务，主题是《Codex App 内容生产工作流》。要求：
+<pre><code><small>📋 复制可用</small>
+请在当前对话里做一个办公四件套演示任务，主题是《Codex App 内容生产工作流》。要求：
 1. 生成 Word 文档、PDF 文件、PPTX 演示稿、XLSX 表格四类真实文件；
 2. 每个文件都要有实际内容，不要空文件；
 3. 生成后告诉我每个文件的真实路径；
 4. 尽量生成一个预览或文件清单，方便我截图放进教程；
-5. 最后给出验收清单，确认四个文件都存在、能打开、不是占位内容。</blockquote>
+5. 最后给出验收清单，确认四个文件都存在、能打开、不是占位内容。
+</code></pre>
 <p>验收结果：
 1.Word 文档验收截图：</p>
 <p><img src="images/017/HIAl5MyaIAADs7e.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
@@ -101,7 +103,8 @@
 <p>然后迁移到商业化就是，调用GPT2-image、seedance2.0、elevenlabs等API，90%自动化地完成上述整个思路，赋能到AI流量变现、AI电商带货、AI前端获客、AI广告宣传等真实场景里面。</p>
 <p>至于怎么写脚本、怎么生成图片、怎么制作视频，这是一门大学问，需要千锤百炼去苦修试错，不是朝夕就能学会的，而且细分到每一个垂直领域所需要掌握的技巧又是完全不同的。</p>
 <p>但是怎么生成一个视频，快速上手玩，有一个通用模板可以给大家快速上手：</p>
-<blockquote>目标：
+<pre><code><small>📋 复制可用</small>
+目标：
 受众：
 目标平台：unspecified / YouTube / Shorts / Reels / TikTok / 官网 / 会议现场
 时长：
@@ -119,7 +122,8 @@
 关键帧 / 参考图 / 角色一致性资产：
 品牌 / 法务 / 无障碍：
 数据变量 / 占位符：
-输出要求：先给 scene list，再给 final prompt，再给 render metadata JSON</blockquote>
+输出要求：先给 scene list，再给 final prompt，再给 render metadata JSON
+</code></pre>
 <p>关于纯AI视频这一块，我之前这篇推文也有分享过我汇总的影视基础知识：
 </p>
 <p><img src="images/017/HIAmCMOaYAAQIxT.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
@@ -128,14 +132,16 @@
 <p>原因可能就是。。。AI太好玩了——本来只是想改一个提示词，然后顺手又刷了一堆X、莫名其妙调用Codex跑一个任务，最后这个任务又停不下来了。。。这就是曾经的我。。。</p>
 <p>我知道用AI很爽，但身体遭不住，健康才是革命的本钱。所以我趁这次写“Codex代码教程“的机会，让 Codex 做了一个网站，主题是“早睡早起身体好”</p>
 <p>让Codex写代码，跑出一个小网站或者小App真的很简单：</p>
-<blockquote>请重新帮我生成一个网站，主题是早睡早起。
+<pre><code><small>📋 复制可用</small>
+请重新帮我生成一个网站，主题是早睡早起。
 要求：
 1. 页面要排版精美；
 2. 可以有 3D 动画效果；
 3. 分析早睡早起的好处；
 4. 给出普通人能执行的步骤；
 5. 做成真实可运行的网站；
-6. 最后启动本地预览，并部署到 Vercel。</blockquote>
+6. 最后启动本地预览，并部署到 Vercel。
+</code></pre>
 <p>涉及到上线部署（别人通过链接能访问你的这个网站）这里可能需要你配置一下Vercel插件（“插件”里面搜Vercel就行）：</p>
 <p><img src="images/017/HIAmaWIacAAI8JG.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>Codex 最后做出来的不只是一个静态页面（已经部署到：https://codex-1-html-css-js-2.vercel.app/，大家可以自由访问），他还做了：</p>
@@ -173,7 +179,9 @@
 <p>写作，不是给AI一个方向，让它琢磨，而是你要把“自己写这篇文章的思路”告诉它，让它帮你加速这个过程，这篇文章的核心和内容基本和你脑海想的别无二致，只是AI把这个琐碎的过程给自动化了。</p>
 <p>所以，有一篇AI写的好文之前，是这个写作的人脑海里面有画面、有思路。</p>
 <p>我拿我之前的这篇文章举个例子：我知道要介绍Codex的主界面以及Codex的设置，那么我给Codex的指令就是：</p>
-<blockquote>“你来操作Codex APP本身，你挨个分析Codex主界面每个按钮的功能，然后再打开Codex的设置，按照左边导航栏的顺序，一页一页仔细地介绍。注意把隐私的地方打码。@computer use”</blockquote>
+<pre><code><small>📋 复制可用</small>
+“你来操作Codex APP本身，你挨个分析Codex主界面每个按钮的功能，然后再打开Codex的设置，按照左边导航栏的顺序，一页一页仔细地介绍。注意把隐私的地方打码。@computer use”
+</code></pre>
 <p>然后是把自己过去写作的经验沉淀为一个Skill，方便Codex了解自己的写作习惯、语言风格，才能写出更贴合自己水平的好文。比如，我自己就沉淀了一个“Yichen tutorial writing”（用过去的长文章提炼的），然后让Codex调用这个skill来帮我写作</p>
 <p>下面是另外一个实战demo，大家可以看看效果：</p>
 <p><img src="images/017/HIAmFQha8AAOWt1.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
