@@ -291,7 +291,7 @@ function getParam(name) {
       html += '<div class="detail-footer">';
       html += '<a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener" style="margin-right:20px;">☝️ 查看 X 原贴 →</a>';
       if (idx + 1 < data.length) {
-        html += '<a href="?id=' + (idx + 1) + '" class="next-link">👉 去下一页</a>';
+        html += '<a href="?id=' + (idx + 1) + '" class="next-link">👉 ' + (isCn ? '去下一页' : '次のページ') + '</a>';
       }
       html += '</div>';
 
