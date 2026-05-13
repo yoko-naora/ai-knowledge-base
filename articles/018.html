@@ -117,9 +117,43 @@
 <p>随着模型越来越强，Harness 会变薄，但它永远不会消失。即便最强大的模型，也需要系统来管理窗口、执行代码、保存状态并验证工作。</p>
 <p>下次当你的智能体表现不佳时，别光顾着抱怨模型，去检查一下你的Harness吧。</p>
   </div>
-  <div class="lang-content jp" style="display: none;">
+    <div class="lang-content jp" style="display: none;">
 <div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/dotey/status/2053601852261110201" target="_blank">@dotey 原文</a></div>
-<p>（日本語訳準備中）</p>
+<p><img src="images/018/HH_Y2gpWcAAl2uX.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>著者：@akshay_pachaar</p>
+<p>本記事では、Anthropic、OpenAI、Perplexity、LangChainが実際に何を開発しているのかを深掘りします。オーケストレーションループ、ツール、メモリ、コンテキスト管理、そして「ステートレス」なLLMを全能のエージェントへと変貌させる基盤メカニズムについて解説します。</p>
+<p>チャットボットを開発したことがある方、ReActループをツールで構築したことがある方——デモではうまく動いても、本番環境では、モデルが3ステップ前のことを忘れ、ツール呼び出しが静かに失敗し、コンテキストウィンドウが無意味なゴミで埋め尽くされます。</p>
+<p>問題はモデル自体ではなく、モデルを包むインフラストラクチャにあります。</p>
+<p>LangChainはこれを証明しました：モデルもパラメータも変えずに、LLMを包むアーキテクチャを変更しただけで、TerminalBench 2.0の順位を30位圏外から5位に急上昇させました。別の研究ではLLM自身にこのアーキテクチャを最適化させることで76.4%の通過率を達成し、人間が設計したシステムを上回りました。</p>
+<p>このインフラストラクチャには正式名称がつきました：<strong>AI Agent Harness</strong>。</p>
+<p>2026年初頭に正式に確立された用語ですが、中核概念は以前から存在。HarnessはLLMを包む完全なソフトウェアアーキテクチャであり、オーケストレーションループ、ツール、メモリ、コンテキスト管理、状態永続化、エラー処理、ガードレールを含みます。AnthropicはSDKを「Claude Codeを駆動するAgent Harness」と明言。OpenAIのCodexチームも「エージェント」と「Harness」を同一視しています。</p>
+<p>LangChainのVivek Trivedyによる定義：「モデル自身でなければ、あなたはHarnessである。」</p>
+<p>混同されがちな区別：「AIエージェント」はユーザーが知覚する振る舞い——目標を持ち、ツールを使い、自己修正できる実体。「Harness」はその振る舞いを生み出す背後機構。「エージェントを開発した」と言うとき、本当の意味は「Harnessを開発してモデルに接続した」です。</p>
+<p><img src="images/018/HH_YlPbWgAAyPU9.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>Beren Millidgeの2023年の比喩：生のLLMはメモリもハードディスクもI/OデバイスもないCPUのようなもの。コンテキストウィンドウがメモリ（高速だが容量限定）、外部DBがハードディスク（大容量だが低速）、ツール統合がデバイスドライバ。そしてHarnessがOS。「私たちはフォン・ノイマンアーキテクチャを再発明した」。</p>
+<p>モデルを中心とした3層構造：<strong>プロンプトエンジニアリング</strong>（指示の設計）、<strong>コンテキストエンジニアリング</strong>（タイミングと内容の管理）、<strong>Harnessエンジニアリング</strong>（上記2つ+アプリケーションアーキテクチャ全体：ツール編成・状態永続化・エラー復旧・検証ループ・安全実行・ライフサイクル管理）。Harnessは単なるAI Wrapperではなく、エージェント自律行動のための完全システムです。</p>
+<p><img src="images/018/HH_YrOyXUAAOFUR.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>12のコンポーネント</h2>
+<p><strong>1. オーケストレーションループ：</strong>システムの心臓。思考-行動-観察（TAO）サイクルを実装。Anthropicはこれを「愚直なループ」と表現。</p>
+<p><strong>2. ツール：</strong>エージェントの手。構造化スキーマ（名前・説明・パラメータ型）で定義され、サンドボックスで実行。Claude Codeは6種、OpenAI Agents SDKは関数ツール+マネージドツール+MCP対応。</p>
+<p><strong>3. メモリ：</strong>短期（セッション内履歴）+長期（セッション横断）。Claude Codeは3層（軽量インデックス+詳細ファイル+検索専用アーカイブ）。設計原則：エージェントは自分の記憶を「ヒント」と見なし、行動前に実状態で検証する。</p>
+<p><strong>4. コンテキスト管理：</strong>「Lost in the Middle」現象——重要情報がウィンドウ中間にあるとパフォーマンス30%以上低下。対策：圧縮・観測マスキング・ジャストインタイム検索・サブエージェント委任。</p>
+<p><strong>5. プロンプト構築：</strong>階層構造（システムプロンプト→ツール定義→メモリ→履歴→ユーザーメッセージ）。OpenAI Codexは厳格な優先度スタック。</p>
+<p><strong>6. 出力解析：</strong>ネイティブツール呼び出し（構造化tool_callsオブジェクト）。構造化出力はPydanticモデルで制約。</p>
+<p><strong>7. 状態管理：</strong>LangGraphは型付き辞書+チェックポインティング。OpenAIは4戦略。Claude CodeはGitコミットをチェックポイントに。</p>
+<p><strong>8. エラー処理：</strong>10ステップ各99%成功率でも全体は約90.4%。LangGraphは4分類（一時的/モデル回復可能/ユーザー修復可能/予期せぬエラー）。</p>
+<p><strong>9. ガードレールと安全性：</strong>OpenAIは入力/出力/ツールの3層チェック。Anthropicは「権限実行」と「モデル推論」を分離。モデルがしたいことを決め、Harnessが許可することを決める。</p>
+<p><strong>10. 検証ループ：</strong>ルールベース+ビジュアル（Playwrightスクリーンショット）+LLM-as-judge。Boris Cherny：モデルに自己検証させると品質が2〜3倍向上。</p>
+<p><strong>11. サブエージェント編成：</strong>Claude CodeはFork/Teammate/Worktree。OpenAIはツールとして/移譲として。</p>
+<p><strong>12. 実行サイクル：</strong>プロンプト組立→モデル推論→出力分類→ツール実行→結果パッケージ→コンテキスト更新→ループ。</p>
+<p><strong>主要実装：</strong>Anthropic (Claude Agent SDK)はシンプルなquery()関数。OpenAI (Agents SDK)はコードファースト。LangGraphは明示的状態グラフ。CrewAIはロールベース協調。AutoGen（Microsoft）は複数編成モード。</p>
+<p><img src="images/018/HH_X7DiWQAASlWi.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>「足場」という比喩は極めて正確。建築足場は一時的インフラ。家が建ったら足場は撤去する——モデル能力向上とともにHarnessの複雑さは低減すべき。これが共進化の原則：優れたHarnessならモデルアップグレード時に複雑さを追加せずに性能が自動向上。</p>
+<p><img src="images/018/HH_Yw1OWAAAphY9.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><strong>7つの選択：</strong>単一vs.マルチエージェント（まず単一を極める）/ ReAct vs. 計画先行 / コンテキスト管理戦略 / 検証ループ設計 / 権限と安全 / ツール範囲（最小セットが最適）/ Harnessの厚み（何を固定し何をモデルに委ねるか）。</p>
+<p><img src="images/018/HH_YZYdWkAA-BtD.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>同一モデルでもHarness設計で性能は天と地。TerminalBenchの証拠：Harness変更だけで20位以上変動。Harnessは解決済みの問題でも汎用コモディティでもない。コンテキストを希少資源として管理し、検証ループでエラー蓄積を防ぎ、幻覚のないメモリシステムを構築する——ハードコアな工学能力の結晶です。</p>
+<p>モデルが強くなるほどHarnessは薄くなるが、決して消えない。次にエージェントのパフォーマンスが悪いときは、モデルを責める前にHarnessを点検してください。</p>
   </div>
 </div>
 <footer>

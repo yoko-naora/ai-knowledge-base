@@ -3,105 +3,268 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>購読 · AI知識庫</title>
-<link rel="stylesheet" href="assets/css/style.css">
+<title>購読プランを選択 · AI知識庫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  .checkout-container { max-width: 700px; margin: 80px auto 60px; padding: 0 20px; }
-  .checkout-container h1 { font-size: 1.8rem; margin-bottom: 8px; }
-  .checkout-container .subtitle { color: #888; margin-bottom: 40px; }
-  .checkout-step { background: #f9f9f9; border-radius: 12px; padding: 28px; margin-bottom: 24px; }
-  .checkout-step h3 { margin-bottom: 16px; font-size: 1.1rem; }
-  .plan-option { border: 2px solid #e0e0e0; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; cursor: pointer; transition: border .2s; display: flex; justify-content: space-between; align-items: center; }
-  .plan-option:hover { border-color: #FF8C42; }
-  .plan-option.selected { border-color: #FF8C42; background: #FFF7F0; }
-  .plan-option .plan-name { font-weight: 700; font-size: 1.05rem; }
-  .plan-option .plan-price { font-size: 1.3rem; font-weight: 700; color: #FF8C42; }
-  .plan-option .plan-price small { font-size: 0.85rem; color: #888; font-weight: 400; }
-  .stripe-btn { display: block; width: 100%; padding: 16px; background: #FF8C42; color: #fff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none; margin-top: 24px; }
-  .stripe-btn:hover { background: #e67a35; }
-  .back-home { display: inline-block; margin-top: 32px; color: #FF8C42; text-decoration: none; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #1a1814;
+  --ink-muted: #5a5650;
+  --ink-faint: #9a9490;
+  --paper: #faf9f6;
+  --paper-warm: #f2ede5;
+  --gold: #b8925a;
+  --gold-lt: #d4af7a;
+  --accent: #2c5f7a;
+  --accent-lt: #e8f2f7;
+  --border: rgba(26,24,20,.1);
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.8; }
+
+nav {
+  padding: 18px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(250,249,246,.94);
+}
+.nav-logo { font-family: var(--serif); font-size: 15px; letter-spacing: .12em; color: var(--ink); text-decoration: none; }
+.nav-back { font-size: 11px; color: var(--ink-muted); text-decoration: none; letter-spacing: .06em; transition: color .2s; }
+.nav-back:hover { color: var(--gold); }
+
+.checkout-container { max-width: 760px; margin: 60px auto 80px; padding: 0 24px; }
+
+/* STEP INDICATOR */
+.steps { display: flex; justify-content: center; gap: 0; margin-bottom: 60px; }
+.step { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .08em; color: var(--ink-faint); }
+.step.active { color: var(--ink); font-weight: 500; }
+.step.done { color: var(--gold); }
+.step-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: #fff; }
+.step.active .step-num { background: var(--ink); color: #fff; border-color: var(--ink); }
+.step.done .step-num { background: var(--gold); color: #fff; border-color: var(--gold); }
+.step-line { width: 40px; height: 1px; background: var(--border); margin: 0 12px; }
+.step.done + .step-line { background: var(--gold); }
+
+/* PLAN SELECTION */
+h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: center; margin-bottom: 8px; }
+.subtitle { text-align: center; font-size: 13px; color: var(--ink-muted); margin-bottom: 48px; }
+
+.plan-options { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 48px; }
+.plan-card {
+  border: 2px solid var(--border); border-radius: 2px; padding: 36px; cursor: pointer;
+  position: relative; transition: all .2s; background: #fff;
+}
+.plan-card:hover { border-color: var(--gold-lt); }
+.plan-card.selected { border-color: var(--gold); background: rgba(184,146,90,.04); }
+.plan-card.selected::after {
+  content: '✓'; position: absolute; top: 16px; right: 20px;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--gold); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.plan-badge { position: absolute; top: -1px; right: 20px; background: var(--gold); color: #fff; font-size: 9px; font-weight: 500; letter-spacing: .1em; padding: 4px 12px; border-radius: 0 0 4px 4px; }
+.plan-name { font-size: 11px; font-weight: 500; letter-spacing: .14em; color: var(--gold); text-transform: uppercase; margin-bottom: 14px; }
+.plan-price { font-family: var(--serif); font-size: 40px; font-weight: 300; line-height: 1; margin-bottom: 4px; }
+.plan-period { font-size: 13px; color: var(--ink-faint); }
+.plan-save { font-size: 12px; color: var(--gold); margin-top: 6px; font-weight: 500; }
+.plan-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.8; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.plan-desc ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.plan-desc li { display: flex; align-items: flex-start; gap: 8px; font-size: 11px; }
+.plan-desc li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+/* PAYMENT SECTION */
+.payment-section { background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 40px; }
+.payment-section h3 { font-family: var(--serif); font-size: 16px; font-weight: 400; margin-bottom: 8px; }
+.payment-section .summary { font-size: 13px; color: var(--ink-muted); margin-bottom: 28px; }
+.summary-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.summary-row:last-child { border-bottom: none; }
+.summary-label { font-size: 12px; color: var(--ink-muted); }
+.summary-value { font-size: 12px; color: var(--ink); font-weight: 500; }
+.summary-total { font-family: var(--serif); font-size: 20px; font-weight: 400; }
+
+.stripe-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px; background: var(--ink); color: var(--paper);
+  font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: .08em;
+  text-decoration: none; border: none; border-radius: 2px; cursor: pointer;
+  margin-top: 28px; transition: .2s;
+}
+.stripe-btn:hover { background: #333; transform: translateY(-1px); }
+.stripe-note { text-align: center; font-size: 10px; color: var(--ink-faint); margin-top: 14px; line-height: 1.8; }
+.stripe-note img { vertical-align: middle; height: 14px; margin: 0 2px; }
+
+.back-home { display: block; text-align: center; margin-top: 40px; font-size: 12px; color: var(--ink-muted); text-decoration: none; }
+.back-home:hover { color: var(--gold); }
+
+.guarantee { margin-top: 32px; padding: 24px; background: var(--accent-lt); border-radius: 2px; text-align: center; font-size: 12px; color: var(--accent); line-height: 1.9; }
+
+@media (max-width: 700px) {
+  nav { padding: 16px 24px; }
+  .plan-options { grid-template-columns: 1fr; }
+  .steps { gap: 8px; }
+  .step-line { width: 20px; }
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">AI<span>知識庫</span></div>
-  <ul class="nav-links">
-    <li><a href="index.html">記事一覧</a></li>
-    <li><a href="prompts/">最新プロンプト</a></li>
-    <li><a href="index.html#tools">おすすめツール</a></li>
-    <li><a href="pricing.html">料金</a></li>
-    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
-  </ul>
+  <a class="nav-logo" href="index.html">AI 知識庫</a>
+  <a class="nav-back" href="index.html">← トップに戻る</a>
 </nav>
 
 <div class="checkout-container">
-  <h1>購読プランを選択</h1>
-  <p class="subtitle">お支払いはStripeで安全に処理されます</p>
 
-  <div class="checkout-step">
-    <h3>1. プランを選ぶ</h3>
-    <label class="plan-option selected" id="plan-monthly">
-      <div>
-        <div class="plan-name">月額プラン</div>
-        <div style="color:#888;font-size:0.9rem;">全記事読み放題・毎週更新</div>
-      </div>
-      <div class="plan-price">¥980 <small>/ 月</small></div>
-    </label>
-    <label class="plan-option" id="plan-yearly">
-      <div>
-        <div class="plan-name">年額プラン</div>
-        <div style="color:#888;font-size:0.9rem;">約2ヶ月無料・優先テーマ提案権・専用コミュニティ</div>
-      </div>
-      <div class="plan-price">¥9,800 <small>/ 年</small></div>
-    </label>
+  <!-- STEP INDICATOR -->
+  <div class="steps">
+    <div class="step active"><span class="step-num">1</span> プラン選択</div>
+    <div class="step-line"></div>
+    <div class="step"><span class="step-num">2</span> お支払い</div>
+    <div class="step-line"></div>
+    <div class="step"><span class="step-num">3</span> 完了</div>
   </div>
 
-  <div class="checkout-step">
-    <h3>2. お支払い</h3>
-    <p style="color:#888;font-size:0.9rem;margin-bottom:16px;">以下のボタンからStripeの安全な決済ページに移動します。クレジットカード情報はStripeが処理し、当サイトでは一切保存しません。</p>
-    <a href="#" class="stripe-btn" id="pay-btn">Stripeで支払う →</a>
+  <h1>購読プランを選択</h1>
+  <p class="subtitle">お支払いはStripeで安全に処理されます。カード情報は当サイトでは一切保存しません。</p>
+
+  <!-- PLAN OPTIONS -->
+  <div class="plan-options">
+    <div class="plan-card" id="plan-monthly-card" onclick="selectPlan('monthly')">
+      <div class="plan-name">月額プラン</div>
+      <div class="plan-price">¥980</div>
+      <div class="plan-period">/ 月（税込）</div>
+      <div class="plan-desc">
+        <ul>
+          <li>全記事読み放題（中日バイリンガル）</li>
+          <li>200+ 厳選プロンプト見放題</li>
+          <li>毎月 10〜15 本更新</li>
+          <li>陽子おすすめツール解説</li>
+          <li>いつでも解約可</li>
+        </ul>
+      </div>
+    </div>
+    <div class="plan-card" id="plan-yearly-card" onclick="selectPlan('yearly')">
+      <div class="plan-badge">2ヶ月無料</div>
+      <div class="plan-name">年額プラン</div>
+      <div class="plan-price">¥9,800</div>
+      <div class="plan-period">/ 年（税込）</div>
+      <div class="plan-save">月あたり ¥817 · 約2ヶ月お得</div>
+      <div class="plan-desc">
+        <ul>
+          <li>月額プランの全機能</li>
+          <li>優先テーマ提案権</li>
+          <li>専用コミュニティ参加</li>
+          <li>限定ボイス配信（画面収録付き）</li>
+          <li>過去アーカイブ全公開</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT -->
+  <div class="payment-section">
+    <h3>お支払い内容の確認</h3>
+    <p class="summary">選択したプランの内容をご確認の上、Stripeの安全な決済ページへお進みください。</p>
+
+    <div class="summary-row">
+      <span class="summary-label">プラン</span>
+      <span class="summary-value" id="summary-plan">月額プラン</span>
+    </div>
+    <div class="summary-row">
+      <span class="summary-label">金額</span>
+      <span class="summary-total" id="summary-price">¥980 / 月</span>
+    </div>
+
+    <!--
+    ╔══════════════════════════════════════════════════════════╗
+    ║  STRIPE PAYMENT LINK の設定方法                           ║
+    ║                                                          ║
+    ║  1. Stripeダッシュボード → 商品 → 支払いリンク          ║
+    ║  2. 以下の2つのリンクを作成：                             ║
+    ║     - 月額 ¥980/月（サブスクリプション）                  ║
+    ║     - 年額 ¥9,800/年（サブスクリプション）                ║
+    ║  3. 各リンクのURLをコピー                                 ║
+    ║  4. 下の stripeLinks オブジェクトに貼り付け              ║
+    ║  5. このコメントブロックを削除                            ║
+    ║                                                          ║
+    ║  Stripe Payment Links 作成先:                            ║
+    ║  https://dashboard.stripe.com/payment-links/create       ║
+    ╚══════════════════════════════════════════════════════════╝
+    -->
+    <a href="#" class="stripe-btn" id="stripe-pay-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><line x1="1" y1="8" x2="15" y2="8" stroke="currentColor" stroke-width="1.2"/><rect x="3" y="3" width="3" height="2" rx="0.5" stroke="currentColor" stroke-width="1"/></svg>
+      Stripeで安全に支払う →
+    </a>
+    <p class="stripe-note">
+      <span style="display:inline-flex;align-items:center;gap:4px;">🔒 Visa / Mastercard / Amex 対応</span>
+      · カード情報はStripeが安全に処理し、当サイトでは保存しません
+    </p>
+  </div>
+
+  <div class="guarantee">
+    <strong>🔄 いつでも解約保証</strong><br>
+    月額プランはいつでも解約可能です（次回更新から停止）。年額プランも次年度の自動更新をいつでも停止できます。まずはお試し感覚で。
   </div>
 
   <a href="index.html" class="back-home">← トップページに戻る</a>
 </div>
 
-<footer style="margin-top:0;">
-  <div class="links">
-    <a href="index.html">記事一覧</a>
-    <a href="prompts/">最新プロンプト</a>
-    <a href="index.html#tools">おすすめツール</a>
-    <a href="index.html#pricing">料金</a>
-    <a href="tokushoho.html">特定商取引法に基づく表記</a>
-  </div>
-  <div class="copyright">© 2026 AI知識庫 · Designed for 陽子</div>
-</footer>
-
 <script>
-const monthly = document.getElementById('plan-monthly');
-const yearly = document.getElementById('plan-yearly');
-const payBtn = document.getElementById('pay-btn');
-
-// URL パラメータでプラン選択（?plan=yearly）
-const params = new URLSearchParams(window.location.search);
-let selected = params.get('plan') === 'yearly' ? 'yearly' : 'monthly';
-
-// 初期選択をUIに反映
-if (selected === 'yearly') {
-  monthly.classList.remove('selected');
-  yearly.classList.add('selected');
-}
-
-const links = {
-  monthly: '#',  // ← Stripe Payment Link URL を入れる
-  yearly: '#'    // ← Stripe Payment Link URL を入れる
+// ══════════════════════════════════════════════════════════
+// ★★★ Stripe Payment Link の URL をここに貼り付けてください ★★★
+// ══════════════════════════════════════════════════════════
+var stripeLinks = {
+  monthly: '#',  // ← Stripeの月額¥980 Payment Link URL
+  yearly: '#'    // ← Stripeの年額¥9,800 Payment Link URL
 };
 
-monthly.addEventListener('click', () => { monthly.classList.add('selected'); yearly.classList.remove('selected'); selected = 'monthly'; });
-yearly.addEventListener('click', () => { yearly.classList.add('selected'); monthly.classList.remove('selected'); selected = 'yearly'; });
-payBtn.addEventListener('click', (e) => {
-  const url = links[selected];
-  if (url === '#') { e.preventDefault(); alert('決済リンクを準備中です。しばらくお待ちください。'); return; }
+var selectedPlan = 'monthly';
+
+// URLパラメータで初期プラン選択
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var planParam = params.get('plan');
+  if (planParam === 'yearly' || planParam === 'annual') {
+    selectedPlan = 'yearly';
+  }
+  updateUI();
+})();
+
+function selectPlan(plan) {
+  selectedPlan = plan;
+  updateUI();
+}
+
+function updateUI() {
+  var monthlyCard = document.getElementById('plan-monthly-card');
+  var yearlyCard = document.getElementById('plan-yearly-card');
+  var summaryPlan = document.getElementById('summary-plan');
+  var summaryPrice = document.getElementById('summary-price');
+
+  monthlyCard.classList.remove('selected');
+  yearlyCard.classList.remove('selected');
+
+  if (selectedPlan === 'yearly') {
+    yearlyCard.classList.add('selected');
+    summaryPlan.textContent = '年額プラン';
+    summaryPrice.innerHTML = '¥9,800 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;">/ 年（月あたり¥817）</span>';
+  } else {
+    monthlyCard.classList.add('selected');
+    summaryPlan.textContent = '月額プラン';
+    summaryPrice.innerHTML = '¥980 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;">/ 月</span>';
+  }
+}
+
+document.getElementById('stripe-pay-btn').addEventListener('click', function(e) {
+  var url = stripeLinks[selectedPlan];
+  if (url === '#') {
+    e.preventDefault();
+    alert('決済リンクを準備中です。まもなく公開されますので、しばらくお待ちください。\n\nご質問は SNS Aladdin までお問い合わせください。');
+    return;
+  }
   window.location.href = url;
 });
 </script>

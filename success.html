@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>購読完了 · AI知識庫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #1a1814;
+  --ink-muted: #5a5650;
+  --ink-faint: #9a9490;
+  --paper: #faf9f6;
+  --paper-warm: #f2ede5;
+  --gold: #b8925a;
+  --accent: #2c5f7a;
+  --accent-lt: #e8f2f7;
+  --border: rgba(26,24,20,.1);
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.8; min-height: 100vh; display: flex; flex-direction: column; }
+
+nav {
+  padding: 18px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border);
+  background: rgba(250,249,246,.94);
+}
+.nav-logo { font-family: var(--serif); font-size: 15px; letter-spacing: .12em; color: var(--ink); text-decoration: none; }
+
+.success-container { flex: 1; display: flex; align-items: center; justify-content: center; padding: 60px 24px; }
+.success-card { max-width: 560px; width: 100%; text-align: center; background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 60px 48px; }
+
+.success-icon { width: 64px; height: 64px; border-radius: 50%; background: #e8f5e9; display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 28px; }
+h1 { font-family: var(--serif); font-size: 24px; font-weight: 300; margin-bottom: 12px; }
+.success-sub { font-size: 13px; color: var(--ink-muted); line-height: 2.1; margin-bottom: 36px; }
+
+.next-steps { text-align: left; background: var(--paper-warm); border-radius: 2px; padding: 28px; margin-bottom: 32px; }
+.next-steps h3 { font-family: var(--serif); font-size: 14px; font-weight: 400; margin-bottom: 16px; }
+.next-steps ol { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.next-steps ol li { display: flex; gap: 12px; font-size: 12px; color: var(--ink-muted); line-height: 1.7; }
+.step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--gold); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+
+.access-code-box { background: #fdf8f0; border: 1px dashed var(--gold); border-radius: 2px; padding: 20px 24px; margin-bottom: 32px; }
+.access-code-box .label { font-size: 10px; letter-spacing: .12em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+.access-code-box .code { font-family: var(--serif); font-size: 24px; font-weight: 400; letter-spacing: .08em; color: var(--ink); user-select: all; }
+.access-code-box .hint { font-size: 10px; color: var(--ink-faint); margin-top: 6px; }
+
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 32px; background: var(--ink); color: var(--paper);
+  font-size: 12px; font-weight: 500; letter-spacing: .08em;
+  text-decoration: none; border-radius: 2px; transition: .2s;
+}
+.cta-btn:hover { background: #333; transform: translateY(-1px); }
+.cta-btn span { transition: transform .2s; }
+.cta-btn:hover span { transform: translateX(4px); }
+
+.help-note { font-size: 11px; color: var(--ink-faint); margin-top: 28px; line-height: 1.9; }
+.help-note a { color: var(--gold); text-decoration: none; }
+
+footer { padding: 24px 60px; text-align: center; font-size: 11px; color: var(--ink-faint); border-top: 1px solid var(--border); }
+footer a { color: var(--ink-faint); text-decoration: none; }
+
+@media (max-width: 600px) {
+  nav { padding: 16px 24px; }
+  .success-card { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">AI 知識庫</a>
+</nav>
+
+<div class="success-container">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <h1>購読が完了しました！</h1>
+    <p class="success-sub">
+      ありがとうございます。<br>
+      AI知識庫の全コンテンツにアクセスいただけるようになりました。
+    </p>
+
+    <div class="next-steps">
+      <h3>📋 アクセス方法</h3>
+      <ol>
+        <li>
+          <span class="step-num">1</span>
+          <span>このブラウザでは<strong>自動的にロックが解除</strong>されています。そのまま記事をお読みください。</span>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <span>別の端末で読む場合は、下記の<strong>アクセスコード</strong>を記事ページで入力してください。</span>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <span>ご登録のメールアドレス宛にも、アクセスコードを<strong>後日お送り</strong>します。</span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="access-code-box">
+      <p class="label">Access Code</p>
+      <p class="code" id="access-code">aiknowledge2026</p>
+      <p class="hint">ロックされた記事でこのコードを入力すると、全コンテンツが読み放題になります。</p>
+    </div>
+
+    <a href="index.html#articles" class="cta-btn">記事を読みに行く <span>→</span></a>
+
+    <p class="help-note">
+      ご質問は <a href="https://www.snsaladdin.com/">SNS Aladdin</a> まで。<br>
+      特定商取引法に基づく表記は<a href="tokushoho.html">こちら</a>。
+    </p>
+  </div>
+</div>
+
+<footer>
+  © 2026 AI知識庫 · <a href="index.html">トップに戻る</a>
+</footer>
+
+<script>
+// Auto-unlock only when coming from Stripe (has session_id in URL)
+// Direct visitors must use access code on article pages
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('session_id')) {
+    localStorage.setItem('kb_subscriber', 'true');
+    document.querySelector('.success-icon').textContent = '🔓';
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -224,9 +224,49 @@ lark-cli doctor
 <li>[ ] 「工作流说明」里有 5 个手动触发词</li>
 <li>[ ] 发布前保留人工 Gate，不要第一版就全自动发布</li>
   </div>
-  <div class="lang-content jp" style="display: none;">
+    <div class="lang-content jp" style="display: none;">
 <div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/ChrisWangwy/status/2054190173764936079" target="_blank">@ChrisWangwy 原文</a></div>
-<p>（日本語訳準備中）</p>
+<p><img src="images/019/HIHrgT9bkAA3yPk.jpg" alt="cover" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>私はAIコンテンツファクトリーを持っています。毎日AI関連の新情報を収集し、4時間ごとにAIHOTの精选を同期してFeishu（飛書）に格納。毎朝9時に過去24時間のコンテンツから今日書けるテーマ候補を推薦します。この記事もそのシステムで書かれました。私が実践・骨組み設計・伝えたいことを明確にし、Codexデスクトップ版のAgentが執筆・修正・プロセス整理を行いました。</p>
+<p>この記事は人向けであると同時に、Agent向けでもあります。Claude Code、Codex、Hermes、OpenClaw、Cursor——どのAgentにもこの記事をコピーし、中の手順に沿って対話すれば、あなたもこのシステムを手に入れられます。</p>
+<p>朝、Xをチェックし、WeChat公式アカウントのバックエンドを見て、気になるリンクを自分に送り、メモに保存。昼にClaudeの更新を見て「書けるかも」。夜にエディタを開くと、数十のリンクと十数個のタブと未完成の下書き——どこから始めればいいかわからない。この状態は痛いほどわかります。「どれを書くか」の決断自体がエネルギーを消耗するのです。</p>
+<p>問題の根本はインスピレーション不足ではなく、素材・テーマ選定・執筆・公開の4段階が互いに認識していないこと。WeChatお気に入り・メモ・Feishu文書・AIチャットに分散し、情報が次段階に伝わらず、毎回再検索・再判断しているのです。</p>
+<p>解決策はシンプル：それらを繋ぐこと。これは全自動投稿システムではありません。「何を見るか」「どこに置くか」「どれを書くか」「どう書くか」「公開するか」を分離し、AIが反復作業を、人間が最終判断を担います。</p>
+<p><strong>AIHOT：</strong>https://aihot.virxact.com/ —— @Khazix0918卡兹克氏が作った情報フィルター。単なるリンク集ではなく、X・公式ブログ・論文・製品更新・業界動向を収集し、AIで選別・要約・分類・推薦理由付与。Agent対応（Skill/RSS/REST API）も完備。</p>
+<p><img src="images/019/HIHw8k-aUAA0Vit.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>Agentに「このskillをインストールして：https://aihot.virxact.com/aihot-skill/」と言うだけ。標準SKILL.md形式で、Claude Code、Codex CLI、Cursor、Gemini CLI等で動作。</p>
+<p><strong>6層アーキテクチャ（モデル名ではなく役割で定義）：</strong></p>
+<p><strong>第1層 AIHOT（情報収集）：</strong>レーダー。毎日起こっていることをスキャン。</p>
+<p><strong>第2層 Codexデスクトップ版（実行とスケジューリング）：</strong>チャットボックス以上のワークベンチ。ローカルファイル読取・コマンド実行・下書き読書き・プロセス記録。「AIHOT取得→Feishu書込→テーマ生成→初稿生成→ログ記録→結果返送」を繋ぐ。</p>
+<p><strong>第3層 素材整理とテーマ選定：</strong>「今日20件の情報」から「今日書く価値のある5テーマ」へ。重複排除・分類・要約補完・タグ付け・テーマカード生成・H/K/R/Eスコアリング（H=好奇心 K=知識価値 R=共感 E=実行難易度）。</p>
+<p><strong>第4層 Feishu多次元テーブル（構造化）：</strong>システムの骨格。AIHOTは流れ、Feishuは貯水池。</p>
+<p><img src="images/019/HIHvmloaUAE59_x.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><strong>第5層 創作工房：</strong>テーマカードと素材からWeChat記事・X長文投稿・RED・Toutiao用に展開+プラットフォーム別カバー生成。モデルは入れ替え可能。</p>
+<p><strong>第6層 人間Gate：</strong>省けない層。テーマの価値判断・論旨のブレ・公開判断・削除すべき表現・補足すべき視点——最終判断は常に人間。</p>
+<p><img src="images/019/HIHwC6GbwAA2kee.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>要約：AIHOTが情報を発見→Codexが実行→Feishuが構造化→テーマ層が素材を書ける題に→創作工房が各PF用原稿に→人間が最終判断。</p>
+<p><strong>セットアップ：</strong>以下のプロンプトをCodexデスクトップ版にコピーするだけ。AgentがAIHOT Skill→lark-cliチェック→なければインストール→Feishu認証誘導→「AIコンテンツ中台」Base作成（10テーブル）→自動化タスク登録。</p>
+<pre><code>
+目標：Codex + AIHOT + Feishu コンテンツ中台の構築
+1. AIHOT Skillインストール確認
+2. lark-cli確認/インストール
+3. Feishu認証（ブラウザで承認→ターミナルで確認）
+4. 「AIコンテンツ中台」Base作成（10テーブル：每日素材池/AIHOT精选入库/历史对标文章库/X推文情报库/知识卡片库/选题池/草稿与成稿库/封面与视觉资产库/Agent任务台/工作流说明）
+5. 各テーブルのフィールド定義
+6. ワークフロー登録（5つのトリガーワード）
+7. 自動化タスク作成（4時間毎のAIHOT同期+毎朝9時のテーマ推薦）
+</code></pre>
+<p><img src="images/019/HIHt2tWagAAOCi6.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>あなたが実際にするのは2つだけ：ブラウザでFeishu認証を承認すること、Agentが建テーブル計画を出力した後に「実行」と返信すること。</p>
+<p><img src="images/019/HIHtqCSboAA6egn.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><img src="images/019/HIHxnsyaUAALK5-.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>日常運用：自動化1（4時間毎AIHOT同期）→重複排除して入库。自動化2（毎朝9時テーマ推薦）→過去24時間から3〜5候補をH/K/R/E付きで选题池に。自動化は「テーマ推薦」まで——公開は常に人間Gate。</p>
+<p>手動トリガー：「更新今日内容中台」「生成今日选题卡」「把这个选题写成公众号初稿」「给这篇文章生成多平台封面方案」「复盘这篇文章」。</p>
+<p><img src="images/019/HIHw1K1agAAWrAf.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><img src="images/019/HIHvGEEbcAIlMbA.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>AIHOTが「何を見るか」、Feishuが「どこに置くか」、Codexが「誰が走らせるか」、テーマ層が「どれを書くか」、創作工房が「どう原稿化するか」、人間Gateが「本当に公開すべきか」——それぞれが正しい位置に収まれば、コンテンツ生産は日々の場当たり的作業から、再利用可能なラインへと変わります。</p>
+<p>最後に——实操文で一番大事なのは「詳しそうに見えること」ではなく、読者が手順通りにやって本当に動くこと。AIは生産効率を上げるが、署名の背後にある信用を肩代わりできない。@Khazix0918氏に改めて感謝。</p>
+<p><strong>チェックリスト：</strong>☐ Agent環境あり ☐ AIHOT Skillインストール済 ☐ lark-cli確認済 ☐ Feishu認証済 ☐ Base+10テーブル作成済 ☐ 自動化タスク登録済 ☐ ワークフロー5つ登録済 ☐ 公開前の人間Gate維持</p>
   </div>
 </div>
 <footer>

@@ -4,32 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>特定商取引法に基づく表記 · AI知識庫</title>
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  .legal-container { max-width: 800px; margin: 80px auto 60px; padding: 0 20px; }
-  .legal-container h1 { font-size: 1.8rem; margin-bottom: 32px; }
-  .legal-container table { width: 100%; border-collapse: collapse; }
-  .legal-container td { padding: 14px 16px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
-  .legal-container td:first-child { font-weight: 600; white-space: nowrap; width: 30%; color: #555; }
-  .legal-container td:last-child { line-height: 1.7; }
-  .back-home { display: inline-block; margin-top: 40px; color: #FF8C42; text-decoration: none; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#1a1814;--ink-muted:#5a5650;--ink-faint:#9a9490;--paper:#faf9f6;--gold:#b8925a;--border:rgba(26,24,20,.1);--serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',sans-serif}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.8}
+nav{padding:18px 60px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:rgba(250,249,246,.94)}
+.nav-logo{font-family:var(--serif);font-size:15px;letter-spacing:.12em;color:var(--ink);text-decoration:none}
+.nav-back{font-size:11px;color:var(--ink-muted);text-decoration:none;letter-spacing:.06em}
+.nav-back:hover{color:var(--gold)}
+.legal-container{max-width:760px;margin:60px auto 80px;padding:0 24px}
+.legal-container h1{font-family:var(--serif);font-size:26px;font-weight:300;margin-bottom:12px}
+.legal-container .subtitle{font-size:12px;color:var(--ink-faint);margin-bottom:40px}
+table{width:100%;border-collapse:collapse}
+td{padding:16px 18px;border-bottom:1px solid var(--border);vertical-align:top;font-size:13px;line-height:1.9}
+td:first-child{font-weight:500;color:var(--ink-muted);white-space:nowrap;width:30%;font-size:12px;letter-spacing:.04em}
+.back-home{display:inline-block;margin-top:40px;font-size:12px;color:var(--ink-muted);text-decoration:none}
+.back-home:hover{color:var(--gold)}
+footer{padding:24px 60px;text-align:center;font-size:11px;color:var(--ink-faint);border-top:1px solid var(--border)}
+@media(max-width:600px){nav{padding:16px 24px}td:first-child{white-space:normal;width:auto;display:block;padding-bottom:4px}td:last-child{display:block;padding-top:0}}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">AI<span>知識庫</span></div>
-  <ul class="nav-links">
-    <li><a href="index.html">記事一覧</a></li>
-    <li><a href="prompts/">最新プロンプト</a></li>
-    <li><a href="index.html#tools">おすすめツール</a></li>
-    <li><a href="pricing.html">料金</a></li>
-    <li><a href="https://www.snsaladdin.com/">SNS Aladdin</a></li>
-  </ul>
+  <a class="nav-logo" href="index.html">AI 知識庫</a>
+  <a class="nav-back" href="index.html">← トップに戻る</a>
 </nav>
 
 <div class="legal-container">
   <h1>特定商取引法に基づく表記</h1>
+  <p class="subtitle">Act on Specified Commercial Transactions</p>
   <table>
     <tr><td>販売業者</td><td>SNSアラジン株式会社</td></tr>
     <tr><td>運営責任者</td><td>直良 陽子</td></tr>
@@ -46,15 +52,8 @@
   <a href="index.html" class="back-home">← トップページに戻る</a>
 </div>
 
-<footer style="margin-top:0;">
-  <div class="links">
-    <a href="index.html">記事一覧</a>
-    <a href="prompts/">最新プロンプト</a>
-    <a href="index.html#tools">おすすめツール</a>
-    <a href="index.html#pricing">料金</a>
-    <a href="tokushoho.html">特定商取引法に基づく表記</a>
-  </div>
-  <div class="copyright">© 2026 AI知識庫 · Designed for 陽子</div>
+<footer>
+  © 2026 AI知識庫 · SNS Aladdin
 </footer>
 
 </body>

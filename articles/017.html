@@ -295,9 +295,93 @@
 核心思路就是：同时覆盖 HTTP 代理、WebSocket 代理，以及 Codex Desktop 自己的启动环境。</blockquote>
 <p>最后，祝大家使用Codex愉快！如果有业务场景繁琐、需要优化的老板，也欢迎联系我。</p>
   </div>
-  <div class="lang-content jp" style="display: none;">
+    <div class="lang-content jp" style="display: none;">
 <div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/gengdaJ/status/2053724702993190917" target="_blank">@gengdaJ 原文</a></div>
-<p>（日本語訳準備中）</p>
+<p>前回はCodex Appのゼロからの入門編をお届けしました。Codexの画面構成と基本設定を中心に解説しました。</p>
+<p><img src="images/017/HIAmLRabwAAxDTZ.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>基礎が整ったので、いよいよCodex Appで本当に効率化・コスト削減につながる作業を始め、ビジネスにあらゆる角度から活用していきましょう。</p>
+<p>今回の記事では、実戦的なシーンをいくつか体験しながら、Codexのあまり知られていない活用秘訣をご紹介します。基礎からやや高度な内容まで、機能からシーンまで、Codexを一気にマスターしましょう！🔥</p>
+<li>社畜必須：CodexでWord・PDF・PPT（画像型VS HTML型）・Sheetsの四種神器を作成。</li>
+<li>クールな3D動画を自作：Codex + HyperFrames / Remotion（three.js）で「国産アニメ映画トップ10」を制作。</li>
+<li>早寝早起き：Codexで早寝早起きを分析する美しいレイアウトのWebサイトを作成し、Vercelにデプロイ。さらにCodexでOpenRouterを操作し新モデルRingの能力を比較検証。</li>
+<li>クリエイター必須：Codexで画像付き長文チュートリアルを作成——CodexにCodex自身を操作させ、複数チャットを並行実行し、スクリーンショットからモザイク処理まで一括で。</li>
+<li>EC選品・出品の自動化：Codex + Playwrightでブラウザを操作し、Pinduoduoへの商品一括出品をシームレスに実現。</li>
+<p>遊びながら学び、ついでに収益化も——これが私の目標です。前置きはこのくらいにして、早速始めます！</p>
+<h2>一、社畜必須：CodexでWord・PDF・PPT・Sheetsの四種神器を作成</h2>
+<p>これまで、イベント企画書・プロジェクト報告・コース教材・コンサルレポート・社員研修資料などを作るには、まず数ヶ月かけてこれらのツールを使いこなせるようになる必要がありました。しかし今はCodexでたった一行のプロンプトで、美しいレイアウトと正確なデータを含むWord・PDF・PPT・Sheetsを生成できます。</p>
+<p>Codexの四種神器作成能力を紹介するため、以下のデモを行いました：</p>
+<pre><code><small>📋 コピペ可</small>
+このチャットでオフィス四種神器のデモタスクを実行してください。テーマは「Codex App コンテンツ制作ワークフロー」。要件：
+1. Word文書、PDFファイル、PPTXプレゼンテーション、XLSXスプレッドシートの4種類の実ファイルを生成；
+2. 各ファイルに実際のコンテンツを含め、空ファイルにしない；
+3. 生成後、各ファイルの実際のパスを通知；
+4. スクリーンショットをチュートリアルに使えるよう、プレビューまたはファイル一覧を生成；
+5. 最後に4ファイルすべてが存在し、開け、プレースホルダーでないことを確認する検収チェックリストを提示。
+</code></pre>
+<p>検収結果：1.Word文書 / 2.PDFファイル / 3.PPTプレゼンテーション / 4.Sheets スプレッドシート</p>
+<p><img src="images/017/HIAl5MyaIAADs7e.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><img src="images/017/HIAltNFbEAAPS6V.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><img src="images/017/HIAmdVtbUAAdvp5.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p><img src="images/017/HIBFTaEacAAM8v8.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>もちろん、スキルや最適化されたプロンプトを与えていない状態でこのクオリティは非常に優秀です！</p>
+<p>ご存知の通り、現在Xで最も話題のPPT作成方法は、間違いなく従来の殻を破ったHTML描画PPTです。関連するバズりスキルも数え切れないほどあります。以下では「応用編」PPTの操作パスで皆さんにヒントをお届けします。</p>
+<h2>ルート1：画像型PPT</h2>
+<p>画像型PPTとは：まずCodexに16:9のビジュアル画像を1枚ずつ生成させ、それらの画像をPPTに配置する方法です。各スライドは本質的に1枚の完成画像です。GPT2-imageがベースなので、かなり良い仕上がりになります。もちろん編集可能です。興味があればDMでどうぞ。</p>
+<h2>ルート2：HTML型PPT</h2>
+<p>HTML型PPTは最近非常に注目されています。従来のPPTソフトを使わず、HTML・CSS・JSで直接スライドを書きます。メリット：ブラウザで直接プレビュー可能；アニメーション・インタラクションが作れる；コードでレイアウト制御可能；スクリーンショット・エクスポートが容易；Codexとの相性が抜群。Xには多くのOSSスキルがあります。Grokで検索すれば使えます。</p>
+<p><img src="images/017/HIAlwMhasAAAqo9.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>二、クールな3D動画を自作：Codex + HyperFrames / Remotionで「国産アニメ映画トップ10」</h2>
+<p>ここからは少しクールなことを。以前Codex + HyperFrames / Remotion (three.js) で3D動画を作りました。</p>
+<p><img src="images/017/HIAmIPoaMAA7lCp.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>基本構想：Codexがプロジェクト作成・コード修正・レンダリング実行・エラー調査を担当。three.jsが3D映像。Minimaxがナレーション。yt-dlpが動画DL。Remotion / HyperFramesがWebアニメを動画に変換。ローカルツールで音量統一。最終MP4出力。</p>
+<p>詳細手順：1.目標動画の要件をCodexに明確に伝える。2.要件すり合わせ——不明点は一旦停止して質問。3.「超高」と「フルアクセス」をオンにして@browserと@computer useで操作させる。4.完成品の不満点を修正。</p>
+<p>当初この動画は「自動スクリプト→素材検索→自動DL→ハイライト検出→自動ナレーション→自動編集」のパイプライン検証が目的でした。そして商業化すればGPT2-image・Seedance 2.0・ElevenLabs等APIで90%自動化し、AIトラフィック収益化・EC・集客・広告に活用できます。</p>
+<p>動画を作り始めるための汎用テンプレート：</p>
+<pre><code><small>📋 コピペ可</small>
+目標：／対象視聴者：／対象プラットフォーム：／長さ：／アスペクト比/解像度/FPS：／言語：
+シーン数：／主体/キャラクター：／アクション：／シーン/背景：／カメラ/構図：
+光/色彩/スタイル：／字幕/画面テキスト：／音声(ナレーション/声色/速度/音楽/SFX)：／トランジション：
+ブランド/法務/アクセシビリティ：／出力要件：シーンリスト→最終プロンプト→レンダリングメタデータJSON
+</code></pre>
+<p><img src="images/017/HIAmCMOaYAAQIxT.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>三、早寝早起き：一行プロンプトでWebサイトを作りVercelにデプロイ</h2>
+<p>AIが楽しすぎて生活リズムが乱れる——かつての私です。健康こそが革命の元手。Codexに早寝早起きサイトを作らせました。</p>
+<pre><code><small>📋 コピペ可</small>
+早寝早起きをテーマにしたWebサイトを生成。要件：1.美しいレイアウト 2.3Dアニメーション 3.メリット分析 4.実行可能ステップ 5.実際動作 6.Vercelにデプロイ。
+</code></pre>
+<p>Vercelプラグイン（プラグインで検索）の設定が必要かもしれません。</p>
+<p><img src="images/017/HIAmaWIacAAI8JG.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>出来上がったサイト（https://codex-1-html-css-js-2.vercel.app/）：3D概日リズム+メリット解説+シャットダウン/起動ルーティン+7日間プラン+自己評価+よくある誤解+参考資料。</p>
+<p><img src="images/017/HIAmOONaQAA3uS7.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>さらにWeb版AIのコードを無料活用する技：CodexでOpenRouterを操作し新モデルをテスト。Ring-2.6-1T (free)を試し、https://ring-sleep-site.vercel.app/ にデプロイ。かなり良い結果。国産大規模モデルは十分実用的です。この発想をGPT-5.5 Proに適用すればさらに強力。この秘密は内緒で。</p>
+<p><img src="images/017/HIAl_Mta0AAVcuv.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>四、クリエイター必須：Codexで画像付き長文チュートリアルを作成</h2>
+<p>長文が苦手な方に役立つセクションです。「素材検索→テーマ選定→構成→執筆→画像配置」に数時間——私はCodexに書かせています。前回92万インプレッションの記事は80%がCodex製。記事・スクリーンショット・モザイク・カバー画像含め、私は20%の修正だけ。</p>
+<p><img src="images/017/HIAlqNQbUAA5QC2.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>重要なのは「方向性」ではなく「思考プロセス」をAIに伝えること。例：</p>
+<pre><code><small>📋 コピペ可</small>
+Codex APP自体を操作して、メイン画面の各ボタン機能を順番に分析し、設定を左ナビ順に1ページずつ丁寧に紹介。プライバシー部分はモザイク処理。@computer use
+</code></pre>
+<p>過去の執筆経験をスキル化（私は「Yichen tutorial writing」）してCodexに呼び出させれば、自分のスタイルで書けます。</p>
+<p><img src="images/017/HIAmFQha8AAOWt1.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>さらにCodexに5つのウィンドウを並行実行させ、自分で自分を監視させることで効率が大幅UP。</p>
+<h2>五、EC選品・出品の自動化：Codex + PlaywrightでPinduoduo商品一括出品</h2>
+<p>EC事業者の典型的課題：リンク数膨大、複数SKU、数千行データ、新店舗時に数百リンク作成。各SKUに在庫・単価・規格コード等入力。手作業は遅くミスも多い。これはクリエイティブ判断ではなく、構造化データの安定入力——自動化に最適。</p>
+<p>1つ目のアプローチ：Computer Use → CodexがPinduoduo管理画面へのアクセスを拒否 → Playwrightへ切替。</p>
+<p><img src="images/017/HIAl2LgbwAAg9ue.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>Playwrightは「コードでブラウザ操作」。目で見るのではなくWeb要素を直接識別。Computer Useより一括タスク向き。</p>
+<p>パイプライン：商品マスターテーブル→フィールドマッピング→Playwrightで管理画面→商品基本情報入力→SKU価格・在庫入力→画像/動画UP→スクリーンショット・人手確認→一括実行→成功/失敗ログ出力。</p>
+<p><img src="images/017/HIAmjXXbcAAjgqS.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>Codexの役割：Excel読み取り→列分析→標準テーブル再整理→フィールドマッピング確認→Playwright自動化記述→ブラウザ操作→テスト実行→スクリーンショット・確認→ログ記録→一括実行→スキル化。成功体験をスキル化すれば「会社で再利用可能な自動化フロー」に。</p>
+<p><img src="images/017/HIAl8MvaEAAmSLO.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>六、よくあるハマりポイント</h2>
+<p><strong>ハマり1：Computer Useは万能ではない</strong>——一部サイトは自動化検出。Playwrightを第一選択に。ログイン済みブラウザ再利用でログイン状態検出回避。Computer Useはオープンサイト向き、Playwrightはアンチスクレイピングのある管理画面向き。</p>
+<p><strong>ハマり2：Codexはローカルターミナルを操作できない</strong>——外部ターミナルプロセスにコマンド送信不可。回避策：Web版AIを直接操作、またはCodex内蔵ターミナルでCLI実行（これは可能）。</p>
+<p><strong>ハマり3：方向性だけで思考プロセスがない→ゴミ出力</strong>——書く前に自分でフレームワークを組み、それをプロンプトとして渡す。執筆スタイルのスキルを蓄積。</p>
+<h2>七・八・九（まとめ）</h2>
+<p>Codexを単なるチャットアシスタントにしておくのはもったいない。文字・画像・動画制作、WeChatチャット解析、ブラウザ自動操作、AI対決、OpenRouter新モデル自動テスト、他のAI作業監視——可能性は無限大。</p>
+<p><strong>初心者おすすめ学習順：</strong>画像生成→Word/PDF/PPT/XLSX→HTML小Webサイト→ローカルプレビュー→Vercelデプロイ→画像付きチュートリアル→HTML PPT→動画アニメーション→ビジネス自動化。</p>
+<p><strong>価格：</strong>無料版は2回で終了。最低Plus会員。ヘビーユーザーはPro（100ドル/週）。チャージ必要な方はyichen10801またはyichen365aiまで。プロキシ設定はHTTP_PROXY等に加えWSS_PROXY/WS_PROXYも必要。~/.codex/config.tomlとlaunchctl setenvの両方に設定し、Codex完全終了後再起動。</p>
   </div>
 </div>
 <footer>
