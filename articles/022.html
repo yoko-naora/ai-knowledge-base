@@ -73,7 +73,17 @@
 <p>2. 使用 Claude Code</p>
 <p><img src="images/022/HIIWFLUbIAA4GIi.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>输出结果：</p>
+<pre><code>```json
+正在分析 main.py...
+发现 3 个潜在问题：
+1. 第 15 行：变量未定义
+2. 第 23 行：建议使用 try-except
+3. 第 40 行：函数命名不规范
+```</code></pre>
 <p>3. 安装 AI 工具</p>
+<pre><code>```
+pip install openai
+```</code></pre>
 <p>输出结果：</p>
 <p><img src="images/022/HIIUsvlbIAA66sk.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>使用场景：</p>
@@ -90,11 +100,37 @@
 <p>比如：</p>
 <p>claude "帮我写个函数"</p>
 <p>输入 → 回车 → 得到结果 → 结束。这就是 CLI。</p>
+<pre><code>```
+┌─ OpenAI API Configuration ─┐
+│                             │
+│ API Key: [sk-...        ]   │
+│ Model:   [▼ gpt-4       ]   │
+│ Timeout: [30s           ]   │
+│                             │
+│ [Save]  [Cancel]            │
+└─────────────────────────────┘
+```</code></pre>
 <h2>TUI：Text-based User Interface（终端文本界面）</h2>
 <p>核心特征： 跑在终端里，但不是单纯一行行命令，而是有"界面感"——列表、面板、快捷键、光标选择。</p>
 <p>典型例子：</p>
 <p>1. Claude Code 的交互模式</p>
 <p>当你运行 claude 进入交互模式后，会看到：</p>
+<pre><code>```markdown
+┌─────────────────────────────────────────────────────┐
+│ Claude Code                                          │
+├─────────────────────────────────────────────────────┤
+│ 对话历史：                                            │
+│ > 你：写一个 Python 函数计算斐波那契数列               │
+│ < Claude: 好的，我来帮你写...                         │
+│                                                      │
+│ def fibonacci(n):                                    │
+│     if n <= 1:                                       │
+│         return n                                     │
+│     return fibonacci(n-1) + fibonacci(n-2)           │
+│                                                      │
+│ [↑↓] 浏览历史  [Tab] 补全  [Ctrl+C] 退出              │
+└─────────────────────────────────────────────────────┘
+```</code></pre>
 <p>你可以用方向键浏览历史对话，用斜杠键调用 skill，整个界面是交互式的。</p>
 <p>2. 一些 AI 工具的配置界面</p>
 <p>有些工具在安装时会弹出配置界面：</p>
@@ -113,6 +149,11 @@
 <p>比如：</p>
 <p>claude</p>
 <p>输入后，整个终端变成了一个对话界面，你可以用方向键浏览历史，用快捷键操作。这就是 TUI。</p>
+<pre><code>```json
+curl https://api.openai.com/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Hello"}]}'
+```</code></pre>
 <h2>GUI：Graphical User Interface（图形用户界面）</h2>
 <p>核心特征： 用窗口、按钮、菜单、图标、鼠标操作。</p>
 <p>典型例子：</p>
@@ -140,7 +181,17 @@
 <p>CLI vs TUI：关键区别</p>
 <p>很多人把 CLI 和 TUI 混为一谈，因为它们都在终端里用。但区别很明显：</p>
 <p>举个例子：</p>
+<pre><code>```
+Collecting openai
+  Downloading openai-1.12.0-py3-none-any.whl (226 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.7/226.7 kB 2.1 MB/s
+Installing collected packages: openai
+Successfully installed openai-1.12.0
+```</code></pre>
 <p>CLI 方式调用 OpenAI API：</p>
+<pre><code>```json
+pip install openai
+```</code></pre>
 <p>你输入一条命令，回车，得到 JSON 结果。</p>
 <p>TUI 方式使用 Claude Code：</p>
 <p>claude</p>
@@ -183,6 +234,18 @@
 <li>claude 执行并输出结果</li>
 <li>Terminal 显示结果</li>
 <p>再举个例子：安装 OpenAI 的 Python 库</p>
+<pre><code>```json
+{
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)"
+      }
+    }
+  ]
+}
+```</code></pre>
 <p>发生了什么：</p>
 <li>你在 Terminal 窗口里输入 pip install openai</li>
 <li>Shell（比如 Zsh）读到这行文字</li>
@@ -190,6 +253,12 @@
 <li>Shell 把 install openai 作为参数传给 pip</li>
 <li>pip 开始下载和安装</li>
 <li>安装过程的输出显示在 Terminal 里</li>
+<pre><code>```json
+Collecting openai
+  Downloading openai-1.12.0-py3-none-any.whl
+Installing collected packages: openai
+Successfully installed openai-1.12.0
+```</code></pre>
 <h2>命令行：Command Line</h2>
 <p>它是什么： 通过输入文字命令来操作程序的交互方式。</p>
 <p>注意： 命令行不是一个具体的软件，而是一种操作方式。</p>
@@ -200,6 +269,12 @@ Shell    = 主持人/翻译（解释器）
 命令行   = 你说话下指令这种交流方式（方式）
 CLI 程序 = 你说的一句句话（具体内容）
 TUI 程序 = 在舞台上演出的交互式小节目</p>
+<pre><code>```json
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{"model": "gpt-4", "messages": [{"role": "user", "content": "Hello"}]}'
+```</code></pre>
 <p>完整链路：</p>
 <p>场景：你要使用 Claude Code</p>
 <p>1. 你打开 Terminal（比如 macOS 的终端 app）
@@ -270,6 +345,15 @@ TUI 程序 = 在舞台上演出的交互式小节目</p>
 <p>使用 Claude Code：</p>
 <p>claude</p>
 <p>进入交互界面后：</p>
+<pre><code>```json
+curl https://api.openai.com/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gpt-4",
+    "messages": [{"role": "user", "content": "写一个 Python 函数计算斐波那契数列"}]
+  }'
+```</code></pre>
 <p>优点： 可视化、快捷键高效、不离开终端、可以浏览历史对话 缺点： 需要学习快捷键、不如 GUI 直观</p>
 <p>方式 3：GUI（图形界面）</p>
 <p>打开 ChatGPT 网页版：</p>
@@ -346,6 +430,18 @@ TUI 程序 = 在舞台上演出的交互式小节目</p>
 <h2>附录：相关概念速查</h2>
 <p>如果你已经搞清楚了 CLI、TUI、GUI、Terminal、Shell，这些相关概念也值得了解：</p>
 <p>界面形态类</p>
+<pre><code>```json
+{
+  "choices": [
+    {
+      "message": {
+        "role": "assistant",
+        "content": "Hello! How can I help you today?"
+      }
+    }
+  ]
+}
+```</code></pre>
 <p>开发者接口类</p>
 <p><img src="images/022/HIIYpSoa8AAYHw2.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>一句话区别：</p>
@@ -361,6 +457,9 @@ TUI 程序 = 在舞台上演出的交互式小节目</p>
 >>> openai.chat.completions.create(...)</p>
 <p>输入代码 → 立即执行 → 看到结果。</p>
 <p>工具类型</p>
+<pre><code>```json
+claude "帮我分析这个文件"
+```</code></pre>
 <p>速记</p>
 <p>人操作软件：CLI / TUI / GUI
 程序操作程序：API / SDK

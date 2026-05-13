@@ -93,7 +93,6 @@
 <li>第五步（结果打包）：将结果格式化为模型可读的消息，捕获错误以便模型自愈。</li>
 <li>第六步（上下文更新）：将结果追加到历史记录，必要时触发压缩。</li>
 <li>第七步（循环）：返回第一步，直到满足退出条件。</li>
-<p><em>引用推文：<a href="https://x.com/i/status/2041146899319971922" target="_blank">https://x.com/i/status/2041146899319971922</a></em></p>
 <li>Anthropic (Claude Agent SDK)：通过一个简单的 query() 函数暴露 Harness，运行时是一个“笨循环”，智慧全在模型里。</li>
 <li>OpenAI (Agents SDK)：采用“代码优先”策略，工作流逻辑直接用 Python 表达，而不是复杂的图形语言。</li>
 <li>LangGraph：将 Harness 建模为显式的状态图，强调对流程的精细控制。</li>
