@@ -270,13 +270,18 @@ function getParam(name) {
         }
 
         // 3. Prompt content with all images inline
-        var promptText = realPrompt || imagePrompt;
+        var promptText = realPrompt;
         html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content">';
         // Show remaining images (skip first which is cover)
         for (var gi = 1; gi < p.images.length; gi++) {
           html += '<img src="' + imgPath(p.images[gi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
         }
-        html += escapeHtml(promptText) + '</div></div>';
+        if (promptText) {
+          html += escapeHtml(promptText);
+        } else {
+          html += '<em>提示词待补充，可联系 @MrLarus 提供番号</em>';
+        }
+        html += '</div></div>';
       }
 
       // Footer - link to X
