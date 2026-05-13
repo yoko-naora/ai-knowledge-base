@@ -769,23 +769,28 @@
   },
   {
     "cat": "全景/3D/空间",
-    "title": "2026-04-30T12:13:15.000Z",
-    "text": "第二步：同样在ChatGPT生成内部全景图\n【内部全景】提示词",
-    "link": "https://x.com/MrLarus/status/2049824398723498404",
+    "title": "Thu Apr 30 12:10:20 +0000 2026",
+    "text": "🚀太强了！用ChatGPT-Image2生成等矩形全景图\n任何2D图片都能秒变自由探索的3D环境！\n\n我花了5分钟，把《哈尔的移动城堡》做成了沉浸式3D世界！\n外景：漫步在绿野山间的魔法移动城堡\n内景：城堡内部的客厅&魔法工作室\n\n教程 + 完整提示词我放到了评论区👇",
+    "link": "https://x.com/MrLarus/status/2049823664489603425",
     "title_ja": "2026-04-30T12:13:15.000Z",
     "text_ja": "ステップ 2: ChatGPT でも内部パノラマを生成する\n【内部パノラマ】即言",
-    "date": "2026-04-30 12:13",
-    "image_prompt": "第二步：同样在ChatGPT生成内部全景图\n【内部全景】提示词",
-    "image_prompt_ja": "ステップ 2: ChatGPT でも内部パノラマを生成する\n【内部パノラマ】即言",
+    "date": "2026-04-30 12:10",
+    "image_prompt": "第一步：在ChatGPT生成外部全景等矩形图\n\n【外部全景】提示词\nmake equirectangular panorama of Howl's Moving Castle floating in the beautiful countryside, Studio Ghibli style, whimsical vibrant green hills, small windmill, detailed grass and flowers, blue sky with soft clouds, warm afternoon lighting, highly detailed, seamless 360 degree view, perfect for 3D scene rendering\n\n第二步：同样在ChatGPT生成内部全景图\n\n【内部全景】提示词\nmake equirectangular panorama of the cozy interior living room and workshop inside Howl's Moving Castle, Studio Ghibli style, magical cluttered room with bookshelves, fireplace, potions, flying objects and large windows showing the countryside, warm lighting, whimsical and detailed, highly detailed, seamless 360 degree view, perfect for 3D scene\n\n第三步：上传到Panoee或其他工具，接下来随意拖动就能360°自由漫游了",
+    "image_prompt_ja": "",
     "video_prompt": "",
     "video_prompt_ja": "",
     "images": [
-      "images/MrLarus_2049824398723498404_1.jpg"
+      "images/MrLarus_2049824324912079282_1.jpg",
+      "images/MrLarus_2049824398723498404_1.jpg",
+      "images/MrLarus_2049825029165051991_1.jpg",
+      "images/MrLarus_2049825029165051991_2.jpg"
     ],
-    "video": "",
-    "type": "image",
+    "video": "videos/MrLarus_2049823664489603425_1.mp4",
+    "type": "video",
     "author": "@MrLarus",
-    "id": 65
+    "id": 65,
+    "real_prompt": "第一步：在ChatGPT生成外部全景等矩形图\n\n【外部全景】提示词\nmake equirectangular panorama of Howl's Moving Castle floating in the beautiful countryside, Studio Ghibli style, whimsical vibrant green hills, small windmill, detailed grass and flowers, blue sky with soft clouds, warm afternoon lighting, highly detailed, seamless 360 degree view, perfect for 3D scene rendering\n\n第二步：同样在ChatGPT生成内部全景图\n\n【内部全景】提示词\nmake equirectangular panorama of the cozy interior living room and workshop inside Howl's Moving Castle, Studio Ghibli style, magical cluttered room with bookshelves, fireplace, potions, flying objects and large windows showing the countryside, warm lighting, whimsical and detailed, highly detailed, seamless 360 degree view, perfect for 3D scene\n\n第三步：上传到Panoee或其他工具，接下来随意拖动就能360°自由漫游了",
+    "real_prompt_ja": ""
   },
   {
     "cat": "全景/3D/空间",
