@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第16篇：Codex App 从0到1完整入门教程 · AI知识库</title>
+<title>第16篇：Codex App 从0到1完整入门教程：把这个超级APP的每一个细节抽丝剥茧讲清楚 · AI知识库</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-
 <nav>
   <div class="logo">AI<span>知识库</span></div>
   <ul class="nav-links">
@@ -22,23 +21,15 @@
     <button onclick="switchLang('jp')">日本語</button>
   </div>
 </nav>
-
 <section class="article-hero">
   <a href="../index.html" class="back-link">← <span class="lang-content cn" style="display: block;">返回首页</span><span class="lang-content jp" style="display: none;">トップに戻る</span></a>
-  <h1><span class="lang-content cn" style="display: block;">第16篇：Codex App 从0到1完整入门教程</span><span class="lang-content jp" style="display: none;">第16回：Codex App 从0到1完整入门教程</span></h1>
-  <div class="meta">✏️ @gengdaJ（逸尘） · 2026-05-06</div>
+  <h1><span class="lang-content cn" style="display: block;">第16篇：Codex App 从0到1完整入门教程：把这个超级APP的每一个细节抽丝剥茧讲清楚</span><span class="lang-content jp" style="display: none;">第16回：Codex App 从0到1完整入门教程：把这个超级APP的每一个细节抽丝剥茧讲清楚</span></h1>
+  <div class="meta">✏️ @gengdaJ（逸尘） · Wed May 06</div>
   <div class="source">📎 <a href="https://x.com/gengdaJ/status/2051891231953920174" target="_blank"><span class="lang-content cn" style="display: block;">查看原文</span><span class="lang-content jp" style="display: none;">原文を見る</span></a></div>
 </section>
-
 <div class="article-content">
   <div class="lang-content cn" style="display: block;">
-
 <div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/gengdaJ/status/2051891231953920174" target="_blank">@gengdaJ 原帖</a></div>
-
-<p>title: "Codex App 从0到1完整入门教程：把这个超级APP的每一个细节抽丝剥茧讲清楚"</p>
-<p>author: "逸尘 (@gengdaJ)"</p>
-<p>source: "https://x.com/gengdaJ/status/2051891231953920174"</p>
-<p>date: "Wed May 06 05:06:06 +0000 2026"</p>
 <p>最近我发现，很多人第一次接触 Codex App 的反应不是“哇，好强”，而是：</p>
 <p>这玩意儿到底从哪开始使用？需不需要我配置一大堆东西？</p>
 <p>左边一堆入口，中间是聊天，右边又会弹出网页、图片、文档、来源、代码变化。设置里还有一堆看起来很技术的东西。</p>
@@ -51,9 +42,10 @@
 <li>普通对话和项目对话有什么区别。</li>
 <li>插件、技能、MCP、自动化、Git 这些词怎么理解。</li>
 <li>哪些地方小白最容易点错。</li>
-<blockquote>本文基于 Mac 版 Codex App 实测整理。</blockquote>
-<p>Codex版本：Codex 26.429.30905。</p>
-<p>Codex App 更新很快，你看到的按钮名称和位置可能会有一点变化，但核心逻辑基本一样。</p>
+<blockquote>本文基于 Mac 版 Codex App 实测整理。
+Codex版本：Codex 26.429.30905。
+Codex App 更新很快，你看到的按钮名称和位置可能会有一点变化，但核心逻辑基本一样。</blockquote>
+<h2>一、Codex App 到底是什么</h2>
 <p>一句话：Codex App 是一个把 AI Agent 放进你电脑里的工作台，只要你能在电脑上做的操作，它基本上也都能做，而且它会做的更完美、更高效。</p>
 <p>说白了，它不是一个你问一句，它答一句的普通聊天框。Codex App 更像是你的助理，它可以：</p>
 <li>和你聊天。</li>
@@ -70,26 +62,32 @@
 <p>先看一张打开后的整体界面。</p>
 <p>这张图先不用看细节。你只要记住：左边是导航栏，中间是你和 Codex 对话的地方，右边有时会出现结果、来源、预览和代码变化。</p>
 <p>这就是 Codex App 和普通聊天框最大的差别：它不是只有“问答”，它还有“工作现场”。</p>
-<p>Mac 用户建议只从 OpenAI 官方入口下载 Codex App：</p>
-<p> https://openai.com/codex/</p>
+<h2>二、下载和登录</h2>
+<p>Mac 用户建议只从 OpenAI 官方入口下载 Codex App：
+ https://openai.com/codex/</p>
 <p>安装方式和普通 Mac App 差不多：</p>
 <li>下载 Codex App。</li>
 <li>打开安装包。</li>
 <li>把 Codex 拖进“应用程序”。</li>
 <li>从启动台或应用程序里打开 Codex。</li>
 <li>用你的 ChatGPT / OpenAI 账号登录（普通账号也有一定的免费额度）</li>
+<p><img src="images/016/HHmwSdOaQAAlP2t.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>三、本地 Codex App、云端 Codex、普通 ChatGPT 有什么区别</h2>
 <p>在开始介绍Codex App之前，我把Codex App和云端Codex以及普通Chatgpt的区别先理一下，因为很多人一直没搞清楚这三者的区别。</p>
 <p>名字 大白话解释 适合做什么     ChatGPT 普通对话 一个网页或 App 里的助手 问问题、写文案、解释概念、生成文件、生成图片   Codex App 本地版 装在你电脑上的 AI 工作台 普通ChatGPT能做的都能做，最大的区别就是能轻松地读取本地的文件。   云端 Codex 在云端环境里跑的 AI Agent 有时候电脑关机了本地Codex APP就用不了了，如果在云端上跑任务，那就不受本地电源的限制，因为是跑在官方服务器上面的。</p>
 <p>小白先记住一个判断标准就够了：</p>
 <li>一般任务：用普通对话。</li>
 <li>要处理本地文件或项目：用 Codex App 里的项目。</li>
 <li>要让 Codex 在远程环境里持续跑任务：用云端 Codex。</li>
+<p><img src="images/016/HHmzNoabcAA8qzd.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>四、主界面地图：左边、中间、右边</h2>
 <p>第一次打开 Codex App，可能有点懵逼，因为上面的功能还是有点多的，毕竟人家是“超级工作台”嘛！</p>
 <p>区域 它是干什么的 小白最常用的动作     左边导航栏 找入口、找项目、找对话 新对话、切换对话、连接插件和设置自动化任务   中间对话区 你和 Codex 真正交流的地方 输入需求、让Codex开始工作   右边结果区 展示证据和产物 看来源、预览网页/图片/PDF、看代码变化</p>
 <p>下面这张图是插件页，但它很适合看 Codex 的整体布局：左边是导航，中间是主要内容，右边这次没有打开额外预览（一般有生成图片、代码或者网页，就可以在右边预览）。</p>
+<h2>五、左侧导航栏：你从这里进入不同工作流</h2>
 <p>左边是 Codex 的入口区。</p>
 <p>常见入口包括：</p>
-<li>新对话</li>
+<p>1. 新对话</p>
 <p>大白话：开一个全新的聊天任务</p>
 <p>适用时机：不想沿用旧上下文、清空之前聊天记录重新提问时</p>
 <p>2. 搜索</p>
@@ -107,11 +105,13 @@
 <p>6. 普通对话</p>
 <p>大白话：不绑定任何项目的纯聊天模式</p>
 <p>适用时机：查询概念、撰写文案、梳理思路、日常简单提问时</p>
+<h2>六、搜索：找回你之前做过的事</h2>
 <p>点左侧“搜索”，会弹出一个搜索浮层。</p>
 <p>它的作用很简单：</p>
 <li>找历史对话。</li>
 <li>找之前跑过的项目任务。</li>
 <li>找你忘记名字的上下文。</li>
+<h2>七、插件：给 Codex 装能力包</h2>
 <p>点左侧“插件”，会进入插件页。</p>
 <p>插件其实就是给 Codex 装能力包。</p>
 <p>比如：</p>
@@ -131,7 +131,9 @@
 <li>你想让 Codex 做 PPT、表格、文档。</li>
 <li>你想让 Codex 和 GitHub、Slack、Linear 等工具协作。</li>
 <p>小白建议：刚开始只用官方已经内置好的插件，不要急着装一堆，后续熟练了可以慢慢添加</p>
+<h2>八、自动化：让 Codex 稍后或定期帮你做事</h2>
 <p>点左侧“自动化”，会看到自动化页面。</p>
+<p><img src="images/016/HHmv3ixasAAxGiI.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>自动化就是让 Codex 在某个时间点，或按某个频率，自动执行一件你提前设置好的任务。</p>
 <p>常见场景：</p>
 <li>每天早上帮你整理某个项目状态。</li>
@@ -139,6 +141,8 @@
 <li>半小时后继续当前线程。</li>
 <li>定期监控某个网页、邮箱、任务列表。</li>
 <li>定时生成日报、周报、复盘。</li>
+<p><img src="images/016/HHmzTE3bMAAg-F8.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>九、右侧结果区：产出物</h2>
 <p>Codex 的右侧区域可能出现：</p>
 <li>生成出来的文件。</li>
 <li>搜索来源。</li>
@@ -148,9 +152,13 @@
 <li>内置浏览器。</li>
 <li>代码差异。</li>
 <li>Git 变化。</li>
+<p><img src="images/016/HHmwAvsaQAAcKvy.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>你可以把右侧理解成：Codex 交作业的地方。</p>
 <p>中间告诉你“Codex到底做了什么”，右边让你看“Codex到底产出了什么”。</p>
+<h2>十、设置入口：让Codex更好用</h2>
 <p>左下角有“设置”入口，这里面可能有很多小白陌生的设置，但是挨个认真看完，其实也能设置好，把Codex设置的更加好用。下面逐个介绍：👇</p>
+<h2>十一、设置页 1：常规</h2>
+<p><img src="images/016/HHmwDkgaUAA8Gjm.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>常规管的是 App 的基础使用习惯。</p>
 <p>常见内容包括：</p>
 <li>工作模式：更偏日常工作，还是更偏编程。</li>
@@ -171,7 +179,10 @@
 <p>第三个是发送方式。</p>
 <p>长文本是否需要 Command + Enter 发送，这个会影响你写长需求时会不会误触，因为很多朋友不小心点击Enter就会发送，比如我。。。</p>
 <p>第四个是语音输入</p>
+<p><img src="images/016/HHmv0vaakAAf2oq.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>这个相当于全局键，打开了之后，不止是在Codex App内部，可以在电脑上任意一个对话框调用Codex的语音输入法。但是如果习惯了比如Typeless、豆包输入法的朋友就没有必要切换了。</p>
+<h2>十二、设置页 2：外观</h2>
+<p><img src="images/016/HHmyBuxbUAABj7h.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>外观管的是界面长什么样。</p>
 <p>常见内容包括：</p>
 <li>主题。</li>
@@ -182,7 +193,11 @@
 <li>字号或界面密度。</li>
 <p>这个页面基本不影响 Codex 能不能完成任务，它只影响你看界面UI的时候舒不舒服。</p>
 <p>但是有个新功能大家也许会感兴趣：可以在这个界面选择一只桌宠，然后再Codex对话框输入/宠物就能唤起一只陪伴大家工作的小可爱！</p>
+<p><img src="images/016/HHmyxjWboAAHaaP.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>十三、设置页 3：配置</h2>
+<p><img src="images/016/HHmwGrmaMAA9LPK.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>保持默认即可，不需要改。</p>
+<h2>十四、设置页 4：个性化</h2>
 <p>个性化管的是 Codex 怎么理解你。</p>
 <p>这里通常会出现类似：</p>
 <li>个人偏好。</li>
@@ -200,9 +215,12 @@
 <li>不要把 API Key、密码、Cookie 写进去。</li>
 <li>不要把私人身份证、银行卡、公司机密写进去。</li>
 <li>不要写互相矛盾的规则。</li>
+<h2>十五、设置页 5：MCP 服务器</h2>
 <p>MCP 对小白来说第一次听见会有点懵，但是简单理解就是MCP 是让 Codex 连接外部工具的一条通道，大概意义和插件没啥区别。</p>
 <p>比如某个工具提供了 MCP，Codex 就可以通过它读取数据、调用功能、执行操作。</p>
 <p>一般不需要添加，就是用Codex内置的插件已经能满足99%的日常工作生活需求了。</p>
+<p><img src="images/016/HHmxoi_aQAEclcw.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>十六、设置页 6：Git</h2>
 <p>Git 是代码世界里的“版本记录系统”。</p>
 <p>如果你不是程序员，可以先这样理解：</p>
 <blockquote>Git 像一个项目的时间机器，记录每次改了什么。</blockquote>
@@ -213,7 +231,10 @@
 <li>能不能回退。</li>
 <li>要不要提交。</li>
 <p>但是总而言之，这些都是技术相关，小白第一次上手把这页的设置保持默认即可，不需要改变。</p>
+<h2>十七、设置页 7和8：环境和工作树</h2>
 <p>小白保持默认即可！</p>
+<p><img src="images/016/HHmy7s3akAAZgFO.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>十八、设置页 9和10：浏览器使用和电脑操作</h2>
 <p>浏览器使用是指 Codex 能操作内置浏览器，这个功能非常实用，Codex 可以用它来：</p>
 <li>打开网页。</li>
 <li>搜索资料。</li>
@@ -222,6 +243,8 @@
 <li>测试前端页面。</li>
 <li>截图或检查页面效果。</li>
 <p>直接在Codex App内部就完成相关操作，不需要再跳转到别的网页，十分便捷。</p>
+<p><img src="images/016/HHmv6UTa0AAJGhH.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>十九、设置页 10：电脑操控</h2>
 <p>电脑操控是让 Codex 操作 Mac 上的应用。</p>
 <p>比如：</p>
 <li>打开某个 App。</li>
@@ -239,20 +262,26 @@
 <li>公司工具。</li>
 <li>私人资料。</li>
 <p>小白建议：第一次用电脑操控，最好只让它操作无风险 App，特别记住不要操作社媒账号和微信！！！！！</p>
+<h2>二十、设置页 11：已归档对话</h2>
 <p>已归档对话就是被你收起来的历史对话，它不是删除，更像是：一个没有时间限制的回收站，不会过期清理，想要找回来的时候随时在这里找回就行。</p>
 <p>适合归档的内容：</p>
 <li>已经完成的任务。</li>
 <li>暂时不用的项目对话。</li>
 <li>不想占用左侧列表的旧记录。</li>
 <li>需要保留但不常看的过程。</li>
+<h2>二十一、跑一个普通对话：先从低风险任务开始</h2>
 <p>刚开始用 Codex，不建议直接让它改项目，先开启一个普通对话。特别建议打开“完全访问权限”，那一刻，会发现真的很爽，小白应该不会一上来就做什么惊人的操作，所以也不会有太大的安全风险，吧。。。</p>
 <p>比如输入：</p>
 <p>如果是做一个比较复杂的任务，建议打开“计划模式”，先梳理清楚思路，再开始做。</p>
+<h2>二十二、权限确认：非常重要！</h2>
 <p>Codex 可能会请求不同权限，你可以这样理解：</p>
 <p>权限类型 意味着什么 小白怎么判断     文件访问 Codex 要读或改某个文件夹 看清楚路径是不是你允许的项目   终端命令 Codex 要在电脑上运行命令 不懂就让它先解释   浏览器 Codex 要打开网页或操作网页 避免付款、删除、发布类操作   第三方账号 Codex 要连接 Gmail、GitHub 等 看清楚授权范围   电脑操控 Codex 要操作 Mac App 边界一定要说清楚</p>
 <p>小白最容易犯的错：看到确认按钮就点。千万不要这样，如果你看不懂，就问：</p>
+<p><img src="images/016/HHmvw_iacAAfIMi.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>Codex 本身也可以帮你解释权限滴！～</p>
-<li>Codex 一直在跑，不知道是不是卡了</li>
+<p><img src="images/016/HHmwJzpaYAAU3Gp.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>二十三、常见踩坑和排查</h2>
+<p>1. Codex 一直在跑，不知道是不是卡了</p>
 <p>先看左边对话状态，是在转圈还是蓝色的不动的点</p>
 <p>如果它显示转圈，那就是没有结束。</p>
 <p>如果它显示蓝色的点，就代表任务已经结束了</p>
@@ -260,9 +289,11 @@
 <p>不要直接点，让它解释：</p>
 <p>3. 它改了项目，我看不懂</p>
 <p>让它解释 Git diff：</p>
+<p><img src="images/016/HHmx6cRbEAEdFDk.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>4. 生成结果不满意</p>
 <p>不要重开。</p>
 <p>直接基于结果继续改：</p>
+<p><img src="images/016/HHmv9IebQAAD9pr.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>5. 插件太多，不知道装哪个</p>
 <p>先别装，先用官方内置能力。</p>
 <p>等你明确知道“我要让 Codex 连接某个工具”，再去插件页找。</p>
@@ -273,6 +304,7 @@
 <li>输出什么。</li>
 <li>不要做什么。</li>
 <li>遇到问题怎么处理。</li>
+<h2>二十四、我的推荐使用路线</h2>
 <p>如果你是第一次用 Codex App，我建议按这个顺序来：</p>
 <li>打开 App，先熟悉左侧导航。</li>
 <li>新建一个普通对话，问一个低风险问题。</li>
@@ -283,11 +315,13 @@
 <li>让它解释它做了什么。</li>
 <li>再尝试插件页和自动化页。</li>
 <li>最后再碰 Git、MCP、电脑操控这些高级功能。</li>
+<h2>二十五、账号额度怎么选：Plus 够不够，Pro 什么时候值得</h2>
 <p>尽量用付费的会员账号登录，因为免费的真的经不起折腾。大佬级别的直接上pro，小白可以先plus尝尝鲜。</p>
-<p>一些购买方法汇总：</p>
-<p>小猫的20美金礼品卡订阅方法：https://x.com/lngkximo/status/2050761195750351026</p>
+<p>一些购买方法汇总：
+小猫的20美金礼品卡订阅方法：https://x.com/lngkximo/status/2050761195750351026</p>
 <p>gamsgo：https://www.gamsgo.com/partner/WsMzs，之前有200刀，现在好像缺货。</p>
 <p>逸尘：我这边也提供plus和200刀pro的充值，但是基本上都和官方价格差不多，但是优点胜在不需要折腾，充值方式简单，不愿意浪费太多时间的大佬可以让我赚杯咖啡钱～联系：yichen365ai</p>
+<h2>二十六、写在最后</h2>
 <p>Codex App 是一个非常牛逼、而且非常适合普通人上手的超级APP，他比Claude Code的CLI界面更加好上手，非常符合小白的使用习惯。而且他能够操控电脑、读取本地文件，基本上只要是人类能做的软件操作他都能完成。</p>
 <p>它的功能非常广泛：</p>
 <li>聊天。</li>
@@ -301,21 +335,15 @@
 <li>本地电脑权限。</li>
 <p>所以小白第一次打开会懵，是很正常的，但是你要习惯使用它，慢慢地给他加插件、加Skill，最后把它培养成最合适的超级助手。</p>
 <p>最后，祝你使用Codex愉快！</p>
-
   </div>
   <div class="lang-content jp" style="display: none;">
-
 <div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/gengdaJ/status/2051891231953920174" target="_blank">@gengdaJ 原文</a></div>
-
 <p>（日本語訳準備中）</p>
-
   </div>
 </div>
-
 <footer>
-  <p><a href="../index.html">← 返回首页</a></p>
+  <p><a href="../index.html" class="back-link" style="color:#FF6B35;">← 返回首页</a></p>
 </footer>
-
 <script src="../assets/js/main.js"></script>
 </body>
 </html>

@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>第22篇：终端、命令行、Shell 到底啥区别 · AI知识库</title>
+<title>第22篇：甭装了，90% 的人根本分不清：终端、命令行、Shell 到底啥区别 · AI知识库</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-
 <nav>
   <div class="logo">AI<span>知识库</span></div>
   <ul class="nav-links">
@@ -22,23 +21,15 @@
     <button onclick="switchLang('jp')">日本語</button>
   </div>
 </nav>
-
 <section class="article-hero">
   <a href="../index.html" class="back-link">← <span class="lang-content cn" style="display: block;">返回首页</span><span class="lang-content jp" style="display: none;">トップに戻る</span></a>
-  <h1><span class="lang-content cn" style="display: block;">第22篇：终端、命令行、Shell 到底啥区别</span><span class="lang-content jp" style="display: none;">第22回：终端、命令行、Shell 到底啥区别</span></h1>
-  <div class="meta">✏️ @longdechen12（观自） · 2026-05-13</div>
+  <h1><span class="lang-content cn" style="display: block;">第22篇：甭装了，90% 的人根本分不清：终端、命令行、Shell 到底啥区别</span><span class="lang-content jp" style="display: none;">第22回：甭装了，90% 的人根本分不清：终端、命令行、Shell 到底啥区别</span></h1>
+  <div class="meta">✏️ @longdechen12（观自） · Tue May 12</div>
   <div class="source">📎 <a href="https://x.com/longdechen12/status/2054231595931123997" target="_blank"><span class="lang-content cn" style="display: block;">查看原文</span><span class="lang-content jp" style="display: none;">原文を見る</span></a></div>
 </section>
-
 <div class="article-content">
   <div class="lang-content cn" style="display: block;">
-
 <div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/longdechen12/status/2054231595931123997" target="_blank">@longdechen12 原帖</a></div>
-
-<p>title: "甭装了，90% 的人根本分不清：终端、命令行、Shell 到底啥区别"</p>
-<p>author: "观自 (@longdechen12)"</p>
-<p>source: "https://x.com/longdechen12/status/2054231595931123997"</p>
-<p>date: "Tue May 12 16:05:52 +0000 2026"</p>
 <p>"安装 Claude Code 时，提示我打开 Terminal 输入命令。"</p>
 <p>"CodeX 提供了 CLI 工具，也可以用 GUI 界面。"</p>
 <p>"Cursor 是个 IDE，但也可以通过命令行启动。"</p>
@@ -46,6 +37,7 @@
 <p>这些概念不是什么高深的技术术语，但它们确实是 AI 工具使用中的"通用语言"。搞不清楚它们，就像听别人说话时总有几个字听不清，虽然能猜个大概，但总觉得不踏实。</p>
 <p>更要命的是，这些词经常被混用。有人说"打开命令行"，其实是让你打开终端；有人说"用 CLI 调用 API"，但你不知道这和在网页上用有什么区别。</p>
 <p>今天就把这些概念一次性说清楚。</p>
+<h2>省流版：核心区别</h2>
 <p>界面类型（人怎么跟软件互动）：</p>
 <li>CLI：输入命令，程序输出文本</li>
 <li>TUI：终端里的文本界面，有面板、快捷键、光标选择</li>
@@ -58,6 +50,7 @@
 <li>IDE：集成开发环境，包含编辑、调试、构建等一整套工具</li>
 <p>一句话记住： Terminal 是地方，Shell 是翻译，命令行是方式，CLI/TUI/GUI 是界面类型，IDE 是工具套装。</p>
 <p>下面逐个拆解。</p>
+<h2>为什么这些概念容易混？</h2>
 <p>因为它们不在同一个维度。</p>
 <p>就像你问"苹果和水果有什么区别"——这个问题本身就有问题，因为苹果是水果的一种，它们不是并列关系。</p>
 <p>这些概念也一样：</p>
@@ -67,15 +60,22 @@
 <p>所以一个 IDE 可以是 GUI 的（Cursor、VS Code），也可以高度依赖终端（Claude Code）。</p>
 <p>一个工具也可能同时有多种界面：OpenAI 提供了 CLI 工具，也有网页版 GUI（ChatGPT），还有 API 接口。</p>
 <p>搞清楚这个分层逻辑，后面就好理解了。</p>
+<p><img src="images/022/HIIYHsrakAA65VU.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>第一层：界面类型——CLI、TUI、GUI 的本质区别</h2>
 <p>这三个词说的是"人怎么跟软件对话"。</p>
+<h2>CLI：Command Line Interface（命令行界面）</h2>
 <p>核心特征： 你输入命令，程序输出文本。</p>
 <p>典型例子：</p>
-<li>调用 OpenAI API</li>
+<p>1. 调用 OpenAI API</p>
+<p><img src="images/022/HIIXnsNbwAA1oAQ.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>输出结果：</p>
+<p><img src="images/022/HIIVVVeaoAAzw87.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>2. 使用 Claude Code</p>
+<p><img src="images/022/HIIWFLUbIAA4GIi.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>输出结果：</p>
 <p>3. 安装 AI 工具</p>
 <p>输出结果：</p>
+<p><img src="images/022/HIIUsvlbIAA66sk.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>使用场景：</p>
 <li>自动化脚本（批量调用 API、批量处理文件）</li>
 <li>精确控制（指定参数、获得可预测的结果）</li>
@@ -90,13 +90,15 @@
 <p>比如：</p>
 <p>claude "帮我写个函数"</p>
 <p>输入 → 回车 → 得到结果 → 结束。这就是 CLI。</p>
+<h2>TUI：Text-based User Interface（终端文本界面）</h2>
 <p>核心特征： 跑在终端里，但不是单纯一行行命令，而是有"界面感"——列表、面板、快捷键、光标选择。</p>
 <p>典型例子：</p>
-<li>Claude Code 的交互模式</li>
+<p>1. Claude Code 的交互模式</p>
 <p>当你运行 claude 进入交互模式后，会看到：</p>
 <p>你可以用方向键浏览历史对话，用斜杠键调用 skill，整个界面是交互式的。</p>
 <p>2. 一些 AI 工具的配置界面</p>
 <p>有些工具在安装时会弹出配置界面：</p>
+<p><img src="images/022/HIIW427bEAA9sKK.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>你可以用 Tab 键在不同选项间切换，用方向键选择下拉菜单。</p>
 <p>使用场景：</p>
 <li>需要浏览和选择（查看对话历史、选择模型）</li>
@@ -111,9 +113,10 @@
 <p>比如：</p>
 <p>claude</p>
 <p>输入后，整个终端变成了一个对话界面，你可以用方向键浏览历史，用快捷键操作。这就是 TUI。</p>
+<h2>GUI：Graphical User Interface（图形用户界面）</h2>
 <p>核心特征： 用窗口、按钮、菜单、图标、鼠标操作。</p>
 <p>典型例子：</p>
-<li>ChatGPT 网页版</li>
+<p>1. ChatGPT 网页版</p>
 <li>打开浏览器访问 chat.openai.com</li>
 <li>在输入框输入问题</li>
 <li>点击发送按钮</li>
@@ -133,6 +136,7 @@
 <li>面向普通用户（降低学习成本，不需要记命令）</li>
 <p>为什么 AI 工具都提供 GUI？</p>
 <p>因为大部分用户更习惯图形界面。ChatGPT 如果只有 CLI，用户量会少很多。</p>
+<p><img src="images/022/HIIWti1awAAZxVJ.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>CLI vs TUI：关键区别</p>
 <p>很多人把 CLI 和 TUI 混为一谈，因为它们都在终端里用。但区别很明显：</p>
 <p>举个例子：</p>
@@ -148,7 +152,10 @@
 <p>所以：</p>
 <li>CLI 更像"跟程序下命令"</li>
 <li>TUI 更像"在终端里打开一个小软件界面"</li>
+<p><img src="images/022/HIIUiLBaYAABOa5.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<h2>第二层：环境概念——TERMINAL、SHELL、命令行的区别</h2>
 <p>这是最容易混淆的一组概念。</p>
+<h2>Terminal：终端/终端模拟器</h2>
 <p>它是什么： 一个显示文字、接收键盘输入的窗口程序。</p>
 <p>典型例子：</p>
 <li>macOS Terminal</li>
@@ -159,6 +166,7 @@
 <p>简单理解：</p>
 <p>Terminal 就是一个"文字显示器"。你打开它，看到一个黑色（或白色）的窗口，里面可以输入文字，也可以显示文字。</p>
 <p>就像你打开记事本可以输入文字一样，Terminal 也是一个可以输入文字的窗口，只不过它专门用来运行命令和程序。</p>
+<h2>Shell：命令解释器</h2>
 <p>它是什么： 运行在 Terminal 里的程序，负责理解你输入的命令，并启动相应的程序。</p>
 <p>典型例子：</p>
 <li>Bash</li>
@@ -182,33 +190,39 @@
 <li>Shell 把 install openai 作为参数传给 pip</li>
 <li>pip 开始下载和安装</li>
 <li>安装过程的输出显示在 Terminal 里</li>
+<h2>命令行：Command Line</h2>
 <p>它是什么： 通过输入文字命令来操作程序的交互方式。</p>
 <p>注意： 命令行不是一个具体的软件，而是一种操作方式。</p>
 <p>三者关系：地方、翻译、方式</p>
 <p>可以把它想成一个"剧场"：</p>
-<p>Terminal = 舞台/屏幕（地方）</p>
-<p>Shell    = 主持人/翻译（解释器）</p>
-<p>命令行   = 你说话下指令这种交流方式（方式）</p>
-<p>CLI 程序 = 你说的一句句话（具体内容）</p>
-<p>TUI 程序 = 在舞台上演出的交互式小节目</p>
+<p>Terminal = 舞台/屏幕（地方）
+Shell    = 主持人/翻译（解释器）
+命令行   = 你说话下指令这种交流方式（方式）
+CLI 程序 = 你说的一句句话（具体内容）
+TUI 程序 = 在舞台上演出的交互式小节目</p>
 <p>完整链路：</p>
 <p>场景：你要使用 Claude Code</p>
-<li>你打开 Terminal（比如 macOS 的终端 app）</li>
-<p>   → Terminal 是一个窗口程序，显示文字的地方</p>
-<p>2. Terminal 自动启动 zsh</p>
-<p>   → zsh 是 Shell，负责理解你输入的命令</p>
-<p>3. 你输入：claude "帮我写个函数"</p>
-<p>   → 这是 CLI 方式使用 Claude Code</p>
-<p>   → 输入命令 → 得到结果 → 结束</p>
-<p>4. 你输入：claude</p>
-<p>   → 这是 TUI 方式使用 Claude Code</p>
-<p>   → 整个终端变成交互界面</p>
-<p>   → 你可以持续对话，用快捷键操作</p>
-<p>   → 按 Ctrl+C 退出，回到普通终端</p>
-<p>5. 你输入：open -a Cursor</p>
-<p>   → 启动 Cursor（GUI 程序）</p>
-<p>   → 打开一个新的图形化窗口</p>
-<p>   → 用鼠标点击、拖拽文件</p>
+<p>1. 你打开 Terminal（比如 macOS 的终端 app）
+   → Terminal 是一个窗口程序，显示文字的地方
+
+2. Terminal 自动启动 zsh
+   → zsh 是 Shell，负责理解你输入的命令
+
+3. 你输入：claude "帮我写个函数"
+   → 这是 CLI 方式使用 Claude Code
+   → 输入命令 → 得到结果 → 结束
+
+4. 你输入：claude
+   → 这是 TUI 方式使用 Claude Code
+   → 整个终端变成交互界面
+   → 你可以持续对话，用快捷键操作
+   → 按 Ctrl+C 退出，回到普通终端
+
+5. 你输入：open -a Cursor
+   → 启动 Cursor（GUI 程序）
+   → 打开一个新的图形化窗口
+   → 用鼠标点击、拖拽文件</p>
+<p><img src="images/022/HIIVERgbYAAYHT_.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>关键理解：</p>
 <li>Terminal：始终是那个文字窗口，不管你运行什么程序</li>
 <li>Shell：在 Terminal 里运行，负责理解你的命令</li>
@@ -222,6 +236,7 @@
 <p>但大家都懂这句话的意思其实是：</p>
 <blockquote>"打开一个终端窗口，然后在里面输入命令。"</blockquote>
 <p>所以日常交流中混用没问题，但理解底层概念能让你在技术文档和讨论中更精确。</p>
+<h2>第三层：工具类型——IDE 是什么？</h2>
 <p>IDE：Integrated Development Environment（集成开发环境）</p>
 <p>它是什么： 面向开发的一整套工具环境，通常包含：</p>
 <li>代码编辑器</li>
@@ -238,14 +253,18 @@
 <li>Windsurf（AI 原生 IDE）</li>
 <p>注意： IDE 不是一种界面类型，而是一种功能定位。</p>
 <p>一个 IDE 可以是 GUI 的（Cursor、VS Code），也可以高度依赖终端（Claude Code）。</p>
+<p><img src="images/022/HIIWwM3bAAAxLxr.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>Cursor 和 Claude Code 有什么区别？</p>
 <li>Cursor：GUI IDE，用鼠标操作，有图形化界面，适合习惯传统编辑器的用户</li>
 <li>Claude Code：CLI/TUI 工具，主要在终端里用命令操作，适合喜欢键盘流的用户</li>
 <p>但它们都是"开发环境"，都集成了 AI 能力。</p>
+<h2>实战场景：使用 AI 工具的三种方式</h2>
 <p>假设你要使用 OpenAI 的 GPT-4，可以有三种方式：</p>
 <p>方式 1：纯 CLI（命令行）</p>
 <p>使用 curl 调用 API：</p>
+<p><img src="images/022/HIIU0D6akAAfrzU.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>输出结果：</p>
+<p><img src="images/022/HIITnNubcAAZjdF.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>优点： 精确、可脚本化、适合自动化（比如批量处理 100 个文件） 缺点： 需要记命令、不直观、结果是 JSON 格式需要解析</p>
 <p>方式 2：TUI（终端界面）</p>
 <p>使用 Claude Code：</p>
@@ -265,18 +284,20 @@
 <li>AI 直接在代码编辑器里生成代码</li>
 <p>优点： 直观、易上手、可以看到格式化的代码、可以点击复制 缺点： 鼠标操作慢、不适合自动化、需要打开浏览器或应用</p>
 <p>三者对比</p>
+<p><img src="images/022/HIIW8E-bIAAGizt.png" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>我的建议：</p>
 <li>日常使用：GUI（ChatGPT 网页版、Cursor）</li>
 <li>开发集成：CLI（调用 API，把 AI 能力嵌入到你的应用）</li>
 <li>高频使用：TUI（Claude Code，不用切换窗口）</li>
 <li>批量处理：CLI（写脚本批量调用）</li>
+<h2>为什么越来越多工具提供 CLI？</h2>
 <p>你可能注意到了，最近很多工具都开始提供 CLI 版本：</p>
 <li>飞书 CLI：可以用命令行管理文档、发消息</li>
 <li>Obsidian CLI：可以用命令行创建笔记、搜索内容</li>
 <li>CodeX：可以用命令行调用 GPT</li>
 <li>Claude Code：直接在终端里用 AI</li>
 <p>为什么会有这个趋势？</p>
-<li>自动化需求爆发</li>
+<p>1. 自动化需求爆发</p>
 <p>AI 时代，大家都想把工具串起来：</p>
 <li>用脚本批量处理 100 个文件</li>
 <li>定时自动生成报告</li>
@@ -305,7 +326,8 @@
 <li>知道怎么输入命令</li>
 <li>知道怎么看结果</li>
 <p>这些基础技能，会让你在 AI 时代走得更远。</p>
-<li>看懂安装文档</li>
+<h2>为什么要搞清楚这些概念？</h2>
+<p>1. 看懂安装文档</p>
 <p>很多 AI 工具的安装文档会说：</p>
 <blockquote>"Open your terminal and run: pip install openai"</blockquote>
 <p>如果你不懂这些概念，就会卡在第一步。</p>
@@ -321,30 +343,35 @@
 <li>"OpenAI API 调用失败" → 可能是 CLI 命令写错了</li>
 <li>"Cursor 打不开" → 这是 GUI 程序的问题</li>
 <p>搜索关键词更精确，解决问题更快。</p>
+<h2>附录：相关概念速查</h2>
 <p>如果你已经搞清楚了 CLI、TUI、GUI、Terminal、Shell，这些相关概念也值得了解：</p>
 <p>界面形态类</p>
 <p>开发者接口类</p>
+<p><img src="images/022/HIIYpSoa8AAYHw2.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>一句话区别：</p>
 <li>API：OpenAI 说"你可以这样调用我"</li>
 <li>SDK：OpenAI 说"我把调用方式打包好了"（pip install openai）</li>
 <li>Library：你主动调用它（import openai）</li>
 <li>Framework：它规定结构，你往里填代码</li>
 <p>命令行相关</p>
+<p><img src="images/022/HIIUCjQbUAAzZIK.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>REPL 例子：</p>
-<p>python</p>
-<p>>>> import openai</p>
-<p>>>> openai.chat.completions.create(...)</p>
+<p>python
+>>> import openai
+>>> openai.chat.completions.create(...)</p>
 <p>输入代码 → 立即执行 → 看到结果。</p>
 <p>工具类型</p>
 <p>速记</p>
-<p>人操作软件：CLI / TUI / GUI</p>
-<p>程序操作程序：API / SDK</p>
-<p>开发环境：Terminal / Shell / IDE</p>
-<p>AI 工具举例：</p>
-<li>ChatGPT（GUI）</li>
-<li>Claude Code（CLI/TUI）</li>
-<li>OpenAI API（API）</li>
-<li>Cursor（GUI IDE）</li>
+<p>人操作软件：CLI / TUI / GUI
+程序操作程序：API / SDK
+开发环境：Terminal / Shell / IDE
+
+AI 工具举例：
+- ChatGPT（GUI）
+- Claude Code（CLI/TUI）
+- OpenAI API（API）
+- Cursor（GUI IDE）</p>
+<h2>最后</h2>
 <p>这些概念不是为了考试，而是为了让你在 AI 工具的世界里更自如。</p>
 <p>当你看到一个新的 AI 工具时，你会自然地问：</p>
 <li>它是 CLI、TUI 还是 GUI？</li>
@@ -360,21 +387,15 @@
 <p>AI 工具的世界也一样。</p>
 <p>关于作者</p>
 <p>我是观自，如果你在 AI 商业落地上有困惑，欢迎交流。</p>
-
   </div>
   <div class="lang-content jp" style="display: none;">
-
 <div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/longdechen12/status/2054231595931123997" target="_blank">@longdechen12 原文</a></div>
-
 <p>（日本語訳準備中）</p>
-
   </div>
 </div>
-
 <footer>
-  <p><a href="../index.html">← 返回首页</a></p>
+  <p><a href="../index.html" class="back-link" style="color:#FF6B35;">← 返回首页</a></p>
 </footer>
-
 <script src="../assets/js/main.js"></script>
 </body>
 </html>

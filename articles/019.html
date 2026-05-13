@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-
 <nav>
   <div class="logo">AI<span>知识库</span></div>
   <ul class="nav-links">
@@ -22,23 +21,15 @@
     <button onclick="switchLang('jp')">日本語</button>
   </div>
 </nav>
-
 <section class="article-hero">
   <a href="../index.html" class="back-link">← <span class="lang-content cn" style="display: block;">返回首页</span><span class="lang-content jp" style="display: none;">トップに戻る</span></a>
   <h1><span class="lang-content cn" style="display: block;">第19篇：把这篇文章丢给 Agent，它会帮你搭一套 AI 内容工厂</span><span class="lang-content jp" style="display: none;">第19回：把这篇文章丢给 Agent，它会帮你搭一套 AI 内容工厂</span></h1>
-  <div class="meta">✏️ @ChrisWangwy（老爸的AI联萌） · 2026-05-12</div>
+  <div class="meta">✏️ @ChrisWangwy（老爸的AI联萌） · Tue May 12</div>
   <div class="source">📎 <a href="https://x.com/ChrisWangwy/status/2054190173764936079" target="_blank"><span class="lang-content cn" style="display: block;">查看原文</span><span class="lang-content jp" style="display: none;">原文を見る</span></a></div>
 </section>
-
 <div class="article-content">
   <div class="lang-content cn" style="display: block;">
-
 <div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/ChrisWangwy/status/2054190173764936079" target="_blank">@ChrisWangwy 原帖</a></div>
-
-<p>title: "把这篇文章丢给 Agent，它会帮你搭一套 AI 内容工厂"</p>
-<p>author: "老爸的AI联萌 (@ChrisWangwy)"</p>
-<p>source: "https://x.com/ChrisWangwy/status/2054190173764936079"</p>
-<p>date: "Tue May 12 13:21:17 +0000 2026"</p>
 <p>我有一套 AI 内容工厂。</p>
 <p>它每天帮我收集 AI 圈的新资料，每 4 小时同步一次 AIHOT 精选，把素材放进飞书；每天早上 9 点，再根据过去 24 小时的内容，给我推荐一批今天可以写的选题。</p>
 <p>你现在看到的这篇文章，也是这套系统写出来的。我负责实操、定框架、说清楚我到底想表达什么，然后把它交给 Codex 桌面版里的 Agent 帮我写、帮我改、帮我把流程整理成读者也能复制的版本。</p>
@@ -54,6 +45,7 @@
 <p>先说 AIHOT。</p>
 <p>AIHOT 的地址在这里：https://aihot.virxact.com/</p>
 <p>这个站是@Khazix0918卡兹克大佬做的。我必须先认真夸一下。</p>
+<p><img src="images/019/HIHw8k-aUAA0Vit.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>很多人做 AI 资讯站，做出来的是一个「列表」。卡兹克做出来的不是列表，是一套有品味的信息过滤器。它每天把 X、官方博客、论文、产品更新、行业动态这些东西抓回来，再用 AI 做筛选、摘要、分类、推荐理由。你打开之后看到的不是一堆链接，而是一张已经被人替你清过噪的桌子。</p>
 <p>这件事很难得。</p>
 <p>信息源这东西，表面上看只是「谁订阅得多」。但真正决定质量的，是谁有耐心每天去调信源、筛噪声、修页面、补接口、下线不合适的东西、把手机端适配好，还愿意把 Agent 接入方式做成公开入口。卡兹克大佬这波不是简单开了一个网站，而是把自己每天看 AI 圈的那套雷达，直接摆到所有人面前。</p>
@@ -82,25 +74,32 @@
 <p>E 是执行难度，这个选题今天能不能写出来，证据够不够，素材有没有缺口。</p>
 <p>第四层是飞书多维表格，负责结构沉淀。</p>
 <p>这是整套系统的骨架。AIHOT 是流，飞书是池子。没有飞书，今天的信息明天就散了；有了飞书，每条素材、每个选题、每篇草稿、每张封面、每次 Agent 运行结果，都有自己的位置。</p>
+<p><img src="images/019/HIHvmloaUAE59_x.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>第五层是创作工坊。</p>
 <p>我故意不用某个模型名来命名这一层。因为这层真正负责的是创作动作，不是某个模型。它要根据选题卡和素材生成公众号初稿、X 长帖、小红书图文脚本、今日头条版本，还要生成不同平台的封面提示词。你可以让 GPT-5.5 来写，也可以让任何你觉得中文顺手的模型做改写。只要输入输出规范稳定，模型随时可以换。</p>
 <p>第六层是人工 Gate。</p>
 <p>这层不能省。选题是不是值得写，文章有没有偏离你的判断，能不能发布，哪些话要删，哪些观点要补，最终都得人来定。AI 可以替你跑腿，但不能替你背书。</p>
 <p>所以这套系统一句话概括就是：</p>
 <p>AIHOT 发现信息，Codex 桌面版执行动作，飞书沉淀结构，选题层把素材变成可写的题，创作工坊把题变成不同平台的稿件，人做最后判断。</p>
+<p><img src="images/019/HIHwC6GbwAA2kee.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>真正动手的时候，不必把飞书 CLI、AIHOT Skill、建表、自动化分成十几个零散教程。你可以直接把下面这段话复制给 Codex 桌面版，让 Agent 一手包办。</p>
 <p>这段提示词的用法很简单。你不用先学一堆飞书 API，也不用先想表结构。你把它丢给 Agent，它会先检查有没有 AIHOT Skill，再检查有没有 lark-cli，没有就装，有就继续授权。授权这一步它不能替你点浏览器确认，所以它会把链接给你，你打开、授权、回到终端确认状态就行。</p>
+<p><img src="images/019/HIHt2tWagAAOCi6.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>真正需要你亲自做的，只有两个动作：浏览器里确认飞书授权，以及在 Agent 输出建表计划后回复「执行」。</p>
+<p><img src="images/019/HIHtqCSboAA6egn.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>这也是为什么我说文章要写给 Agent 看。以前你看一篇教程，要自己把每个步骤复制到终端里；现在你把整段任务丢给 Agent，它会自己拆成步骤执行，遇到需要你授权的地方停下来等你，遇到缺命令的地方先检查环境。</p>
+<p><img src="images/019/HIHxnsyaUAALK5-.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>飞书通了以后，这套系统的日常运转就很清晰。</p>
 <p>第一条自动化任务，是每 4 小时同步一次 AIHOT。</p>
 <p>它不需要每次拉全量。默认拉最近一段时间的精选内容，按链接或 AIHOT 条目 ID 去重，然后写入「AIHOT 精选入库」和「每日素材池」。如果同一条素材已经存在，就更新摘要、推荐理由、分类和入库批次，不要重复写一条新记录。</p>
 <p>这条任务的价值是持续补水。你不用早上一次性刷完所有信息，也不用担心下午出了一个新模型、新产品、新论文被漏掉。它每 4 小时看一眼，把值得看的东西放进池子里。</p>
 <p>第二条自动化任务，是每天早上 9 点推荐选题。</p>
+<p><img src="images/019/HIHw1K1agAAWrAf.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>它读取过去 24 小时的「每日素材池」和「AIHOT 精选入库」，按主题聚类，生成 3 到 5 个候选选题。每个选题都要带目标读者、读者痛点、反常识角度、可用证据、建议平台、H/K/R/E 评分，然后写入「选题池」。</p>
 <p>这条任务的价值是减少选题焦虑。你早上打开 Codex，不是面对一堆未读链接，而是看到一张已经整理好的选题卡。你要做的不是从信息流里捞针，而是在几个可写的方向里，挑一个今天最想表达的。</p>
 <p>这里的关键是，自动化只到「推荐选题」为止。</p>
 <p>不要让它自动发布。第一版做到「采集素材、生成选题、人工确认、生成初稿、生成多平台封面、回写飞书」就已经很够用了。发布最好始终留一个人工 Gate。写作这件事，AI 可以帮你把信息差磨平，但最后署名的人是你。</p>
+<p><img src="images/019/HIHvGEEbcAIlMbA.jpg" alt="image" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
 <p>如果你想手动触发，也可以直接对 Agent 说这些话：</p>
 <p>更新今日内容中台</p>
 <p>Agent 会调用 AIHOT Skill，把最新精选同步进飞书。</p>
@@ -134,21 +133,15 @@
 <li>[ ] 「Agent 任务台」里有每天早上 9 点推荐选题的任务记录</li>
 <li>[ ] 「工作流说明」里有 5 个手动触发词</li>
 <li>[ ] 发布前保留人工 Gate，不要第一版就全自动发布</li>
-
   </div>
   <div class="lang-content jp" style="display: none;">
-
 <div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/ChrisWangwy/status/2054190173764936079" target="_blank">@ChrisWangwy 原文</a></div>
-
 <p>（日本語訳準備中）</p>
-
   </div>
 </div>
-
 <footer>
-  <p><a href="../index.html">← 返回首页</a></p>
+  <p><a href="../index.html" class="back-link" style="color:#FF6B35;">← 返回首页</a></p>
 </footer>
-
 <script src="../assets/js/main.js"></script>
 </body>
 </html>
