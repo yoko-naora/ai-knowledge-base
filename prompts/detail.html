@@ -223,30 +223,29 @@ function getParam(name) {
         html += '<div class="text-only-content">' + escapeHtml(text) + '</div>';
       } else if (hasVideo) {
         // === Video (with or without images) ===
-        // 1. Image (storyboard) if available
+        // 1. Cover image (first image as hero) if available
         if (hasImages) {
           html += '<div class="detail-media">';
-          if (p.images.length === 1) {
-            html += '<img src="' + imgPath(p.images[0]) + '" alt="故事板" loading="lazy">';
-          } else {
-            html += '<div class="image-grid">';
-            p.images.forEach(function(img) {
-              html += '<img src="' + imgPath(img) + '" alt="" loading="lazy">';
-            });
-            html += '</div>';
-          }
+          html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="封面图" loading="lazy"></div>';
           html += '</div>';
         }
 
-        // 2. Image Prompt
-        if (imagePrompt) {
-          html += '<div class="prompt-block"><div class="prompt-label">📷 图片提示词</div><div class="prompt-content">' + escapeHtml(imagePrompt) + '</div></div>';
-        }
-
-        // 3. Video
+        // 2. Video
         html += '<div class="video-wrapper">';
         html += '<video controls preload="metadata"><source src="' + videoPath(p.video) + '" type="video/mp4">您的浏览器不支持视频播放</video>';
         html += '</div>';
+
+        // 3. Image Prompt
+        if (imagePrompt) {
+          html += '<div class="prompt-block"><div class="prompt-label">📷 图片提示词</div><div class="prompt-content">';
+          // Show remaining images (skip first which is cover)
+          if (hasImages) {
+            for (var vi = 1; vi < p.images.length; vi++) {
+              html += '<img src="' + imgPath(p.images[vi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
+            }
+          }
+          html += escapeHtml(imagePrompt) + '</div></div>';
+        }
 
         // 4. Video Prompt
         if (videoPrompt) {
@@ -260,17 +259,9 @@ function getParam(name) {
 
       } else if (hasImages && !hasVideo) {
         // === Type B: Image only ===
-        // 1. Images
+        // 1. Cover image (first image as hero)
         html += '<div class="detail-media">';
-        if (p.images.length === 1) {
-          html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="提示词成品图" loading="lazy"></div>';
-        } else {
-          html += '<div class="image-grid">';
-          p.images.forEach(function(img) {
-            html += '<img src="' + imgPath(img) + '" alt="" loading="lazy">';
-          });
-          html += '</div>';
-        }
+        html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="封面图" loading="lazy"></div>';
         html += '</div>';
 
         // 2. Social caption
@@ -278,12 +269,14 @@ function getParam(name) {
           html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div></div>';
         }
 
-        // 3. Real prompt (may be empty - user will fill in later)
-        if (realPrompt) {
-          html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content">' + escapeHtml(realPrompt) + '</div></div>';
-        } else {
-          html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content empty"><em>提示词待补充，可联系 @MrLarus 提供番号</em></div></div>';
+        // 3. Prompt content with all images inline
+        var promptText = realPrompt || imagePrompt || text;
+        html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content">';
+        // Show remaining images (skip first which is cover)
+        for (var gi = 1; gi < p.images.length; gi++) {
+          html += '<img src="' + imgPath(p.images[gi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
         }
+        html += escapeHtml(promptText) + '</div></div>';
       }
 
       // Footer - link to X
