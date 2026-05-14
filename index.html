@@ -56,6 +56,17 @@ nav {
   transition: background .2s;
 }
 .nav-cta:hover { background: #a07840; }
+.lang-switch { display: flex; gap: 6px; margin-left: 12px; }
+.lang-switch button {
+  background: none; border: 1px solid var(--border); border-radius: 20px;
+  padding: 3px 10px; cursor: pointer; font-size: 10px; font-family: var(--sans);
+  color: var(--ink-muted); transition: all .2s;
+}
+.lang-switch button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.lang-content.cn { display: block; }
+.lang-content.jp { display: none; }
+body.show-jp .lang-content.cn { display: none; }
+body.show-jp .lang-content.jp { display: block; }
 
 /* HERO */
 .hero { padding-top: 100px; padding-bottom: 0; }
@@ -288,29 +299,33 @@ footer a:hover { color: var(--gold); }
 <nav>
   <a class="nav-logo" href="#">AI 知識庫</a>
   <ul class="nav-links">
-    <li><a href="#articles">記事</a></li>
-    <li><a href="prompts/index.html">最新プロンプト</a></li>
-    <li><a href="#tools">おすすめツール</a></li>
-    <li><a href="#pricing">料金</a></li>
-    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#articles"><span class="lang-content cn">文章</span><span class="lang-content jp">記事</span></a></li>
+    <li><a href="prompts/index.html"><span class="lang-content cn">最新提示詞</span><span class="lang-content jp">最新プロンプト</span></a></li>
+    <li><a href="#tools"><span class="lang-content cn">推薦工具</span><span class="lang-content jp">おすすめツール</span></a></li>
+    <li><a href="#pricing"><span class="lang-content cn">定價</span><span class="lang-content jp">料金</span></a></li>
+    <li><a href="#faq"><span class="lang-content cn">FAQ</span><span class="lang-content jp">FAQ</span></a></li>
   </ul>
-  <a class="nav-cta" href="#pricing">今すぐ購読</a>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+  <a class="nav-cta" href="#pricing"><span class="lang-content cn">立即訂閱</span><span class="lang-content jp">今すぐ購読</span></a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-text">
     <p class="eyebrow fu">Weekly AI Intelligence</p>
-    <h1 class="fu d1">Xの達人ノウハウを<br>毎週、<em>中日双語</em>で。</h1>
-    <p class="hero-sub fu d2">世界中のAIクリエイターが発信する実践知を、陽子が毎日リサーチ・厳選・翻訳。<strong>コピペで一键生成</strong>——読むだけで差がつく、バイリンガルAI知識庫。</p>
+    <h1 class="fu d1"><span class="lang-content cn">X達人的實戰經驗<br>每週為您送達，<em>中日双语</em>。</span><span class="lang-content jp">Xの達人ノウハウを<br>毎週、<em>中日双語</em>で。</span></h1>
+    <p class="hero-sub fu d2"><span class="lang-content cn">全球AI創作者發佈的實戰知識，由陽子每日研究、精選、翻譯。<strong>一鍵複製即用</strong>——讀就能拉開差距的雙語AI知識庫。</span><span class="lang-content jp">世界中のAIクリエイターが発信する実践知を、陽子が毎日リサーチ・厳選・翻訳。<strong>コピペで一键生成</strong>——読むだけで差がつく、バイリンガルAI知識庫。</span></p>
     <div class="hero-stats fu d3">
       <div><div class="stat-n">15<span class="stat-u">+</span></div><div class="stat-l">厳選記事</div></div>
       <div><div class="stat-n">200<span class="stat-u">+</span></div><div class="stat-l">プロンプト</div></div>
       <div><div class="stat-n">毎週<span class="stat-u">2-3</span></div><div class="stat-l">本更新</div></div>
     </div>
     <div class="hero-btns fu d4">
-      <a href="#pricing" class="hero-btn">購読を始める <span>→</span></a>
-      <a href="#articles" class="hero-btn outline">無料サンプルを見る</a>
+      <a href="#pricing" class="hero-btn"><span class="lang-content cn">開始訂閱</span><span class="lang-content jp">購読を始める</span> <span>→</span></a>
+      <a href="#articles" class="hero-btn outline"><span class="lang-content cn">免費試讀</span><span class="lang-content jp">無料サンプルを見る</span></a>
     </div>
   </div>
   <div class="hero-photo-wrap">
@@ -453,8 +468,8 @@ footer a:hover { color: var(--gold); }
 
 <!-- FREE PREVIEW BANNER -->
 <div class="free-banner" id="articles">
-  <div class="free-banner-text">📖 <strong>太字タイトルの3記事は無料で全文公開中</strong> — まずは読み心地を確かめてください</div>
-  <a href="#articles" class="free-banner-link">無料サンプルを見る ↓</a>
+  <div class="free-banner-text"><span class="lang-content cn">📖 </span><div class="free-banner-text"><span class="lang-content cn"><strong>粗體標題的3篇文章免費全文公開中</strong> — 先來感受一下內容品質</span><span class="lang-content jp">📖 <strong>太字タイトルの3記事は無料で全文公開中</strong> — まずは読み心地を確かめてください</span></div>
+  <a href="#articles" class="free-banner-link"><span class="lang-content cn">查看免費樣本 ↓</span><span class="lang-content jp">無料サンプルを見る ↓</span></a>
 </div>
 
 <!-- CONTENT PREVIEW -->
@@ -617,11 +632,11 @@ footer a:hover { color: var(--gold); }
 <!-- PRICING -->
 <section class="pricing-sec sec" id="pricing">
   <p class="sec-label">Pricing</p>
-  <h2 class="sec-title">シンプルな2プラン</h2>
+  <h2 class="sec-title"><span class="lang-content cn">簡潔雙方案</span><span class="lang-content jp">シンプルな2プラン</span></h2>
   <p class="sec-body">まずは月額から。合わなければいつでも解約できます。</p>
   <div class="pricing-grid">
     <div class="p-card">
-      <p class="p-plan">月額プラン</p>
+      <p class="p-plan"><span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span></p>
       <div class="p-price">¥980<span class="p-per">/月</span></div>
       <p class="p-note">税込・いつでも解約可</p>
       <ul class="p-list">
@@ -633,11 +648,11 @@ footer a:hover { color: var(--gold); }
         <li class="off">専用コミュニティ</li>
         <li class="off">限定ボイス配信</li>
       </ul>
-      <a href="checkout.html?plan=monthly" class="p-btn outline">月額で始める →</a>
+      <a href="checkout.html?plan=monthly" class="p-btn outline"><span class="lang-content cn">月度訂閱 →</span><span class="lang-content jp">月額で始める →</span></a>
     </div>
     <div class="p-card feat">
       <div class="p-badge urgency">初回限定</div>
-      <p class="p-plan">年額プラン</p>
+      <p class="p-plan"><span class="lang-content cn">年度方案</span><span class="lang-content jp">年額プラン</span></p>
       <div class="p-price">¥9,800<span class="p-per">/年</span></div>
       <p class="p-note">月あたり ¥817 · 2ヶ月無料 · 税込</p>
       <ul class="p-list">
@@ -649,7 +664,7 @@ footer a:hover { color: var(--gold); }
         <li>専用コミュニティ参加</li>
         <li>限定ボイス配信（画面収録付き）</li>
       </ul>
-      <a href="checkout.html?plan=yearly" class="p-btn gold">年額で始める（2ヶ月無料）→</a>
+      <a href="checkout.html?plan=yearly" class="p-btn gold"><span class="lang-content cn">年度訂閱（2個月免費）→</span><span class="lang-content jp">年額で始める（2ヶ月無料）→</span></a>
     </div>
   </div>
 </section>
@@ -723,11 +738,11 @@ footer a:hover { color: var(--gold); }
 <!-- FINAL CTA -->
 <section class="final-cta">
   <p class="sec-label" style="color:rgba(255,255,255,.7)">Start Today</p>
-  <h2 class="sec-title" style="color:#fff; max-width:640px; margin:0 auto 16px;">AI情報格差を、今日から逆転する。</h2>
-  <p class="final-sub">まずは月額¥980から。無料サンプルを読んでからでも大丈夫。</p>
+  <h2 class="sec-title" style="color:#fff; max-width:640px; margin:0 auto 16px;"><span class="lang-content cn">AI資訊差距，從今天開始逆轉。</span><span class="lang-content jp">AI情報格差を、今日から逆転する。</span></h2>
+  <p class="final-sub"><span class="lang-content cn">每月只需 ¥980。先看看免費樣本再決定也不遲。</span><span class="lang-content jp">まずは月額¥980から。無料サンプルを読んでからでも大丈夫。</span></p>
   <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
-    <a href="checkout.html?plan=yearly" class="final-btn">年額で始める（2ヶ月無料）→</a>
-    <a href="checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:12px;padding:18px 52px;background:transparent;color:#fff;font-size:13px;font-weight:500;letter-spacing:.12em;text-decoration:none;border-radius:2px;border:1px solid rgba(255,255,255,.4);transition:.2s;">月額 ¥980 で試す →</a>
+    <a href="checkout.html?plan=yearly" class="final-btn"><span class="lang-content cn">年度訂閱（2個月免費）→</span><span class="lang-content jp">年額で始める（2ヶ月無料）→</span></a>
+    <a href="checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:12px;padding:18px 52px;background:transparent;color:#fff;font-size:13px;font-weight:500;letter-spacing:.12em;text-decoration:none;border-radius:2px;border:1px solid rgba(255,255,255,.4);transition:.2s;"><span class="lang-content cn">月度 ¥980 試試看 →</span><span class="lang-content jp">月額 ¥980 で試す →</span></a>
   </div>
 </section>
 
@@ -740,14 +755,27 @@ footer a:hover { color: var(--gold); }
     <span style="color:rgba(250,249,246,.35); font-size:11px;">Community:</span>
     <a href="mailto:info@snsaladdin.com" class="community-badge">Email 📮</a>
     <a href="https://x.com/NaoraYoko" target="_blank" class="community-badge">X：Yoko｜Ai_shukyaku</a>
-    <span class="line-label">Line公式アカウント</span>
+    <span class="line-label"><span class="lang-content cn">Line官方帳號</span><span class="lang-content jp">Line公式アカウント</span></span>
   </div>
   <div class="footer-line">
-    <img src="line-qr.png" alt="Line公式アカウント" style="width:100px; border-radius:6px;">
+    <img src="line-qr.png" alt="<span class="lang-content cn">Line官方帳號</span><span class="lang-content jp">Line公式アカウント</span>" style="width:100px; border-radius:6px;">
   </div>
 </footer>
 
 <script>
+// Language switch
+function switchLang(lang) {
+  document.body.classList.toggle('show-jp', lang === 'jp');
+  document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+    btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
+  });
+  localStorage.setItem('kb-lang', lang);
+}
+(function() {
+  var saved = localStorage.getItem('kb-lang') || 'cn';
+  switchLang(saved);
+})();
+
 // FAQ toggle
 document.querySelectorAll('.faq-item').forEach(item => {
   item.querySelector('.faq-q').addEventListener('click', () => {
