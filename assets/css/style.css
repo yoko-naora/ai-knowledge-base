@@ -223,14 +223,17 @@ nav .lang-switch button.active { background: #1A1A2E; color: #fff; border-color:
 }
 .article-content .source-block a { color: #FF6B35; text-decoration: none; }
 .article-content img { max-width: 100%; border-radius: 8px; margin: 16px 0; }
-.lang-content.cn { display: block; }
+/* 导航・Hero 言語切替 — span は inline 維持 */
+.lang-content.cn { display: inline; }
 .lang-content.jp { display: none; }
 body.show-jp .lang-content.cn { display: none; }
-body.show-jp .lang-content.jp { display: block; }
-nav .lang-content.cn { display: inline; }
-nav .lang-content.jp { display: none; }
-body.show-jp nav .lang-content.cn { display: none; }
-body.show-jp nav .lang-content.jp { display: inline; }
+body.show-jp .lang-content.jp { display: inline; }
+
+/* 記事本文 言語切替 — div は block */
+.lang-cn { display: block; }
+.lang-jp { display: none; }
+body.show-jp .lang-cn { display: none; }
+body.show-jp .lang-jp { display: block; }
 
 /* Image gallery (prompts) */
 .prompt-grid {
