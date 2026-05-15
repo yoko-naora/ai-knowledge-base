@@ -222,7 +222,7 @@ nav .lang-switch button.active { background: #1A1A2E; color: #fff; border-color:
   padding: 20px; margin: 24px 0; font-size: 13px;
 }
 .article-content .source-block a { color: #FF6B35; text-decoration: none; }
-.article-content img { max-width: 100%; border-radius: 8px; margin: 16px 0; border: 2px solid red; min-height: 100px; min-width: 100px; }
+.article-content img { display: block; max-width: 100%; border-radius: 8px; margin: 16px 0; border: 2px solid red; min-height: 100px; min-width: 100px; }
 .lang-content.cn { display: block; }
 .lang-content.jp { display: none; }
 body.show-jp .lang-content.cn { display: none !important; }
