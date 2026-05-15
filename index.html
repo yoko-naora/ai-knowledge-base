@@ -316,8 +316,7 @@ footer a:hover { color: var(--gold); }
 <section class="hero">
   <div class="hero-text">
     <p class="eyebrow fu">Weekly AI Intelligence</p>
-    <img class="lang-content cn" src="index-c.png" alt="X達人的實戰經驗 每週為您送達，中日双語" style="width:100%; display:block; margin:0 auto 24px;">
-    <img class="lang-content jp" src="index-j.png" alt="Xの達人ノウハウを毎週、中日双語で" style="width:100%; display:block; margin:0 auto 24px;">
+    <img id="heroImg" src="index-c.png" alt="AI知識庫" style="width:100%; display:block; margin:0 auto 24px;">
     <div class="hero-stats fu d3">
       <div><div class="stat-n">15<span class="stat-u">+</span></div><div class="stat-l">厳選記事</div></div>
       <div><div class="stat-n">200<span class="stat-u">+</span></div><div class="stat-l">プロンプト</div></div>
@@ -331,9 +330,7 @@ footer a:hover { color: var(--gold); }
   <div class="hero-photo-wrap">
     <div class="hero-carousel" id="heroCarousel">
       <div class="hero-track" id="heroTrack">
-        <img src="hero-collage.jpg" alt="AI知識庫">
-        <img src="hero-collage.png" alt="AI知識庫">
-        <!-- ← 残り8枚の画像をここに追加 -->
+        <!-- JSが動的に画像を挿入します -->
       </div>
       <button class="hero-arrow prev" id="heroPrev" aria-label="前へ">←</button>
       <button class="hero-arrow next" id="heroNext" aria-label="次へ">→</button>
@@ -769,6 +766,8 @@ function switchLang(lang) {
   document.querySelectorAll('.lang-switch button').forEach(function(btn) {
     btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
   });
+  var hero = document.getElementById('heroImg');
+  if (hero) hero.src = lang === 'jp' ? 'index-j.png' : 'index-c.png';
   localStorage.setItem('kb-lang', lang);
 }
 (function() {
@@ -811,6 +810,27 @@ function handleLead(e) {
   return false;
 }
 
+// ═════════════════════════════════════════
+// ★ 輪播圖片列表 — 新しいのを先頭に追加するだけ
+// 最大12枚。超えたら古いのから自動カット。
+// ═════════════════════════════════════════
+var carouselImages = [
+  'prompts/images/AIwithSynthia_2050794157531373709_2.jpg',
+  'prompts/images/AIwithSynthia_2051311862265102635_1.jpg',
+  'prompts/images/MrLarus_2048617054803046701_1.jpg',
+  'prompts/images/MrLarus_2049756879908184128_4.jpg',
+  'prompts/images/MrLarus_2050474656944058480_3.jpg',
+  'prompts/images/MrLarus_2051167888615096673_1.jpg',
+  'prompts/images/MrLarus_2052278749937156465_1.jpg',
+  'prompts/images/MrLarus_2053870707591790908_3.jpg',
+  'prompts/images/Sairah_0_2050905646544121894_2.jpg',
+  'prompts/images/test_058_2050583835134263735_2.jpg'
+];
+var MAX_CAROUSEL = 12;
+if (carouselImages.length > MAX_CAROUSEL) {
+  carouselImages = carouselImages.slice(0, MAX_CAROUSEL);
+}
+
 // Hero carousel
 (function() {
   var track = document.getElementById('heroTrack');
@@ -818,6 +838,14 @@ function handleLead(e) {
   var next = document.getElementById('heroNext');
   var dots = document.getElementById('heroDots');
   if (!track || !dots) return;
+
+  // Build slides from array
+  carouselImages.forEach(function(src, i) {
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'AI知識庫 ' + (i + 1);
+    track.appendChild(img);
+  });
 
   var slides = track.querySelectorAll('img');
   var total = slides.length;
