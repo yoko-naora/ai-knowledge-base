@@ -162,14 +162,16 @@ h1 em { font-style: normal; color: var(--gold); font-weight: 600; }
 /* CONTENT */
 .content-sec { background: var(--paper); }
 .articles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 60px; }
-.art-card { background: #fff; padding: 30px; position: relative; transition: transform .2s; cursor: pointer; text-decoration: none; display: block; color: inherit; }
+.art-card { background: #fff; padding: 0; position: relative; transition: transform .2s; cursor: pointer; text-decoration: none; display: block; color: inherit; border-radius: 2px; overflow: hidden; }
 .art-card:hover { transform: translateY(-3px); }
-.art-no { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--paper-warm); line-height: 1; margin-bottom: 14px; }
+.art-card .art-body { padding: 22px 24px; }
+.art-no { font-family: var(--serif); font-size: 36px; font-weight: 400; color: var(--paper-warm); line-height: 1; position: absolute; top: 148px; left: 20px; z-index: 2; }
+.art-thumb { width: 100%; height: 180px; object-fit: cover; display: block; background: var(--paper-warm); }
 .art-tag { font-size: 9px; font-weight: 500; letter-spacing: .14em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
 .art-title { font-family: var(--serif); font-size: 14px; font-weight: 400; line-height: 1.65; margin-bottom: 10px; }
 .art-author { font-size: 11px; color: var(--ink-faint); }
 .art-badge {
-  position: absolute; top: 22px; right: 22px;
+  position: absolute; top: 12px; right: 12px;
   font-size: 9px; font-weight: 500; letter-spacing: .08em;
   padding: 4px 10px; border-radius: 2px;
 }
@@ -318,7 +320,7 @@ footer a:hover { color: var(--gold); }
     <p class="eyebrow fu">Weekly AI Intelligence</p>
     <img id="heroImg" src="index-c.png" alt="AI知識庫" style="width:100%; display:block; margin:0 auto 24px;">
     <div class="hero-stats fu d3">
-      <div><div class="stat-n">15<span class="stat-u">+</span></div><div class="stat-l">厳選記事</div></div>
+      <div><div class="stat-n">25<span class="stat-u">+</span></div><div class="stat-l">厳選記事</div></div>
       <div><div class="stat-n">200<span class="stat-u">+</span></div><div class="stat-l">プロンプト</div></div>
       <div><div class="stat-n">毎週<span class="stat-u">2-3</span></div><div class="stat-l">本更新</div></div>
     </div>
@@ -475,124 +477,280 @@ footer a:hover { color: var(--gold); }
   <h2 class="sec-title">毎週更新される<br>実践的AIコンテンツ</h2>
   <p class="sec-body">Xで話題のAI達人たちの知識を厳選。工具推薦・変現術・プロンプト設計まで、すぐ使える内容だけを届けます。</p>
   <div class="articles">
+    <!-- 025 -->
     <a href="articles/025.html" class="art-card">
       <div class="art-no">025</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">副業・変現</div>
-      <div class="art-title">転売も講座販売もなし——AIで月収10万元を稼ぐ方法</div>
-      <div class="art-author">@ma_zhenyuan（Miles.） · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/025/HIFcYnNbcAEznQ7.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
+        <div class="art-title"><span class="lang-content cn">不做中转，不卖课，如何用 AI 月入 10万</span><span class="lang-content jp">転売も講座販売もなし——AIで月収10万元を稼ぐ方法</span></div>
+        <div class="art-author">@ma_zhenyuan（Miles.） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 024 -->
     <a href="articles/024.html" class="art-card">
       <div class="art-no">024</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">AI文章術</div>
-      <div class="art-title">たった10分で、AIが親よりもあなたを理解する方法</div>
-      <div class="art-author">@jinchenma_ai（金尘马） · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/024/HIHb6JXbUAA_40t.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI写作术</span><span class="lang-content jp">AI文章術</span></div>
+        <div class="art-title"><span class="lang-content cn">只需10分钟，让AI比亲妈都懂你</span><span class="lang-content jp">たった10分で、AIが親よりもあなたを理解する方法</span></div>
+        <div class="art-author">@jinchenma_ai（金尘马） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 023 -->
     <a href="articles/023.html" class="art-card">
       <div class="art-no">023</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">副業・変現</div>
-      <div class="art-title">2026年Xクリエイター収益完全ガイド：ゼロから入金までの実践的チュートリアル</div>
-      <div class="art-author">@AI_Jasonyu（鱼总聊AI） · 2026-02-15</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/023/HBL0-BMakAQiKEj.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
+        <div class="art-title"><span class="lang-content cn">2026年X创作者收益完全指南：从零到收款</span><span class="lang-content jp">2026年Xクリエイター収益完全ガイド：ゼロから入金まで</span></div>
+        <div class="art-author">@AI_Jasonyu（鱼总聊AI） · 2026-02-15</div>
+      </div>
     </a>
+    <!-- 022 -->
     <a href="articles/022.html" class="art-card">
       <div class="art-no">022</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">知識</div>
-      <div class="art-title">ターミナル・コマンドライン・Shellの違いを徹底解説</div>
-      <div class="art-author">@longdechen12（观自） · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/022/HIILg2SagAAhd5Q.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">知识</span><span class="lang-content jp">知識</span></div>
+        <div class="art-title"><span class="lang-content cn">90%的人分不清：终端、命令行、Shell的区别</span><span class="lang-content jp">ターミナル・コマンドライン・Shellの違いを徹底解説</span></div>
+        <div class="art-author">@longdechen12（观自） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 021 -->
     <a href="articles/021.html" class="art-card">
       <div class="art-no">021</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">副業・変現</div>
-      <div class="art-title">AI電子書籍が静かに大儲け中：Amazon Kindle執筆・出版の完全フロー</div>
-      <div class="art-author">@AmberTreelet（小树） · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/021/HIHrdX-akAA15mI.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
+        <div class="art-title"><span class="lang-content cn">AI 电子书正在闷声赚大钱：亚马逊 Kindle 写作上架全流程</span><span class="lang-content jp">AI電子書籍が静かに大儲け中：Amazon Kindle執筆・出版の完全フロー</span></div>
+        <div class="art-author">@AmberTreelet（小树） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 020 -->
     <a href="articles/020.html" class="art-card">
       <div class="art-no">020</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">工具推薦</div>
-      <div class="art-title">GPT2: テキスト→ビジュアル変換 x 最強プロンプト x 激推し！</div>
-      <div class="art-author">@xiaoxiaodong01（小小东） · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/020/HIIA4LebMAA_UGp.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">工具推荐</span><span class="lang-content jp">工具推薦</span></div>
+        <div class="art-title"><span class="lang-content cn">GPT2: 文本转视觉 x 最强提示词 x 力荐！</span><span class="lang-content jp">GPT2: テキスト→ビジュアル変換 x 最強プロンプト x 激推し！</span></div>
+        <div class="art-author">@xiaoxiaodong01（小小东） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 019 -->
     <a href="articles/019.html" class="art-card">
       <div class="art-no">019</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">AIツール</div>
-      <div class="art-title">この記事をAgentに渡せばAIコンテンツ工場が完成</div>
-      <div class="art-author">@ChrisWangwy（老爸的AI联萌） · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/019/HIHrgT9bkAA3yPk.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">把这篇文章丢给 Agent，它会帮你搭一套 AI 内容工厂</span><span class="lang-content jp">この記事をAgentに渡せば、AIコンテンツ工場が完成する</span></div>
+        <div class="art-author">@ChrisWangwy（老爸的AI联萌） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 018 -->
     <a href="articles/018.html" class="art-card">
       <div class="art-no">018</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">AIツール</div>
-      <div class="art-title">深度拆解：AI Agent Harness の構造【訳】</div>
-      <div class="art-author">@dotey（宝玉） · 2026-05-10</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/018/HH_Y2gpWcAAl2uX.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">深度拆解：AI Agent Harness 的构造【译】</span><span class="lang-content jp">徹底解剖：AI Agent Harness の構造【訳】</span></div>
+        <div class="art-author">@dotey（宝玉） · 2026-05-10</div>
+      </div>
     </a>
+    <!-- 017 -->
     <a href="articles/017.html" class="art-card">
       <div class="art-no">017</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">AIツール</div>
-      <div class="art-title">Codex App 边玩边赚钱实战教学：不为人知的使用秘诀</div>
-      <div class="art-author">@gengdaJ（逸尘） · 2026-05-11</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/017/HIAmLRabwAAxDTZ.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">Codex App 边玩边赚钱实战教学：不为人知的使用秘诀</span><span class="lang-content jp">Codex Appで遊びながら稼ぐ実戦ガイド：知られざる活用秘訣</span></div>
+        <div class="art-author">@gengdaJ（逸尘） · 2026-05-11</div>
+      </div>
     </a>
+    <!-- 016 -->
     <a href="articles/016.html" class="art-card">
       <div class="art-no">016</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">AIツール</div>
-      <div class="art-title">Codex App 从0到1完整入门教程：超级APP的细节抽丝剥茧</div>
-      <div class="art-author">@gengdaJ（逸尘） · 2026-05-06</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/016/HHmv0vaakAAf2oq.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">Codex App 从0到1完整入门教程：超级APP的细节抽丝剥茧</span><span class="lang-content jp">Codex App ゼロから始める完全入門ガイド：スーパーアプリの全貌を徹底解説</span></div>
+        <div class="art-author">@gengdaJ（逸尘） · 2026-05-06</div>
+      </div>
     </a>
+    <!-- 015 -->
     <a href="articles/015.html" class="art-card">
       <div class="art-no">015</div>
-      <div class="art-badge free">無料</div>
-      <div class="art-tag">工具推薦</div>
-      <div class="art-title">15個の仕事に役立つAIツール完全ガイド</div>
-      <div class="art-author">@wangdefou · 2026-05-11</div>
+      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
+      <img class="art-thumb" src="articles/images/015/HIAethcbEAAJX38.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">工具推荐</span><span class="lang-content jp">工具推薦</span></div>
+        <div class="art-title"><span class="lang-content cn">工具推荐：15个干活的AI工具</span><span class="lang-content jp">仕事に役立つ15のAIツール完全ガイド</span></div>
+        <div class="art-author">@wangdefou（得否） · 2026-05-11</div>
+      </div>
     </a>
+    <!-- 014 -->
     <a href="articles/014.html" class="art-card">
       <div class="art-no">014</div>
-      <div class="art-badge free">無料</div>
-      <div class="art-tag">Claude Code</div>
-      <div class="art-title">Claude Code + 飞书 Agent 办公5例</div>
-      <div class="art-author">@Khazix0918 · 2026-05-12</div>
+      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
+      <img class="art-thumb" src="articles/images/014/image_01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag">Claude Code</div>
+        <div class="art-title"><span class="lang-content cn">Claude Code + 飞书 Agent 办公玩法5例</span><span class="lang-content jp">Claude Code + Feishu Agent 業務活用法（5選）</span></div>
+        <div class="art-author">@Khazix0918（数字生命卡兹克） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 013 -->
     <a href="articles/013.html" class="art-card">
       <div class="art-no">013</div>
-      <div class="art-badge free">無料</div>
-      <div class="art-tag">Skill</div>
-      <div class="art-title">製品調査Skill：10分で競合分析を完結させる方法</div>
-      <div class="art-author">@cnyzgkc · 2026-05-12</div>
+      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
+      <img class="art-thumb" src="articles/images/013/image_01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag">Skill</div>
+        <div class="art-title"><span class="lang-content cn">产品调研Skill：10分钟搞定竞品调研</span><span class="lang-content jp">プロダクトリサーチSkill：10分で競合調査を完了</span></div>
+        <div class="art-author">@cnyzgkc（木马人） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 012 -->
     <a href="articles/012.html" class="art-card">
       <div class="art-no">012</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">チーム運営</div>
-      <div class="art-title">AI時代のエンジニアチーム、どう管理するか</div>
-      <div class="art-author">@dotey · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/012/01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">团队运营</span><span class="lang-content jp">チーム運営</span></div>
+        <div class="art-title"><span class="lang-content cn">AI时代到底该怎么管一个工程团队</span><span class="lang-content jp">AI時代におけるエンジニアリングチームの正しいマネジメントとは</span></div>
+        <div class="art-author">@dotey（宝玉） · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 011 -->
     <a href="articles/011.html" class="art-card">
       <div class="art-no">011</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">コスト最適化</div>
-      <div class="art-title">Kimi K2.6でOpusをコスト削減する完全ガイド</div>
-      <div class="art-author">@shmidtqq · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <div class="art-thumb" style="background: linear-gradient(135deg, #f2ede5, #e8f2f7);"></div>
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">成本优化</span><span class="lang-content jp">コスト最適化</span></div>
+        <div class="art-title"><span class="lang-content cn">Kimi K2.6 替代 Opus 省钱指南</span><span class="lang-content jp">Kimi K2.6 で Opus を代替する節約ガイド</span></div>
+        <div class="art-author">@shmidtqq · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 010 -->
     <a href="articles/010.html" class="art-card">
       <div class="art-no">010</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">副業・変現</div>
-      <div class="art-title">AI 履歴書最適化で初週1,260元の収益化</div>
-      <div class="art-author">@AdrianPunk115 · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/010/img_01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
+        <div class="art-title"><span class="lang-content cn">AI 简历优化第1周赚1260元</span><span class="lang-content jp">AIで履歴書の最適化、第1週で1260元</span></div>
+        <div class="art-author">@AdrianPunk115 · 2026-05-12</div>
+      </div>
     </a>
+    <!-- 009 -->
     <a href="articles/009.html" class="art-card">
       <div class="art-no">009</div>
-      <div class="art-badge locked">会員限定</div>
-      <div class="art-tag">知識</div>
-      <div class="art-title">エンタープライズ RAG で月収 10 万円を実現する実践ガイド</div>
-      <div class="art-author">@ma_zhenyuan (Miles) · 2026-05-12</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/009/img_01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
+        <div class="art-title"><span class="lang-content cn">企业级 RAG 月入 10 万实战指南</span><span class="lang-content jp">エンタープライズ RAG で月収 10 万円を実現する実践ガイド</span></div>
+        <div class="art-author">@ma_zhenyuan (Miles) · 2026-05-12</div>
+      </div>
+    </a>
+    <!-- 008 -->
+    <a href="articles/008.html" class="art-card">
+      <div class="art-no">008</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/008/HH5IaB6WEAEFE2w.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">Seedance 2.0 过脸方法合集</span><span class="lang-content jp">Seedance 2.0 顔認証回避方法集</span></div>
+        <div class="art-author">@MrLarus · 2026-05-10</div>
+      </div>
+    </a>
+    <!-- 007 -->
+    <a href="articles/007.html" class="art-card">
+      <div class="art-no">007</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/007/HIC-SQ6.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">提示词设计</span><span class="lang-content jp">プロンプト設計</span></div>
+        <div class="art-title"><span class="lang-content cn">AI作图全平台提示词模板（10个场景）</span><span class="lang-content jp">AI作画プラットフォーム完全ガイド（10シーン）</span></div>
+        <div class="art-author">@0x小师妹 · 2026-05-12</div>
+      </div>
+    </a>
+    <!-- 006 -->
+    <a href="articles/006.html" class="art-card">
+      <div class="art-no">006</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/006/img_01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">个人 Agent 自建实战：EvoPaw</span><span class="lang-content jp">個人エージェント構築実践：EvoPaw</span></div>
+        <div class="art-author">@XudongHan · 2026-05-06</div>
+      </div>
+    </a>
+    <!-- 005 -->
+    <a href="articles/005.html" class="art-card">
+      <div class="art-no">005</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <img class="art-thumb" src="articles/images/005/img_01.jpg" alt="">
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">GPT-Image-2 + XCrawl AI 主图自动化工作流</span><span class="lang-content jp">GPT-Image-2 + XCrawl AI商品画像自動化ワークフロー</span></div>
+        <div class="art-author">@zstmfhy · 2026-05-06</div>
+      </div>
+    </a>
+    <!-- 004 -->
+    <a href="articles/004.html" class="art-card">
+      <div class="art-no">004</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <div class="art-thumb" style="background: linear-gradient(135deg, #f2ede5, #fdf0ec);"></div>
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">提示词设计</span><span class="lang-content jp">プロンプト設計</span></div>
+        <div class="art-title"><span class="lang-content cn">提示词不是咒语，是审美决策系统</span><span class="lang-content jp">プロンプトは呪文じゃない、美的判断システム</span></div>
+        <div class="art-author">@AdrianPunk115 · 2026-05-06</div>
+      </div>
+    </a>
+    <!-- 003 -->
+    <a href="articles/003.html" class="art-card">
+      <div class="art-no">003</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <div class="art-thumb" style="background: linear-gradient(135deg, #e8f2f7, #f2ede5);"></div>
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">获客</span><span class="lang-content jp">集客</span></div>
+        <div class="art-title"><span class="lang-content cn">Google Maps + Claude 本地商家网站获客方法</span><span class="lang-content jp">Google Maps + Claude で地元ビジネスのWeb集客</span></div>
+        <div class="art-author">@timbidefi · 2026-05-06</div>
+      </div>
+    </a>
+    <!-- 002 -->
+    <a href="articles/002.html" class="art-card">
+      <div class="art-no">002</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <div class="art-thumb" style="background: linear-gradient(135deg, #f2ede5, #e8f2f7);"></div>
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">Codex + HyperFrames 正在吃掉剪辑行业</span><span class="lang-content jp">Codex + HyperFrames が編集業界を飲み込む</span></div>
+        <div class="art-author">@Saccc_c · 2026-05-06</div>
+      </div>
+    </a>
+    <!-- 001 -->
+    <a href="articles/001.html" class="art-card">
+      <div class="art-no">001</div>
+      <div class="art-badge locked"><span class="lang-content cn">会员限定</span><span class="lang-content jp">会員限定</span></div>
+      <div class="art-thumb" style="background: linear-gradient(135deg, var(--paper-warm), var(--accent-lt));"></div>
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">Codex + GPT-Image-2 视频产出工作流</span><span class="lang-content jp">Codex + GPT-Image-2 動画制作ワークフロー</span></div>
+        <div class="art-author">@Formulasearch · 2026-05-06</div>
+      </div>
     </a>
   </div>
 </section>
