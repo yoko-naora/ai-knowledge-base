@@ -267,14 +267,14 @@ function updateUI() {
 }
 
 document.getElementById('stripe-pay-btn').addEventListener('click', function(e) {
-  var url = stripeLinks[selectedPlan];
-  if (url === '#') {
-    e.preventDefault();
-    alert('決済リンクを準備中です。まもなく公開されますので、しばらくお待ちください。\n\nご質問は SNS Aladdin までお問い合わせください。');
-    return;
-  }
-  window.location.href = url;
-});
+	  e.preventDefault();
+	  var url = stripeLinks[selectedPlan];
+	  if (url === '#' || !url) {
+	    alert('決済リンクを準備中です。まもなく公開されますので、しばらくお待ちください。\n\nご質問は SNS Aladdin までお問い合わせください。');
+	    return;
+	  }
+	  window.location.assign(url);
+	});
 </script>
 
 </body>
