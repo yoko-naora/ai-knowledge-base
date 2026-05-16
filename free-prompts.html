@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>無料プロンプト5選 · AI知識庫</title>
+<meta name="description" content="AI知識庫から厳選した5本のプロンプトを無料公開。コピペですぐ使える、GPT-Image2・Seedance対応。">
+<meta property="og:title" content="無料プロンプト5選 · AI知識庫">
+<meta property="og:description" content="AI知識庫から厳選した5本のプロンプトを無料公開。コピペですぐ使える、GPT-Image2・Seedance対応。">
+<meta property="og:image" content="https://kb.snsaladdin.com/hero-collage.jpg">
+<meta property="og:url" content="https://kb.snsaladdin.com/free-prompts.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="自己2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #1a1814;
+  --ink-muted: #5a5650;
+  --ink-faint: #9a9490;
+  --paper: #faf9f6;
+  --paper-warm: #f2ede5;
+  --gold: #b8925a;
+  --gold-lt: #d4af7a;
+  --accent: #2c5f7a;
+  --border: rgba(26,24,20,.1);
+  --serif: 'Noto Serif JP', serif;
+  --sans: 'Noto Sans JP', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 400; line-height: 1.8; overflow-x: hidden; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(250,249,246,.94); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { font-family: var(--serif); font-size: 15px; letter-spacing: .12em; color: var(--ink); text-decoration: none; }
+.nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+.nav-links a { font-size: 11px; color: var(--ink-muted); text-decoration: none; letter-spacing: .06em; transition: color .2s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  font-size: 11px; font-weight: 500; letter-spacing: .12em;
+  padding: 9px 22px; background: var(--gold); color: #fff;
+  border: none; border-radius: 2px; cursor: pointer; text-decoration: none;
+  transition: background .2s;
+}
+.nav-cta:hover { background: #a07840; }
+.lang-switch { display: flex; gap: 6px; margin-left: 12px; }
+.lang-switch button {
+  background: none; border: 1px solid var(--border); border-radius: 20px;
+  padding: 3px 10px; cursor: pointer; font-size: 10px; font-family: var(--sans);
+  color: var(--ink-muted); transition: all .2s;
+}
+.lang-switch button.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.lang-content.cn { display: block; }
+.lang-content.jp { display: none; }
+body.show-jp .lang-content.cn { display: none; }
+body.show-jp .lang-content.jp { display: block; }
+
+/* Page header */
+.page-hero { padding: 140px 80px 60px; text-align: center; }
+.page-eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .22em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+.page-hero h1 { font-family: var(--serif); font-size: clamp(28px, 3vw, 44px); font-weight: 400; line-height: 1.45; margin-bottom: 16px; }
+.page-hero .sub { font-size: 14px; color: var(--ink-muted); line-height: 2; max-width: 520px; margin: 0 auto; }
+
+/* Prompt cards */
+.prompts-sec { padding: 0 80px 100px; max-width: 900px; margin: 0 auto; }
+.prompt-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 2px;
+  padding: 0; margin-bottom: 48px; overflow: hidden;
+}
+.prompt-card-header {
+  padding: 40px 44px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.prompt-num {
+  font-family: var(--serif); font-size: 11px; color: var(--gold);
+  letter-spacing: .16em; margin-bottom: 8px;
+}
+.prompt-card-header h2 {
+  font-family: var(--serif); font-size: 20px; font-weight: 400;
+  line-height: 1.55; margin-bottom: 8px; color: var(--ink);
+}
+.prompt-card-header .desc {
+  font-size: 12px; color: var(--ink-muted); line-height: 1.9;
+  margin-bottom: 12px;
+}
+.prompt-cat {
+  display: inline-block; font-size: 10px; letter-spacing: .08em;
+  padding: 3px 10px; border: 1px solid var(--gold-lt);
+  border-radius: 20px; color: var(--gold);
+}
+.prompt-images {
+  display: flex; gap: 12px; overflow-x: auto;
+  padding: 28px 44px; scroll-snap-type: x mandatory;
+}
+.prompt-images img {
+  height: 240px; width: auto; flex-shrink: 0;
+  border-radius: 2px; scroll-snap-align: start;
+  display: block; background: var(--paper-warm);
+}
+.prompt-images img:hover { transform: scale(1.02); transition: transform .2s; }
+
+/* Prompt text area */
+.prompt-text-area { padding: 0 44px 40px; }
+.prompt-text-area details { border: 1px solid var(--border); border-radius: 2px; }
+.prompt-text-area summary {
+  padding: 14px 20px; cursor: pointer; font-size: 12px;
+  color: var(--ink-muted); letter-spacing: .06em;
+  user-select: none; display: flex; justify-content: space-between; align-items: center;
+  background: var(--paper); transition: background .15s;
+}
+.prompt-text-area summary:hover { background: var(--paper-warm); }
+.prompt-text-area summary::after {
+  content: '▸'; font-size: 10px; color: var(--gold);
+  transition: transform .2s; margin-left: 8px;
+}
+.prompt-text-area details[open] summary::after { transform: rotate(90deg); }
+.prompt-text-area pre {
+  max-height: 420px; overflow-y: auto;
+  padding: 20px 24px; margin: 0;
+  font-family: 'Courier New', monospace; font-size: 12px;
+  line-height: 1.75; color: var(--ink);
+  background: var(--paper-warm);
+  white-space: pre-wrap; word-break: break-word;
+  border-top: 1px solid var(--border);
+}
+.copy-row {
+  display: flex; justify-content: flex-end; gap: 10px;
+  padding: 10px 20px; background: var(--paper);
+  border-top: 1px solid var(--border);
+}
+.copy-btn {
+  font-size: 10px; letter-spacing: .08em; padding: 5px 14px;
+  background: var(--ink); color: #fff; border: none;
+  border-radius: 2px; cursor: pointer; font-family: var(--sans);
+  transition: background .2s;
+}
+.copy-btn:hover { background: #333; }
+.copy-btn.copied { background: var(--gold); }
+.x-link {
+  font-size: 10px; color: var(--ink-faint); text-decoration: none;
+  letter-spacing: .06em; display: inline-flex; align-items: center; gap: 4px;
+  padding: 5px 0;
+}
+.x-link:hover { color: var(--gold); }
+
+/* CTA */
+.cta-sec { background: var(--gold); color: #fff; padding: 80px 60px; text-align: center; }
+.cta-sec h2 { font-family: var(--serif); font-size: clamp(22px, 2.4vw, 32px); font-weight: 400; line-height: 1.5; margin-bottom: 12px; }
+.cta-sec .cta-sub { font-size: 14px; color: rgba(255,255,255,.82); line-height: 2; margin-bottom: 36px; }
+.cta-sec .cta-stats { display: flex; gap: 36px; justify-content: center; margin-bottom: 36px; }
+.cta-stat-n { font-family: var(--serif); font-size: 36px; font-weight: 400; line-height: 1; }
+.cta-stat-l { font-size: 10px; color: rgba(255,255,255,.6); letter-spacing: .08em; margin-top: 4px; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 44px; background: #fff; color: var(--gold);
+  font-size: 13px; font-weight: 500; letter-spacing: .12em;
+  text-decoration: none; border-radius: 2px; transition: .2s;
+}
+.cta-btn:hover { background: #f5ede0; transform: translateY(-2px); }
+.cta-btn.outline {
+  background: transparent; color: #fff;
+  border: 1px solid rgba(255,255,255,.4); margin-left: 16px;
+}
+.cta-btn.outline:hover { background: rgba(255,255,255,.08); }
+
+footer { background: var(--ink); color: rgba(250,249,246,.35); padding: 36px 80px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: .06em; }
+footer a { color: rgba(250,249,246,.35); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+.footer-links { display: flex; gap: 24px; align-items: center; }
+.community-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; background: #2e7d32; color: #fff;
+  border-radius: 20px; font-size: 10px; text-decoration: none;
+  letter-spacing: .04em;
+}
+.community-badge:hover { color: #fff !important; opacity: .85; }
+.line-label { font-size: 11px; color: rgba(250,249,246,.25); }
+
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .page-hero { padding: 120px 28px 40px; }
+  .prompts-sec { padding: 0 20px 60px; }
+  .prompt-card-header { padding: 28px 24px 20px; }
+  .prompt-images { padding: 20px 24px; }
+  .prompt-images img { height: 160px; }
+  .prompt-text-area { padding: 0 24px 28px; }
+  .cta-sec { padding: 60px 28px; }
+  footer { padding: 28px 20px; flex-direction: column; gap: 16px; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">AI 知識庫</a>
+  <ul class="nav-links">
+    <li><a href="index.html"><span class="lang-content cn">首页</span><span class="lang-content jp">TOPページ</span></a></li>
+    <li><a href="index.html#articles"><span class="lang-content cn">最新技术</span><span class="lang-content jp">最新技術</span></a></li>
+    <li><a href="prompts/index.html"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a></li>
+    <li><a href="index.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a></li>
+    <li><a href="index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a></li>
+    <li><a href="index.html#faq"><span class="lang-content cn">FAQ</span><span class="lang-content jp">FAQ</span></a></li>
+  </ul>
+  <div class="lang-switch">
+    <button class="active" onclick="switchLang('cn')">中文</button>
+    <button onclick="switchLang('jp')">日本語</button>
+  </div>
+  <a class="nav-cta" href="checkout.html?plan=monthly"><span class="lang-content cn">立即訂閱</span><span class="lang-content jp">今すぐ購読</span></a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <p class="page-eyebrow">Free Sample</p>
+  <h1><span class="lang-content cn">無料プロンプト5選</span><span class="lang-content jp">無料プロンプト5選</span></h1>
+  <p class="sub"><span class="lang-content cn">AI知識庫から厳選した5本のプロンプトを公開。コピペするだけで、あなたも今日から使えます。</span><span class="lang-content jp">AI知識庫から厳選した5本のプロンプトを公開。コピペするだけで、あなたも今日から使えます。</span></p>
+</section>
+
+<!-- 5 PROMPTS -->
+<section class="prompts-sec">
+
+  <!-- PROMPT 1: 几何饮品主图海报 -->
+  <div class="prompt-card">
+    <div class="prompt-card-header">
+      <p class="prompt-num">No. 1</p>
+      <span class="prompt-cat"><span class="lang-content cn">电商/商业海报</span><span class="lang-content jp">EC/商業ポスター</span></span>
+      <h2><span class="lang-content cn">几何饮品主图海报</span><span class="lang-content jp">幾何学的ドリンクメイン画像ポスター</span></h2>
+      <p class="desc"><span class="lang-content cn">高端商业广告级饮品海报。真实产品摄影 + 平面几何设计 + 超现实风味可视化，品牌模特自动匹配产品调性。黑糖奶茶、山茶纯茶、椰殿果茶……填品牌名即可出图。</span><span class="lang-content jp">ハイエンド広告品質のドリンクポスター。リアルな製品写真+平面的な幾何学模様のデザイン+超現実的な味覚の視覚化、ブランドモデルが自動で製品の雰囲気にマッチング。ブランド名を入力するだけ。</span></p>
+      <a class="x-link" href="https://x.com/MrLarus/status/2050573342860616117" target="_blank">Xで元投稿を見る →</a>
+    </div>
+    <div class="prompt-images">
+      <img src="prompts/images/MrLarus_2050573342860616117_1.jpg" alt="Example 1" loading="lazy">
+      <img src="prompts/images/MrLarus_2050573342860616117_2.jpg" alt="Example 2" loading="lazy">
+      <img src="prompts/images/MrLarus_2050573342860616117_3.jpg" alt="Example 3" loading="lazy">
+      <img src="prompts/images/MrLarus_2050573342860616117_4.jpg" alt="Example 4" loading="lazy">
+    </div>
+    <div class="prompt-text-area">
+      <details>
+        <summary><span class="lang-content cn">📋 点击展开完整提示词</span><span class="lang-content jp">📋 クリックでプロンプトを展開</span></summary>
+        <pre id="prompt-1">《几何饮品主图海报》提示词：
+
+请根据以下用户输入，创作一张高完成度的商业饮品海报。
+
+【用户输入】
+品牌名：【填写品牌名，可为真实品牌或虚构品牌】
+品牌缩写 / 主视觉大字：【填写1-6个字母或汉字，例如 STAR / COSTA / HEYTEA / 椰殿】
+产品名：【填写具体饮品名，例如 森林冷萃咖啡 / 热带芒果果茶 / 黑糖珍珠奶茶】
+产品类型：【咖啡 / 奶茶 / 果茶 / 气泡饮 / 能量饮料 / 其他】
+主色调：【填写品牌主色，例如 深森林绿 / 暖橙粉 / 电光蓝 / 奶油米白 / 深红棕】
+辅助色：【填写辅助色，例如 金色细线 / 奶白 / 冰蓝 / 焦糖棕】
+食材元素：【填写3-6个核心食材，例如 咖啡豆、肉桂、橙皮、奶泡、冰块】
+几何风格：【极简几何 / 包豪斯几何 / 未来感几何 / 东方留白几何 / 活力放射几何】
+模特设定：【年轻男性 / 年轻女性 / 都市白领 / 运动青年 / 时尚女孩 / 其他具体人群】
+核心口号：【填写一句短口号，例如 TASTE IN MOTION / 风味正在流动】
+底部标签：【填写3-4个短标签，例如 Fresh Brewed / Rich Aroma / Crafted Daily / Real Ingredients】
+画幅比例：【默认4:5竖版，如需修改可填写3:4、2:3、1:1】
+
+【重要默认规则】
+默认必须出现一位符合品牌产品调性的模特。
+除非用户明确写出"不出现模特"或"只要产品"，否则画面中必须有模特与饮品互动。
+模特不是背景装饰，而是品牌调性的一部分，需要自动匹配产品类型、品牌颜色、饮品气质和广告风格。
+
+如果用户没有填写模特设定，请根据产品类型自动生成合适模特：
+- 咖啡：都市白领、创意工作者、冷静专业气质
+- 奶茶：时尚青年、精致潮流气质
+- 果茶：运动青年、阳光活力气质
+- 气泡饮：年轻潮流人群、轻快街头气质
+- 能量饮料：运动型或未来感青年，力量与速度感
+- 纯茶 / 茶饮：清冷、克制、东方高级感人物
+- 植物饮 / 健康饮：自然、清爽、自律生活方式气质
+
+【创作目标】
+这不是普通饮品海报，也不是简单的产品摄影，而是一张融合「高端商业广告 + 平面几何设计 + 超现实3D饮品表现 + 食材风味可视化 + 品牌调性模特」的品牌视觉海报。
+
+核心视觉概念是：
+把饮品的风味、香气、口感、能量和人物气质，翻译成一套有秩序的几何运动系统。
+几何图形不是普通背景装饰，而是从饮品液体、蒸汽、食材、人物动作和光影中自然生长出来的视觉语言。
+
+【整体风格】
+画面应呈现 premium、modern、bold、clean、commercial、high-end advertising、magazine campaign、cinematic product photography 的质感。
+整体视觉要高级、有冲击力、有品牌感，适合社交媒体传播、品牌广告、产品推广和视觉案例展示。
+风格应是：flat geometric design fused with hyper-realistic 3D beverage, organic ingredients, and premium lifestyle model photography。
+
+【画面结构】
+采用【画幅比例】竖版商业广告构图。
+
+背景使用大面积【主色调】作为品牌色块，可以加入圆角矩形、几何网格、细线、圆形、三角形、六边形、斜切色块或抽象平面结构。
+背景要干净、有秩序、有现代感，不要杂乱。
+
+画面中央或中下方为主视觉：
+一位【模特设定】手持【产品名】杯子，杯子处于前景视觉中心，具有轻微广角近距离广告镜头感。
+模特应与杯子形成明确互动关系：手真实握住杯身或杯盖，手臂从人物身体自然延伸，肩膀、手肘、手腕、手指方向符合真实人体结构。
+人物可以正面、微侧身或侧身，但身体朝向、头部朝向、视线方向、手臂方向和杯子位置必须一致，形成可信的商业摄影瞬间。
+
+如果用户明确选择"不出现模特"或"只要产品"，则改为产品杯子单独悬浮或置于中央，以更强的产品广告构图呈现。
+
+杯子必须具有真实商业摄影质感：
+清晰杯身、真实材质、自然高光、细腻阴影、立体体积感，产品识别度强。
+杯子不能变形，杯口、杯身、杯底透视必须合理。
+
+【人物与手部一致性要求】
+这是本海报的关键质量要求。
+模特必须是完整、可信、符合物理现实的人物，不要只生成一只孤立的手。
+手、手腕、手臂、肩膀和身体必须属于同一个人，并且在空间中自然连接。
+手持杯子的动作必须符合真实摄影逻辑：手指自然环绕杯身，拇指位置合理，手腕角度舒适，杯子重心稳定。
+人物姿态不要过度扭曲，不要出现反向手臂、错位肩膀、断裂手腕、额外手指、融合手指、畸形手掌、漂浮手、与身体方向不一致的手。
+人物视线、头部、躯干和持杯动作要协调，像真实商业广告拍摄出来的瞬间。
+
+【核心视觉效果：饮品转化为几何】
+饮品从杯口自然溢出、升腾或爆发，但不是混乱飞溅。
+液体、蒸汽、冰块、奶泡、茶汤、咖啡、果汁或气泡，必须被设计成一种受控的几何运动结构。
+
+具体表现为：
+1. 饮品液体带有真实光泽、折射、浓稠度和流动感。
+2. 液体在空中逐渐转化为干净的几何平面，例如圆形、三角形、六边形、弧线、色块、透明片层。
+3. 【食材元素】以真实3D材质悬浮在杯子周围，与几何结构自然融合。
+4. 蒸汽、香气或气泡转化为柔和的几何雾层、细线轨迹和微光粒子。
+5. 所有元素围绕杯子形成一个清晰的视觉漩涡或放射结构，让画面有动势，但保持高级克制。
+6. 几何运动方向需要配合人物动作和杯子方向。
+
+【品牌文字系统】
+画面后方加入巨型品牌缩写 / 主视觉大字：【品牌缩写 / 主视觉大字】
+字体使用 bold modern sans-serif typography，部分被人物、杯子或几何元素遮挡，形成高级广告层次。
+
+顶部可放置小型品牌名：【品牌名】
+底部设置极简标签条：【底部标签】
+核心口号【核心口号】可以放在中上方或中下方。
+
+文字排版要求：
+简洁、克制、清晰、有品牌感。
+不要堆太多小字。不要让文字喧宾夺主。
+整体像高端饮品广告 campaign，而不是普通促销海报。
+
+【光影与材质】
+使用 cinematic commercial lighting、soft volumetric light、studio product photography、sharp highlights、realistic shadows。
+液体、杯子、食材和人物皮肤/服装必须真实细腻；几何部分则保持平面、干净、矢量感。
+形成"真实3D产品与人物"与"扁平几何系统"的强烈对比。
+
+【画面气质】
+整体要有强烈的广告大片感、设计感和系列化统一感。
+视觉重心明确：先看到杯子和饮品几何爆发，再看到模特气质，再看到几何系统、品牌大字和底部标签。
+
+【避免问题】
+不要默认无模特。不要生成孤立的手。不要让杯子变形。
+不要让几何背景抢走产品主体。不要塑料感、贴纸感、拼贴感。
+不要普通奶茶店促销风。不要低端电商海报风。
+
+【最终效果】
+一张高完成度、高级、现代、具有强商业广告质感的饮品品牌海报。
+默认呈现为：品牌调性模特 + 真实商业饮品产品 + 食材风味可视化 + 有秩序的几何运动系统。</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyPrompt('prompt-1', this)"><span class="lang-content cn">复制提示词</span><span class="lang-content jp">プロンプトをコピー</span></button>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- PROMPT 2: AI衣品升级改造报告 -->
+  <div class="prompt-card">
+    <div class="prompt-card-header">
+      <p class="prompt-num">No. 2</p>
+      <span class="prompt-cat"><span class="lang-content cn">穿搭/形象/造型</span><span class="lang-content jp">穿搭/イメージ/スタイリング</span></span>
+      <h2><span class="lang-content cn">AI衣品升级改造报告</span><span class="lang-content jp">AI衣品アップグレード改造レポート</span></h2>
+      <p class="desc"><span class="lang-content cn">上传一张你的照片，AI自动生成Before/After穿搭改造报告。保留面部辨识度，只升级穿搭、气质、比例、层次和配饰。韩系轻潮、Clean Fit、City Boy风格，3套完整Look。</span><span class="lang-content jp">あなたの写真をアップロードするだけで、AIがBefore/Afterの穿搭改造レポートを自動生成。顔の特徴を保ったまま、服装・雰囲気・プロポーション・レイヤー・アクセサリーをアップグレード。韓国系カジュアル・クリーンフィット・シティボーイスタイル、3つのルックを提案。</span></p>
+      <a class="x-link" href="https://x.com/MrLarus/status/2048617409917977008" target="_blank">Xで元投稿を見る →</a>
+    </div>
+    <div class="prompt-images">
+      <img src="prompts/images/MrLarus_2048617054803046701_1.jpg" alt="Example 1" loading="lazy">
+      <img src="prompts/images/MrLarus_2048617054803046701_2.jpg" alt="Example 2" loading="lazy">
+      <img src="prompts/images/MrLarus_2048617054803046701_3.jpg" alt="Example 3" loading="lazy">
+      <img src="prompts/images/MrLarus_2048617054803046701_4.jpg" alt="Example 4" loading="lazy">
+    </div>
+    <div class="prompt-text-area">
+      <details>
+        <summary><span class="lang-content cn">📋 点击展开完整提示词</span><span class="lang-content jp">📋 クリックでプロンプトを展開</span></summary>
+        <pre id="prompt-2">【AI穿搭-衣品升级改造报告提示词】
+
+请基于用户上传的形象照片，生成一张横向 4:3 的高完成度「AI 衣品升级改造报告 / Before & After Style Upgrade Report」。
+
+如果有参考图像，Image A 是用户上传的本人形象照片，是本次生成的核心人物参考。请保留用户本人的基础身份特征、脸部辨识度、五官特征、年龄感、发型特征、身材比例和整体气质，让人一眼能认出这是同一个人；但在不改变"这个人是谁"的前提下，对整体穿搭、气质、比例、层次、配饰和上镜状态进行明显升级。
+
+本次生成不是普通换装图，不是简单穿搭建议，也不是基础电商搭配图，而是一张「高设计感、高反差、高信息量」的个人潮流形象重塑提案板。
+
+【核心审美方向】
+整体风格请明确偏向：
+韩系轻潮、Clean Fit、City Boy、Urban Casual、日系简约街头、港风松弛有型、主流潮牌感、清爽高级、日常可穿、上镜好看。
+
+After 的风格应具备以下特征：
+1. 轮廓更利落：上身有结构感，肩线更精神，衣长更修饰比例。
+2. 比例更优化：通过短外套、内搭层次、裤型和鞋型拉高视觉重心。
+3. 层次更完整：外套、内搭、裤装、鞋包、配饰形成完整造型。
+4. 配饰更精致：可加入银色项链、手表、戒指、眼镜、斜挎包等。
+5. 鞋型更有风格：优先选择复古运动鞋、德训鞋、板鞋、乐福鞋。
+6. 整体更上镜：姿态更自然自信，气质更松弛。
+
+【Before / After 主视觉】
+整张图的核心必须是 "Before vs After 双人像强对比"。
+Before：呈现用户原始形象或接近原始状态的穿着基线。
+After：呈现同一个人经过潮流升级后的新形象。
+
+建议使用以下穿搭逻辑：
+- 短款夹克 / 飞行员夹克 / 工装夹克 / 干净衬衫外套 / 轻机能外套
+- 高质感白色或米白色内搭、针织内搭、干净圆领 T 恤
+- 直筒裤、微阔裤、垂顺西裤、宽松牛仔裤或卡其裤
+- 复古运动鞋、德训鞋、板鞋、乐福鞋
+- 小体量斜挎包、银色项链、手表、戒指、眼镜等精致配饰
+
+【版式设计要求】
+整体版式要像「潮流杂志内页 + 专业形象顾问提案板」。
+- 使用大胆但克制的大标题
+- 使用清晰的 Before / After 标签
+- 使用箭头、分割线、编号模块、半透明信息卡片
+- 背景以白色、浅灰、米白为主，可加入炭黑、橄榄绿、钴蓝等少量强调色
+
+标题建议：「AI 衣品升级改造报告」
+副标题：「Before & After Style Upgrade Report」
+
+【内容模块】
+1. 风格主题 / Style Direction
+2. 核心变化点 / Key Upgrades（5-6个短标签）
+3. 色系选择 / Color Palette（主色3+辅助色2+点缀色1）
+4. 材质构成 / Materials（4-5种关键材质）
+5. 廓形/比例策略 / Silhouette Strategy（3-5条关键策略）
+6. 推荐 Look / Outfit Ideas（3套完整穿搭：日常通勤/周末出街/约会漫步）
+7. 关键单品升级 / Key Pieces（5-6个带来改造感的单品）
+8. 细节说明 / Detail Notes
+9. 总结 / Summary
+
+【视觉质量要求】
+- 横向 4:3，高完成度，高级潮流杂志感，专业提案板感
+- After 更帅、更潮、更上镜
+
+【严格避免】
+- After 古板、老气、商务化、成熟过头
+- 像保险销售、办公室通勤、老干部穿搭
+- 像 Excel 表格、PPT 模板、电商拼图
+- Before 和 After 不像同一个人</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyPrompt('prompt-2', this)"><span class="lang-content cn">复制提示词</span><span class="lang-content jp">プロンプトをコピー</span></button>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- PROMPT 3: 剖面科普图解绘本 -->
+  <div class="prompt-card">
+    <div class="prompt-card-header">
+      <p class="prompt-num">No. 3</p>
+      <span class="prompt-cat"><span class="lang-content cn">教育/科普/图解</span><span class="lang-content jp">教育/科学/イラスト</span></span>
+      <h2><span class="lang-content cn">剖面科普图解绘本</span><span class="lang-content jp">断面科普図解絵本</span></h2>
+      <p class="desc"><span class="lang-content cn">输入任意主题（火山、心脏、潜水艇、霸王龙……），自动生成出版级科普图解页。外部形态+内部结构+功能分区+知识标注，孩子一看就入迷。</span><span class="lang-content jp">テーマ（火山・心臓・潜水艦・ティラノサウルス…）を入力するだけで、出版品質の科学図解ページを自動生成。外部形態+内部構造+機能区分+知識ラベル、子供が夢中になる絵本品質。</span></p>
+      <a class="x-link" href="https://x.com/MrLarus/status/2049120610752614684" target="_blank">Xで元投稿を見る →</a>
+    </div>
+    <div class="prompt-images">
+      <img src="prompts/images/MrLarus_2049120511335014693_1.jpg" alt="Example 1" loading="lazy">
+      <img src="prompts/images/MrLarus_2049120511335014693_2.jpg" alt="Example 2" loading="lazy">
+      <img src="prompts/images/MrLarus_2049120511335014693_3.jpg" alt="Example 3" loading="lazy">
+      <img src="prompts/images/MrLarus_2049120511335014693_4.jpg" alt="Example 4" loading="lazy">
+    </div>
+    <div class="prompt-text-area">
+      <details>
+        <summary><span class="lang-content cn">📋 点击展开完整提示词</span><span class="lang-content jp">📋 クリックでプロンプトを展開</span></summary>
+        <pre id="prompt-3">《剖面科普图解绘本》提示词：
+
+请根据【主题】创作一张高完成度、适合系列化发布的「剖面科普图解绘本 / Cutaway Educational Picture Book」风格插画。
+
+这不是普通插画，也不是单纯的写实结构图，而是一张结合"剖面展示 + 内部结构说明 + 功能分区图解 + 绘本质感 + 信息标注系统"的知识型视觉图。画面应让观者能够同时看见对象的外部形态、内部结构、层级关系、功能逻辑与关键知识点。
+
+【输入主题】
+主题：【在这里填写主题，例如心脏 / 向日葵 / 巨龙 / 图书馆 / 火山 / 鲸鱼 / 城堡 / 潜水艇 / 魔法树】
+
+【自动理解规则】
+请不要机械照搬单一套路，而是根据【主题】自动判断最适合的图像表达方式：
+1. 自动判断主题更接近哪一类对象（人体/动物/植物/建筑/机械/交通工具/自然地理/幻想设定等）。
+2. 自动判断最适合展示的内容重点（内部结构/功能分区/运作原理/生长过程/生态关系/层级系统/空间组织/能量流动）。
+3. 自动判断最适合的受众理解层级，整体偏向"儿童可读 + 大众科普可看懂"。
+4. 如果主题本身不适合严格"解剖式剖面"，也可采用"局部切开/半透明展示/分层展开/截面说明/内部空间揭示"等方式。
+
+【画幅与构图】
+画幅比例固定为：3:4 竖版。
+画面主体应集中在画面中央，通过纵向延展、上下分层、主剖面居中、说明信息围绕主体分布的方式呈现。
+
+【画面内容要求】
+1. 主题对象一眼可识别，外部轮廓清楚。
+2. 内部结构、内部空间或分层关系清晰可读。
+3. 重点区域应有明确功能含义或知识解释价值。
+4. 可加入适量的小人物、小动物、小角色或微型互动场景，增强趣味性。
+5. 可加入箭头、编号、中文小标题、说明框、局部放大框、知识贴士等。
+6. 信息量丰富，但不能杂乱。
+
+【视觉风格】
+- 清晰自然的手绘线条
+- 略带绘本感的轮廓与造型
+- 明亮、温和、干净的配色
+- 结构清楚但不过度工程化
+- 细节丰富但不堆砌
+- 画面有探索感、阅读感、观察乐趣
+- 风格介于"儿童绘本插画"和"图解说明图"之间
+
+【材质与质感要求】
+保留绘本插画气质，但不要加入明显纸张材质效果。
+不要出现：纸张纹理、纸质压痕、印刷噪点、复古做旧肌理、书页折痕、泛黄纸感。
+整体画面应更像"现代儿童科普绘本插画成稿"。
+
+【版式与文字】
+文字标注不需要过多，使用中文短标签或简短说明词组。
+标注系统应服务于理解，不要堆满整页。
+
+【色彩建议】
+- 明亮、柔和、易读
+- 主题突出，背景干净
+- 层次清晰，不脏不灰
+- 适合儿童认知和大众科普阅读
+
+【禁止倾向】
+不要做成：纯医学教科书式写实图谱、冰冷工业蓝图、低幼幼儿简笔画、赛博朋克式光污染、带有明显纸质扫描感的旧书风效果。
+
+【最终目标】
+让整张图看起来像一本高质量现代科普绘本中的精彩竖版图解页。它既有知识性，也有美感；既有结构说明感，也有趣味阅读感；既适合儿童看，也能让成年人觉得高级、清晰、好看。</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyPrompt('prompt-3', this)"><span class="lang-content cn">复制提示词</span><span class="lang-content jp">プロンプトをコピー</span></button>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- PROMPT 4: 毛绒微缩世界海报 -->
+  <div class="prompt-card">
+    <div class="prompt-card-header">
+      <p class="prompt-num">No. 4</p>
+      <span class="prompt-cat"><span class="lang-content cn">电商/商业海报</span><span class="lang-content jp">EC/商業ポスター</span></span>
+      <h2><span class="lang-content cn">毛绒微缩世界海报</span><span class="lang-content jp">ぬいぐるみミニチュアワールドポスター</span></h2>
+      <p class="desc"><span class="lang-content cn">为品牌创建治愈系毛绒微缩世界。填入品牌名+场景主题，AI自动生成毛绒角色、梦幻场景和高质感摄影海报。Nike、IKEA、MUJI……同一套提示词适配任何品牌。</span><span class="lang-content jp">ブランドのための癒し系ぬいぐるみミニチュアワールド。ブランド名+シーンテーマを入力すると、AIがぬいぐるみキャラクター・夢のようなシーン・高品質な写真ポスターを自動生成。Nike・IKEA・MUJI…同じプロンプトでどんなブランドにも対応。</span></p>
+      <a class="x-link" href="https://x.com/MrLarus/status/2049163386001277341" target="_blank">Xで元投稿を見る →</a>
+    </div>
+    <div class="prompt-images">
+      <img src="prompts/images/MrLarus_2049163386001277341_1.jpg" alt="Example 1" loading="lazy">
+      <img src="prompts/images/MrLarus_2049163386001277341_2.jpg" alt="Example 2" loading="lazy">
+      <img src="prompts/images/MrLarus_2049163386001277341_3.jpg" alt="Example 3" loading="lazy">
+      <img src="prompts/images/MrLarus_2049163386001277341_4.jpg" alt="Example 4" loading="lazy">
+    </div>
+    <div class="prompt-text-area">
+      <details>
+        <summary><span class="lang-content cn">📋 点击展开完整提示词</span><span class="lang-content jp">📋 クリックでプロンプトを展開</span></summary>
+        <pre id="prompt-4">《毛绒微缩世界海报》提示词：
+
+请根据用户输入的信息，创作一张高完成度的「毛绒微缩世界摄影海报 / Plush Micro-World Photography Poster」。
+
+用户输入：
+品牌名：
+场景主题：
+角色名（可选）：
+标题文字（可选）：
+情绪氛围（可选）：
+
+如果用户填写了【角色名】，请围绕该角色进行毛绒化设计与场景呈现；如果用户没有填写【角色名】，请根据【品牌名】、【场景主题】和整体氛围，自动生成一个最适合该品牌与场景的毛绒角色。角色可以是动物型、幻想生物型、品牌吉祥物型、软萌小精灵型或其他更适合主题的形象。
+
+本次画面不是普通玩具摆拍，不是儿童插画，也不是信息密集型广告海报，而是一张融合「高质感毛绒玩具摄影 + 梦幻微缩场景 + 克制品牌文字平面系统」的竖版手机海报。整体应像真实摄影棚中拍摄出来的毛绒微缩世界，有真实镜头感、浅景深、自然光影、前后景层次、细腻材质和品牌大片感。
+
+画面主体是一位或一组毛绒角色，角色需要圆润、柔软、可爱但不幼稚，具有明显的毛绒、羊毛毡、绒面布料或软体玩具质感。角色表情要简洁、有情绪、有记忆点，使角色像正在生活在这个小世界里。角色应与【场景主题】发生自然互动（休息/散步/阅读/玩耍/收信/喝咖啡/旅行/等待/庆祝/发呆/工作/陪伴/探索）。
+
+请围绕【场景主题】搭建一个梦幻、精致、生活化的微缩场景。场景可以像微型庭院、童话房间、品牌橱窗、柔软山丘、游乐场、阳台、花园、街角、咖啡馆、书房、卧室、展台、快闪空间、节日装置或其他适合主题的小世界。
+
+画面构图采用竖版 iPhone 海报比例。使用摄影式构图，需要有明确的前景、中景和背景：
+- 前景：轻微虚化的道具、花朵、云朵、玩具、布料边缘
+- 中景：毛绒角色和主要互动区域
+- 背景：柔和的天空、房屋、窗户、庭院、室内空间、品牌装置或梦幻景深
+
+光线要真实、柔和、有空气感。画面应具有真实摄影质感：浅景深、柔和虚化、细腻绒毛高光、自然阴影、微距摄影感、干净明亮的色彩层次。
+
+色彩风格应根据品牌名与场景主题自动判断。整体可以使用高明度、干净、柔和、治愈的色彩体系（天空蓝、奶油黄、樱花粉、浅紫、草地绿、暖橙、木色、白色等），但必须保持画面清爽、高级、有商业摄影感。
+
+文字平面系统需要克制、干净、有品牌感。文字面积建议控制在画面的 5%–12% 以内。若用户填写了【标题文字】，则优先使用该标题；若未填写，则自动生成简洁、有设计感的英文或中英混排标题。
+
+整体视觉应呈现为一个高级、柔软、梦幻、真实摄影感的毛绒微缩世界。
+
+禁止：低质感玩具摆拍、廉价儿童插画、过度卡通化、恐怖表情、脏乱背景、文字过多、信息图式箭头标注、杂乱贴纸堆叠、过度商业促销感、过度塑料质感、角色与场景不匹配、没有摄影景深、没有毛绒材质。</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyPrompt('prompt-4', this)"><span class="lang-content cn">复制提示词</span><span class="lang-content jp">プロンプトをコピー</span></button>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- PROMPT 5: 世界杯看台抓拍视频 -->
+  <div class="prompt-card">
+    <div class="prompt-card-header">
+      <p class="prompt-num">No. 5</p>
+      <span class="prompt-cat"><span class="lang-content cn">视频制作/Seedance</span><span class="lang-content jp">動画制作/Seedance</span></span>
+      <h2><span class="lang-content cn">世界杯看台抓拍视频</span><span class="lang-content jp">W杯スタンドキャプチャー動画</span></h2>
+      <p class="desc"><span class="lang-content cn">完整3步工作流：① GPT-Image2生成6宫格分镜故事板 → ② 喂给Seedance生成视频 → ③ 后期调色。从体育场全景→看台特写→大屏时刻→女主反应→全场欢呼，直播感拉满。</span><span class="lang-content jp">完全3ステップワークフロー：① GPT-Image2で6コマ絵コンテ作成 → ② Seedanceに渡して動画生成 → ③ 後処理で調整。スタジアム全景→スタンドのクローズアップ→大型スクリーンの瞬間→ヒロインの反応→満員の喝采、ライブ感満載。</span></p>
+      <a class="x-link" href="https://x.com/MrLarus/status/2053798102142693773" target="_blank">Xで元投稿を見る →</a>
+    </div>
+    <div class="prompt-images">
+      <img src="prompts/images/MrLarus_2053798102142693773_1.jpg" alt="Example 1" loading="lazy">
+      <img src="prompts/images/MrLarus_2053798739668529661_1.jpg" alt="Example 2" loading="lazy">
+      <img src="prompts/images/MrLarus_2053799708749934731_1.jpg" alt="Example 3" loading="lazy">
+    </div>
+    <div class="prompt-text-area">
+      <details>
+        <summary><span class="lang-content cn">📋 点击展开完整提示词（3步工作流）</span><span class="lang-content jp">📋 クリックでプロンプトを展開（3ステップ）</span></summary>
+        <pre id="prompt-5">【Step 1】创作分镜故事板
+
+先在 ChatGPT 里把这个故事板搭出来，用的是 6 宫格。
+
+参考提示词：
+
+请生成一张高完成度的「2026世界杯女球迷出圈故事板 / 6宫格竖版分镜图」。
+
+【画布要求】
+- 竖版构图
+- 6宫格排版，2列 × 3行
+- 每一格都是一个独立镜头，整体要有统一的体育直播分镜感
+
+【整体设定】
+主题是：2026年世界杯比赛现场，一位支持阿根廷的中国年轻女球迷，在看台上被转播镜头拍到，随后出现在球场大屏幕上，引发现场观众关注和欢呼。
+
+【女主设定】
+女主是一位年轻中国女生，长相要偏青春清纯、初恋感、女友感。
+她不是浓妆网红脸，也不是艳丽性感挂，而是：
+- 东亚面孔
+- 五官好看、秀气、耐看
+- 眼神清亮，气质温柔
+- 长发自然披肩
+- 淡妆或近乎裸妆
+- 穿女生版、略修身的阿根廷球衣
+
+【分镜内容】
+场景1——体育场全景
+夜幕下的2026世界杯赛场，巨大的现代化体育场灯火通明。镜头从高处俯拍，观众席座无虚席。加入中文体育转播UI、比赛信息、时间条、直播标识。
+
+场景2——看台女球迷特写
+镜头切到看台，一位年轻中国女球迷出现在画面中。她支持阿根廷，穿着女生版阿根廷球衣，长发披肩，淡妆，清纯好看，神态自然，轻轻看向球场方向。
+
+场景3——比赛紧张画面
+球门附近出现一次紧张的进攻场面，阿根廷队制造威胁，比赛气氛拉满。
+
+场景4——大屏时刻
+球场巨大的电子屏幕突然亮起，屏幕上显示的正是刚才这位中国女球迷的特写。画面要同时看到：大屏幕上的她，以及现实看台中的她本人。周围球迷开始注意到她，指向大屏、露出笑容、起哄、欢呼。
+
+场景5——她的反应
+特写镜头拍她意识到自己出现在大屏上的瞬间。她先有一点惊讶，然后露出害羞又甜甜的笑容，可以轻轻捂嘴，再小幅度挥手。表情变化要自然：惊讶 → 害羞 → 甜甜地笑。
+
+场景6——全场氛围收尾
+镜头拉远，展示整片看台的欢呼氛围。大量阿根廷球迷挥舞旗帜、围巾和双手。女主也在其中，带着开心的笑容融入全场庆祝。
+
+【画面细节要求】
+- 每一格都有中文场景标题（场景1/场景2/场景3…）
+- 画面中可带适度的中文体育转播UI
+- 整体色调以体育场真实灯光为主，蓝白色阿根廷元素贯穿
+- 所有镜头都要强调"真实转播感"
+- 女主在所有格子中的身份和长相必须保持一致
+
+---
+
+【Step 2】生成视频
+
+把这张 6 宫格故事板丢进 Seedance 去生成视频。
+
+参考提示词：
+
+请基于这张6宫格竖版故事板，生成一段高真实感、强临场感的短视频。
+
+【视频目标】
+视频要像一段"2026世界杯中文体育直播中的真实片段"，而不是广告短片。整体时长约12～15秒，节奏自然流畅，使用分镜切换，而不是一镜到底。
+
+【整体风格】
+- 超真实体育直播风格
+- 2026世界杯现场氛围
+- 镜头语言要像电视转播镜头
+- 保留适度的运动模糊、现场噪点、直播压缩感、真实灯光变化
+
+【分镜顺序】
+场景1：体育场全景镜头，夜幕下灯火通明，观众席爆满。镜头从高处缓慢扫过球场与看台。
+场景2：镜头切到看台上的中国女球迷特写。她安静地坐在热情的球迷之间，神态自然放松。
+场景3：切到比赛紧张时刻。阿根廷队在禁区附近制造进攻，球员快速跑动。
+场景4：切到球场大屏幕。大屏幕亮起，画面中出现这位中国女球迷的特写。周围球迷指向大屏、笑、起哄、欢呼。
+场景5：给她一个近景反应镜头。她先愣一下，然后发现真的是自己上屏了，露出害羞又开心的笑容。表情变化：惊讶 → 害羞 → 甜甜地笑。
+场景6：最后镜头拉远，展示整片看台的热烈氛围。阿根廷球迷挥舞围巾和旗帜，全场欢呼。女主融入其中。
+
+【画质要求】
+- 高真实感
+- 真实肤质
+- 真实人群运动
+- 真实球场光影
+- 轻微直播压缩感
+- 真实体育频道转播质感
+
+---
+
+【Step 3】后期处理（可选）
+
+参考体育转播画面去调整：饱和度、亮度、清晰度、对比度、轻微噪点、压缩感。
+让画面第一眼感觉和电视信号转播画质一致。
+
+如果对你有启发，请关注@MrLarus，我会持续分享实践案例！</pre>
+        <div class="copy-row">
+          <button class="copy-btn" onclick="copyPrompt('prompt-5', this)"><span class="lang-content cn">复制提示词</span><span class="lang-content jp">プロンプトをコピー</span></button>
+        </div>
+      </details>
+    </div>
+  </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <h2><span class="lang-content cn">这5个只是开始。全45本提示词 + 25篇深度文章，每周更新。</span><span class="lang-content jp">この5本はほんの始まり。全45本のプロンプト+25本の詳細記事、毎週更新。</span></h2>
+  <p class="cta-sub"><span class="lang-content cn">月額 ¥980。いつでも解約できます。</span><span class="lang-content jp">月額 ¥980。いつでも解約できます。</span></p>
+  <div class="cta-stats">
+    <div><div class="cta-stat-n">45<span style="font-size:18px">+</span></div><div class="cta-stat-l"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></div></div>
+    <div><div class="cta-stat-n">25<span style="font-size:18px">+</span></div><div class="cta-stat-l"><span class="lang-content cn">深度文章</span><span class="lang-content jp">詳細記事</span></div></div>
+    <div><div class="cta-stat-n"><span class="lang-content cn">每周</span><span class="lang-content jp">毎週</span>2-3</div><div class="cta-stat-l"><span class="lang-content cn">本更新</span><span class="lang-content jp">本更新</span></div></div>
+  </div>
+  <a href="checkout.html?plan=monthly" class="cta-btn"><span class="lang-content cn">月額 ¥980 で始める →</span><span class="lang-content jp">月額 ¥980 で始める →</span></a>
+  <a href="index.html" class="cta-btn outline"><span class="lang-content cn">返回首页</span><span class="lang-content jp">TOPに戻る</span></a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 AI知識庫</span>
+  <div class="footer-links">
+    <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+    <a href="tokushoho.html">特定商取引法に基づく表記</a>
+    <span style="color:rgba(250,249,246,.35); font-size:11px;">Community:</span>
+    <a href="mailto:info@snsaladdin.com" class="community-badge">Email 📮</a>
+    <a href="https://x.com/NaoraYoko" target="_blank" class="community-badge">X：Yoko｜Ai_shukyaku</a>
+    <span class="line-label"><span class="lang-content cn">Line官方帳號</span><span class="lang-content jp">Line公式アカウント</span></span>
+  </div>
+  <div class="footer-line">
+    <img src="line-qr.png" alt="Line" style="width:100px; border-radius:6px;">
+  </div>
+</footer>
+
+<script>
+function switchLang(lang) {
+  document.body.classList.toggle('show-jp', lang === 'jp');
+  document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+    btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
+  });
+  localStorage.setItem('kb-lang', lang);
+}
+(function() {
+  var saved = localStorage.getItem('kb-lang') || 'cn';
+  switchLang(saved);
+})();
+
+function copyPrompt(id, btn) {
+  var pre = document.getElementById(id);
+  if (!pre) return;
+  navigator.clipboard.writeText(pre.textContent).then(function() {
+    var orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 1800);
+  }).catch(function() {
+    // Fallback
+    var range = document.createRange();
+    range.selectNode(pre);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  });
+}
+</script>
+</body>
+</html>

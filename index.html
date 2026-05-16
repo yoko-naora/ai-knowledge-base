@@ -962,9 +962,13 @@ document.querySelectorAll('.p-card, .rev-card, .who-card, .pain-card, .value-car
 function handleLead(e) {
   e.preventDefault();
   var email = e.target.querySelector('input').value;
-  // TODO: Replace with your email service endpoint (Beehiiv / ConvertKit / Resend)
-  // For now, redirect to free prompts page
-  alert('メール送信機能はまもなく公開です。しばらくお待ちください。\n\n（Stripe決済は check-outページからご利用いただけます）');
+  // Store email for later (when email service is connected)
+  if (email) {
+    var leads = JSON.parse(localStorage.getItem('kb-leads') || '[]');
+    leads.push({ email: email, time: new Date().toISOString() });
+    localStorage.setItem('kb-leads', JSON.stringify(leads));
+    window.location.href = 'free-prompts.html';
+  }
   return false;
 }
 
