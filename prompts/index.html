@@ -99,6 +99,21 @@
   var prompts = [];
   var currentFilter = 'all';
 
+  // CN→JP category name mapping
+  var catMap = {
+    '电商/商业海报': 'EC/商業ポスター',
+    '穿搭/形象/造型': '着こなし/イメージ/スタイリング',
+    '教育/科普/图解': '教育/科学/図解',
+    '视频制作/Seedance': '動画制作/Seedance',
+    '品牌/VI/包装': 'ブランド/VI/パッケージ',
+    '游戏/娱乐/影视': 'ゲーム/エンタメ/映像',
+    '全景/3D/空间': 'パノラマ/3D/空間',
+    '健康/生活/实用工具': '健康/生活/実用ツール',
+    '其他/教育': 'その他/教育',
+    '其他/闲聊': 'その他/雑談'
+  };
+  function tcat(cn) { return catMap[cn] || cn; }
+
   function switchLang(lang) {
     currentLang = lang;
     document.querySelectorAll('.lang-content.cn').forEach(function(el) { el.style.display = lang === 'cn' ? '' : 'none'; });
@@ -138,11 +153,13 @@
     var cats = info.categories;
     var counts = info.counts;
 
-    function renderFilter(barId, statsId) {
+    function renderFilter(barId, statsId, isJp) {
       var bar = document.getElementById(barId);
-      var html = '<button class="filter-btn active" data-cat="all">全' + prompts.length + '条</button>';
+      var allLabel = isJp ? '全' + prompts.length + '件' : '全' + prompts.length + '条';
+      var html = '<button class="filter-btn active" data-cat="all">' + allLabel + '</button>';
       cats.forEach(function(c) {
-        html += '<button class="filter-btn" data-cat="' + c.replace(/"/g, '&quot;') + '">' + c + ' (' + counts[c] + ')</button>';
+        var catLabel = isJp ? tcat(c) : c;
+        html += '<button class="filter-btn" data-cat="' + c.replace(/"/g, '&quot;') + '">' + catLabel + ' (' + counts[c] + ')</button>';
       });
       bar.innerHTML = html;
 
@@ -154,20 +171,26 @@
           renderGallery();
         });
       });
-      updateStats(statsId);
+      updateStats(statsId, isJp);
     }
 
-    renderFilter('filterBar', 'statsBar');
-    renderFilter('filterBarJp', 'statsBarJp');
+    renderFilter('filterBar', 'statsBar', false);
+    renderFilter('filterBarJp', 'statsBarJp', true);
   }
 
-  function updateStats(statsId) {
+  function updateStats(statsId, isJp) {
     var el = document.getElementById(statsId);
     if (!el) return;
     var filtered = currentFilter === 'all' ? prompts : prompts.filter(function(p) { return p.cat === currentFilter; });
-    el.textContent = currentFilter === 'all'
-      ? '共 ' + prompts.length + ' 条提示词'
-      : currentFilter + ' · ' + filtered.length + ' 条';
+    if (isJp) {
+      el.textContent = currentFilter === 'all'
+        ? '全' + prompts.length + '件のプロンプト'
+        : tcat(currentFilter) + ' · ' + filtered.length + '件';
+    } else {
+      el.textContent = currentFilter === 'all'
+        ? '共 ' + prompts.length + ' 条提示词'
+        : currentFilter + ' · ' + filtered.length + ' 条';
+    }
   }
 
   function formatDate(dateStr) {
@@ -233,7 +256,7 @@
     });
 
     grid.innerHTML = html;
-    updateStats(currentLang === 'cn' ? 'statsBar' : 'statsBarJp');
+    updateStats(currentLang === 'cn' ? 'statsBar' : 'statsBarJp', currentLang === 'jp');
   }
 
   fetchPrompts();
