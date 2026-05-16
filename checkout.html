@@ -139,7 +139,7 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
       <div class="plan-desc">
         <ul>
           <li>全記事読み放題（中日バイリンガル）</li>
-          <li>200+ 厳選プロンプト見放題</li>
+          <li>45+ 厳選プロンプト見放題</li>
           <li>毎月 10〜15 本更新</li>
           <li>陽子おすすめツール解説</li>
           <li>いつでも解約可</li>
@@ -182,16 +182,21 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
     ╔══════════════════════════════════════════════════════════╗
     ║  STRIPE PAYMENT LINK の設定方法                           ║
     ║                                                          ║
-    ║  1. Stripeダッシュボード → 商品 → 支払いリンク          ║
-    ║  2. 以下の2つのリンクを作成：                             ║
-    ║     - 月額 ¥980/月（サブスクリプション）                  ║
-    ║     - 年額 ¥9,800/年（サブスクリプション）                ║
-    ║  3. 各リンクのURLをコピー                                 ║
-    ║  4. 下の stripeLinks オブジェクトに貼り付け              ║
-    ║  5. このコメントブロックを削除                            ║
+    ║  1. Stripeダッシュボード → Payment Links を作成          ║
+    ║     https://dashboard.stripe.com/payment-links/create    ║
     ║                                                          ║
-    ║  Stripe Payment Links 作成先:                            ║
-    ║  https://dashboard.stripe.com/payment-links/create       ║
+    ║  2. 以下の2つの Subscription Payment Link を作成：       ║
+    ║     - 月額 ¥980/月                                      ║
+    ║     - 年額 ¥9,800/年                                    ║
+    ║                                                          ║
+    ║  3. ★ 支払い完了後のリダイレクト先 URL に設定：           ║
+    ║     https://kb.snsaladdin.com/success.html               ║
+    ║     ?session_id={CHECKOUT_SESSION_ID}                    ║
+    ║     （{CHECKOUT_SESSION_ID} は Stripe が自動置換）        ║
+    ║                                                          ║
+    ║  4. 作成後、各 Payment Link の URL をコピー               ║
+    ║  5. 下の stripeLinks に貼り付け                          ║
+    ║  6. このコメントブロックを削除                            ║
     ╚══════════════════════════════════════════════════════════╝
     -->
     <a href="#" class="stripe-btn" id="stripe-pay-btn">

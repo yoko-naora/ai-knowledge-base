@@ -104,10 +104,13 @@ footer a { color: var(--ink-faint); text-decoration: none; }
       </ol>
     </div>
 
-    <div class="access-code-box">
+    <div class="access-code-box" id="access-code-box" style="display:none;">
       <p class="label">Access Code</p>
       <p class="code" id="access-code">aiknowledge2026</p>
       <p class="hint">ロックされた記事でこのコードを入力すると、全コンテンツが読み放題になります。</p>
+    </div>
+    <div id="no-session-note" style="text-align:center;padding:20px;background:#f2ede5;border-radius:2px;margin-bottom:32px;font-size:12px;color:#5a5650;line-height:2;">
+      決済が完了すると、アクセスコードがここに表示されます。<br>まだお支払いがお済みでない場合は、<a href="checkout.html" style="color:#b8925a;">購読プラン</a>からお進みください。
     </div>
 
     <a href="index.html#articles" class="cta-btn">記事を読みに行く <span>→</span></a>
@@ -124,13 +127,16 @@ footer a { color: var(--ink-faint); text-decoration: none; }
 </footer>
 
 <script>
-// Auto-unlock only when coming from Stripe (has session_id in URL)
-// Direct visitors must use access code on article pages
+// Auto-unlock and show access code only when coming from Stripe (has session_id in URL)
 (function() {
   var params = new URLSearchParams(window.location.search);
+  var codeBox = document.getElementById('access-code-box');
+  var noSession = document.getElementById('no-session-note');
   if (params.get('session_id')) {
     localStorage.setItem('kb_subscriber', 'true');
     document.querySelector('.success-icon').textContent = '🔓';
+    codeBox.style.display = '';
+    noSession.style.display = 'none';
   }
 })();
 </script>
