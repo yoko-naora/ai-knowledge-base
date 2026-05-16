@@ -136,9 +136,9 @@
 <script>
 // Language switch (copy from main.js)
 function switchLang(lang) {
-  document.querySelectorAll('.lang-content').forEach(function(el) { el.style.display = el.classList.contains(lang) ? 'block' : 'none'; });
   document.querySelectorAll('.lang-switch button').forEach(function(btn) { btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語')); });
   localStorage.setItem('kb-lang', lang);
+  window.location.reload();
 }
 
 function getLang() { return localStorage.getItem('kb-lang') || 'cn'; }
