@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>購読プランを選択 · AI知識庫</title>
+<title><span class="lang-content cn">选择订阅方案 · AI知识库</span><span class="lang-content jp">購読プランを選択 · AI知識庫</span></title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -23,6 +23,10 @@
   --sans: 'Noto Sans JP', sans-serif;
 }
 body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-weight: 300; line-height: 1.8; }
+	.lang-content.cn { display: block; }
+	.lang-content.jp { display: none; }
+	body.show-jp .lang-content.cn { display: none; }
+	body.show-jp .lang-content.jp { display: block; }
 
 nav {
   padding: 18px 60px;
@@ -114,70 +118,76 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
 <body>
 
 <nav>
-  <a class="nav-logo" href="index.html">AI 知識庫</a>
-  <a class="nav-back" href="index.html">← トップに戻る</a>
+  <div style="display:flex;align-items:center;gap:22px;">
+    <a class="nav-logo" href="index.html">AI 知識庫</a>
+    <div class="lang-switch" style="display:flex;gap:6px;">
+      <button class="active" onclick="switchLang('cn')" style="background:none;border:1px solid var(--border);border-radius:20px;padding:3px 10px;cursor:pointer;font-size:10px;font-family:var(--sans);color:var(--ink-muted);">中文</button>
+      <button onclick="switchLang('jp')" style="background:none;border:1px solid var(--border);border-radius:20px;padding:3px 10px;cursor:pointer;font-size:10px;font-family:var(--sans);color:var(--ink-muted);">日本語</button>
+    </div>
+  </div>
+  <a class="nav-back" href="index.html"><span class="lang-content cn">← 返回首页</span><span class="lang-content jp">← トップに戻る</span></a>
 </nav>
 
 <div class="checkout-container">
 
   <!-- STEP INDICATOR -->
   <div class="steps">
-    <div class="step active"><span class="step-num">1</span> プラン選択</div>
+    <div class="step active"><span class="step-num">1</span> <span class="lang-content cn">选择方案</span><span class="lang-content jp">プラン選択</span></div>
     <div class="step-line"></div>
-    <div class="step"><span class="step-num">2</span> お支払い</div>
+    <div class="step"><span class="step-num">2</span> <span class="lang-content cn">支付</span><span class="lang-content jp">お支払い</span></div>
     <div class="step-line"></div>
-    <div class="step"><span class="step-num">3</span> 完了</div>
+    <div class="step"><span class="step-num">3</span> <span class="lang-content cn">完成</span><span class="lang-content jp">完了</span></div>
   </div>
 
-  <h1>購読プランを選択</h1>
-  <p class="subtitle">お支払いはStripeで安全に処理されます。カード情報は当サイトでは一切保存しません。</p>
+  <h1><span class="lang-content cn">选择订阅方案</span><span class="lang-content jp">購読プランを選択</span></h1>
+  <p class="subtitle"><span class="lang-content cn">付款通过Stripe安全处理。本站不保存任何卡信息。</span><span class="lang-content jp">お支払いはStripeで安全に処理されます。カード情報は当サイトでは一切保存しません。</span></p>
 
   <!-- PLAN OPTIONS -->
   <div class="plan-options">
     <div class="plan-card" id="plan-monthly-card" onclick="selectPlan('monthly')">
-      <div class="plan-name">月額プラン</div>
+      <div class="plan-name"><span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span></div>
       <div class="plan-price">¥980</div>
       <div class="plan-period">/ 月（税込）</div>
       <div class="plan-desc">
         <ul>
-          <li>全記事読み放題（中日バイリンガル）</li>
-          <li>45+ 厳選プロンプト見放題</li>
-          <li>毎月 10〜15 本更新</li>
-          <li>月一 2時間Live勉強会</li>
-          <li class="off">ビジネスプラン精査</li>
-          <li class="off">専用コミュニティ参加</li>
+          <li><span class="lang-content cn">全文章无限阅读（中日双语）</span><span class="lang-content jp">全記事読み放題（中日バイリンガル）</span></li>
+          <li><span class="lang-content cn">45+ 精选提示词无限使用</span><span class="lang-content jp">45+ 厳選プロンプト見放題</span></li>
+          <li><span class="lang-content cn">每月 10〜15 篇更新</span><span class="lang-content jp">毎月 10〜15 本更新</span></li>
+          <li><span class="lang-content cn">每月一次2小时直播学习会</span><span class="lang-content jp">月一 2時間Live勉強会</span></li>
+          <li class="off"><span class="lang-content cn">商业计划审查</span><span class="lang-content jp">ビジネスプラン精査</span></li>
+          <li class="off"><span class="lang-content cn">专属社群参与</span><span class="lang-content jp">専用コミュニティ参加</span></li>
         </ul>
       </div>
     </div>
     <div class="plan-card" id="plan-yearly-card" onclick="selectPlan('yearly')">
-      <div class="plan-badge">1ヶ月無料</div>
-      <div class="plan-name">年額プラン</div>
+      <div class="plan-badge"><span class="lang-content cn">1个月免费</span><span class="lang-content jp">1ヶ月無料</span></div>
+      <div class="plan-name"><span class="lang-content cn">年度方案</span><span class="lang-content jp">年額プラン</span></div>
       <div class="plan-price">¥9,800</div>
       <div class="plan-period">/ 年（税込）</div>
-      <div class="plan-save">月あたり ¥817 · 約1ヶ月お得</div>
+      <div class="plan-save"><span class="lang-content cn">月均 ¥817 · 约省1个月</span><span class="lang-content jp">月あたり ¥817 · 約1ヶ月お得</span></div>
       <div class="plan-desc">
         <ul>
-          <li>全記事読み放題（中日バイリンガル）</li>
-          <li>45+ 厳選プロンプト見放題</li>
-          <li>毎月 10〜15 本更新</li>
-          <li>月一 2時間Live勉強会</li>
-          <li>ビジネスプラン精査</li>
-          <li>専用コミュニティ参加</li>
+          <li><span class="lang-content cn">全文章无限阅读（中日双语）</span><span class="lang-content jp">全記事読み放題（中日バイリンガル）</span></li>
+          <li><span class="lang-content cn">45+ 精选提示词无限使用</span><span class="lang-content jp">45+ 厳選プロンプト見放題</span></li>
+          <li><span class="lang-content cn">每月 10〜15 篇更新</span><span class="lang-content jp">毎月 10〜15 本更新</span></li>
+          <li><span class="lang-content cn">每月一次2小时直播学习会</span><span class="lang-content jp">月一 2時間Live勉強会</span></li>
+          <li><span class="lang-content cn">商业计划审查</span><span class="lang-content jp">ビジネスプラン精査</span></li>
+          <li><span class="lang-content cn">专属社群参与</span><span class="lang-content jp">専用コミュニティ参加</span></li>
       </div>
     </div>
   </div>
 
   <!-- PAYMENT -->
   <div class="payment-section">
-    <h3>お支払い内容の確認</h3>
-    <p class="summary">選択したプランの内容をご確認の上、Stripeの安全な決済ページへお進みください。</p>
+    <h3><span class="lang-content cn">确认支付内容</span><span class="lang-content jp">お支払い内容の確認</span></h3>
+    <p class="summary"><span class="lang-content cn">请确认所选方案内容后，前往Stripe安全支付页面。</span><span class="lang-content jp">選択したプランの内容をご確認の上、Stripeの安全な決済ページへお進みください。</span></p>
 
     <div class="summary-row">
-      <span class="summary-label">プラン</span>
-      <span class="summary-value" id="summary-plan">月額プラン</span>
+      <span class="summary-label"><span class="lang-content cn">方案</span><span class="lang-content jp">プラン</span></span>
+      <span class="summary-value" id="summary-plan"><span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span></span>
     </div>
     <div class="summary-row">
-      <span class="summary-label">金額</span>
+      <span class="summary-label"><span class="lang-content cn">金额</span><span class="lang-content jp">金額</span></span>
       <span class="summary-total" id="summary-price">¥980 / 月</span>
     </div>
 
@@ -207,20 +217,34 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
       Stripeで安全に支払う →
     </a>
     <p class="stripe-note">
-      <span style="display:inline-flex;align-items:center;gap:4px;">🔒 Visa / Mastercard / Amex 対応</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;"><span class="lang-content cn">🔒 支持 Visa / Mastercard / Amex</span><span class="lang-content jp">🔒 Visa / Mastercard / Amex 対応</span></span>
       · カード情報はStripeが安全に処理し、当サイトでは保存しません
     </p>
   </div>
 
   <div class="guarantee">
-    <strong>🔄 いつでも解約保証</strong><br>
+    <strong><span class="lang-content cn">🔄 随时解约保障</span><span class="lang-content jp">🔄 いつでも解約保証</span></strong><br>
     月額プランはいつでも解約可能です（次回更新から停止）。年額プランも次年度の自動更新をいつでも停止できます。まずはお試し感覚で。
   </div>
 
-  <a href="index.html" class="back-home">← トップページに戻る</a>
+  <a href="index.html" class="back-home"><span class="lang-content cn">← 返回首页</span><span class="lang-content jp">← トップページに戻る</span></a>
 </div>
 
 <script>
+function switchLang(lang) {
+  document.body.classList.toggle('show-jp', lang === 'jp');
+  document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+    btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
+    btn.style.background = btn.classList.contains('active') ? 'var(--ink)' : 'none';
+    btn.style.color = btn.classList.contains('active') ? '#fff' : 'var(--ink-muted)';
+    btn.style.borderColor = btn.classList.contains('active') ? 'var(--ink)' : 'var(--border)';
+  });
+  localStorage.setItem('kb-lang', lang);
+}
+(function() {
+  switchLang(localStorage.getItem('kb-lang') || 'jp');
+})();
+
 // ══════════════════════════════════════════════════════════
 // ★★★ Stripe Payment Link の URL をここに貼り付けてください ★★★
 // ══════════════════════════════════════════════════════════
@@ -256,13 +280,12 @@ function updateUI() {
   yearlyCard.classList.remove('selected');
 
   if (selectedPlan === 'yearly') {
-    yearlyCard.classList.add('selected');
-    summaryPlan.textContent = '年額プラン';
-    summaryPrice.innerHTML = '¥9,800 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;">/ 年（月あたり¥817）</span>';
+	    yearlyCard.classList.add('selected');
+	    summaryPlan.innerHTML = '<span class="lang-content cn">年度方案</span><span class="lang-content jp">年額プラン</span>';
+	    summaryPrice.innerHTML = '¥9,800 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;"><span class="lang-content cn">/ 年（月均¥817）</span><span class="lang-content jp">/ 年（月あたり¥817）</span></span>';
   } else {
-    monthlyCard.classList.add('selected');
-    summaryPlan.textContent = '月額プラン';
-    summaryPrice.innerHTML = '¥980 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;">/ 月</span>';
+	    summaryPlan.innerHTML = '<span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span>';
+	    summaryPrice.innerHTML = '¥980 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;"><span class="lang-content cn">/ 月</span><span class="lang-content jp">/ 月</span></span>';
   }
 }
 
