@@ -1,0 +1,12 @@
+{
+  "name": "ai-knowledge-base",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "send-weekly": "node --env-file=.env scripts/send-weekly-update.mjs"
+  },
+  "dependencies": {
+    "resend": "^4.1.2",
+    "stripe": "^17.7.0"
+  }
+}
