@@ -151,7 +151,7 @@ export default async function handler(req) {
 
   let email;
   try {
-    const body = JSON.parse(req.body);
+    const body = await req.json();
     email = body.email;
   } catch {
     return new Response(JSON.stringify({ error: "Invalid JSON" }), {
