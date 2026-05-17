@@ -1,3 +1,5 @@
 node_modules/
 .env
+scripts/.sent-state.json
+scripts/.email-preview.html
 netlify/functions/send-lead-email/send-lead-email.js
