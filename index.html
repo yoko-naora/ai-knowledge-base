@@ -881,7 +881,7 @@ footer a:hover { color: var(--gold); }
     <h3><span class="lang-content cn">📩 立即可用的精选提示词5选</span><span class="lang-content jp">📩 すぐ使える厳選プロンプト5選</span></h3>
     <p><span class="lang-content cn">从订阅者热门提示词中精选5条。<br>输入邮箱地址即可立即获取。</span><span class="lang-content jp">購読者に人気のプロンプトから5本をピックアップ。<br>メールアドレスを入力すると、すぐに受信できます。</span></p>
     <form class="lead-form" id="lead-form" onsubmit="handleLead(event)">
-      <input type="email" placeholder="<span class="lang-content cn">输入邮箱地址</span><span class="lang-content jp">メールアドレスを入力</span>" required>
+      <input type="email" id="lead-email" placeholder="输入邮箱地址" required>
       <button type="submit"><span class="lang-content cn">免费获取</span><span class="lang-content jp">無料で受け取る</span></button>
     </form>
     <p class="lead-note"><span class="lang-content cn">※ 随时可取消订阅。不会发送垃圾邮件。</span><span class="lang-content jp">※ 登録はいつでも解除できます。迷惑メールは送りません。</span></p>
@@ -924,6 +924,8 @@ function switchLang(lang) {
   });
   var hero = document.getElementById('heroImg');
   if (hero) hero.src = lang === 'jp' ? 'index-j.png' : 'index-c.png';
+  var emailInput = document.getElementById('lead-email');
+  if (emailInput) emailInput.placeholder = lang === 'jp' ? 'メールアドレスを入力' : '输入邮箱地址';
   localStorage.setItem('kb-lang', lang);
 }
 (function() {
