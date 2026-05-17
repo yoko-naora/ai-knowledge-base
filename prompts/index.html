@@ -116,9 +116,11 @@
 
   function switchLang(lang) {
     currentLang = lang;
+    document.body.classList.toggle('show-jp', lang === 'jp');
     document.querySelectorAll('.lang-content.cn').forEach(function(el) { el.style.display = lang === 'cn' ? '' : 'none'; });
     document.querySelectorAll('.lang-content.jp').forEach(function(el) { el.style.display = lang === 'jp' ? '' : 'none'; });
     document.querySelectorAll('.lang-switch button').forEach(function(b) { b.classList.toggle('active', b.textContent.includes(lang === 'cn' ? '中文' : '日本語')); });
+    localStorage.setItem('kb-lang', lang);
     renderGallery();
   }
   window.switchLang = switchLang;
