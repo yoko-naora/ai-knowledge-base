@@ -199,8 +199,8 @@ export default async function handler(req) {
 
     const data = await res.json();
     if (!res.ok) {
-      console.error("Resend error:", data);
-      return new Response(JSON.stringify({ error: "Failed to send email", ok: false }), {
+      console.error("Resend error:", JSON.stringify(data));
+      return new Response(JSON.stringify({ error: "Resend API error", detail: data, ok: false }), {
         status: 502,
         headers: { "Content-Type": "application/json" },
       });
