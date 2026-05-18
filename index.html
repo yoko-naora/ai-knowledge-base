@@ -974,10 +974,20 @@ function handleLead(e) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: email })
-  }).catch(function() { /* silent fail — redirect anyway */ });
+  }).catch(function() { /* silent fail */ });
 
-  // Redirect immediately — user doesn't wait for email
-  window.location.href = 'free-prompts.html';
+  // Replace form with confirmation message
+  var box = document.querySelector('.lead-box');
+  var isJp = document.documentElement.lang === 'ja';
+  box.innerHTML =
+    '<div style="text-align:center;padding:20px 0;">' +
+      '<p style="font-size:28px;margin:0 0 12px;">&#10004;</p>' +
+      '<p style="font-size:14px;color:#1a1814;margin:0 0 8px;line-height:1.8;">' + (isJp ? '厳選プロンプト5選をメールでお送りしました。' : '5个提示词已经送到您的邮箱。') + '</p>' +
+      '<p style="font-size:13px;color:#5a5650;margin:0 0 20px;line-height:1.8;">' + (isJp ? 'メールが届かない場合は、迷惑メールフォルダをご確認ください。' : '如果没有收到，请检查垃圾邮件文件夹。') + '</p>' +
+      '<a href="free-prompts.html" style="display:inline-block;background:#1a1814;color:#faf9f6;font-size:13px;font-weight:500;letter-spacing:.08em;text-decoration:none;padding:12px 32px;border-radius:2px;margin-bottom:12px;">' + (isJp ? '5選をWebで見る →' : '查看完整5选 →') + '</a>' +
+      '<br>' +
+      '<a href="#" onclick="window.scrollTo({top:0,behavior:\'smooth\'});return false;" style="font-size:12px;color:#b8925a;text-decoration:none;">' + (isJp ? 'トップに戻る ↑' : '回到首页 ↑') + '</a>' +
+    '</div>';
   return false;
 }
 
