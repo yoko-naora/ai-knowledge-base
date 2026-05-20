@@ -47,6 +47,12 @@
 }
 .prompt-content.empty em { font-style: italic; }
 
+/* Copy button */
+.copy-btn-wrap { text-align: right; margin-top: 10px; }
+.copy-btn { display: inline-block; background: #fff; border: 1px solid #FF6B35; color: #FF6B35; padding: 4px 16px; border-radius: 6px; font-size: 0.82rem; cursor: pointer; transition: .2s; }
+.copy-btn:hover { background: #FF6B35; color: #fff; }
+.copy-btn.copied { background: #4CAF50; border-color: #4CAF50; color: #fff; }
+
 /* Text-only type */
 .text-only-content {
   background: #fafafa;
@@ -134,10 +140,16 @@
 </footer>
 
 <script>
-// Language switch (copy from main.js)
+// Language switch
 function switchLang(lang) {
   document.querySelectorAll('.lang-switch button').forEach(function(btn) { btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語')); });
   localStorage.setItem('kb-lang', lang);
+  // Update copy button text
+  document.querySelectorAll('.copy-btn').forEach(function(btn) {
+    if (!btn.classList.contains('copied')) {
+      btn.textContent = lang === 'cn' ? '复制' : 'コピー';
+    }
+  });
   window.location.reload();
 }
 
@@ -178,6 +190,7 @@ function getParam(name) {
       var p = data[idx];
       var lang = getLang();
       var isCn = lang === 'cn';
+      var copyBtnHtml = '<div class="copy-btn-wrap"><button class="copy-btn">' + (isCn ? '复制' : 'コピー') + '</button></div>';
 
       var text = isCn ? (p.text || '') : (p.text_ja || p.text || '');
       var imagePrompt = isCn ? (p.image_prompt || '') : (p.image_prompt_ja || p.image_prompt || '');
@@ -225,6 +238,7 @@ function getParam(name) {
       if (hasTextOnly) {
         // === Type C: Text only ===
         html += '<div class="text-only-content">' + escapeHtml(text) + '</div>';
+        html += copyBtnHtml;
       } else if (hasVideo) {
         // === Video (with or without images) ===
         // 1. Cover image (first image as hero) if available
@@ -248,17 +262,17 @@ function getParam(name) {
               html += '<img src="' + imgPath(p.images[vi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
             }
           }
-          html += escapeHtml(imagePrompt) + '</div></div>';
+          html += escapeHtml(imagePrompt) + '</div>' + copyBtnHtml + '</div>';
         }
 
         // 4. Video Prompt
         if (videoPrompt) {
-          html += '<div class="prompt-block"><div class="prompt-label">🎬 视频提示词</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div></div>';
+          html += '<div class="prompt-block"><div class="prompt-label">🎬 视频提示词</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div>' + copyBtnHtml + '</div>';
         }
 
         // Also show the full text (social caption) at the end
         if (text) {
-          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div></div>';
+          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
         }
 
       } else if (hasImages && !hasVideo) {
@@ -270,7 +284,7 @@ function getParam(name) {
 
         // 2. Social caption
         if (text) {
-          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div></div>';
+          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
         }
 
         // 3. Prompt content with all images inline
@@ -285,7 +299,7 @@ function getParam(name) {
         } else {
           html += '<em>提示词待补充，可联系 @MrLarus 提供番号</em>';
         }
-        html += '</div></div>';
+        html += '</div>' + copyBtnHtml + '</div>';
       }
 
       // Footer - link to X + next page
@@ -303,6 +317,47 @@ function getParam(name) {
       loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a></div>';
       console.error('Detail load error:', err);
     });
+
+  // Copy button handler (event delegation on root)
+  root.addEventListener('click', function(e) {
+    var btn = e.target.closest('.copy-btn');
+    if (!btn) return;
+    var block = btn.closest('.prompt-block');
+    var content = block ? block.querySelector('.prompt-content') : document.querySelector('.text-only-content');
+    if (!content) return;
+    var text = content.innerText;
+    var doCopy = function() {
+      btn.classList.add('copied');
+      var lang = getLang();
+      btn.textContent = lang === 'cn' ? '✓ 已复制' : '✓ コピーしました';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.textContent = lang === 'cn' ? '复制' : 'コピー';
+      }, 2000);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(doCopy).catch(function() {
+        // Fallback
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        doCopy();
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      doCopy();
+    }
+  });
 
   function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
