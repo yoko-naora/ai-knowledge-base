@@ -146,7 +146,7 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
   <div class="plan-options">
     <div class="plan-card" id="plan-monthly-card" onclick="selectPlan('monthly')">
       <div class="plan-name"><span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span></div>
-      <div class="plan-price">¥980</div>
+      <div class="plan-price">¥2,980</div>
       <div class="plan-period">/ 月（税込）</div>
       <div class="plan-desc">
         <ul>
@@ -162,9 +162,9 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
     <div class="plan-card" id="plan-yearly-card" onclick="selectPlan('yearly')">
       <div class="plan-badge"><span class="lang-content cn">1个月免费</span><span class="lang-content jp">1ヶ月無料</span></div>
       <div class="plan-name"><span class="lang-content cn">年度方案</span><span class="lang-content jp">年額プラン</span></div>
-      <div class="plan-price">¥9,800</div>
+      <div class="plan-price">¥30,000</div>
       <div class="plan-period">/ 年（税込）</div>
-      <div class="plan-save"><span class="lang-content cn">月均 ¥817 · 约省1个月</span><span class="lang-content jp">月あたり ¥817 · 約1ヶ月お得</span></div>
+      <div class="plan-save"><span class="lang-content cn">月均 ¥2,500 · 约省1个月</span><span class="lang-content jp">月あたり ¥2,500 · 約1ヶ月お得</span></div>
       <div class="plan-desc">
         <ul>
           <li><span class="lang-content cn">全文章无限阅读（中日双语）</span><span class="lang-content jp">全記事読み放題（中日バイリンガル）</span></li>
@@ -188,7 +188,7 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
     </div>
     <div class="summary-row">
       <span class="summary-label"><span class="lang-content cn">金额</span><span class="lang-content jp">金額</span></span>
-      <span class="summary-total" id="summary-price">¥980 / 月</span>
+      <span class="summary-total" id="summary-price">¥2,980 / 月</span>
     </div>
 
     <!--
@@ -199,8 +199,8 @@ h1 { font-family: var(--serif); font-size: 28px; font-weight: 300; text-align: c
     ║     https://dashboard.stripe.com/payment-links/create    ║
     ║                                                          ║
     ║  2. 以下の2つの Subscription Payment Link を作成：       ║
-    ║     - 月額 ¥980/月                                      ║
-    ║     - 年額 ¥9,800/年                                    ║
+    ║     - 月額 ¥2,980/月                                      ║
+    ║     - 年額 ¥30,000/年                                    ║
     ║                                                          ║
     ║  3. ★ 支払い完了後のリダイレクト先 URL に設定：           ║
     ║     https://kb.snsaladdin.com/success.html               ║
@@ -249,8 +249,8 @@ function switchLang(lang) {
 // ★★★ Stripe Payment Link の URL をここに貼り付けてください ★★★
 // ══════════════════════════════════════════════════════════
 var stripeLinks = {
-  monthly: 'https://buy.stripe.com/28E6oHcMw820bZ9ggP2wU00',  // 月額¥980
-  yearly: 'https://buy.stripe.com/5kQ8wPbIsfus1kv0hR2wU01',  // 年額¥9,800
+  monthly: 'https://buy.stripe.com/14A6oH13O8204wH7Kj2wU03',  // 月額¥2,980
+  yearly: 'https://buy.stripe.com/dRmaEXaEo0zybZ93u32wU04',  // 年額¥30,000
 };
 
 var selectedPlan = 'monthly';
@@ -282,10 +282,10 @@ function updateUI() {
   if (selectedPlan === 'yearly') {
 	    yearlyCard.classList.add('selected');
 	    summaryPlan.innerHTML = '<span class="lang-content cn">年度方案</span><span class="lang-content jp">年額プラン</span>';
-	    summaryPrice.innerHTML = '¥9,800 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;"><span class="lang-content cn">/ 年（月均¥817）</span><span class="lang-content jp">/ 年（月あたり¥817）</span></span>';
+	    summaryPrice.innerHTML = '¥30,000 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;"><span class="lang-content cn">/ 年（月均¥2,500）</span><span class="lang-content jp">/ 年（月あたり¥2,500）</span></span>';
   } else {
 	    summaryPlan.innerHTML = '<span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span>';
-	    summaryPrice.innerHTML = '¥980 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;"><span class="lang-content cn">/ 月</span><span class="lang-content jp">/ 月</span></span>';
+	    summaryPrice.innerHTML = '¥2,980 <span style="font-size:13px;color:var(--ink-faint);font-weight:300;"><span class="lang-content cn">/ 月</span><span class="lang-content jp">/ 月</span></span>';
   }
 }
 
