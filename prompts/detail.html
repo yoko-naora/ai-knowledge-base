@@ -253,12 +253,19 @@ var catMapJp = {
         gatedHtml += '<div class="gated-overlay"><div style="max-width:420px;margin:0 auto;">';
         gatedHtml += '<p style="font-family:\'Noto Serif JP\',serif;font-size:16px;font-weight:300;color:#1a1814;margin-bottom:10px;">' + (isCn ? '继续阅读需订阅' : '続きを読むには購読が必要です') + '</p>';
         gatedHtml += '<p style="font-size:12px;color:#5a5650;line-height:2;margin-bottom:20px;">' + (isCn ? '此提示词完整内容仅对AI知识库订阅者开放。<br>月付¥2,980即可畅读全部文章与提示词。' : 'このプロンプトの全文はAI知識庫の購読者限定です。<br>月額¥2,980で全記事・全プロンプトが読み放題になります。') + '</p>';
-        gatedHtml += '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;margin-bottom:16px;">' + (isCn ? '立刻订阅 →' : '月額¥2,980で読み放題 →') + '</a>';
-        gatedHtml += '<p style="font-size:10px;color:#9a9490;margin-top:8px;">' + (isCn ? '已订阅？' : 'すでに購読済みですか？') + '</p>';
+        gatedHtml += '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;margin-bottom:20px;">' + (isCn ? '立刻订阅 →' : '月額¥2,980で読み放題 →') + '</a>';
+        // Email verification
+        gatedHtml += '<p style="font-size:10px;color:#9a9490;">' + (isCn ? '已订阅？用注册邮箱验证' : 'すでに購読済みですか？<br>登録したメールアドレスで認証してください') + '</p>';
         gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">';
-        gatedHtml += '<input id="gating-code" type="text" placeholder="' + (isCn ? '输入访问代码' : 'アクセスコードを入力') + '" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:180px;outline:none;">';
-        gatedHtml += '<button id="gating-unlock" style="padding:7px 16px;background:#b8925a;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;">' + (isCn ? '解锁' : '解除') + '</button></div>';
-        gatedHtml += '<p id="gating-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">' + (isCn ? '代码错误' : 'コードが正しくありません') + '</p>';
+        gatedHtml += '<input id="gating-email" type="email" placeholder="' + (isCn ? '输入邮箱地址' : 'メールアドレスを入力') + '" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:200px;outline:none;">';
+        gatedHtml += '<button id="gating-verify" style="padding:7px 16px;background:#b8925a;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;">' + (isCn ? '验证' : '認証') + '</button></div>';
+        gatedHtml += '<p id="gating-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">' + (isCn ? '未找到活跃订阅，请确认邮箱或重新订阅' : '有効な購読が見つかりません。メールアドレスをご確認いただくか、再購読してください。') + '</p>';
+        gatedHtml += '<p id="gating-loading" style="font-size:10px;color:#9a9490;margin-top:6px;display:none;">' + (isCn ? '验证中...' : '確認中...') + '</p>';
+        // Access code (legacy)
+        gatedHtml += '<p style="font-size:9px;color:#c0bbb5;margin-top:16px;">' + (isCn ? '使用访问代码' : 'アクセスコードをお持ちですか？') + '</p>';
+        gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:4px;">';
+        gatedHtml += '<input id="gating-code" type="text" placeholder="' + (isCn ? '访问代码' : 'アクセスコード') + '" style="padding:5px 10px;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;width:150px;outline:none;">';
+        gatedHtml += '<button id="gating-unlock" style="padding:5px 12px;background:transparent;color:#9a9490;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;cursor:pointer;white-space:nowrap;">' + (isCn ? '解锁' : '解除') + '</button></div>';
         gatedHtml += '</div></div></div>';
         // Source link
         gatedHtml += '<div class="detail-footer"><a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener">☝️ ' + (isCn ? '查看 X 原贴 →' : 'Xの元ポストを見る →') + '</a></div>';
@@ -266,7 +273,37 @@ var catMapJp = {
         loading.style.display = 'none';
         root.innerHTML = gatedHtml;
 
-        // Bind unlock
+        // ── Email verification ──
+        document.getElementById('gating-verify').addEventListener('click', function() {
+          var email = document.getElementById('gating-email').value.trim();
+          if (!email) return;
+          document.getElementById('gating-error').style.display = 'none';
+          document.getElementById('gating-loading').style.display = '';
+          document.getElementById('gating-verify').disabled = true;
+          fetch('/api/check-subscription?email=' + encodeURIComponent(email))
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+              document.getElementById('gating-loading').style.display = 'none';
+              document.getElementById('gating-verify').disabled = false;
+              if (data.active) {
+                localStorage.setItem('kb_subscriber', 'true');
+                localStorage.setItem('kb_email', email);
+                location.reload();
+              } else {
+                document.getElementById('gating-error').style.display = '';
+              }
+            })
+            .catch(function() {
+              document.getElementById('gating-loading').style.display = 'none';
+              document.getElementById('gating-verify').disabled = false;
+              document.getElementById('gating-error').style.display = '';
+            });
+        });
+        document.getElementById('gating-email').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') document.getElementById('gating-verify').click();
+        });
+
+        // ── Access code (legacy) ──
         var VALID_HASH = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92';
         document.getElementById('gating-unlock').addEventListener('click', function() {
           var code = document.getElementById('gating-code').value;
@@ -277,8 +314,6 @@ var catMapJp = {
             if (hashHex === VALID_HASH) {
               localStorage.setItem('kb_subscriber', 'true');
               location.reload();
-            } else {
-              document.getElementById('gating-error').style.display = '';
             }
           });
         });
