@@ -259,11 +259,11 @@ async function getEmailFromSubscription(stripe, subscription) {
 //  Handler
 // ──────────────────────────────────────
 export default async function handler(event) {
-  if (event.httpMethod !== "POST") {
+  if (event.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { "Content-Type": "application/json" } });
   }
 
-  const sig = event.headers["stripe-signature"];
+  const sig = event.headers.get("stripe-signature");
   if (!sig) {
     return new Response(JSON.stringify({ error: "Missing stripe-signature header" }), { status: 400, headers: { "Content-Type": "application/json" } });
   }

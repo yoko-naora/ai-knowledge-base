@@ -8,11 +8,12 @@ import Stripe from "stripe";
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 
 export default async function handler(event) {
-  if (event.httpMethod !== "GET") {
+  if (event.method !== "GET") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { "Content-Type": "application/json" } });
   }
 
-  const email = (event.queryStringParameters?.email || "").trim().toLowerCase();
+  const url = new URL(event.url);
+  const email = (url.searchParams.get("email") || "").trim().toLowerCase();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return new Response(JSON.stringify({ error: "Invalid email" }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
