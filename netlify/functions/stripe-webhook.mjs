@@ -260,17 +260,17 @@ async function getEmailFromSubscription(stripe, subscription) {
 // ──────────────────────────────────────
 export default async function handler(event) {
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: JSON.stringify({ error: "Method not allowed" }) };
+    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: { "Content-Type": "application/json" } });
   }
 
   const sig = event.headers["stripe-signature"];
   if (!sig) {
-    return { statusCode: 400, body: JSON.stringify({ error: "Missing stripe-signature header" }) };
+    return new Response(JSON.stringify({ error: "Missing stripe-signature header" }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
 
   if (!STRIPE_WEBHOOK_SECRET || !STRIPE_SECRET_KEY) {
     console.error("STRIPE keys not configured");
-    return { statusCode: 500, body: JSON.stringify({ error: "Stripe keys not configured" }) };
+    return new Response(JSON.stringify({ error: "Stripe keys not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 
   const stripe = new Stripe(STRIPE_SECRET_KEY);
@@ -280,7 +280,7 @@ export default async function handler(event) {
     stripeEvent = stripe.webhooks.constructEvent(event.body, sig, STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error("Signature verification failed:", err.message);
-    return { statusCode: 400, body: JSON.stringify({ error: `Signature verification failed: ${err.message}` }) };
+    return new Response(JSON.stringify({ error: `Signature verification failed: ${err.message}` }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
 
   const type = stripeEvent.type;
@@ -296,7 +296,7 @@ export default async function handler(event) {
     email = await getEmailFromSession(data);
     if (!email) {
       console.error("No email in session:", data.id);
-      return { statusCode: 200, body: JSON.stringify({ error: "No email", type }) };
+      return new Response(JSON.stringify({ error: "No email", type }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
     const amount = data.amount_total || 0;
     isMonthly = amount <= 5000;
@@ -310,7 +310,7 @@ export default async function handler(event) {
     email = await getEmailFromInvoice(stripe, data);
     if (!email) {
       console.error("No email in invoice:", data.id);
-      return { statusCode: 200, body: JSON.stringify({ error: "No email", type }) };
+      return new Response(JSON.stringify({ error: "No email", type }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
     const amount = data.amount_paid || data.total || 0;
     isMonthly = amount <= 5000;
@@ -321,7 +321,7 @@ export default async function handler(event) {
     // Skip the first invoice (handled by checkout.session.completed)
     if (data.billing_reason === "subscription_create") {
       console.log(`[invoice.paid] Skipping first invoice for ${email} (handled by checkout.session.completed)`);
-      return { statusCode: 200, body: JSON.stringify({ ok: true, type, action: "skipped_first_invoice" }) };
+      return new Response(JSON.stringify({ ok: true, type, action: "skipped_first_invoice" }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
 
     subject = isJp
@@ -332,7 +332,7 @@ export default async function handler(event) {
     email = await getEmailFromSubscription(stripe, data);
     if (!email) {
       console.error("No email in subscription:", data.id);
-      return { statusCode: 200, body: JSON.stringify({ error: "No email", type }) };
+      return new Response(JSON.stringify({ error: "No email", type }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
     // Determine plan from subscription items
     const items = data.items?.data || [];
@@ -346,13 +346,13 @@ export default async function handler(event) {
       : `【AI知识库】订阅到期通知`;
     html = buildCancellationEmail(email, isMonthly, isJp, endedAt);
   } else {
-    return { statusCode: 200, body: JSON.stringify({ received: true, type, action: "ignored" }) };
+    return new Response(JSON.stringify({ received: true, type, action: "ignored" }), { status: 200, headers: { "Content-Type": "application/json" } });
   }
 
   // ── Send email ──
   if (!RESEND_API_KEY) {
     console.error("RESEND_API_KEY not configured");
-    return { statusCode: 500, body: JSON.stringify({ error: "RESEND_API_KEY not configured" }) };
+    return new Response(JSON.stringify({ error: "RESEND_API_KEY not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 
   try {
@@ -373,13 +373,13 @@ export default async function handler(event) {
     const result = await res.json();
     if (!res.ok) {
       console.error("Resend error:", JSON.stringify(result));
-      return { statusCode: 502, body: JSON.stringify({ error: "Resend API error", detail: result }) };
+      return new Response(JSON.stringify({ error: "Resend API error", detail: result }), { status: 502, headers: { "Content-Type": "application/json" } });
     }
 
     console.log(`[${type}] Email sent to ${email}: ${result.id}`);
-    return { statusCode: 200, body: JSON.stringify({ ok: true, type, email_id: result.id }) };
+    return new Response(JSON.stringify({ ok: true, type, email_id: result.id }), { status: 200, headers: { "Content-Type": "application/json" } });
   } catch (err) {
     console.error("Email send error:", err);
-    return { statusCode: 500, body: JSON.stringify({ error: "Email send failed" }) };
+    return new Response(JSON.stringify({ error: "Email send failed" }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 }
