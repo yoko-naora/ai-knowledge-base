@@ -316,6 +316,10 @@ footer .community-badge:hover { opacity: 0.85; }
 footer .line-label { color: #888; font-size: 11px; }
 
 /* Responsive */
+@media (max-width: 1050px) {
+  nav { padding: 0 20px; }
+  nav .nav-links { gap: 14px; font-size: 10px; }
+}
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
   nav .nav-links { display: none; }

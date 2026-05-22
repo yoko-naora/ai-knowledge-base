@@ -48,8 +48,8 @@
   overlay.innerHTML =
     '<div style="max-width:420px;margin:0 auto;" id="gating-cta">' +
     '<p style="font-family:\'Noto Serif JP\',serif;font-size:16px;font-weight:300;color:#1a1814;margin-bottom:10px;">続きを読むには購読が必要です</p>' +
-    '<p style="font-size:12px;color:#5a5650;line-height:2;margin-bottom:20px;">この記事の全文は、AI知識庫の購読者限定です。<br>月額¥980で全記事・全プロンプトが読み放題になります。</p>' +
-    '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;">月額¥980で読み放題 →</a>' +
+    '<p style="font-size:12px;color:#5a5650;line-height:2;margin-bottom:20px;">この記事の全文は、AI知識庫の購読者限定です。<br>月額¥2,980で全記事・全プロンプトが読み放題になります。</p>' +
+    '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;">月額¥2,980で読み放題 →</a>' +
     '<p style="font-size:10px;color:#9a9490;margin-top:14px;">すでに購読済みですか？</p>' +
     '<div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">' +
     '<input id="gating-code" type="text" placeholder="アクセスコードを入力" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:180px;outline:none;">' +
