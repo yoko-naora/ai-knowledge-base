@@ -13,7 +13,7 @@
 .filter-btn.active { background: #FF6B35; color: #fff; border-color: #FF6B35; }
 .stats-bar { color: #888; font-size: 0.85rem; margin: 12px 0 20px; }
 .prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-.prompt-card { border: 1px solid #eee; border-radius: 12px; overflow: hidden; transition: .25s; background: #fff; }
+.prompt-card { border: 1px solid #eee; border-radius: 12px; overflow: hidden; transition: .25s; background: #fff; cursor: pointer; position: relative; }
 .prompt-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
 .prompt-card .card-img { width: 100%; height: 200px; object-fit: cover; background: #f5f5f5; display: block; }
 .prompt-card .card-img-placeholder { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; font-size: 3rem; background: #f5f5f5; color: #ccc; }
@@ -24,6 +24,9 @@
 .prompt-card .card-author { color: #FF6B35; font-weight: 500; }
 .prompt-card .card-author a:hover { text-decoration: underline !important; }
 .prompt-card .card-date { color: #aaa; }
+.prompt-badge { position: absolute; top: 10px; right: 10px; font-size: 10px; font-weight: 500; letter-spacing: .04em; padding: 3px 10px; border-radius: 12px; z-index: 2; }
+.prompt-badge.free { background: #e8f5e9; color: #2e7d32; }
+.prompt-badge.locked { background: #e8f2f7; color: #2c5f7a; }
 .loading { text-align: center; padding: 60px 20px; color: #888; }
 .loading .spinner { display: inline-block; width: 32px; height: 32px; border: 3px solid #eee; border-top-color: #FF6B35; border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -52,8 +55,8 @@
   <a href="../index.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
   <h1><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></h1>
   <p style="color:#666; margin-top:12px;">
-    <span class="lang-content cn">来自 X 上顶级提示词创作者 @MrLarus 的结构化提示词图库，每张图下方附完整 prompt</span>
-    <span class="lang-content jp">Xのトッププロンプトクリエイター @MrLarus の構造化プロンプトギャラリー、各画像に完全なプロンプト付き</span>
+    <span class="lang-content cn">来自 X 上顶级提示词创作者的结构化提示词图库。<span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:0.8rem;">免费</span> 可直接查看 · <span style="background:#e8f2f7;color:#2c5f7a;padding:2px 8px;border-radius:10px;font-size:0.8rem;">付费</span> 需订阅</span>
+    <span class="lang-content jp">Xのトッププロンプトクリエイターの構造化プロンプトギャラリー。<span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:10px;font-size:0.8rem;">無料</span> そのまま閲覧 · <span style="background:#e8f2f7;color:#2c5f7a;padding:2px 8px;border-radius:10px;font-size:0.8rem;">有料</span> 購読必要</span>
   </p>
 </section>
 
@@ -93,16 +96,12 @@
 </footer>
 
 <script src="../assets/js/main.js"></script>
-<script src="../assets/gating.js"></script>
 <script>
 (function() {
   var currentLang = 'cn';
   var prompts = [];
   var currentFilter = 'all';
-  var FREE_LIMIT = 8;
-  var isSubscriber = localStorage.getItem('kb_subscriber') === 'true';
 
-  // CN→JP category name mapping
   var catMap = {
     '电商/商业海报': 'EC/商業ポスター',
     '穿搭/形象/造型': '着こなし/イメージ/スタイリング',
@@ -167,7 +166,6 @@
         html += '<button class="filter-btn" data-cat="' + c.replace(/"/g, '&quot;') + '">' + catLabel + ' (' + counts[c] + ')</button>';
       });
       bar.innerHTML = html;
-
       bar.querySelectorAll('.filter-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
           bar.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -205,96 +203,10 @@
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   }
 
-  function buildCard(p, realIndex) {
-    var descKey = currentLang === 'cn' ? 'text' : 'text_ja';
-    var titleKey = currentLang === 'cn' ? 'title' : 'title_ja';
-    var desc = p[descKey] || p.text || '';
-    desc = desc.replace(/\\n/g, ' ').substring(0, 100);
-    if (desc.length >= 100) desc += '…';
-
-    var imgHtml = '';
-    if (p.images && p.images.length > 0 && p.images[0]) {
-      var imgPath = p.images[0];
-      if (!imgPath.startsWith('http')) {
-        imgPath = imgPath.replace(/^images\//, '');
-        imgPath = 'images/' + imgPath;
-      }
-      imgHtml = '<img class="card-img" src="' + imgPath + '" alt="' + (desc.replace(/"/g,'&quot;').substring(0,60)) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="card-img-placeholder" style="display:none">🎨</div>';
-    } else {
-      imgHtml = '<div class="card-img-placeholder">🎨</div>';
-    }
-
-    var date = p.date || p.title || '';
-    var author = p.author || '@MrLarus';
-    var link = p.link || '#';
-    var onclick = isSubscriber ? "location.href='detail.html?id=" + realIndex + "'" : "showPaywall()";
-
-    var h = '<div class="prompt-card" data-id="' + realIndex + '" onclick="' + onclick + '" style="cursor:pointer;">';
-    h += imgHtml;
-    h += '<div class="card-body">';
-    h += '<div class="card-cat">' + (p.cat || '未分类') + '</div>';
-    h += '<div class="card-text">' + desc.replace(/"/g,'&quot;') + '</div>';
-    h += '<div class="card-meta">';
-    h += '<span class="card-author">☝️ <a href="' + link + '" target="_blank" rel="noopener" style="color:#FF6B35;text-decoration:none;" onclick="event.stopPropagation();">' + author.replace(/"/g,'&quot;') + '</a></span>';
-    h += '<span class="card-date">' + formatDate(date) + '</span>';
-    h += '</div></div></div>';
-    return h;
-  }
-
-  function renderPaywall(hiddenCount) {
-    var isJp = currentLang === 'jp';
-    var container = document.getElementById('paywallContainer');
-    if (container) container.remove();
-    var pw = document.createElement('div');
-    pw.id = 'paywallContainer';
-    pw.style.cssText = 'margin:32px 0 0;';
-    pw.innerHTML =
-      '<div style="position:relative;overflow:hidden;border-radius:12px;padding:80px 32px 48px;text-align:center;background:linear-gradient(180deg, rgba(245,245,245,0) 0%, rgba(245,245,245,0.95) 30%, rgba(245,245,245,1) 60%);border:1px solid #eee;">' +
-        '<p style="font-family:\'Noto Serif JP\',serif;font-size:18px;color:#1a1814;margin-bottom:10px;">' + (isJp ? 'さらに ' + hiddenCount + ' 件のプロンプトを読むには購読が必要です' : '还有 ' + hiddenCount + ' 条提示词，订阅后查看') + '</p>' +
-        '<p style="font-size:13px;color:#666;line-height:2;margin-bottom:24px;">' + (isJp ? 'AI知識庫の購読で全45件のプロンプトが見放題に。' : '订阅AI知识库即可查看全部45条精选提示词。') + '</p>' +
-        '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:14px 36px;background:#1a1814;color:#faf9f6;font-size:12px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;margin-bottom:20px;">' + (isJp ? '月額¥2,980で読み放題 →' : '立刻订阅 →') + '</a>' +
-        '<p style="font-size:10px;color:#999;margin-bottom:8px;">' + (isJp ? 'すでに購読済みですか？' : '已订阅？') + '</p>' +
-        '<div style="display:flex;gap:6px;justify-content:center;">' +
-        '<input id="prompt-unlock-code" type="text" placeholder="' + (isJp ? 'アクセスコードを入力' : '输入访问代码') + '" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:180px;outline:none;">' +
-        '<button id="prompt-unlock-btn" style="padding:7px 16px;background:#b8925a;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;">' + (isJp ? '解除' : '解锁') + '</button>' +
-        '</div>' +
-        '<p id="prompt-unlock-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">' + (isJp ? 'コードが正しくありません' : '代码错误') + '</p>' +
-      '</div>';
-    pw.querySelector('#prompt-unlock-btn').addEventListener('click', handleUnlock);
-    pw.querySelector('#prompt-unlock-code').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') handleUnlock();
-    });
-    document.getElementById('promptGrid').after(pw);
-  }
-
-  async function handleUnlock() {
-    var code = document.getElementById('prompt-unlock-code').value;
-    var VALID_HASH = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92';
-    var msgBuffer = new TextEncoder().encode(code.trim());
-    var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    var hashArray = Array.from(new Uint8Array(hashBuffer));
-    var hashHex = hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
-    if (hashHex === VALID_HASH) {
-      localStorage.setItem('kb_subscriber', 'true');
-      isSubscriber = true;
-      renderGallery();
-    } else {
-      document.getElementById('prompt-unlock-error').style.display = '';
-    }
-  }
-
-  window.showPaywall = function() {
-    var pw = document.getElementById('paywallContainer');
-    if (pw) pw.scrollIntoView({ behavior: 'smooth' });
-  };
-
   function renderGallery() {
     var filtered = currentFilter === 'all' ? prompts : prompts.filter(function(p) { return p.cat === currentFilter; });
-
     var grid = document.getElementById('promptGrid');
     var empty = document.getElementById('emptyState');
-    var pw = document.getElementById('paywallContainer');
-    if (pw) pw.remove();
 
     if (filtered.length === 0) {
       grid.style.display = 'none';
@@ -304,21 +216,51 @@
     grid.style.display = '';
     empty.style.display = 'none';
 
+    var isJp = currentLang === 'jp';
+    var descKey = currentLang === 'cn' ? 'text' : 'text_ja';
     var html = '';
-    var visible = isSubscriber ? filtered : filtered.slice(0, FREE_LIMIT);
-    var hiddenCount = filtered.length - visible.length;
 
-    visible.forEach(function(p, idx) {
-      var realIndex = prompts.indexOf(filtered[idx]);
-      html += buildCard(p, realIndex);
+    filtered.forEach(function(p) {
+      var realIndex = prompts.indexOf(p);
+      var isFree = p.free === true;
+      var desc = p[descKey] || p.text || '';
+      desc = desc.replace(/\\n/g, ' ').substring(0, 100);
+      if (desc.length >= 100) desc += '…';
+
+      var imgHtml = '';
+      if (p.images && p.images.length > 0 && p.images[0]) {
+        var imgPath = p.images[0];
+        if (!imgPath.startsWith('http')) {
+          imgPath = imgPath.replace(/^images\//, '');
+          imgPath = 'images/' + imgPath;
+        }
+        imgHtml = '<img class="card-img" src="' + imgPath + '" alt="' + (desc.replace(/"/g,'&quot;').substring(0,60)) + '" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="card-img-placeholder" style="display:none">🎨</div>';
+      } else {
+        imgHtml = '<div class="card-img-placeholder">🎨</div>';
+      }
+
+      var date = p.date || p.title || '';
+      var author = p.author || '@MrLarus';
+      var link = p.link || '#';
+
+      html += '<div class="prompt-card" onclick="location.href=\'detail.html?id=' + realIndex + '\'">';
+      if (isFree) {
+        html += '<span class="prompt-badge free">' + (isJp ? '無料' : '免费') + '</span>';
+      } else {
+        html += '<span class="prompt-badge locked">' + (isJp ? '有料' : '付费') + '</span>';
+      }
+      html += imgHtml;
+      html += '<div class="card-body">';
+      html += '<div class="card-cat">' + (isJp ? tcat(p.cat || '') : (p.cat || '未分类')) + '</div>';
+      html += '<div class="card-text">' + desc.replace(/"/g,'&quot;') + '</div>';
+      html += '<div class="card-meta">';
+      html += '<span class="card-author">☝️ <a href="' + link + '" target="_blank" rel="noopener" style="color:#FF6B35;text-decoration:none;" onclick="event.stopPropagation();">' + author.replace(/"/g,'&quot;') + '</a></span>';
+      html += '<span class="card-date">' + formatDate(date) + '</span>';
+      html += '</div></div></div>';
     });
 
     grid.innerHTML = html;
     updateStats(currentLang === 'cn' ? 'statsBar' : 'statsBarJp', currentLang === 'jp');
-
-    if (!isSubscriber && hiddenCount > 0) {
-      renderPaywall(hiddenCount);
-    }
   }
 
   fetchPrompts();

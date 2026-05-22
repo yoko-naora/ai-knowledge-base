@@ -101,6 +101,15 @@
 
 /* Multiple images mixed */
 .multi-image { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+/* Gating overlay */
+.gated-wrap { position: relative; margin-top: 24px; }
+.gated-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent 0%, rgba(250,249,246,.92) 45%, rgba(250,249,246,.98) 70%);
+  padding: 100px 28px 40px; text-align: center; pointer-events: auto; z-index: 10;
+}
+.preview-blur { overflow: hidden; max-height: 320px; position: relative; opacity: 0.5; }
 </style>
 </head>
 <body>
@@ -179,6 +188,14 @@ function getParam(name) {
   return match ? decodeURIComponent(match[1]) : null;
 }
 
+var catMapJp = {
+  '电商/商业海报': 'EC/商業ポスター', '穿搭/形象/造型': '着こなし/イメージ/スタイリング',
+  '教育/科普/图解': '教育/科学/図解', '视频制作/Seedance': '動画制作/Seedance',
+  '品牌/VI/包装': 'ブランド/VI/パッケージ', '游戏/娱乐/影视': 'ゲーム/エンタメ/映像',
+  '全景/3D/空间': 'パノラマ/3D/空間', '健康/生活/实用工具': '健康/生活/実用ツール',
+  '其他/教育': 'その他/教育', '其他/闲聊': 'その他/雑談'
+};
+
 // Main render
 (function() {
   var root = document.getElementById('detailRoot');
@@ -202,6 +219,74 @@ function getParam(name) {
       var lang = getLang();
       var isCn = lang === 'cn';
       var copyBtnHtml = '<div class="copy-btn-wrap"><button class="copy-btn">' + (isCn ? '复制' : 'コピー') + '</button></div>';
+
+      var isSubscriber = localStorage.getItem('kb_subscriber') === 'true';
+      var isFree = p.free === true;
+      var isJp = !isCn;
+
+      // Paid prompt + not subscriber → show preview + paywall
+      if (!isFree && !isSubscriber) {
+        var previewText = (isCn ? (p.text || '') : (p.text_ja || p.text || '')).replace(/\\n/g, '\n');
+        var previewPrompt = isCn ? (p.real_prompt || p.image_prompt || '') : (p.real_prompt_ja || p.image_prompt_ja || p.real_prompt || p.image_prompt || '');
+        var catLabel = isJp ? catMapJp[p.cat] || p.cat : p.cat;
+        var gatedHtml = '';
+        gatedHtml += '<div class="detail-nav"><a href="index.html">← ' + (isCn ? '返回提示词列表' : 'プロンプト一覧に戻る') + '</a></div>';
+        gatedHtml += '<div class="detail-header">';
+        if (p.cat) gatedHtml += '<div class="detail-cat">' + (catLabel || p.cat) + '</div>';
+        gatedHtml += '<h1 class="detail-title">' + escapeHtml(previewText.split('\n')[0].substring(0, 80)) + '</h1>';
+        gatedHtml += '<div class="detail-meta"><span>' + (p.author || '@MrLarus') + '</span><span>' + formatDate(p.date || p.title || '') + '</span>';
+        gatedHtml += '<span style="background:#e8f2f7;color:#2c5f7a;padding:2px 8px;border-radius:10px;">' + (isCn ? '付费' : '有料') + '</span></div></div>';
+        // Preview first image
+        if (p.images && p.images.length > 0) {
+          var firstImg = p.images[0];
+          if (!firstImg.startsWith('http')) firstImg = 'images/' + firstImg.replace(/^images\//, '');
+          gatedHtml += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + firstImg + '" alt="" loading="lazy" style="max-width:100%;border-radius:12px;"></div></div>';
+        }
+        // Preview text
+        gatedHtml += '<div class="text-only-content" style="margin-bottom:0;">' + escapeHtml(previewText.substring(0, 250)) + (previewText.length > 250 ? '…' : '') + '</div>';
+        // Blurred prompt preview + paywall
+        gatedHtml += '<div class="gated-wrap">';
+        gatedHtml += '<div class="preview-blur">';
+        gatedHtml += '<div class="prompt-block"><div class="prompt-label">📋 ' + (isCn ? '完整提示词' : 'プロンプト全文') + '</div>';
+        gatedHtml += '<div class="prompt-content">' + escapeHtml(previewPrompt.substring(0, 350)) + '…</div></div>';
+        gatedHtml += '</div>';
+        gatedHtml += '<div class="gated-overlay"><div style="max-width:420px;margin:0 auto;">';
+        gatedHtml += '<p style="font-family:\'Noto Serif JP\',serif;font-size:16px;font-weight:300;color:#1a1814;margin-bottom:10px;">' + (isCn ? '继续阅读需订阅' : '続きを読むには購読が必要です') + '</p>';
+        gatedHtml += '<p style="font-size:12px;color:#5a5650;line-height:2;margin-bottom:20px;">' + (isCn ? '此提示词完整内容仅对AI知识库订阅者开放。<br>月付¥2,980即可畅读全部文章与提示词。' : 'このプロンプトの全文はAI知識庫の購読者限定です。<br>月額¥2,980で全記事・全プロンプトが読み放題になります。') + '</p>';
+        gatedHtml += '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;margin-bottom:16px;">' + (isCn ? '立刻订阅 →' : '月額¥2,980で読み放題 →') + '</a>';
+        gatedHtml += '<p style="font-size:10px;color:#9a9490;margin-top:8px;">' + (isCn ? '已订阅？' : 'すでに購読済みですか？') + '</p>';
+        gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">';
+        gatedHtml += '<input id="gating-code" type="text" placeholder="' + (isCn ? '输入访问代码' : 'アクセスコードを入力') + '" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:180px;outline:none;">';
+        gatedHtml += '<button id="gating-unlock" style="padding:7px 16px;background:#b8925a;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;">' + (isCn ? '解锁' : '解除') + '</button></div>';
+        gatedHtml += '<p id="gating-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">' + (isCn ? '代码错误' : 'コードが正しくありません') + '</p>';
+        gatedHtml += '</div></div></div>';
+        // Source link
+        gatedHtml += '<div class="detail-footer"><a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener">☝️ ' + (isCn ? '查看 X 原贴 →' : 'Xの元ポストを見る →') + '</a></div>';
+
+        loading.style.display = 'none';
+        root.innerHTML = gatedHtml;
+
+        // Bind unlock
+        var VALID_HASH = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92';
+        document.getElementById('gating-unlock').addEventListener('click', function() {
+          var code = document.getElementById('gating-code').value;
+          var msgBuffer = new TextEncoder().encode(code.trim());
+          crypto.subtle.digest('SHA-256', msgBuffer).then(function(hashBuffer) {
+            var hashArray = Array.from(new Uint8Array(hashBuffer));
+            var hashHex = hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+            if (hashHex === VALID_HASH) {
+              localStorage.setItem('kb_subscriber', 'true');
+              location.reload();
+            } else {
+              document.getElementById('gating-error').style.display = '';
+            }
+          });
+        });
+        document.getElementById('gating-code').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') document.getElementById('gating-unlock').click();
+        });
+        return;
+      }
 
       var text = isCn ? (p.text || '') : (p.text_ja || p.text || '');
       var imagePrompt = isCn ? (p.image_prompt || '') : (p.image_prompt_ja || p.image_prompt || '');
