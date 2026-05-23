@@ -82,7 +82,7 @@ export async function onRequestPost(context) {
 
   let stripeEvent;
   try {
-    stripeEvent = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    stripeEvent = await stripe.webhooks.constructEventAsync(rawBody, sig, webhookSecret);
   } catch (err) {
     return new Response(JSON.stringify({ error: `Signature verification failed: ${err.message}` }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
