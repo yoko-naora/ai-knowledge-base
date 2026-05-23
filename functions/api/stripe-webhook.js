@@ -71,7 +71,10 @@ export async function onRequestPost(context) {
   const resendKey = context.env.RESEND_API_KEY;
 
   if (!webhookSecret || !stripeKey) {
-    return new Response(JSON.stringify({ error: "Stripe keys not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });
+    const missing = [];
+    if (!webhookSecret) missing.push("STRIPE_WEBHOOK_SECRET");
+    if (!stripeKey) missing.push("STRIPE_SECRET_KEY");
+    return new Response(JSON.stringify({ error: "Stripe keys not configured", missing }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 
   const stripe = new Stripe(stripeKey);
