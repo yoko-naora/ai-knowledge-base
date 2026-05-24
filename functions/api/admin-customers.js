@@ -27,36 +27,50 @@ export async function onRequestGet(context) {
     while (hasMore) {
       const list = await stripe.customers.list({ limit: 100, starting_after: startingAfter });
       for (const cus of list.data) {
-        const subs = await stripe.subscriptions.list({ customer: cus.id, limit: 5, status: "all" });
+        const subs = await stripe.subscriptions.list({ customer: cus.id, limit: 5, status: "all", expand: ["data.items.data.price"] });
         const activeSub = subs.data.find(s => s.status === "active" || s.status === "trialing");
         const allEnded = subs.data.length > 0 && subs.data.every(s => s.status === "canceled" || s.status === "incomplete_expired" || s.status === "unpaid");
 
-        let plan = null, status = "none", amount = 0, purchasedAt = null, currentPeriodEnd = null;
+        let productName = null, plan = null, status = "none", planAmount = 0, actualPaid = 0, purchasedAt = null, currentPeriodEnd = null;
 
         if (activeSub) {
           status = activeSub.status === "trialing" ? "trialing" : "active";
-          amount = activeSub.items.data.reduce((sum, item) => sum + ((item.price?.unit_amount || 0) * (item.quantity || 1)), 0);
-          plan = amount <= 5000 ? "monthly" : "yearly";
+          planAmount = activeSub.items.data.reduce((sum, item) => sum + ((item.price?.unit_amount || 0) * (item.quantity || 1)), 0);
+          plan = planAmount <= 5000 ? "monthly" : "yearly";
           purchasedAt = new Date(activeSub.created * 1000).toISOString();
           currentPeriodEnd = activeSub.current_period_end;
+          const productId = activeSub.items.data[0]?.price?.product;
+          if (typeof productId === "string" && productId) {
+            try { const prod = await stripe.products.retrieve(productId); productName = prod.name; } catch { productName = productId; }
+          }
         } else if (allEnded) {
           status = "ended";
           const lastSub = subs.data[0];
-          amount = lastSub.items.data.reduce((sum, item) => sum + ((item.price?.unit_amount || 0) * (item.quantity || 1)), 0);
-          plan = amount <= 5000 ? "monthly" : "yearly";
+          planAmount = lastSub.items.data.reduce((sum, item) => sum + ((item.price?.unit_amount || 0) * (item.quantity || 1)), 0);
+          plan = planAmount <= 5000 ? "monthly" : "yearly";
           purchasedAt = new Date(lastSub.created * 1000).toISOString();
+          const productId = lastSub.items.data[0]?.price?.product;
+          if (typeof productId === "string" && productId) {
+            try { const prod = await stripe.products.retrieve(productId); productName = prod.name; } catch { productName = productId; }
+          }
         }
 
         let latestPayment = null;
         try {
-          const invoices = await stripe.invoices.list({ customer: cus.id, limit: 1, status: "paid" });
-          if (invoices.data.length > 0) latestPayment = new Date(invoices.data[0].created * 1000).toISOString();
+          const invoices = await stripe.invoices.list({ customer: cus.id, limit: 5 });
+          const paidInvoice = invoices.data.find(inv => inv.status === "paid" || inv.amount_paid > 0);
+          if (paidInvoice) {
+            latestPayment = new Date(paidInvoice.created * 1000).toISOString();
+            actualPaid = paidInvoice.amount_paid;
+          }
         } catch { /* skip */ }
 
         customers.push({
           name: cus.name || "", email: cus.email || "", phone: cus.phone || "",
+          product: productName || "",
           plan, status,
-          amount: amount > 0 ? `¥${amount.toLocaleString()}` : "",
+          plan_amount: planAmount > 0 ? planAmount : 0,
+          actual_paid: actualPaid,
           purchased_at: purchasedAt,
           current_period_end: currentPeriodEnd ? new Date(currentPeriodEnd * 1000).toISOString() : null,
           latest_payment: latestPayment,
@@ -67,8 +81,8 @@ export async function onRequestGet(context) {
     }
 
     customers.sort((a, b) => {
-      if (a.status === "active" && b.status !== "active") return -1;
-      if (b.status === "active" && a.status !== "active") return 1;
+      if ((a.status === "active" || a.status === "trialing") && !(b.status === "active" || b.status === "trialing")) return -1;
+      if (!(a.status === "active" || a.status === "trialing") && (b.status === "active" || b.status === "trialing")) return 1;
       return (b.purchased_at || "").localeCompare(a.purchased_at || "");
     });
 

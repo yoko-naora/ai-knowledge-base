@@ -76,15 +76,14 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
     <table id="customerTable" style="display:none;">
       <thead>
         <tr>
+          <th>购买时间</th>
           <th>姓名</th>
           <th>邮箱</th>
-          <th>电话</th>
+          <th>产品</th>
           <th>方案</th>
           <th>状态</th>
-          <th>金额</th>
-          <th>购买日期</th>
+          <th>实付金额</th>
           <th>到期日</th>
-          <th>最近付款</th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
@@ -169,20 +168,19 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
           else statusBadge = '<span class="badge none">无订阅</span>';
 
           var planBadge = '';
-          if (c.plan === 'monthly') planBadge = '<span class="badge monthly">月额 ¥2,980</span>';
-          else if (c.plan === 'yearly') planBadge = '<span class="badge yearly">年额 ¥30,000</span>';
+          if (c.plan === 'monthly') planBadge = '<span class="badge monthly">月额</span>';
+          else if (c.plan === 'yearly') planBadge = '<span class="badge yearly">年额</span>';
           else planBadge = '<span>-</span>';
 
           rows += '<tr>' +
+            '<td class="date-cell">' + formatTime(c.purchased_at) + '</td>' +
             '<td class="name-cell">' + escapeHtml(c.name || '-') + '</td>' +
             '<td class="email-cell">' + escapeHtml(c.email || '-') + '</td>' +
-            '<td>' + escapeHtml(c.phone || '-') + '</td>' +
+            '<td>' + escapeHtml(c.product || '-') + '</td>' +
             '<td>' + planBadge + '</td>' +
             '<td>' + statusBadge + '</td>' +
-            '<td>' + (c.amount || '-') + '</td>' +
-            '<td class="date-cell">' + formatDate(c.purchased_at) + '</td>' +
-            '<td class="date-cell">' + formatDate(c.current_period_end) + '</td>' +
-            '<td class="date-cell">' + formatDate(c.latest_payment) + '</td>' +
+            '<td>' + formatAmount(c.actual_paid) + '</td>' +
+            '<td class="date-cell">' + formatTime(c.current_period_end) + '</td>' +
             '</tr>';
         });
 
@@ -196,11 +194,16 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
       });
   }
 
-  function formatDate(dateStr) {
+  function formatTime(dateStr) {
     if (!dateStr) return '-';
     var d = new Date(dateStr);
     if (isNaN(d.getTime())) return dateStr.slice(0, 10);
-    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0') + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+
+  function formatAmount(amount) {
+    if (!amount || amount === 0) return '-';
+    return '¥' + amount.toLocaleString();
   }
 
   function escapeHtml(str) {
