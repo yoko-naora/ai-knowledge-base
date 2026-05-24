@@ -11,6 +11,11 @@ export async function onRequestGet(context) {
     return new Response(JSON.stringify({ error: "Invalid email" }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
 
+  // Admin bypass — yokonaora@gmail.com always has full access
+  if (email === 'yokonaora@gmail.com') {
+    return new Response(JSON.stringify({ active: true, plan: "admin", bypass: true }), { status: 200, headers: { "Content-Type": "application/json" } });
+  }
+
   const key = context.env.STRIPE_SECRET_KEY;
   if (!key) {
     return new Response(JSON.stringify({ error: "Stripe not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });

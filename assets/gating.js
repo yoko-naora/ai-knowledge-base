@@ -13,10 +13,16 @@
 (function () {
   if (document.querySelector('.gating-applied')) return;
 
+  // Admin bypass via URL hash — bookmark with #admin to auto-unlock on any device
+  if (window.location.hash === '#admin') {
+    localStorage.setItem('kb_email', 'yokonaora@gmail.com');
+    localStorage.setItem('kb_subscriber', 'true');
+  }
+
   // Already unlocked via payment or previous email verification
   if (localStorage.getItem('kb_subscriber') === 'true') return;
 
-  // Admin bypass
+  // Admin bypass via stored email
   if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
     localStorage.setItem('kb_subscriber', 'true');
     return;
