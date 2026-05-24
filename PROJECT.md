@@ -7,7 +7,7 @@ AI知识库会员制サイト。ユーザーは月額 ¥2,980 または年額 ¥
 - **URL:** https://kb.snsaladdin.com
 - **Repo:** `yoko-naora/ai-knowledge-base` (main)
 - **Local dir:** `C:\Users\jding\kb-site`
-- **Host:** Cloudflare Pages (`ai-knowledge-base-v2`)
+- **Host:** Cloudflare Pages (`ai-knowledge-base-v3`, GitHub 自動デプロイ)
 - **Main index:** `C:\Users\jding\PROJECTS.md`
 
 ## Architecture
@@ -25,7 +25,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## Completed
 
-- [x] DNS: CNAME `kb` → `kb-snsaladdin.netlify.app.` (value-domain, 末尾 `.` 必須)
+- [x] DNS: CNAME `kb` → `ai-knowledge-base-v3.pages.dev.` (value-domain, TTL 180s)
 - [x] SSL: Cloudflare 自動証明書
 - [x] 全ページ静的生成 (index, articles/001-025, prompts/index, detail, checkout, success, admin, tokushoho, free-prompts)
 - [x] 中日バイリンガル対応 (nav, footer, article, prompts)
@@ -37,17 +37,22 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] プロンプト詳細頁 コピーボタン + 言語切替修正
 - [x] 免費提示詞頁 (free-prompts.html)
 - [x] 設計規範統一 (Noto Sans/Serif JP, 字号体系)
+- [x] v3 プロジェクト移行（v1+v2 削除、GitHub 自動デプロイ）
+- [x] 404 ページ作成
+- [x] ナビ ハンバーガーメニュー（900px 以下対応）
+- [x] Success 頁 no-session-note 中文対応
+- [x] Stripe Webhook URL 更新 → kb.snsaladdin.com
+- [x] Statement Descriptor 変更 → AI CHISHIKIKO
+- [x] テスト購読 5 件取消
 
 ## Known Issues
 
 | # | Issue | Priority | Status |
 |---|-------|----------|--------|
-| 1 | Admin 頁 產品名 + 実付金額顯示不全 | High | 調査中 (2026-05-23) |
+| 1 | Admin 頁 產品名 + 実付金額顯示不全 | High | 調査中 |
 | 2 | Stripe Automatic Tax (+10%) 未検証 | High | 待測試 |
-| 3 | TEST100 優惠碼測試單未在 admin 顯示 | Medium | 待確認 |
-| 4 | 購読者 0 名、週次メール未本番送信 | Low | 集客待ち |
-
-**2026-05-24 対応済:** DNS CNAME を Netlify から Cloudflare Pages に切替、全env var を secret_text 化
+| 3 | 購読者 0 名、週次メール未本番送信 | Low | 集客待ち |
+| 4 | DNS 一部 ISP で未伝播（24h TTL 残存） | Low | 待機中 |
 
 ## Next Actions (優先順)
 
@@ -73,7 +78,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 **Secrets are NEVER stored in this file.** They live in:
 
-- **Production:** Cloudflare Dashboard → Workers & Pages → `ai-knowledge-base-v2` → Settings → Environment Variables
+- **Production:** Cloudflare Dashboard → Workers & Pages → `ai-knowledge-base-v3` → Settings → Environment Variables
 - **Local dev:** `.env` file (gitignored), template at `.env.example`
 
 Variables needed:
@@ -93,7 +98,7 @@ GitHub 連携済 — `main` ブランチに push すると自動デプロイ。�
 ```
 cd C:\Users\jding\kb-site
 $env:CLOUDFLARE_API_TOKEN = "<token>"
-npx wrangler pages deploy . --project-name=ai-knowledge-base-v2 --branch=main --commit-dirty=true
+npx wrangler pages deploy . --project-name=ai-knowledge-base-v3 --branch=main --commit-dirty=true
 ```
 
 ## Design System
