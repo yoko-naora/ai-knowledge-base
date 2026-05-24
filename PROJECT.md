@@ -44,6 +44,10 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] Stripe Webhook URL 更新 → kb.snsaladdin.com
 - [x] Statement Descriptor 変更 → AI CHISHIKIKO
 - [x] テスト購読 5 件取消
+- [x] Admin メール bypass 追加（yokonaora@gmail.com）
+- [x] 成果物管理リスト DELIVERABLES.md 作成
+- [x] 2時間直播脚本 保存
+- [x] TikTok 日本語プロフィール文案 完成
 
 ## Known Issues
 
@@ -56,10 +60,11 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## Next Actions (優先順)
 
-1. **Admin 表示修正** — 產品名・実付金額のデバッグ完了
-2. **税額検証** — Stripe Tax +10% の webhook データ確認、admin に税額表示
-3. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
-4. **週次メール本番** — 購読者獲得後、初回本番送信
+1. **TikTok 復帰配信準備** — 直播脚本を読み込む、直播滚图テスト、サイト動作確認
+2. **Admin 表示修正** — 產品名・実付金額のデバッグ完了
+3. **税額検証** — Stripe Tax +10% の webhook データ確認、admin に税額表示
+4. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
+5. **週次メール本番** — 購読者獲得後、初回本番送信
 
 ## Key Links
 
