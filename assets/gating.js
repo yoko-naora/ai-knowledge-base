@@ -16,6 +16,12 @@
   // Already unlocked via payment or previous email verification
   if (localStorage.getItem('kb_subscriber') === 'true') return;
 
+  // Admin bypass
+  if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
+    localStorage.setItem('kb_subscriber', 'true');
+    return;
+  }
+
   var container = document.querySelector('.article-content');
   if (!container) return;
 
@@ -81,6 +87,14 @@
   document.getElementById('gating-verify').addEventListener('click', function () {
     var email = document.getElementById('gating-email').value.trim();
     if (!email) return;
+
+    // Admin bypass
+    if (email === 'yokonaora@gmail.com') {
+      localStorage.setItem('kb_email', email);
+      localStorage.setItem('kb_subscriber', 'true');
+      unlock();
+      return;
+    }
 
     document.getElementById('gating-error').style.display = 'none';
     document.getElementById('gating-loading').style.display = '';
