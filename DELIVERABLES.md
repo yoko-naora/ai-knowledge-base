@@ -16,7 +16,7 @@
 |---|------|----------|------|---------|
 | 4 | 直播滚图 HTML | `\\wsl.localhost\Ubuntu\home\jding\ai-knowledge-base\livestream-slideshow.html` | 直播间全屏展示网站所有文章配图，自动翻页 | 2026-05-24 |
 | 5 | 直播滚图启动器 | `C:\Users\jding\OneDrive\デスクトップ\直播滚图.bat` | 一键启动 http.server + 打开浏览器 | 2026-05-24 |
-| 6 | 2小时直播脚本 | Claude 对话产出（2026-05-24） | 6幕结构，口播全文 | 2026-05-24 |
+| 6 | 2小时直播脚本 | `C:\Users\jding\kb-site\直播脚本-2小时.md` | 6幕结构，口播全文 | 2026-05-24 |
 
 ## 设计资产
 
