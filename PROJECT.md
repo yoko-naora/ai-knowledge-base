@@ -51,6 +51,11 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] yokonaora@gmail.com 全記事免付費 bypass（main.js 34頁覆蓋 + 服務端 check-subscription + #admin URL hash）
 - [x] 直播滾圖 + 脚本分離（livestream-combined.html 主畫面 + 直播脚本-2小时.html 独立弹窗）
 - [x] 直播滾圖 bat 更新（脱离 WSL 依赖，直連 kb-site 目錄）
+- [x] 直播滾圖文字疊層全刪除（純圖片）
+- [x] 脚本頁頂部「滾圖关了？点此重新打开」鏈接
+- [x] Cloudflare Web Analytics 開啟 + analytics.html 實時統計面板
+- [x] 全 34 頁 pageview beacon（main.js 統一追蹤）
+- [x] 直播 bat 開 3 窗：滾圖 + 脚本 + 統計面板
 
 ## Known Issues
 
