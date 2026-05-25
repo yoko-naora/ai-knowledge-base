@@ -21,3 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('kb-lang') || 'cn';
   switchLang(saved);
 });
+
+// Pageview beacon
+(function() {
+  var page = location.pathname || '/';
+  var ref = document.referrer || 'direct';
+  try {
+    fetch('/api/pageview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: page, ref: ref }),
+    }).catch(function() {});
+  } catch(e) {}
+})();
