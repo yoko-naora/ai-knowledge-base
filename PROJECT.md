@@ -48,6 +48,9 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] 成果物管理リスト DELIVERABLES.md 作成
 - [x] 2時間直播脚本 保存
 - [x] TikTok 日本語プロフィール文案 完成
+- [x] yokonaora@gmail.com 全記事免付費 bypass（main.js 34頁覆蓋 + 服務端 check-subscription + #admin URL hash）
+- [x] 直播滾圖 + 脚本分離（livestream-combined.html 主畫面 + 直播脚本-2小时.html 独立弹窗）
+- [x] 直播滾圖 bat 更新（脱离 WSL 依赖，直連 kb-site 目錄）
 
 ## Known Issues
 
@@ -60,7 +63,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## Next Actions (優先順)
 
-1. **TikTok 復帰配信準備** — 直播脚本を読み込む、直播滚图テスト、サイト動作確認
+1. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
 2. **Admin 表示修正** — 產品名・実付金額のデバッグ完了
 3. **税額検証** — Stripe Tax +10% の webhook データ確認、admin に税額表示
 4. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
