@@ -327,83 +327,10 @@
     <button class="ctrl-btn" id="playBtn" onclick="togglePlay()" title="播放/暂停">▶</button>
     <button class="ctrl-btn" onclick="resetSlide()" title="重置到开头">⟳</button>
     <button class="jump-btn" onclick="jumpToPrompts()" title="跳到提示词展示">🎨 提示词展示</button>
-    <button class="jump-btn" onclick="toggleScript()" id="scriptToggleBtn" title="直播脚本">📜 脚本</button>
+    <button class="jump-btn" onclick="toggleScript()" id="scriptToggleBtn" title="直播脚本（弹出独立窗口）">📜 脚本</button>
   </div>
 
-  <div class="hint">← → 翻页 · Space 播放/暂停 · F 全屏 · 🎨 跳提示词 · 📜 脚本</div>
-</div>
-
-<!-- ====== SCRIPT PANEL ====== -->
-<div id="scriptPanel">
-<h3>📜 2時間ライブ配信スクリプト</h3>
-<div class="sc-goal">TikTok 復帰初回配信用 · 6幕構成</div>
-
-<h4>第1幕 オープニング（0:00-0:15）</h4>
-<div class="sc-goal">目標：誰が話してるか信頼させる。復帰の理由を伝える。</div>
-<div class="sc-cue">0:00 — 挨拶と滞留</div>
-<div class="sc-line">みなさん、こんばんは。○○です。ほんとに久しぶりです。6ヶ月ぶりの配信になります。</div>
-<div class="sc-line">今来てくれた人、ちょっとコメントで「見えてるよ」って打ってもらえますか。</div>
-<div class="sc-note">→ コメント拾いながら3-5分流す</div>
-<div class="sc-cue">0:05 — 自己紹介</div>
-<div class="sc-line">僕はこのTikTokで5年間、集客の方法を教えてきました。200名以上の方に指導して、20社以上の会社さんのコンサルもやってきました。</div>
-<div class="sc-line">でも、この6ヶ月、配信を止めてました。なぜか。次の時代に、本当に必要なものを作っていたからです。</div>
-<div class="sc-cue">0:10 — 復帰の理由と今夜の約束</div>
-<div class="sc-line">この半年、ずっとひとつのサイトを作ってました。今日は、それを見せに来ました。</div>
-<div class="sc-line">売り込みだけの配信にはしません。今世界で何が起きてるのか、どうすれば中高年でも取り残されずに稼げるのか、ちゃんと話します。</div>
-
-<h4>第2幕 問題提起（0:15-0:40）</h4>
-<div class="sc-goal">目標：視聴者に「自分のことだ」と思わせる。危機感と共感。</div>
-<div class="sc-cue">0:15 — 世界と日本のギャップ</div>
-<div class="sc-line">（画面共有：英語のプロンプト一覧や海外ツールの画面）</div>
-<div class="sc-line">今、世界中でプロンプトを使って稼いでる人が爆発的に増えてます。でも、これぜんぶ英語か中国語。日本語で検索しても出てこない。</div>
-<div class="sc-line">日本の検索エンジンは日本語の情報しか拾わない。TikTokのレコメンドもそう。あなたは知らないうちに壁の中に閉じ込められてる。</div>
-<div class="sc-cue">0:25 — 視聴者の心の声を代弁</div>
-<div class="sc-line">「自分には関係ない」「もう歳だし」「何から始めればいいかわからない」…わかります。50代、60代の方もたくさんいました。</div>
-<div class="sc-line">でも、それ、あなたの能力の問題じゃないんです。日本語でアクセスできる情報が、決定的に少ないだけ。</div>
-<div class="sc-cue">0:35 — 希望の提示</div>
-<div class="sc-line">答えはシンプル。英語と中国語のいいプロンプトを日本語に翻訳して、使い方まで解説して、ビジネスに活かすところまでセットで提供すればいい。それを、この半年で全部やりました。</div>
-
-<h4>第3幕 サイト紹介（0:40-1:10）</h4>
-<div class="sc-goal">目標：実際の画面を見せて「使える」と思わせる。価格の違和感を先に潰す。</div>
-<div class="sc-cue">0:40 — サイト全体像</div>
-<div class="sc-line">（画面共有：kb.snsaladdin.com のトップページ）</div>
-<div class="sc-line">これが、この半年で作ったサイト。「0から1件目の成約まで」がコンセプト。</div>
-<div class="sc-line">プロンプトの一覧、記事、ジャンル別に分かれてて、集客、セールス、コンテンツ作成…</div>
-<div class="sc-note">→ 実際にスクロールしながら見せる</div>
-<div class="sc-cue">0:50 — プロンプト実演</div>
-<div class="sc-line">たとえばこれ。「SNSの投稿を30秒で作るプロンプト」。（実際にAIツールで実行）ほら、瞬時に出てくる。英語で検索して翻訳して…って普通なら何時間もかかる。でもここなら日本語ですぐ使える。</div>
-<div class="sc-cue">1:00 — 価格提示</div>
-<div class="sc-line">月額2,980円。年額30,000円。缶コーヒー1日1本届けたら同じくらい。</div>
-<div class="sc-line">ここにあるプロンプトを1つ使って1件成約が取れたら、その月からプラス。</div>
-<div class="sc-line">情報商材みたいに「今だけ○万円」はしない。ずっとこの価格。更新し続けるから。</div>
-
-<h4>第4幕 障害突破（1:10-1:30）</h4>
-<div class="sc-goal">目標：「自分には無理」という壁を1枚ずつ剥がす。</div>
-<div class="sc-cue">1:10 — 年齢の壁を壊す</div>
-<div class="sc-line">「自分には無理だ」と思う人、特に40代後半、50代、60代の方。でも、5年間で200人以上教えてきてはっきり言える。AIもプロンプトも、年齢じゃない。始めるかどうかだけ。</div>
-<div class="sc-line">むしろ中高年の方のほうが強い。人生経験があるから。知識より知恵が必要なんです。どれが役に立つ情報か、どう人に伝えるか。若い子よりあなたのほうがずっと上手い。</div>
-<div class="sc-cue">1:20 — 技術の壁を壊す</div>
-<div class="sc-line">「パソコン苦手」「ITわからない」…大丈夫。スマホで全部見れる。コピーボタン一つでコピー、貼り付けて送信するだけ。ここは「勉強する場所」じゃなくて「使って稼ぐ場所」。</div>
-
-<h4>第5幕 クロージング（1:30-1:50）</h4>
-<div class="sc-goal">目標：リンクを押させる。迷いを断ち切る。</div>
-<div class="sc-cue">1:30 — 最終プッシュ</div>
-<div class="sc-line">まとめ。世界ではプロンプトを使える人がどんどん稼いでいる。でも日本は言語と検索の壁で情報にたどり着けない。僕はその壁を壊すためにこのサイトを作った。月2,980円。あとはリンクを押すだけ。</div>
-<div class="sc-cue">1:40 — 限定感＋アクション</div>
-<div class="sc-line">プロフィールのリンクから kb.snsaladdin.com。今開いてくれた人、コメントで「見た」って打って。</div>
-<div class="sc-line">今開いた人はブックマーク。でも今この配信を見てるうちに、まずはサイトを開くことだけやってほしい。</div>
-
-<h4>第6幕 Q&A（1:50-2:00）</h4>
-<div class="sc-goal">目標：コメント拾って個別の不安を潰す。フォローを促す。</div>
-<div class="sc-line">残り10分、質問あればコメントで。「難しそう」「自分にできるかな」でもなんでもいいです。</div>
-<div class="sc-note">→ コメント拾いながら回答</div>
-<div class="sc-line">Q「初心者でも大丈夫？」→ 大丈夫。初心者向け記事もある。</div>
-<div class="sc-line">Q「スマホだけ？」→ 全部スマホ対応。むしろスマホ前提。</div>
-<div class="sc-line">Q「解約簡単？」→ いつでも可能。縛りなし。続けてる人がほとんど。</div>
-<div class="sc-cue">最後の一言</div>
-<div class="sc-line">今日来てくれたみなさん、本当にありがとう。半年ぶりの配信で温かく迎えてもらえて嬉しかった。</div>
-<div class="sc-line">リンクはプロフィール。今開いてブックマーク、それだけでいい。また次の配信でお会いしましょう。おやすみなさい。</div>
-<div class="sc-note" style="margin-top:16px;">「○○」は自分のアカウント名に置き換え</div>
+  <div class="hint">← → 翻页 · Space 播放/暂停 · F 全屏 · 🎨 跳提示词 · 📜 弹窗脚本</div>
 </div>
 
 <script>
@@ -995,12 +922,22 @@ function updatePlayBtn() {
   document.getElementById('playBtn').classList.toggle('active', playing);
 }
 
-// ======================== SCRIPT PANEL ========================
+// ======================== SCRIPT POPUP ========================
+var scriptWindow = null;
 function toggleScript() {
-  var panel = document.getElementById('scriptPanel');
-  var btn = document.getElementById('scriptToggleBtn');
-  var isOpen = panel.classList.toggle('open');
-  btn.textContent = isOpen ? '📜 脚本 ✓' : '📜 脚本';
+  if (scriptWindow && !scriptWindow.closed) {
+    scriptWindow.close();
+    scriptWindow = null;
+    return;
+  }
+  scriptWindow = window.open(
+    '/直播脚本-2小时.html',
+    'livestream-script',
+    'width=440,height=900,left=' + (screen.width - 460) + ',top=20,resizable=yes,scrollbars=yes'
+  );
+  if (scriptWindow) {
+    scriptWindow.addEventListener('beforeunload', function() { scriptWindow = null; });
+  }
 }
 // ======================== PROGRESS ========================
 function resetProgress() {
