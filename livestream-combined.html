@@ -778,66 +778,6 @@ function buildSlides() {
       img.loading = i < 5 ? 'eager' : 'lazy';
       el.appendChild(img);
 
-      // Overlay
-      const overlay = document.createElement('div');
-      overlay.className = 'overlay';
-
-      var inner = document.createElement('div');
-      inner.className = 'overlay-inner';
-
-      // Tag
-      var tag = document.createElement('span');
-      tag.className = 'overlay-tag';
-      if (slide.type === 'article') {
-        tag.textContent = '📄 第' + slide.num + '篇 · ' + slide.imgIdx + '/' + slide.total;
-      } else if (slide.type === 'prompt') {
-        tag.textContent = '🎨 ' + (slide.cat || '未分类') + ' · ' + slide.imgIdx + '/' + slide.totalInEntry;
-      }
-      inner.appendChild(tag);
-
-      // Title
-      var titleEl = document.createElement('div');
-      titleEl.className = 'overlay-title';
-      titleEl.textContent = slide.title || slide.text || '';
-      inner.appendChild(titleEl);
-
-      // Sub
-      var subEl = document.createElement('div');
-      subEl.className = 'overlay-sub';
-      if (slide.author) {
-        var authorSpan = document.createElement('span');
-        authorSpan.textContent = slide.author;
-        subEl.appendChild(authorSpan);
-      }
-      if (slide.num) {
-        var numSpan = document.createElement('span');
-        numSpan.textContent = '文章 #' + slide.num;
-        subEl.appendChild(numSpan);
-      }
-      inner.appendChild(subEl);
-
-      // Link button
-      if (slide.type === 'article') {
-        var linkBtn = document.createElement('a');
-        linkBtn.className = 'overlay-link';
-        linkBtn.href = 'https://kb.snsaladdin.com/articles/' + String(slide.num).padStart(3, '0') + '.html';
-        linkBtn.target = '_blank';
-        linkBtn.textContent = '阅读文章 →';
-        linkBtn.onclick = function(e) { e.stopPropagation(); };
-        inner.appendChild(linkBtn);
-      } else if (slide.type === 'prompt' && slide.hasPrompt) {
-        var promptBtn = document.createElement('a');
-        promptBtn.className = 'overlay-link';
-        promptBtn.href = 'https://kb.snsaladdin.com/prompts/detail.html?id=' + slide.idx;
-        promptBtn.target = '_blank';
-        promptBtn.textContent = '查看提示词 →';
-        promptBtn.onclick = function(e) { e.stopPropagation(); };
-        inner.appendChild(promptBtn);
-      }
-
-      overlay.appendChild(inner);
-      el.appendChild(overlay);
-
       // Click on image to advance
       el.addEventListener('click', (e) => {
         if (!e.target.closest('a')) nextSlide();
