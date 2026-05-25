@@ -47,9 +47,9 @@
 
   .cf-link {
     display: inline-block; margin-top: 24px;
-    padding: 8px 18px; background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08); border-radius: 6px;
-    color: rgba(255,255,255,0.5); font-size: 11px; text-decoration: none;
+    padding: 10px 20px; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 6px;
+    color: rgba(255,255,255,0.6); font-size: 12px; text-decoration: none;
     transition: all 0.2s;
   }
   .cf-link:hover { background: rgba(255,255,255,0.1); color: #fff; }
@@ -65,15 +65,15 @@
 <body>
 
 <h1>📊 访问统计</h1>
-<p class="sub">kb.snsaladdin.com · 实时</p>
+<p class="sub">kb.snsaladdin.com · 10s 自动刷新</p>
 
 <div class="status">
   <div class="dot"></div>
-  <span class="status-text" id="statusText">监测中 · 10s 刷新</span>
+  <span class="status-text" id="statusText">监测中…</span>
 </div>
 
 <div class="big-num" id="totalNum">—</div>
-<div class="big-label">累计页面浏览量</div>
+<div class="big-label">页面浏览量</div>
 
 <div class="grid">
   <div class="card">
@@ -86,7 +86,7 @@
   </div>
 </div>
 
-<a class="cf-link" href="https://dash.cloudflare.com" target="_blank">Cloudflare Web Analytics →</a>
+<a class="cf-link" href="https://dash.cloudflare.com/09d66bf0a38b35962a68e1bce6a3db6a/analytics/web" target="_blank">📈 Cloudflare Web Analytics 详细数据 →</a>
 
 <script>
 function fmtTime(ts) {
@@ -132,5 +132,6 @@ function refresh() {
 refresh();
 setInterval(refresh, 10000);
 </script>
+<script src="assets/js/main.js?v=6"></script>
 </body>
 </html>
