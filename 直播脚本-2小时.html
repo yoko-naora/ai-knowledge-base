@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2時間ライブ配信スクリプト · kb.snsaladdin.com</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --ink: #1a1814;
+    --ink-soft: #5a5650;
+    --gold: #b8925a;
+    --line: #e8e4de;
+    --tag-bg: #f0ebe0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+    font-size: 16px;
+    line-height: 2;
+    padding: 32px 20px 120px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 400; margin-bottom: 4px; letter-spacing: .04em; }
+  .sub { font-size: 11px; color: var(--ink-soft); margin-bottom: 40px; }
+
+  .act-divider {
+    border-top: 2px solid var(--gold);
+    margin: 52px 0 28px;
+    text-align: center;
+  }
+  .act-divider span {
+    display: inline-block;
+    background: var(--bg);
+    padding: 0 16px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: .12em;
+    transform: translateY(-50%);
+  }
+
+  h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    letter-spacing: .03em;
+  }
+  .goal {
+    font-size: 12px;
+    color: var(--ink-soft);
+    background: var(--tag-bg);
+    padding: 8px 14px;
+    border-radius: 3px;
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+
+  .cue {
+    font-size: 11px;
+    color: var(--gold);
+    margin: 28px 0 6px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    padding-left: 2px;
+  }
+  .cue::before { content: '▶ '; font-size: 10px; }
+
+  .script-block {
+    background: #fff;
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    border-radius: 0 4px 4px 0;
+    line-height: 2.2;
+    font-size: 17px;
+  }
+  .script-block p { margin-bottom: 10px; }
+  .script-block p:last-child { margin-bottom: 0; }
+
+  .note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    padding: 10px 16px;
+    background: var(--tag-bg);
+    border-radius: 3px;
+    margin: 12px 0 24px;
+    line-height: 1.8;
+  }
+
+  .time-badge {
+    display: inline-block;
+    font-size: 10px;
+    background: var(--ink);
+    color: #faf9f6;
+    padding: 2px 10px;
+    border-radius: 10px;
+    letter-spacing: .06em;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 32px 0;
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 20px 14px 100px; font-size: 15px; }
+    .script-block { font-size: 16px; padding: 12px 14px; }
+    h2 { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>2時間ライブ配信スクリプト</h1>
+<p class="sub">kb.snsaladdin.com · TikTok 復帰初回配信用 · 6幕構成</p>
+
+<!-- タイムテーブル -->
+<table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:40px;">
+  <tr style="border-bottom:1px solid var(--line);">
+    <td style="padding:6px 8px;color:var(--ink-soft);">時間</td>
+    <td style="padding:6px 8px;color:var(--ink-soft);">幕</td>
+    <td style="padding:6px 8px;color:var(--ink-soft);">役割</td>
+  </tr>
+  <tr><td style="padding:6px 8px;">0:00-0:15</td><td style="padding:6px 8px;">オープニング</td><td style="padding:6px 8px;">帰還＋信頼</td></tr>
+  <tr><td style="padding:6px 8px;">0:15-0:40</td><td style="padding:6px 8px;">問題提起</td><td style="padding:6px 8px;">「自分のことだ」にさせろ</td></tr>
+  <tr><td style="padding:6px 8px;">0:40-1:10</td><td style="padding:6px 8px;">サイト紹介</td><td style="padding:6px 8px;">画面見せて価格の違和感を潰せ</td></tr>
+  <tr><td style="padding:6px 8px;">1:10-1:30</td><td style="padding:6px 8px;">障害突破</td><td style="padding:6px 8px;">年齢と技術の壁を剥がせ</td></tr>
+  <tr><td style="padding:6px 8px;">1:30-1:50</td><td style="padding:6px 8px;">クロージング</td><td style="padding:6px 8px;">リンクを押させろ</td></tr>
+  <tr><td style="padding:6px 8px;">1:50-2:00</td><td style="padding:6px 8px;">Q&A</td><td style="padding:6px 8px;">残った不安を全部拾え</td></tr>
+</table>
+
+<!-- ====== 第1幕 ====== -->
+<div class="act-divider"><span>第 1 幕</span></div>
+
+<h2>オープニング 〜帰還と信頼構築〜</h2>
+<div class="goal"><span class="time-badge">目標</span> 誰が話してるか信頼させる。復帰の理由を伝える。</div>
+
+<div class="cue">0:00 — 挨拶と滞留</div>
+<div class="script-block">
+<p>みなさん、こんばんは。○○です。ほんとに久しぶりです。6ヶ月ぶりの配信になります。</p>
+<p>今来てくれた人、ちょっとコメントで「見えてるよ」って打ってもらえますか。あ、○○さん来てる！ありがとうございます！</p>
+<p>何人いるかな……お、10人、15人、どんどん入ってきてる。ありがとうございます。</p>
+</div>
+<div class="note">コメント拾いながら3-5分流す</div>
+
+<div class="cue">0:05 — 自己紹介</div>
+<div class="script-block">
+<p>簡単に自己紹介しますね。僕はこのTikTokで5年間、集客の方法を教えてきました。今までに200名以上の方に指導して、20社以上の会社さんのコンサルもやってきました。</p>
+<p>でも、この6ヶ月、配信を止めてました。なぜか。</p>
+<p>次の時代に、本当に必要なものを作っていたからです。</p>
+</div>
+
+<div class="cue">0:10 — 復帰の理由と今夜の約束</div>
+<div class="script-block">
+<p>この半年、ずっとひとつのサイトを作ってました。今日は、それを見せに来ました。</p>
+<p>でも、売り込みだけの配信にはしません。せっかく6ヶ月ぶりに戻ってきたので、今日来てくれた人にはまず、今世界で何が起きてるのか、そしてどうすれば中高年でも取り残されずに稼げるのか、その話をちゃんとします。</p>
+<p>最後まで聞いてくれたら、このサイトがなぜ必要なのか、絶対に伝わると思います。</p>
+</div>
+
+<!-- ====== 第2幕 ====== -->
+<div class="act-divider"><span>第 2 幕</span></div>
+
+<h2>問題提起 〜情報格差の現実〜</h2>
+<div class="goal"><span class="time-badge">目標</span> 視聴者に「自分のことだ」と思わせる。危機感と共感。</div>
+
+<div class="cue">0:15 — 世界と日本のギャップ</div>
+<div class="script-block">
+<p>（画面共有：英語のプロンプト一覧や海外ツールの画面）</p>
+<p>これを見てください。今、世界中でプロンプト、つまりAIへの指示文を使って稼いでる人が爆発的に増えてます。</p>
+<p>でも、これぜんぶ英語か中国語なんです。日本語で検索しても出てこない。</p>
+<p>日本の検索エンジンは、日本語の情報しか拾わない。TikTokのレコメンドもそうです。あなたが見てるのは、アルゴリズムが「この人にはこれで十分」と判断した情報だけ。</p>
+<p>つまり、知らないうちに壁の中に閉じ込められてるんです。</p>
+</div>
+
+<div class="cue">0:25 — 視聴者の心の声を代弁</div>
+<div class="script-block">
+<p>それで、こう思いませんか？</p>
+<p>「自分には関係ない話だ」</p>
+<p>「もう歳だし、新しいことなんて」</p>
+<p>「何から始めればいいかもわからない」</p>
+<p>わかります。僕の生徒さんも、最初はみんなそう言ってました。50代、60代の方もたくさんいました。</p>
+<p>でもね、それ、あなたの能力の問題じゃないんです。日本語でアクセスできる情報が、決定的に少ないだけ。</p>
+</div>
+
+<div class="cue">0:35 — 希望の提示</div>
+<div class="script-block">
+<p>じゃあ、どうするか。</p>
+<p>答えはシンプルです。英語と中国語のいいプロンプトを、日本語に翻訳して、使い方まで解説して、ビジネスに活かすところまでセットで提供すればいい。</p>
+<p>それを、この半年で全部やりました。</p>
+</div>
+
+<!-- ====== 第3幕 ====== -->
+<div class="act-divider"><span>第 3 幕</span></div>
+
+<h2>サイト紹介 〜中身を見せる〜</h2>
+<div class="goal"><span class="time-badge">目標</span> 実際の画面を見せて「使える」と思わせる。価格の違和感を先に潰す。</div>
+
+<div class="cue">0:40 — サイト全体像</div>
+<div class="script-block">
+<p>（画面共有：kb.snsaladdin.com のトップページ）</p>
+<p>これが、この半年で作ったサイトです。</p>
+<p>「0から1件目の成約まで」がコンセプト。ただ学ぶだけじゃありません。ここにあるプロンプトを実際に使って、最初の1件を取るところまでいく。</p>
+<p>中には何があるかというと……</p>
+</div>
+<div class="note">実際にスクロールしながら見せる</div>
+<div class="script-block">
+<p>プロンプトの一覧があります。記事もあります。ジャンル別に分かれてて、集客、セールス、コンテンツ作成、業務効率化、いろんなカテゴリがあります。</p>
+</div>
+
+<div class="cue">0:50 — プロンプト実演</div>
+<div class="script-block">
+<p>たとえばこれ。「SNSの投稿を30秒で作るプロンプト」。</p>
+<p>（プロンプトをコピーして実際にAIツールで実行）</p>
+<p>ほら、こんな感じで瞬時に出てくる。これを英語で検索して見つけて、翻訳して、試して……って普通なら何時間もかかる。でもここなら、日本語で読んで、すぐ使える。</p>
+</div>
+
+<div class="cue">1:00 — 価格提示</div>
+<div class="script-block">
+<p>で、気になるのが金額ですよね。</p>
+<p>月額2,980円。年額だと30,000円。</p>
+<p>缶コーヒー1日1本届けたら同じくらい。セブンのコーヒーでも1杯100円以上する時代ですよ。</p>
+<p>しかも、ここにあるプロンプトを1つ使って、1件成約が取れたら、その月からもうプラスです。</p>
+<p>情報商材みたいに「今だけ○万円」みたいなことはしない。ずっとこの価格です。なぜなら、更新し続けるから。プロンプトは増えていくし、世界のトレンドが変われば中身も変わる。</p>
+</div>
+
+<!-- ====== 第4幕 ====== -->
+<div class="act-divider"><span>第 4 幕</span></div>
+
+<h2>障害突破 〜中高年の不安を潰す〜</h2>
+<div class="goal"><span class="time-badge">目標</span> 「自分には無理」という壁を1枚ずつ剥がす。</div>
+
+<div class="cue">1:10 — 年齢の壁を壊す</div>
+<div class="script-block">
+<p>ここで正直に話します。</p>
+<p>このサイトを見て、「自分には無理だ」と思う人、いると思います。特に40代後半、50代、60代の方。</p>
+<p>でもね、僕が5年間で200人以上教えてきて、はっきり言えることがある。</p>
+<p>AIもプロンプトも、年齢じゃない。始めるかどうかだけ。</p>
+<p>むしろ中高年の方のほうが強いんですよ。なぜかわかります？人生経験があるから。プロンプトをビジネスに活かすには、知識より知恵が必要なんです。どれが役に立つ情報か、どう人に伝えるか。それは若い子より、あなたのほうがずっと上手い。</p>
+</div>
+
+<div class="cue">1:20 — 技術の壁を壊す</div>
+<div class="script-block">
+<p>あと、「パソコン苦手だし」「ITわからないし」って人。</p>
+<p>大丈夫です。このサイト、スマホで全部見れます。プロンプトはコピーボタン一つでコピーできる。貼り付けて、送信するだけ。</p>
+<p>操作がわからなくても、使い方の解説が全部についてる。</p>
+<p>ここは「勉強する場所」じゃなくて「使って稼ぐ場所」なんです。</p>
+</div>
+
+<!-- ====== 第5幕 ====== -->
+<div class="act-divider"><span>第 5 幕</span></div>
+
+<h2>クロージング 〜行動を促す〜</h2>
+<div class="goal"><span class="time-badge">目標</span> リンクを押させる。迷いを断ち切る。</div>
+
+<div class="cue">1:30 — 最終プッシュ</div>
+<div class="script-block">
+<p>ここまで話してきました。まとめます。</p>
+<p>今、世界ではプロンプトを使える人がどんどん稼いでいる。</p>
+<p>でも日本にいると、言語の壁と検索の壁で、その情報にたどり着けない。</p>
+<p>僕はその壁を壊すために、このサイトを作った。</p>
+<p>英語・中国語のプロンプトを日本語で学べて、0から1件目の成約までいける。</p>
+<p>月2,980円。それで不安から解放される。</p>
+<p>あとはあなたがリンクを押すだけです。</p>
+</div>
+
+<div class="cue">1:40 — 限定感＋アクション</div>
+<div class="script-block">
+<p>プロフィールのリンクから飛んでください。kb.snsaladdin.com。</p>
+<p>今、開いてくれた人、コメントで「見た」って打ってもらえます？</p>
+<p>あ、○○さんありがとうございます！○○さんも！</p>
+<p>今リンク開いた人は、そのままブックマークしておいてください。あとでゆっくり見ればいいです。</p>
+<p>でも、今この配信を見てるうちに、まずはサイトを開くことだけやってほしい。それだけで一歩目です。</p>
+</div>
+
+<!-- ====== 第6幕 ====== -->
+<div class="act-divider"><span>第 6 幕</span></div>
+
+<h2>Q&Aと雑談</h2>
+<div class="goal"><span class="time-badge">目標</span> コメント拾って個別の不安を潰す。フォローを促す。</div>
+
+<div class="cue">1:50 — 質問受け付け</div>
+<div class="script-block">
+<p>残り10分くらいなので、質問あればコメントでどうぞ。</p>
+<p>「難しそう」「自分にできるかな」でもなんでもいいです。正直な気持ちを打ってください。</p>
+</div>
+<div class="note">コメントを拾いながら回答</div>
+
+<hr>
+
+<div style="margin-bottom:16px; font-size:13px;"><strong>よくある質問と回答</strong></div>
+
+<div class="script-block">
+<p><strong>Q：本当に初心者でも大丈夫？</strong></p>
+<p>→ 大丈夫です。初心者向け記事もあるし、プロンプトも簡単なものから試せるように並べてあります。</p>
+</div>
+
+<div class="script-block">
+<p><strong>Q：スマホだけでもいける？</strong></p>
+<p>→ 全部スマホ対応です。むしろスマホで使うことを前提にデザインしました。</p>
+</div>
+
+<div class="script-block">
+<p><strong>Q：解約は簡単？</strong></p>
+<p>→ いつでもできます。縛りなしです。それでも続けてる人がほとんどです。</p>
+</div>
+
+<hr>
+
+<div class="cue">最後の一言</div>
+<div class="script-block">
+<p>じゃあそろそろ終わります。今日来てくれたみなさん、本当にありがとうございます。</p>
+<p>半年ぶりに戻ってきた配信で、温かく迎えてもらえて嬉しかったです。</p>
+<p>リンクはプロフィールにあります。今開いてブックマーク、それだけでいいです。</p>
+<p>また次の配信でお会いしましょう。おやすみなさい。</p>
+</div>
+
+<!-- 注意点 -->
+<div class="act-divider"><span>注意点</span></div>
+
+<div class="note" style="font-style:normal;">
+<p>・第 3 幕のサイトデモが最強の武器——実際に触って見せる</p>
+<p>・成交（第 5 幕）は 20 分だけ。前半 90 分は全部、信頼構築のための前置き</p>
+<p>・コメント拾いをこまめに入れる → アルゴリズムが「対話のある配信」と判定して配信が伸びる</p>
+<p>・「○○」は自分のアカウント名に置き換え</p>
+</div>
+
+</body>
+</html>
