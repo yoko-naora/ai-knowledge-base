@@ -7,6 +7,16 @@ function switchLang(lang) {
   localStorage.setItem('kb-lang', lang);
 }
 
+// Admin bypass via URL hash — set before gating.js runs to prevent paywall flash
+if (window.location.hash === '#admin') {
+  localStorage.setItem('kb_email', 'yokonaora@gmail.com');
+  localStorage.setItem('kb_subscriber', 'true');
+  // Clean URL by removing the hash after setting bypass
+  if (window.history && window.history.replaceState) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('kb-lang') || 'cn';
   switchLang(saved);
