@@ -5,6 +5,7 @@ function switchLang(lang) {
     btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
   });
   localStorage.setItem('kb-lang', lang);
+  document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
 }
 
 // Admin bypass — proactive check before gating.js runs
