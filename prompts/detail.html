@@ -220,6 +220,9 @@ var catMapJp = {
       var isCn = lang === 'cn';
       var copyBtnHtml = '<div class="copy-btn-wrap"><button class="copy-btn">' + (isCn ? '复制' : 'コピー') + '</button></div>';
 
+      if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
+        localStorage.setItem('kb_subscriber', 'true');
+      }
       var isSubscriber = localStorage.getItem('kb_subscriber') === 'true';
       var isFree = p.free === true;
       var isJp = !isCn;
@@ -277,6 +280,13 @@ var catMapJp = {
         document.getElementById('gating-verify').addEventListener('click', function() {
           var email = document.getElementById('gating-email').value.trim();
           if (!email) return;
+          // Admin bypass — instant, no server call
+          if (email === 'yokonaora@gmail.com') {
+            localStorage.setItem('kb_subscriber', 'true');
+            localStorage.setItem('kb_email', email);
+            location.reload();
+            return;
+          }
           document.getElementById('gating-error').style.display = 'none';
           document.getElementById('gating-loading').style.display = '';
           document.getElementById('gating-verify').disabled = true;
