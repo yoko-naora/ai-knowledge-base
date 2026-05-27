@@ -110,6 +110,22 @@
   padding: 100px 28px 40px; text-align: center; pointer-events: auto; z-index: 10;
 }
 .preview-blur { overflow: hidden; max-height: 320px; position: relative; opacity: 0.5; }
+
+/* Floating prev/next arrows — only on prompts detail */
+.floating-arrow {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  width: 44px; height: 44px;
+  background: rgba(26,24,20,0.78); color: #faf9f6;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; z-index: 999;
+  text-decoration: none; cursor: pointer;
+  transition: opacity .2s, background .2s; opacity: .55;
+}
+.floating-arrow:hover { opacity: 1; background: #1a1814; }
+.floating-arrow-left  { left: 16px; }
+.floating-arrow-right { right: 16px; }
+@media (max-width: 768px) { .floating-arrow { display: none; } }
 </style>
 </head>
 <body>
@@ -195,6 +211,27 @@ var catMapJp = {
   '全景/3D/空间': 'パノラマ/3D/空間', '健康/生活/实用工具': '健康/生活/実用ツール',
   '其他/教育': 'その他/教育', '其他/闲聊': 'その他/雑談'
 };
+
+function injectArrows(idx, total) {
+  document.querySelectorAll('.floating-arrow').forEach(function(el) { el.remove(); });
+  var lang = getLang();
+  if (idx > 0) {
+    var left = document.createElement('a');
+    left.className = 'floating-arrow floating-arrow-left';
+    left.href = '?id=' + (idx - 1);
+    left.title = lang === 'cn' ? '上一页' : '前のページ';
+    left.innerHTML = '←';
+    document.body.appendChild(left);
+  }
+  if (idx < total - 1) {
+    var right = document.createElement('a');
+    right.className = 'floating-arrow floating-arrow-right';
+    right.href = '?id=' + (idx + 1);
+    right.title = lang === 'cn' ? '下一页' : '次のページ';
+    right.innerHTML = '→';
+    document.body.appendChild(right);
+  }
+}
 
 // Main render
 (function() {
@@ -330,6 +367,7 @@ var catMapJp = {
         document.getElementById('gating-code').addEventListener('keydown', function(e) {
           if (e.key === 'Enter') document.getElementById('gating-unlock').click();
         });
+        injectArrows(idx, data.length);
         return;
       }
 
@@ -453,6 +491,7 @@ var catMapJp = {
 
       loading.style.display = 'none';
       root.innerHTML = html;
+      injectArrows(idx, data.length);
     })
     .catch(function(err) {
       loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a></div>';
