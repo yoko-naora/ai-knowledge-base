@@ -56,6 +56,15 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] Cloudflare Web Analytics 開啟 + analytics.html 實時統計面板
 - [x] 全 34 頁 pageview beacon（main.js 統一追蹤）
 - [x] 直播 bat 開 3 窗：滾圖 + 脚本 + 統計面板
+- [x] admin bypass 修復 — main.js 主動檢查 kb_email、prompts/detail.html 補齊 email check
+- [x] prompts/detail.html 浮動翻頁箭頭（←上一頁/下一页→，中日雙語，手機隱藏）
+- [x] prompts/detail.html 即時語言切換（無頁面刷新，CustomEvent 驅動）
+- [x] 語言切換架構統一 — main.js 入口 → langchange event → detail 監聽，消除 switchLang 衝突
+- [x] 補完 Seedance 動画 id=26（Sam Altman偷拍主题）
+
+## Architecture Notes (2026-05-27)
+
+語言切換現在是單一機制：`main.js switchLang()` → body class + localStorage + `dispatchEvent('langchange')`。各頁面如需要跟隨語言刷新內容，監聽 `langchange` 事件即可。**不要再寫第二個 switchLang 函數。** See memory: `kb-site-architecture`.
 
 ## Known Issues
 
