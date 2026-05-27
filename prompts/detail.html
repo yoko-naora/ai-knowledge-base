@@ -114,17 +114,18 @@
 /* Floating prev/next arrows — only on prompts detail */
 .floating-arrow {
   position: fixed; top: 50%; transform: translateY(-50%);
-  width: 44px; height: 44px;
+  padding: 8px 14px;
   background: rgba(26,24,20,0.78); color: #faf9f6;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem; z-index: 999;
-  text-decoration: none; cursor: pointer;
+  border-radius: 22px;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; z-index: 999;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
   transition: opacity .2s, background .2s; opacity: .55;
 }
 .floating-arrow:hover { opacity: 1; background: #1a1814; }
 .floating-arrow-left  { left: 16px; }
 .floating-arrow-right { right: 16px; }
+.floating-arrow .arrow-icon { font-size: 1.1rem; }
 @media (max-width: 768px) { .floating-arrow { display: none; } }
 </style>
 </head>
@@ -219,16 +220,14 @@ function injectArrows(idx, total) {
     var left = document.createElement('a');
     left.className = 'floating-arrow floating-arrow-left';
     left.href = '?id=' + (idx - 1);
-    left.title = lang === 'cn' ? '上一页' : '前のページ';
-    left.innerHTML = '←';
+    left.innerHTML = '<span class="arrow-icon">←</span><span>' + (lang === 'cn' ? '上一页' : '前のページ') + '</span>';
     document.body.appendChild(left);
   }
   if (idx < total - 1) {
     var right = document.createElement('a');
     right.className = 'floating-arrow floating-arrow-right';
     right.href = '?id=' + (idx + 1);
-    right.title = lang === 'cn' ? '下一页' : '次のページ';
-    right.innerHTML = '→';
+    right.innerHTML = '<span>' + (lang === 'cn' ? '下一页' : '次のページ') + '</span><span class="arrow-icon">→</span>';
     document.body.appendChild(right);
   }
 }
