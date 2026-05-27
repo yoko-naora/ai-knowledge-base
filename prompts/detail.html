@@ -167,42 +167,23 @@
 
 <script>
 
-// Initialize language state on page load
- (function() {
-    var lang = getLang();
-    document.querySelectorAll('.lang-switch button').forEach(function(btn) {
-      btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
-    });
-    document.querySelectorAll('.lang-content').forEach(function(el) {
-      el.style.display = el.classList.contains(lang) ? 'block' : 'none';
-    });
-  })();
-
-function switchLang(lang) {
-  document.querySelectorAll('.lang-switch button').forEach(function(btn) { btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語')); });
-  localStorage.setItem('kb-lang', lang);
-  // Update copy button text
-  document.querySelectorAll('.copy-btn').forEach(function(btn) {
-    if (!btn.classList.contains('copied')) {
-      btn.textContent = lang === 'cn' ? '复制' : 'コピー';
-    }
-  });
-  window.location.reload();
-}
-
+// ── Utility functions ──
 function getLang() { return localStorage.getItem('kb-lang') || 'cn'; }
-
 function formatDate(dateStr) {
   if (!dateStr) return '';
   var d = new Date(dateStr);
   if (isNaN(d.getTime())) return dateStr.slice(0, 10);
   return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
-
-// Get URL param
 function getParam(name) {
   var match = location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
   return match ? decodeURIComponent(match[1]) : null;
+}
+function escapeHtml(str) {
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function escapeAttr(str) {
+  return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 var catMapJp = {
@@ -232,7 +213,227 @@ function injectArrows(idx, total) {
   }
 }
 
-// Main render
+// ── State ──
+var cachedData = null;
+var currentIdx = null;
+
+// ── Render (called on load + language switch) ──
+function renderPrompt() {
+  var data = cachedData;
+  var idx = currentIdx;
+  var root = document.getElementById('detailRoot');
+  var loading = document.getElementById('loading');
+  if (!data || idx === null) return;
+
+  var p = data[idx];
+  var lang = getLang();
+  var isCn = lang === 'cn';
+  var isJp = !isCn;
+  var copyBtnHtml = '<div class="copy-btn-wrap"><button class="copy-btn">' + (isCn ? '复制' : 'コピー') + '</button></div>';
+
+  // Admin auto-bypass
+  if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
+    localStorage.setItem('kb_subscriber', 'true');
+  }
+  var isSubscriber = localStorage.getItem('kb_subscriber') === 'true';
+  var isFree = p.free === true;
+
+  // ── Gated path (paid + not subscriber) ──
+  if (!isFree && !isSubscriber) {
+    var previewText = (isCn ? (p.text || '') : (p.text_ja || p.text || '')).replace(/\\n/g, '\n');
+    var previewPrompt = isCn ? (p.real_prompt || p.image_prompt || '') : (p.real_prompt_ja || p.image_prompt_ja || p.real_prompt || p.image_prompt || '');
+    var catLabel = isJp ? catMapJp[p.cat] || p.cat : p.cat;
+    var gatedHtml = '';
+    gatedHtml += '<div class="detail-nav"><a href="index.html">← ' + (isCn ? '返回提示词列表' : 'プロンプト一覧に戻る') + '</a></div>';
+    gatedHtml += '<div class="detail-header">';
+    if (p.cat) gatedHtml += '<div class="detail-cat">' + (catLabel || p.cat) + '</div>';
+    gatedHtml += '<h1 class="detail-title">' + escapeHtml(previewText.split('\n')[0].substring(0, 80)) + '</h1>';
+    gatedHtml += '<div class="detail-meta"><span>' + (p.author || '@MrLarus') + '</span><span>' + formatDate(p.date || p.title || '') + '</span>';
+    gatedHtml += '<span style="background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;">' + (isCn ? '付费' : '有料') + '</span></div></div>';
+    if (p.images && p.images.length > 0) {
+      var firstImg = p.images[0];
+      if (!firstImg.startsWith('http')) firstImg = 'images/' + firstImg.replace(/^images\//, '');
+      gatedHtml += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + firstImg + '" alt="" loading="lazy" style="max-width:100%;border-radius:12px;"></div></div>';
+    }
+    gatedHtml += '<div class="text-only-content" style="margin-bottom:0;">' + escapeHtml(previewText.substring(0, 250)) + (previewText.length > 250 ? '…' : '') + '</div>';
+    gatedHtml += '<div class="gated-wrap">';
+    gatedHtml += '<div class="preview-blur">';
+    gatedHtml += '<div class="prompt-block"><div class="prompt-label">📋 ' + (isCn ? '完整提示词' : 'プロンプト全文') + '</div>';
+    gatedHtml += '<div class="prompt-content">' + escapeHtml(previewPrompt.substring(0, 350)) + '…</div></div>';
+    gatedHtml += '</div>';
+    gatedHtml += '<div class="gated-overlay"><div style="max-width:420px;margin:0 auto;">';
+    gatedHtml += '<p style="font-family:\'Noto Serif JP\',serif;font-size:16px;font-weight:300;color:#1a1814;margin-bottom:10px;">' + (isCn ? '继续阅读需订阅' : '続きを読むには購読が必要です') + '</p>';
+    gatedHtml += '<p style="font-size:12px;color:#5a5650;line-height:2;margin-bottom:20px;">' + (isCn ? '此提示词完整内容仅对AI知识库订阅者开放。<br>月付¥2,980即可畅读全部文章与提示词。' : 'このプロンプトの全文はAI知識庫の購読者限定です。<br>月額¥2,980で全記事・全プロンプトが読み放題になります。') + '</p>';
+    gatedHtml += '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;margin-bottom:20px;">' + (isCn ? '立刻订阅 →' : '月額¥2,980で読み放題 →') + '</a>';
+    gatedHtml += '<p style="font-size:10px;color:#9a9490;">' + (isCn ? '已订阅？用注册邮箱验证' : 'すでに購読済みですか？<br>登録したメールアドレスで認証してください') + '</p>';
+    gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">';
+    gatedHtml += '<input id="gating-email" type="email" placeholder="' + (isCn ? '输入邮箱地址' : 'メールアドレスを入力') + '" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:200px;outline:none;">';
+    gatedHtml += '<button id="gating-verify" style="padding:7px 16px;background:#b8925a;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;">' + (isCn ? '验证' : '認証') + '</button></div>';
+    gatedHtml += '<p id="gating-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">' + (isCn ? '未找到活跃订阅，请确认邮箱或重新订阅' : '有効な購読が見つかりません。メールアドレスをご確認いただくか、再購読してください。') + '</p>';
+    gatedHtml += '<p id="gating-loading" style="font-size:10px;color:#9a9490;margin-top:6px;display:none;">' + (isCn ? '验证中...' : '確認中...') + '</p>';
+    gatedHtml += '<p style="font-size:9px;color:#c0bbb5;margin-top:16px;">' + (isCn ? '使用访问代码' : 'アクセスコードをお持ちですか？') + '</p>';
+    gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:4px;">';
+    gatedHtml += '<input id="gating-code" type="text" placeholder="' + (isCn ? '访问代码' : 'アクセスコード') + '" style="padding:5px 10px;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;width:150px;outline:none;">';
+    gatedHtml += '<button id="gating-unlock" style="padding:5px 12px;background:transparent;color:#9a9490;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;cursor:pointer;white-space:nowrap;">' + (isCn ? '解锁' : '解除') + '</button></div>';
+    gatedHtml += '</div></div></div>';
+    gatedHtml += '<div class="detail-footer"><a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener">☝️ ' + (isCn ? '查看 X 原贴 →' : 'Xの元ポストを見る →') + '</a></div>';
+
+    loading.style.display = 'none';
+    root.innerHTML = gatedHtml;
+
+    // Email verification
+    document.getElementById('gating-verify').addEventListener('click', function() {
+      var email = document.getElementById('gating-email').value.trim();
+      if (!email) return;
+      if (email === 'yokonaora@gmail.com') {
+        localStorage.setItem('kb_subscriber', 'true');
+        localStorage.setItem('kb_email', email);
+        renderPrompt();
+        return;
+      }
+      document.getElementById('gating-error').style.display = 'none';
+      document.getElementById('gating-loading').style.display = '';
+      document.getElementById('gating-verify').disabled = true;
+      fetch('/api/check-subscription?email=' + encodeURIComponent(email))
+        .then(function(r) { return r.json(); })
+        .then(function(resp) {
+          document.getElementById('gating-loading').style.display = 'none';
+          document.getElementById('gating-verify').disabled = false;
+          if (resp.active) {
+            localStorage.setItem('kb_subscriber', 'true');
+            localStorage.setItem('kb_email', email);
+            renderPrompt();
+          } else {
+            document.getElementById('gating-error').style.display = '';
+          }
+        })
+        .catch(function() {
+          document.getElementById('gating-loading').style.display = 'none';
+          document.getElementById('gating-verify').disabled = false;
+          document.getElementById('gating-error').style.display = '';
+        });
+    });
+    document.getElementById('gating-email').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') document.getElementById('gating-verify').click();
+    });
+
+    var VALID_HASH = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92';
+    document.getElementById('gating-unlock').addEventListener('click', function() {
+      var code = document.getElementById('gating-code').value;
+      var msgBuffer = new TextEncoder().encode(code.trim());
+      crypto.subtle.digest('SHA-256', msgBuffer).then(function(hashBuffer) {
+        var hashArray = Array.from(new Uint8Array(hashBuffer));
+        var hashHex = hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+        if (hashHex === VALID_HASH) {
+          localStorage.setItem('kb_subscriber', 'true');
+          renderPrompt();
+        }
+      });
+    });
+    document.getElementById('gating-code').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') document.getElementById('gating-unlock').click();
+    });
+    injectArrows(idx, data.length);
+    return;
+  }
+
+  // ── Full content path ──
+  var text = isCn ? (p.text || '') : (p.text_ja || p.text || '');
+  var imagePrompt = isCn ? (p.image_prompt || '') : (p.image_prompt_ja || p.image_prompt || '');
+  var videoPrompt = isCn ? (p.video_prompt || '') : (p.video_prompt_ja || p.video_prompt || '');
+  var realPrompt = isCn ? (p.real_prompt || '') : (p.real_prompt_ja || p.real_prompt || '');
+
+  var hasImages = p.images && p.images.length > 0;
+  var hasVideo = p.video ? true : false;
+  var hasTextOnly = !hasImages && !hasVideo;
+
+  function imgPath(name) {
+    if (name.startsWith('http')) return name;
+    return 'images/' + name.replace(/^images\//, '');
+  }
+  function videoPath(name) {
+    return 'videos/' + name.replace(/^videos\//, '');
+  }
+
+  var html = '';
+  html += '<div class="detail-nav"><a href="index.html">← ' + (isCn ? '返回提示词列表' : 'プロンプト一覧に戻る') + '</a></div>';
+  html += '<div class="detail-header">';
+  html += '<div class="detail-cat">' + (isJp ? (catMapJp[p.cat] || p.cat) : (p.cat || '未分类')) + '</div>';
+  html += '<h1 class="detail-title">' + escapeHtml(text.split('\n')[0].substring(0, 80)) + '</h1>';
+  html += '<div class="detail-meta">';
+  html += '<span>' + (p.author || '@MrLarus') + '</span>';
+  html += '<span>' + formatDate(p.date || p.title || '') + '</span>';
+  html += '</div></div>';
+
+  if (hasTextOnly) {
+    html += '<div class="text-only-content">' + escapeHtml(text) + '</div>';
+    html += copyBtnHtml;
+  } else if (hasVideo) {
+    if (hasImages) {
+      html += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="" loading="lazy"></div></div>';
+    }
+    html += '<div class="video-wrapper"><video controls preload="metadata"><source src="' + videoPath(p.video) + '" type="video/mp4"></video></div>';
+    if (imagePrompt) {
+      html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📷 图片提示词' : '📷 画像プロンプト') + '</div><div class="prompt-content">';
+      for (var vi = 1; vi < p.images.length; vi++) {
+        html += '<img src="' + imgPath(p.images[vi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
+      }
+      html += escapeHtml(imagePrompt) + '</div>' + copyBtnHtml + '</div>';
+    }
+    if (videoPrompt) {
+      html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '🎬 视频提示词' : '🎬 動画プロンプト') + '</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div>' + copyBtnHtml + '</div>';
+    }
+    if (text) {
+      html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
+    }
+  } else if (hasImages && !hasVideo) {
+    html += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="" loading="lazy"></div></div>';
+    if (text) {
+      html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
+    }
+    html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📋 完整提示词' : '📋 プロンプト全文') + '</div><div class="prompt-content">';
+    for (var gi = 1; gi < p.images.length; gi++) {
+      html += '<img src="' + imgPath(p.images[gi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
+    }
+    if (realPrompt) {
+      html += escapeHtml(realPrompt);
+    } else {
+      html += '<em>' + (isCn ? '提示词待补充' : 'プロンプト未補充') + '</em>';
+    }
+    html += '</div>' + copyBtnHtml + '</div>';
+  }
+
+  html += '<div class="detail-footer">';
+  html += '<a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener" style="margin-right:20px;">☝️ ' + (isCn ? '查看 X 原贴 →' : 'Xの元ポストを見る →') + '</a>';
+  if (idx + 1 < data.length) {
+    html += '<a href="?id=' + (idx + 1) + '" class="next-link">👉 ' + (isCn ? '去下一页' : '次のページ') + '</a>';
+  }
+  html += '</div>';
+
+  loading.style.display = 'none';
+  root.innerHTML = html;
+  injectArrows(idx, data.length);
+}
+
+// ── Language switch (instant re-render, no page reload) ──
+(function initLangButtons() {
+  var lang = getLang();
+  document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+    btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
+  });
+})();
+
+function switchLang(lang) {
+  document.querySelectorAll('.lang-switch button').forEach(function(btn) {
+    btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
+  });
+  localStorage.setItem('kb-lang', lang);
+  if (cachedData !== null) {
+    renderPrompt();
+  }
+}
+
+// ── Initial load ──
 (function() {
   var root = document.getElementById('detailRoot');
   var loading = document.getElementById('loading');
@@ -250,254 +451,16 @@ function injectArrows(idx, total) {
         loading.innerHTML = '<div class="detail-error">未找到该提示词，<a href="index.html">返回列表</a></div>';
         return;
       }
-
-      var p = data[idx];
-      var lang = getLang();
-      var isCn = lang === 'cn';
-      var copyBtnHtml = '<div class="copy-btn-wrap"><button class="copy-btn">' + (isCn ? '复制' : 'コピー') + '</button></div>';
-
-      if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
-        localStorage.setItem('kb_subscriber', 'true');
-      }
-      var isSubscriber = localStorage.getItem('kb_subscriber') === 'true';
-      var isFree = p.free === true;
-      var isJp = !isCn;
-
-      // Paid prompt + not subscriber → show preview + paywall
-      if (!isFree && !isSubscriber) {
-        var previewText = (isCn ? (p.text || '') : (p.text_ja || p.text || '')).replace(/\\n/g, '\n');
-        var previewPrompt = isCn ? (p.real_prompt || p.image_prompt || '') : (p.real_prompt_ja || p.image_prompt_ja || p.real_prompt || p.image_prompt || '');
-        var catLabel = isJp ? catMapJp[p.cat] || p.cat : p.cat;
-        var gatedHtml = '';
-        gatedHtml += '<div class="detail-nav"><a href="index.html">← ' + (isCn ? '返回提示词列表' : 'プロンプト一覧に戻る') + '</a></div>';
-        gatedHtml += '<div class="detail-header">';
-        if (p.cat) gatedHtml += '<div class="detail-cat">' + (catLabel || p.cat) + '</div>';
-        gatedHtml += '<h1 class="detail-title">' + escapeHtml(previewText.split('\n')[0].substring(0, 80)) + '</h1>';
-        gatedHtml += '<div class="detail-meta"><span>' + (p.author || '@MrLarus') + '</span><span>' + formatDate(p.date || p.title || '') + '</span>';
-        gatedHtml += '<span style="background:#fff3e0;color:#e65100;padding:2px 8px;border-radius:10px;">' + (isCn ? '付费' : '有料') + '</span></div></div>';
-        // Preview first image
-        if (p.images && p.images.length > 0) {
-          var firstImg = p.images[0];
-          if (!firstImg.startsWith('http')) firstImg = 'images/' + firstImg.replace(/^images\//, '');
-          gatedHtml += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + firstImg + '" alt="" loading="lazy" style="max-width:100%;border-radius:12px;"></div></div>';
-        }
-        // Preview text
-        gatedHtml += '<div class="text-only-content" style="margin-bottom:0;">' + escapeHtml(previewText.substring(0, 250)) + (previewText.length > 250 ? '…' : '') + '</div>';
-        // Blurred prompt preview + paywall
-        gatedHtml += '<div class="gated-wrap">';
-        gatedHtml += '<div class="preview-blur">';
-        gatedHtml += '<div class="prompt-block"><div class="prompt-label">📋 ' + (isCn ? '完整提示词' : 'プロンプト全文') + '</div>';
-        gatedHtml += '<div class="prompt-content">' + escapeHtml(previewPrompt.substring(0, 350)) + '…</div></div>';
-        gatedHtml += '</div>';
-        gatedHtml += '<div class="gated-overlay"><div style="max-width:420px;margin:0 auto;">';
-        gatedHtml += '<p style="font-family:\'Noto Serif JP\',serif;font-size:16px;font-weight:300;color:#1a1814;margin-bottom:10px;">' + (isCn ? '继续阅读需订阅' : '続きを読むには購読が必要です') + '</p>';
-        gatedHtml += '<p style="font-size:12px;color:#5a5650;line-height:2;margin-bottom:20px;">' + (isCn ? '此提示词完整内容仅对AI知识库订阅者开放。<br>月付¥2,980即可畅读全部文章与提示词。' : 'このプロンプトの全文はAI知識庫の購読者限定です。<br>月額¥2,980で全記事・全プロンプトが読み放題になります。') + '</p>';
-        gatedHtml += '<a href="../checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:#1a1814;color:#faf9f6;font-size:11px;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;margin-bottom:20px;">' + (isCn ? '立刻订阅 →' : '月額¥2,980で読み放題 →') + '</a>';
-        // Email verification
-        gatedHtml += '<p style="font-size:10px;color:#9a9490;">' + (isCn ? '已订阅？用注册邮箱验证' : 'すでに購読済みですか？<br>登録したメールアドレスで認証してください') + '</p>';
-        gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:6px;">';
-        gatedHtml += '<input id="gating-email" type="email" placeholder="' + (isCn ? '输入邮箱地址' : 'メールアドレスを入力') + '" style="padding:7px 12px;border:1px solid #d4af7a;border-radius:2px;font-family:inherit;font-size:11px;width:200px;outline:none;">';
-        gatedHtml += '<button id="gating-verify" style="padding:7px 16px;background:#b8925a;color:#fff;border:none;border-radius:2px;font-family:inherit;font-size:11px;cursor:pointer;white-space:nowrap;">' + (isCn ? '验证' : '認証') + '</button></div>';
-        gatedHtml += '<p id="gating-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">' + (isCn ? '未找到活跃订阅，请确认邮箱或重新订阅' : '有効な購読が見つかりません。メールアドレスをご確認いただくか、再購読してください。') + '</p>';
-        gatedHtml += '<p id="gating-loading" style="font-size:10px;color:#9a9490;margin-top:6px;display:none;">' + (isCn ? '验证中...' : '確認中...') + '</p>';
-        // Access code (legacy)
-        gatedHtml += '<p style="font-size:9px;color:#c0bbb5;margin-top:16px;">' + (isCn ? '使用访问代码' : 'アクセスコードをお持ちですか？') + '</p>';
-        gatedHtml += '<div style="display:flex;gap:6px;justify-content:center;margin-top:4px;">';
-        gatedHtml += '<input id="gating-code" type="text" placeholder="' + (isCn ? '访问代码' : 'アクセスコード') + '" style="padding:5px 10px;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;width:150px;outline:none;">';
-        gatedHtml += '<button id="gating-unlock" style="padding:5px 12px;background:transparent;color:#9a9490;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;cursor:pointer;white-space:nowrap;">' + (isCn ? '解锁' : '解除') + '</button></div>';
-        gatedHtml += '</div></div></div>';
-        // Source link
-        gatedHtml += '<div class="detail-footer"><a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener">☝️ ' + (isCn ? '查看 X 原贴 →' : 'Xの元ポストを見る →') + '</a></div>';
-
-        loading.style.display = 'none';
-        root.innerHTML = gatedHtml;
-
-        // ── Email verification ──
-        document.getElementById('gating-verify').addEventListener('click', function() {
-          var email = document.getElementById('gating-email').value.trim();
-          if (!email) return;
-          // Admin bypass — instant, no server call
-          if (email === 'yokonaora@gmail.com') {
-            localStorage.setItem('kb_subscriber', 'true');
-            localStorage.setItem('kb_email', email);
-            location.reload();
-            return;
-          }
-          document.getElementById('gating-error').style.display = 'none';
-          document.getElementById('gating-loading').style.display = '';
-          document.getElementById('gating-verify').disabled = true;
-          fetch('/api/check-subscription?email=' + encodeURIComponent(email))
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-              document.getElementById('gating-loading').style.display = 'none';
-              document.getElementById('gating-verify').disabled = false;
-              if (data.active) {
-                localStorage.setItem('kb_subscriber', 'true');
-                localStorage.setItem('kb_email', email);
-                location.reload();
-              } else {
-                document.getElementById('gating-error').style.display = '';
-              }
-            })
-            .catch(function() {
-              document.getElementById('gating-loading').style.display = 'none';
-              document.getElementById('gating-verify').disabled = false;
-              document.getElementById('gating-error').style.display = '';
-            });
-        });
-        document.getElementById('gating-email').addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') document.getElementById('gating-verify').click();
-        });
-
-        // ── Access code (legacy) ──
-        var VALID_HASH = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92';
-        document.getElementById('gating-unlock').addEventListener('click', function() {
-          var code = document.getElementById('gating-code').value;
-          var msgBuffer = new TextEncoder().encode(code.trim());
-          crypto.subtle.digest('SHA-256', msgBuffer).then(function(hashBuffer) {
-            var hashArray = Array.from(new Uint8Array(hashBuffer));
-            var hashHex = hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
-            if (hashHex === VALID_HASH) {
-              localStorage.setItem('kb_subscriber', 'true');
-              location.reload();
-            }
-          });
-        });
-        document.getElementById('gating-code').addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') document.getElementById('gating-unlock').click();
-        });
-        injectArrows(idx, data.length);
-        return;
-      }
-
-      var text = isCn ? (p.text || '') : (p.text_ja || p.text || '');
-      var imagePrompt = isCn ? (p.image_prompt || '') : (p.image_prompt_ja || p.image_prompt || '');
-      var videoPrompt = isCn ? (p.video_prompt || '') : (p.video_prompt_ja || p.video_prompt || '');
-      var realPrompt = isCn ? (p.real_prompt || '') : (p.real_prompt_ja || p.real_prompt || '');
-
-      var hasImages = p.images && p.images.length > 0;
-      var hasVideo = p.video ? true : false;
-      var hasTextOnly = !hasImages && !hasVideo;
-
-      // Determine type
-      var typeLabel = '';
-      if (hasImages && hasVideo) typeLabel = 'A (图+视频)';
-      else if (hasImages && !hasVideo) typeLabel = 'B (图)';
-      else typeLabel = 'C (纯文本)';
-
-      // Build image path
-      function imgPath(name) {
-        if (name.startsWith('http')) return name;
-        var clean = name.replace(/^images\//, '');
-        return 'images/' + clean;
-      }
-
-      // Build video path
-      function videoPath(name) {
-        var clean = name.replace(/^videos\//, '');
-        return 'videos/' + clean;
-      }
-
-      // Build HTML
-      var html = '';
-
-      // Nav back
-      html += '<div class="detail-nav"><a href="index.html">← 返回提示词列表</a></div>';
-
-      // Header
-      html += '<div class="detail-header">';
-      html += '<div class="detail-cat">' + (p.cat || '未分类') + '</div>';
-      html += '<h1 class="detail-title">' + text.split('\n')[0].substring(0, 80) + '</h1>';
-      html += '<div class="detail-meta">';
-      html += '<span>' + (p.author || '@MrLarus') + '</span>';
-      html += '<span>' + formatDate(p.date || p.title || '') + '</span>';
-      html += '</div></div>';
-
-      if (hasTextOnly) {
-        // === Type C: Text only ===
-        html += '<div class="text-only-content">' + escapeHtml(text) + '</div>';
-        html += copyBtnHtml;
-      } else if (hasVideo) {
-        // === Video (with or without images) ===
-        // 1. Cover image (first image as hero) if available
-        if (hasImages) {
-          html += '<div class="detail-media">';
-          html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="封面图" loading="lazy"></div>';
-          html += '</div>';
-        }
-
-        // 2. Video
-        html += '<div class="video-wrapper">';
-        html += '<video controls preload="metadata"><source src="' + videoPath(p.video) + '" type="video/mp4">您的浏览器不支持视频播放</video>';
-        html += '</div>';
-
-        // 3. Image Prompt
-        if (imagePrompt) {
-          html += '<div class="prompt-block"><div class="prompt-label">📷 图片提示词</div><div class="prompt-content">';
-          // Show remaining images (skip first which is cover)
-          if (hasImages) {
-            for (var vi = 1; vi < p.images.length; vi++) {
-              html += '<img src="' + imgPath(p.images[vi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
-            }
-          }
-          html += escapeHtml(imagePrompt) + '</div>' + copyBtnHtml + '</div>';
-        }
-
-        // 4. Video Prompt
-        if (videoPrompt) {
-          html += '<div class="prompt-block"><div class="prompt-label">🎬 视频提示词</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div>' + copyBtnHtml + '</div>';
-        }
-
-        // Also show the full text (social caption) at the end
-        if (text) {
-          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
-        }
-
-      } else if (hasImages && !hasVideo) {
-        // === Type B: Image only ===
-        // 1. Cover image (first image as hero)
-        html += '<div class="detail-media">';
-        html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="封面图" loading="lazy"></div>';
-        html += '</div>';
-
-        // 2. Social caption
-        if (text) {
-          html += '<div class="prompt-block"><div class="prompt-label">📝 帖子文案</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
-        }
-
-        // 3. Prompt content with all images inline
-        var promptText = realPrompt;
-        html += '<div class="prompt-block"><div class="prompt-label">📋 完整提示词</div><div class="prompt-content">';
-        // Show remaining images (skip first which is cover)
-        for (var gi = 1; gi < p.images.length; gi++) {
-          html += '<img src="' + imgPath(p.images[gi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
-        }
-        if (promptText) {
-          html += escapeHtml(promptText);
-        } else {
-          html += '<em>提示词待补充，可联系 @MrLarus 提供番号</em>';
-        }
-        html += '</div>' + copyBtnHtml + '</div>';
-      }
-
-      // Footer - link to X + next page
-      html += '<div class="detail-footer">';
-      html += '<a href="' + escapeAttr(p.link || '#') + '" target="_blank" rel="noopener" style="margin-right:20px;">☝️ 查看 X 原贴 →</a>';
-      if (idx + 1 < data.length) {
-        html += '<a href="?id=' + (idx + 1) + '" class="next-link">👉 ' + (isCn ? '去下一页' : '次のページ') + '</a>';
-      }
-      html += '</div>';
-
-      loading.style.display = 'none';
-      root.innerHTML = html;
-      injectArrows(idx, data.length);
+      cachedData = data;
+      currentIdx = idx;
+      renderPrompt();
     })
     .catch(function(err) {
       loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a></div>';
       console.error('Detail load error:', err);
     });
 
-  // Copy button handler (event delegation on root)
+  // Copy button handler (event delegation — survives re-render)
   root.addEventListener('click', function(e) {
     var btn = e.target.closest('.copy-btn');
     if (!btn) return;
@@ -516,34 +479,20 @@ function injectArrows(idx, total) {
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(doCopy).catch(function() {
-        // Fallback
         var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta);
         doCopy();
       });
     } else {
       var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
       doCopy();
     }
   });
-
-  function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-  function escapeAttr(str) {
-    return str.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
 })();
 </script>
 <script src="../assets/js/main.js?v=6"></script>
