@@ -12,7 +12,11 @@
 //   assert c['actual_paid'] > 0, f'actual_paid is zero: {c}'
 //   assert c['subtotal'] > 0, f'subtotal is zero: {c}'
 //   print(f'OK: {len(d[\"customers\"])} customers, active={c[\"email\"]} actual_paid={c[\"actual_paid\"]} subtotal={c[\"subtotal\"]} tax={c[\"tax\"]}')"
-//   预期: OK 输出，actual_paid > 0, subtotal > 0
+// 预期: OK 输出，actual_paid > 0, subtotal > 0
+//
+// TEST (取消订阅):
+//   curl -s -X POST "https://kb.snsaladdin.com/api/admin-customers?key=admin2026&action=cancel&email=yokonaora@gmail.com"
+//   预期: {"ok":true,"action":"canceled","email":"yokonaora@gmail.com","subscription_id":"sub_xxx"}
 
 import Stripe from "stripe";
 
@@ -131,6 +135,64 @@ export async function onRequestGet(context) {
     });
 
     return new Response(JSON.stringify({ customers, total: customers.length }), { status: 200, headers: { "Content-Type": "application/json" } });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Stripe API error", detail: err.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+  }
+}
+
+// POST /api/admin-customers?key=xxx&action=xxx
+export async function onRequestPost(context) {
+  const url = new URL(context.request.url);
+  const key = url.searchParams.get("key") || "";
+  const action = url.searchParams.get("action") || "";
+  const email = url.searchParams.get("email") || "";
+  const adminKey = context.env.ADMIN_KEY || "admin2026";
+
+  if (key !== adminKey) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+  }
+
+  const stripeKey = context.env.STRIPE_SECRET_KEY;
+  if (!stripeKey) {
+    return new Response(JSON.stringify({ error: "Stripe not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });
+  }
+
+  const stripe = new Stripe(stripeKey);
+
+  try {
+    if (action === "cancel" && email) {
+      // Find customer by email
+      const customers = await stripe.customers.list({ email, limit: 5 });
+      if (customers.data.length === 0) {
+        return new Response(JSON.stringify({ error: "Customer not found", email }), { status: 404, headers: { "Content-Type": "application/json" } });
+      }
+
+      const cus = customers.data[0];
+      let subs = await stripe.subscriptions.list({ customer: cus.id, limit: 5, status: "active" });
+      if (subs.data.length === 0) {
+        subs = await stripe.subscriptions.list({ customer: cus.id, limit: 5, status: "trialing" });
+      }
+
+      if (subs.data.length === 0) {
+        return new Response(JSON.stringify({ error: "No active subscription found", email, customer_id: cus.id }), { status: 404, headers: { "Content-Type": "application/json" } });
+      }
+
+      // Cancel the most recent active/trialing subscription immediately
+      const sub = subs.data[0];
+      const canceled = await stripe.subscriptions.cancel(sub.id);
+
+      return new Response(JSON.stringify({
+        ok: true,
+        action: "canceled",
+        email,
+        customer_id: cus.id,
+        subscription_id: sub.id,
+        status: canceled.status,
+        canceled_at: canceled.canceled_at ? new Date(canceled.canceled_at * 1000).toISOString() : null,
+      }), { status: 200, headers: { "Content-Type": "application/json" } });
+    }
+
+    return new Response(JSON.stringify({ error: "Unknown action", action }), { status: 400, headers: { "Content-Type": "application/json" } });
   } catch (err) {
     return new Response(JSON.stringify({ error: "Stripe API error", detail: err.message }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
