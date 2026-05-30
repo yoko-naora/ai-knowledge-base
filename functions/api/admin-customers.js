@@ -31,7 +31,7 @@ export async function onRequestGet(context) {
         const activeSub = subs.data.find(s => s.status === "active" || s.status === "trialing");
         const allEnded = subs.data.length > 0 && subs.data.every(s => s.status === "canceled" || s.status === "incomplete_expired" || s.status === "unpaid");
 
-        let productName = null, plan = null, status = "none", planAmount = 0, actualPaid = 0, purchasedAt = null, currentPeriodEnd = null;
+        let productName = null, plan = null, status = "none", planAmount = 0, actualPaid = 0, subtotal = 0, tax = 0, purchasedAt = null, currentPeriodEnd = null;
 
         if (activeSub) {
           status = activeSub.status === "trialing" ? "trialing" : "active";
@@ -57,11 +57,40 @@ export async function onRequestGet(context) {
 
         let latestPayment = null;
         try {
-          const invoices = await stripe.invoices.list({ customer: cus.id, limit: 5 });
-          const paidInvoice = invoices.data.find(inv => inv.status === "paid" || inv.amount_paid > 0);
-          if (paidInvoice) {
-            latestPayment = new Date(paidInvoice.created * 1000).toISOString();
-            actualPaid = paidInvoice.amount_paid;
+          // Primary: check Payment Intents (works for both test & live Payment Links)
+          const paymentIntents = await stripe.paymentIntents.list({ customer: cus.id, limit: 10 });
+          let bestPI = null;
+          let bestPIAmount = -1;
+          for (const pi of paymentIntents.data) {
+            const amt = pi.amount_received || pi.amount || 0;
+            if (amt > bestPIAmount && pi.status === "succeeded") {
+              bestPIAmount = amt;
+              bestPI = pi;
+            }
+          }
+          if (bestPI) {
+            latestPayment = new Date(bestPI.created * 1000).toISOString();
+            actualPaid = bestPI.amount_received || bestPI.amount || 0;
+          }
+
+          // Fallback: check invoices for subtotal/tax and amount if PI not found
+          const invoices = await stripe.invoices.list({ customer: cus.id, limit: 10 });
+          for (const inv of invoices.data) {
+            if (inv.subtotal > 0 && subtotal === 0) subtotal = inv.subtotal;
+            if (inv.tax > 0 && tax === 0) tax = inv.tax;
+            // Use invoice amounts only if no PI found
+            if (!bestPI) {
+              const amt = inv.amount_paid || inv.total || inv.amount_due || 0;
+              if (amt > actualPaid) {
+                actualPaid = amt;
+                if (!latestPayment) latestPayment = new Date(inv.created * 1000).toISOString();
+              }
+            }
+          }
+
+          // Last resort: use subtotal + tax as expected amount
+          if (actualPaid === 0 && subtotal > 0) {
+            actualPaid = subtotal + tax;
           }
         } catch { /* skip */ }
 
@@ -71,6 +100,8 @@ export async function onRequestGet(context) {
           plan, status,
           plan_amount: planAmount > 0 ? planAmount : 0,
           actual_paid: actualPaid,
+          subtotal: subtotal,
+          tax: tax,
           purchased_at: purchasedAt,
           current_period_end: currentPeriodEnd ? new Date(currentPeriodEnd * 1000).toISOString() : null,
           latest_payment: latestPayment,

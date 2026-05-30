@@ -82,7 +82,9 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
           <th>产品</th>
           <th>方案</th>
           <th>状态</th>
-          <th>实付金额</th>
+          <th>小計</th>
+          <th>税額</th>
+          <th>实付</th>
           <th>到期日</th>
         </tr>
       </thead>
@@ -179,6 +181,8 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
             '<td>' + escapeHtml(c.product || '-') + '</td>' +
             '<td>' + planBadge + '</td>' +
             '<td>' + statusBadge + '</td>' +
+            '<td>' + formatAmount(c.subtotal) + '</td>' +
+            '<td>' + formatTax(c.tax) + '</td>' +
             '<td>' + formatAmount(c.actual_paid) + '</td>' +
             '<td class="date-cell">' + formatTime(c.current_period_end) + '</td>' +
             '</tr>';
@@ -202,7 +206,13 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
   }
 
   function formatAmount(amount) {
-    if (!amount || amount === 0) return '-';
+    if (amount == null || amount === undefined) return '-';
+    return '¥' + amount.toLocaleString();
+  }
+
+  function formatTax(amount) {
+    if (amount == null || amount === undefined) return '-';
+    if (amount === 0) return '¥0';
     return '¥' + amount.toLocaleString();
   }
 
