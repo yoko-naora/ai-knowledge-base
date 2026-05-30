@@ -1,6 +1,19 @@
 // Cloudflare Pages Function: stripe-webhook
 // POST /api/stripe-webhook
 // Handles: checkout.session.completed, invoice.paid, customer.subscription.deleted
+//
+// TEST (端到端 — 需要 Stripe Dashboard):
+//   1. Stripe Dashboard → Developers → Webhooks → Send test webhook
+//   2. 选 checkout.session.completed, 发送
+//   3. cd kb-site && npx wrangler pages deployment tail <deployment-id> --project-name=ai-knowledge-base-v3
+//   4. 预期日志: "[webhook] VERIFIED — event: checkout.session.completed"
+//   5. 预期日志: "[webhook] SUCCESS — email_id: xxx"
+//   6. 检查 yokonaora@gmail.com 收件箱（含垃圾邮件）
+//
+// TEST (快速 — 端点可达性):
+//   curl -s -w "\nHTTP:%{http_code}" -X POST "https://kb.snsaladdin.com/api/stripe-webhook" \
+//     -H "Content-Type: application/json" -H "stripe-signature: t=1,v1=bad"
+//   预期: 400, "Signature verification failed"
 
 import Stripe from "stripe";
 

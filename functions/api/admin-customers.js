@@ -1,5 +1,18 @@
 // Cloudflare Pages Function: admin-customers
 // GET /api/admin-customers?key=xxx
+//
+// TEST:
+//   curl -s "https://kb.snsaladdin.com/api/admin-customers?key=admin2026" | python3 -c "
+//   import sys,json; d=json.load(sys.stdin)
+//   assert 'customers' in d, 'missing customers'
+//   assert d['total'] > 0, 'no customers'
+//   active = [c for c in d['customers'] if c['status']=='active']
+//   assert len(active) > 0, 'no active customers'
+//   c = active[0]
+//   assert c['actual_paid'] > 0, f'actual_paid is zero: {c}'
+//   assert c['subtotal'] > 0, f'subtotal is zero: {c}'
+//   print(f'OK: {len(d[\"customers\"])} customers, active={c[\"email\"]} actual_paid={c[\"actual_paid\"]} subtotal={c[\"subtotal\"]} tax={c[\"tax\"]}')"
+//   预期: OK 输出，actual_paid > 0, subtotal > 0
 
 import Stripe from "stripe";
 

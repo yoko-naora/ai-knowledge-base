@@ -30,10 +30,10 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] 全ページ静的生成 (index, articles/001-025, prompts/index, detail, checkout, success, admin, tokushoho, free-prompts)
 - [x] 中日バイリンガル対応 (nav, footer, article, prompts)
 - [x] Stripe Payment Links (月額 ¥2,980 / 年額 ¥30,000)
-- [x] Stripe Webhook → Resend 購読完了メール
+- [x] Stripe Webhook → Resend 購読完了メール (2026-05-30 再検証・全リンク正常確認済)
 - [x] 無料5選メール自動送信 (send-lead-email)
 - [x] 週次更新メール (send-weekly, baseline 初期化済)
-- [x] Admin 顧客管理画面 (/admin.html, パスワード `admin2026`)
+- [x] Admin 顧客管理画面 (税額/小計/実付 表示対応済, 2026-05-30)
 - [x] プロンプト詳細頁 コピーボタン + 言語切替修正
 - [x] 免費提示詞頁 (free-prompts.html)
 - [x] 設計規範統一 (Noto Sans/Serif JP, 字号体系)
@@ -70,18 +70,16 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 | # | Issue | Priority | Status |
 |---|-------|----------|--------|
-| 1 | Admin 頁 產品名 + 実付金額顯示不全 | High | 調査中 |
-| 2 | Stripe Automatic Tax (+10%) 未検証 | High | 待測試 |
-| 3 | 購読者 0 名、週次メール未本番送信 | Low | 集客待ち |
-| 4 | DNS 一部 ISP で未伝播（24h TTL 残存） | Low | 待機中 |
+| 1 | Stripe Automatic Tax (+10%) 生産環境未検証（admin表示インフラは完了） | Medium | 実購読者待ち |
+| 2 | 購読者 0 名、週次メール未本番送信 | Low | 集客待ち |
+| 3 | DNS 一部 ISP で未伝播（24h TTL 残存） | Low | 待機中 |
 
 ## Next Actions (優先順)
 
-1. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
-2. **Admin 表示修正** — 產品名・実付金額のデバッグ完了
-3. **税額検証** — Stripe Tax +10% の webhook データ確認、admin に税額表示
-4. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
-5. **週次メール本番** — 購読者獲得後、初回本番送信
+1. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
+2. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
+3. **税額生産検証** — 実購読者発生後、Stripe Tax +10% のデータ確認
+4. **週次メール本番** — 購読者獲得後、初回本番送信
 
 ## Key Links
 
@@ -115,11 +113,10 @@ Variables needed:
 
 ## Deploy
 
-GitHub 連携済 — `main` ブランチに push すると自動デプロイ。手動デプロイが必要な場合：
+GitHub 連携済 — `main` ブランチに push すると自動デプロイ。手動デプロイが必要な場合（OAuth ログイン済み `yokonaora@gmail.com`、API Token 不要）：
 
 ```
 cd C:\Users\jding\kb-site
-$env:CLOUDFLARE_API_TOKEN = "<token>"
 npx wrangler pages deploy . --project-name=ai-knowledge-base-v3 --branch=main --commit-dirty=true
 ```
 
@@ -144,6 +141,7 @@ kb-site/
 ├── free-prompts.html       # Free 5 prompts lead magnet
 ├── tokushoho.html          # 特定商取引法 (legal)
 ├── CNAME                   # kb.snsaladdin.com
+├── TEST.md                 # テスト手順・テストデータ (see: feedback-test-rule)
 ├── articles/               # 001.html - 025.html (26 articles)
 ├── prompts/
 │   ├── index.html          # Prompt listing
