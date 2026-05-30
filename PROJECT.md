@@ -37,6 +37,12 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] プロンプト詳細頁 コピーボタン + 言語切替修正
 - [x] 免費提示詞頁 (free-prompts.html)
 - [x] 設計規範統一 (Noto Sans/Serif JP, 字号体系)
+- [x] 2026-05-30 作業: Webhook デバッグ完了 (v2→v3 移行確認, 監視ログ追加)
+- [x] 2026-05-30 作業: Admin 実付金額修正 (3層フォールバック: PI→invoice→subtotal+tax)
+- [x] 2026-05-30 作業: Admin 税額/小計/実付カラム追加 + ¥0 表示修正
+- [x] 2026-05-30 作業: サブスクリプション取消 API (POST /api/admin-customers?action=cancel)
+- [x] 2026-05-30 作業: テストルール確立 (TEST.md, コード内 TEST コメント, feedback-test-rule 記憶)
+- [x] 2026-05-30 作業: 本番テスト決済実施 → Webhook→メール→Admin 全リンク確認
 - [x] v3 プロジェクト移行（v1+v2 削除、GitHub 自動デプロイ）
 - [x] 404 ページ作成
 - [x] ナビ ハンバーガーメニュー（900px 以下対応）
@@ -78,8 +84,9 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 1. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
 2. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
-3. **税額生産検証** — 実購読者発生後、Stripe Tax +10% のデータ確認
+3. **税額生産検証** — 実購読者発生後、Stripe Tax +10% のデータ確認（admin 表示インフラ完了済）
 4. **週次メール本番** — 購読者獲得後、初回本番送信
+5. **テスト自動化** — TEST.md の curl テストを CI に組み込む（任意）
 
 ## Key Links
 

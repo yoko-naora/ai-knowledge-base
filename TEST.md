@@ -43,6 +43,13 @@ curl -s "https://kb.snsaladdin.com/api/admin-customers?key=admin2026"
 3. 预期看到: 小計/税額/实付 三列, 金额以 ¥ 显示, 客户数据正常
 ```
 
+## 取消订阅测试
+
+```
+curl -s -X POST "https://kb.snsaladdin.com/api/admin-customers?key=admin2026&action=cancel&email=yokonaora@gmail.com"
+# 预期: {"ok":true,"action":"canceled","email":"yokonaora@gmail.com","subscription_id":"sub_xxx","status":"canceled"}
+```
+
 ## 支付全流程测试
 
 ```
