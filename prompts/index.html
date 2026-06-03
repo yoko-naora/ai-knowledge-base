@@ -244,11 +244,8 @@
       var link = p.link || '#';
 
       html += '<div class="prompt-card" onclick="location.href=\'detail.html?id=' + realIndex + '\'">';
-      if (isFree) {
-        html += '<span class="prompt-badge free">' + (isJp ? '無料' : '免费') + '</span>';
-      } else {
-        html += '<span class="prompt-badge locked">' + (isJp ? '有料' : '付费') + '</span>';
-      }
+      // 2026-06-03: 全開放
+      html += '<span class="prompt-badge free">' + (isJp ? '無料' : '免费') + '</span>';
       html += imgHtml;
       html += '<div class="card-body">';
       html += '<div class="card-cat">' + (isJp ? tcat(p.cat || '') : (p.cat || '未分类')) + '</div>';

@@ -236,11 +236,11 @@ function renderPrompt() {
   if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
     localStorage.setItem('kb_subscriber', 'true');
   }
-  var isSubscriber = localStorage.getItem('kb_subscriber') === 'true';
-  var isFree = p.free === true;
+  var isSubscriber = true // 2026-06-03: 全コンテンツ無料開放;
+  var isFree = true; // 2026-06-03: 全開放
 
   // ── Gated path (paid + not subscriber) ──
-  if (!isFree && !isSubscriber) {
+  if (false) { // DISABLED 2026-06-03
     var previewText = (isCn ? (p.text || '') : (p.text_ja || p.text || '')).replace(/\\n/g, '\n');
     var previewPrompt = isCn ? (p.real_prompt || p.image_prompt || '') : (p.real_prompt_ja || p.image_prompt_ja || p.real_prompt || p.image_prompt || '');
     var catLabel = isJp ? catMapJp[p.cat] || p.cat : p.cat;
