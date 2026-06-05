@@ -1,0 +1,8 @@
+# Cloudflare Pages Redirects
+# Block public access to sensitive files
+
+/package.json        /404    404
+/package-lock.json   /404    404
+/CNAME               /404    404
+/netlify.toml        /404    404
+/.env.example        /404    404
