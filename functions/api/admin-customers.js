@@ -1,37 +1,73 @@
 // Cloudflare Pages Function: admin-customers
 // GET /api/admin-customers?key=xxx
+// POST /api/admin-customers?key=xxx&action=cancel&email=xxx
+//
+// SECURITY: ADMIN_KEY must be set in Cloudflare Pages env vars.
+// No default value — missing env var → function refuses to run.
 //
 // TEST:
-//   curl -s "https://kb.snsaladdin.com/api/admin-customers?key=admin2026" | python3 -c "
-//   import sys,json; d=json.load(sys.stdin)
-//   assert 'customers' in d, 'missing customers'
-//   assert d['total'] > 0, 'no customers'
-//   active = [c for c in d['customers'] if c['status']=='active']
-//   assert len(active) > 0, 'no active customers'
-//   c = active[0]
-//   assert c['actual_paid'] > 0, f'actual_paid is zero: {c}'
-//   assert c['subtotal'] > 0, f'subtotal is zero: {c}'
-//   print(f'OK: {len(d[\"customers\"])} customers, active={c[\"email\"]} actual_paid={c[\"actual_paid\"]} subtotal={c[\"subtotal\"]} tax={c[\"tax\"]}')"
-// 预期: OK 输出，actual_paid > 0, subtotal > 0
-//
-// TEST (取消订阅):
-//   curl -s -X POST "https://kb.snsaladdin.com/api/admin-customers?key=admin2026&action=cancel&email=yokonaora@gmail.com"
-//   预期: {"ok":true,"action":"canceled","email":"yokonaora@gmail.com","subscription_id":"sub_xxx"}
+//   curl -s "https://kb.snsaladdin.com/api/admin-customers?key=WRONG" → 401
+//   curl -s "https://kb.snsaladdin.com/api/admin-customers?key=CORRECT" → 200 with customers
+//   预期: phone numbers masked, correct key needed
 
 import Stripe from "stripe";
+
+// In-memory rate limiting (resets on cold start)
+const RATE_WINDOW_MS = 60_000;
+const MAX_REQUESTS = 10;
+const rateStore = new Map();
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const entry = rateStore.get(ip);
+  if (!entry || now - entry.windowStart > RATE_WINDOW_MS) {
+    rateStore.set(ip, { windowStart: now, count: 1 });
+    return false;
+  }
+  entry.count++;
+  return entry.count > MAX_REQUESTS;
+}
+
+function corsHeaders() {
+  return {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "https://kb.snsaladdin.com",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  };
+}
+
+function maskPhone(phone) {
+  const cleaned = phone.replace(/[\s\-()]/g, "");
+  if (cleaned.length <= 4) return "****";
+  const prefix = cleaned.startsWith("+") ? cleaned.slice(0, 3) : "";
+  const last4 = cleaned.slice(-4);
+  return `${prefix}****${last4}`;
+}
 
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const key = url.searchParams.get("key") || "";
-  const adminKey = context.env.ADMIN_KEY || "admin2026";
+  const adminKey = context.env.ADMIN_KEY;
+
+  // SECURITY: No default key — must be set in Cloudflare env vars
+  if (!adminKey) {
+    return new Response(JSON.stringify({ error: "Server configuration error" }), { status: 500, headers: corsHeaders() });
+  }
 
   if (key !== adminKey) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders() });
+  }
+
+  // Rate limit
+  const clientIp = context.request.headers.get("cf-connecting-ip") || "unknown";
+  if (isRateLimited(clientIp)) {
+    return new Response(JSON.stringify({ error: "Too many requests" }), { status: 429, headers: corsHeaders() });
   }
 
   const stripeKey = context.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
-    return new Response(JSON.stringify({ error: "Stripe not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Stripe not configured" }), { status: 500, headers: corsHeaders() });
   }
 
   const stripe = new Stripe(stripeKey);
@@ -74,45 +110,34 @@ export async function onRequestGet(context) {
 
         let latestPayment = null;
         try {
-          // Primary: check Payment Intents (works for both test & live Payment Links)
           const paymentIntents = await stripe.paymentIntents.list({ customer: cus.id, limit: 10 });
-          let bestPI = null;
-          let bestPIAmount = -1;
+          let bestPI = null, bestPIAmount = -1;
           for (const pi of paymentIntents.data) {
             const amt = pi.amount_received || pi.amount || 0;
-            if (amt > bestPIAmount && pi.status === "succeeded") {
-              bestPIAmount = amt;
-              bestPI = pi;
-            }
+            if (amt > bestPIAmount && pi.status === "succeeded") { bestPIAmount = amt; bestPI = pi; }
           }
           if (bestPI) {
             latestPayment = new Date(bestPI.created * 1000).toISOString();
             actualPaid = bestPI.amount_received || bestPI.amount || 0;
           }
 
-          // Fallback: check invoices for subtotal/tax and amount if PI not found
           const invoices = await stripe.invoices.list({ customer: cus.id, limit: 10 });
           for (const inv of invoices.data) {
             if (inv.subtotal > 0 && subtotal === 0) subtotal = inv.subtotal;
             if (inv.tax > 0 && tax === 0) tax = inv.tax;
-            // Use invoice amounts only if no PI found
             if (!bestPI) {
               const amt = inv.amount_paid || inv.total || inv.amount_due || 0;
-              if (amt > actualPaid) {
-                actualPaid = amt;
-                if (!latestPayment) latestPayment = new Date(inv.created * 1000).toISOString();
-              }
+              if (amt > actualPaid) { actualPaid = amt; if (!latestPayment) latestPayment = new Date(inv.created * 1000).toISOString(); }
             }
           }
-
-          // Last resort: use subtotal + tax as expected amount
-          if (actualPaid === 0 && subtotal > 0) {
-            actualPaid = subtotal + tax;
-          }
+          if (actualPaid === 0 && subtotal > 0) { actualPaid = subtotal + tax; }
         } catch { /* skip */ }
 
+        // PII: mask phone number
+        const rawPhone = cus.phone || "";
+
         customers.push({
-          name: cus.name || "", email: cus.email || "", phone: cus.phone || "",
+          name: cus.name || "", email: cus.email || "", phone: maskPhone(rawPhone),
           product: productName || "",
           plan, status,
           plan_amount: planAmount > 0 ? planAmount : 0,
@@ -134,37 +159,40 @@ export async function onRequestGet(context) {
       return (b.purchased_at || "").localeCompare(a.purchased_at || "");
     });
 
-    return new Response(JSON.stringify({ customers, total: customers.length }), { status: 200, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ customers, total: customers.length }), { status: 200, headers: corsHeaders() });
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Stripe API error", detail: err.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Internal error" }), { status: 500, headers: corsHeaders() });
   }
 }
 
-// POST /api/admin-customers?key=xxx&action=xxx
+// POST /api/admin-customers?key=xxx&action=cancel&email=xxx
 export async function onRequestPost(context) {
   const url = new URL(context.request.url);
   const key = url.searchParams.get("key") || "";
   const action = url.searchParams.get("action") || "";
   const email = url.searchParams.get("email") || "";
-  const adminKey = context.env.ADMIN_KEY || "admin2026";
+  const adminKey = context.env.ADMIN_KEY;
+
+  if (!adminKey) {
+    return new Response(JSON.stringify({ error: "Server configuration error" }), { status: 500, headers: corsHeaders() });
+  }
 
   if (key !== adminKey) {
-    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: corsHeaders() });
   }
 
   const stripeKey = context.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
-    return new Response(JSON.stringify({ error: "Stripe not configured" }), { status: 500, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Stripe not configured" }), { status: 500, headers: corsHeaders() });
   }
 
   const stripe = new Stripe(stripeKey);
 
   try {
     if (action === "cancel" && email) {
-      // Find customer by email
       const customers = await stripe.customers.list({ email, limit: 5 });
       if (customers.data.length === 0) {
-        return new Response(JSON.stringify({ error: "Customer not found", email }), { status: 404, headers: { "Content-Type": "application/json" } });
+        return new Response(JSON.stringify({ error: "Customer not found", email }), { status: 404, headers: corsHeaders() });
       }
 
       const cus = customers.data[0];
@@ -174,26 +202,21 @@ export async function onRequestPost(context) {
       }
 
       if (subs.data.length === 0) {
-        return new Response(JSON.stringify({ error: "No active subscription found", email, customer_id: cus.id }), { status: 404, headers: { "Content-Type": "application/json" } });
+        return new Response(JSON.stringify({ error: "No active subscription found", email, customer_id: cus.id }), { status: 404, headers: corsHeaders() });
       }
 
-      // Cancel the most recent active/trialing subscription immediately
       const sub = subs.data[0];
       const canceled = await stripe.subscriptions.cancel(sub.id);
 
       return new Response(JSON.stringify({
-        ok: true,
-        action: "canceled",
-        email,
-        customer_id: cus.id,
-        subscription_id: sub.id,
+        ok: true, action: "canceled", email, customer_id: cus.id, subscription_id: sub.id,
         status: canceled.status,
         canceled_at: canceled.canceled_at ? new Date(canceled.canceled_at * 1000).toISOString() : null,
-      }), { status: 200, headers: { "Content-Type": "application/json" } });
+      }), { status: 200, headers: corsHeaders() });
     }
 
-    return new Response(JSON.stringify({ error: "Unknown action", action }), { status: 400, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Unknown action", action }), { status: 400, headers: corsHeaders() });
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Stripe API error", detail: err.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+    return new Response(JSON.stringify({ error: "Internal error" }), { status: 500, headers: corsHeaders() });
   }
 }
