@@ -8,7 +8,7 @@ export async function onRequest(context) {
       length: k.length,
       hasLeadingSpace: k.startsWith(" "),
       hasTrailingSpace: k.endsWith(" "),
-      hex: Buffer.from(k).toString("hex"),
+      hex: [...new TextEncoder().encode(k)].map(b => b.toString(16).padStart(2,'0')).join(''),
     };
   }
 
