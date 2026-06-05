@@ -95,107 +95,155 @@ tbody tr:hover { background: rgba(184,146,90,.04); }
 
 <script>
 (function() {
-  var ADMIN_KEY = 'admin2026';
-  var VALID_HASH = '6051fc84a7a0d74c225fb18a496b09952da5642e60723ecae543298edd7d82d6';
+  // Security: admin key is validated server-side via /api/admin-customers?key=xxx
+  // No hardcoded password or hash — key stored in sessionStorage only (cleared on tab close)
 
-  // ── Login ──
-  if (localStorage.getItem('kb_admin') === 'true') {
-    showDashboard();
+  var adminKey = sessionStorage.getItem('kb_admin_key');
+
+  // ── Try to restore session ──
+  if (adminKey) {
+    verifyAndShow(adminKey);
   }
 
-  document.getElementById('loginBtn').addEventListener('click', async function() {
-    var pw = document.getElementById('loginInput').value;
-    var msgBuffer = new TextEncoder().encode(pw.trim());
-    var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    var hashArray = Array.from(new Uint8Array(hashBuffer));
-    var hashHex = hashArray.map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
-    if (hashHex === VALID_HASH) {
-      localStorage.setItem('kb_admin', 'true');
-      showDashboard();
-    } else {
-      document.getElementById('loginError').style.display = '';
-    }
+  // ── Login ──
+  document.getElementById('loginBtn').addEventListener('click', function() {
+    var pw = document.getElementById('loginInput').value.trim();
+    if (!pw) return;
+    verifyAndShow(pw);
   });
 
   document.getElementById('loginInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') document.getElementById('loginBtn').click();
   });
 
+  function verifyAndShow(key) {
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('loginBtn').disabled = true;
+    document.getElementById('loginBtn').textContent = '验证中...';
+
+    // Verify by calling the API — server checks the key
+    fetch('/api/admin-customers?key=' + encodeURIComponent(key))
+      .then(function(r) {
+        if (r.status === 401) {
+          // Invalid key — clear and show login
+          sessionStorage.removeItem('kb_admin_key');
+          adminKey = null;
+          document.getElementById('loginError').style.display = '';
+          document.getElementById('loginBtn').disabled = false;
+          document.getElementById('loginBtn').textContent = '进入';
+          return null;
+        }
+        if (!r.ok) throw new Error('Server error: ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        if (data === null) return; // Already handled 401 above
+        // Success! Store key in sessionStorage
+        sessionStorage.setItem('kb_admin_key', key);
+        adminKey = key;
+        showDashboard(data);
+      })
+      .catch(function(err) {
+        document.getElementById('loginError').style.display = '';
+        document.getElementById('loginError').textContent = err.message;
+        document.getElementById('loginBtn').disabled = false;
+        document.getElementById('loginBtn').textContent = '进入';
+      });
+  }
+
+  // ── Logout ──
   document.getElementById('logoutBtn').addEventListener('click', function() {
-    localStorage.removeItem('kb_admin');
+    sessionStorage.removeItem('kb_admin_key');
+    adminKey = null;
     location.reload();
   });
 
-  document.getElementById('refreshBtn').addEventListener('click', loadData);
+  document.getElementById('refreshBtn').addEventListener('click', function() {
+    loadData(adminKey);
+  });
 
-  function showDashboard() {
+  function showDashboard(initialData) {
     document.getElementById('loginBox').style.display = 'none';
     document.getElementById('dashboard').style.display = '';
-    loadData();
+    renderData(initialData);
   }
 
-  // ── Load data ──
-  function loadData() {
+  // ── Load / refresh data ──
+  function loadData(key) {
+    if (!key) return;
     document.getElementById('tableLoading').style.display = '';
     document.getElementById('tableError').style.display = 'none';
     document.getElementById('customerTable').style.display = 'none';
 
-    fetch('/api/admin-customers?key=' + ADMIN_KEY)
-      .then(function(r) { return r.json(); })
+    fetch('/api/admin-customers?key=' + encodeURIComponent(key))
+      .then(function(r) {
+        if (r.status === 401) {
+          sessionStorage.removeItem('kb_admin_key');
+          adminKey = null;
+          location.reload();
+          return null;
+        }
+        if (!r.ok) throw new Error('Server error: ' + r.status);
+        return r.json();
+      })
       .then(function(data) {
+        if (data === null) return;
         document.getElementById('tableLoading').style.display = 'none';
         if (data.error) {
           document.getElementById('tableError').style.display = '';
-          document.getElementById('tableError').textContent = data.error + (data.detail ? ': ' + data.detail : '');
+          document.getElementById('tableError').textContent = data.error;
           return;
         }
-
-        // Stats
-        var active = data.customers.filter(function(c) { return c.status === 'active' || c.status === 'trialing'; });
-        var monthly = active.filter(function(c) { return c.plan === 'monthly'; });
-        var yearly = active.filter(function(c) { return c.plan === 'yearly'; });
-        document.getElementById('statsBar').innerHTML =
-          '<div class="stat-card"><div class="num">' + data.total + '</div><div class="label">总客户</div></div>' +
-          '<div class="stat-card"><div class="num">' + active.length + '</div><div class="label">活跃订阅</div></div>' +
-          '<div class="stat-card"><div class="num">' + monthly.length + '</div><div class="label">月额</div></div>' +
-          '<div class="stat-card"><div class="num">' + yearly.length + '</div><div class="label">年额</div></div>';
-
-        // Table
-        var rows = '';
-        data.customers.forEach(function(c) {
-          var statusBadge = '';
-          if (c.status === 'active') statusBadge = '<span class="badge active">活跃</span>';
-          else if (c.status === 'trialing') statusBadge = '<span class="badge trialing">试用</span>';
-          else if (c.status === 'ended') statusBadge = '<span class="badge ended">已到期</span>';
-          else statusBadge = '<span class="badge none">无订阅</span>';
-
-          var planBadge = '';
-          if (c.plan === 'monthly') planBadge = '<span class="badge monthly">月额</span>';
-          else if (c.plan === 'yearly') planBadge = '<span class="badge yearly">年额</span>';
-          else planBadge = '<span>-</span>';
-
-          rows += '<tr>' +
-            '<td class="date-cell">' + formatTime(c.purchased_at) + '</td>' +
-            '<td class="name-cell">' + escapeHtml(c.name || '-') + '</td>' +
-            '<td class="email-cell">' + escapeHtml(c.email || '-') + '</td>' +
-            '<td>' + escapeHtml(c.product || '-') + '</td>' +
-            '<td>' + planBadge + '</td>' +
-            '<td>' + statusBadge + '</td>' +
-            '<td>' + formatAmount(c.subtotal) + '</td>' +
-            '<td>' + formatTax(c.tax) + '</td>' +
-            '<td>' + formatAmount(c.actual_paid) + '</td>' +
-            '<td class="date-cell">' + formatTime(c.current_period_end) + '</td>' +
-            '</tr>';
-        });
-
-        document.getElementById('tableBody').innerHTML = rows;
-        document.getElementById('customerTable').style.display = '';
+        renderData(data);
       })
       .catch(function(err) {
         document.getElementById('tableLoading').style.display = 'none';
         document.getElementById('tableError').style.display = '';
         document.getElementById('tableError').textContent = '加载失败: ' + err.message;
       });
+  }
+
+  function renderData(data) {
+    // Stats
+    var active = data.customers.filter(function(c) { return c.status === 'active' || c.status === 'trialing'; });
+    var monthly = active.filter(function(c) { return c.plan === 'monthly'; });
+    var yearly = active.filter(function(c) { return c.plan === 'yearly'; });
+    document.getElementById('statsBar').innerHTML =
+      '<div class="stat-card"><div class="num">' + data.total + '</div><div class="label">总客户</div></div>' +
+      '<div class="stat-card"><div class="num">' + active.length + '</div><div class="label">活跃订阅</div></div>' +
+      '<div class="stat-card"><div class="num">' + monthly.length + '</div><div class="label">月额</div></div>' +
+      '<div class="stat-card"><div class="num">' + yearly.length + '</div><div class="label">年额</div></div>';
+
+    // Table
+    var rows = '';
+    data.customers.forEach(function(c) {
+      var statusBadge = '';
+      if (c.status === 'active') statusBadge = '<span class="badge active">活跃</span>';
+      else if (c.status === 'trialing') statusBadge = '<span class="badge trialing">试用</span>';
+      else if (c.status === 'ended') statusBadge = '<span class="badge ended">已到期</span>';
+      else statusBadge = '<span class="badge none">无订阅</span>';
+
+      var planBadge = '';
+      if (c.plan === 'monthly') planBadge = '<span class="badge monthly">月额</span>';
+      else if (c.plan === 'yearly') planBadge = '<span class="badge yearly">年额</span>';
+      else planBadge = '<span>-</span>';
+
+      rows += '<tr>' +
+        '<td class="date-cell">' + formatTime(c.purchased_at) + '</td>' +
+        '<td class="name-cell">' + escapeHtml(c.name || '-') + '</td>' +
+        '<td class="email-cell">' + escapeHtml(c.email || '-') + '</td>' +
+        '<td>' + escapeHtml(c.product || '-') + '</td>' +
+        '<td>' + planBadge + '</td>' +
+        '<td>' + statusBadge + '</td>' +
+        '<td>' + formatAmount(c.subtotal) + '</td>' +
+        '<td>' + formatTax(c.tax) + '</td>' +
+        '<td>' + formatAmount(c.actual_paid) + '</td>' +
+        '<td class="date-cell">' + formatTime(c.current_period_end) + '</td>' +
+        '</tr>';
+    });
+
+    document.getElementById('tableBody').innerHTML = rows;
+    document.getElementById('customerTable').style.display = '';
   }
 
   function formatTime(dateStr) {

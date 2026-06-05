@@ -5,7 +5,66 @@
 [functions]
   node_bundler = "esbuild"
 
+# ── Security headers ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Block clickjacking
+    X-Frame-Options = "DENY"
+    # Prevent MIME type sniffing
+    X-Content-Type-Options = "nosniff"
+    # Restrict referrer info
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # HSTS: force HTTPS for 1 year (includes subdomains)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Content Security Policy — allow fonts from Google, images from self + Stripe
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.stripe.com https://pbs.twimg.com; frame-src https://js.stripe.com https://hooks.stripe.com; connect-src 'self' https://api.stripe.com;"
+    # Permissions policy: restrict sensitive browser features
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ── API → Netlify Functions ──
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# ── Block public access to sensitive files ──
+[[redirects]]
+  from = "/package.json"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/package-lock.json"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/CNAME"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/.env.example"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/.git/*"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/scripts/*"
+  to = "/404"
+  status = 404
+
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404"
+  status = 404

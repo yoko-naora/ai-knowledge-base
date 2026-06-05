@@ -3,6 +3,8 @@
 //   1. checkout.session.completed → welcome + access email
 //   2. invoice.paid → renewal receipt email
 //   3. customer.subscription.deleted → cancellation notice email
+//
+// SECURITY: ACCESS_CODE must be set in Netlify env vars — no default.
 
 import Stripe from "stripe";
 
@@ -10,8 +12,7 @@ const SITE_URL = process.env.URL || "https://kb.snsaladdin.com";
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
-
-const ACCESS_CODE = "aiknowledge2026";
+const ACCESS_CODE = process.env.ACCESS_CODE;
 
 const MONTHLY_FEATURES_CN = [
   "全文章无限阅读（中日双语）",
@@ -132,7 +133,9 @@ function baseEmailLayout({ isJp, headerTitle, headerSub, planName, features, sho
 
   let accessCodeBlock = "";
   if (showAccessCode) {
-    accessCodeBlock = `
+    // Only show access code if env var is configured
+    if (ACCESS_CODE) {
+      accessCodeBlock = `
         <!-- Access Code -->
         <tr>
           <td style="padding:0 0 28px;">
@@ -147,6 +150,7 @@ function baseEmailLayout({ isJp, headerTitle, headerSub, planName, features, sho
             </table>
           </td>
         </tr>`;
+    }
   }
 
   let ctaBlock = "";
@@ -228,7 +232,7 @@ function baseEmailLayout({ isJp, headerTitle, headerSub, planName, features, sho
 }
 
 // ──────────────────────────────────────
-//  Helpers: get customer email from different event types
+//  Helpers: get customer email
 // ──────────────────────────────────────
 async function getEmailFromSession(session) {
   return session.customer_details?.email || session.customer_email || null;
@@ -279,8 +283,8 @@ export default async function handler(event) {
   try {
     stripeEvent = stripe.webhooks.constructEvent(event.body, sig, STRIPE_WEBHOOK_SECRET);
   } catch (err) {
-    console.error("Signature verification failed:", err.message);
-    return new Response(JSON.stringify({ error: `Signature verification failed: ${err.message}` }), { status: 400, headers: { "Content-Type": "application/json" } });
+    console.error("Signature verification failed");
+    return new Response(JSON.stringify({ error: "Signature verification failed" }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
 
   const type = stripeEvent.type;
@@ -301,7 +305,7 @@ export default async function handler(event) {
     const amount = data.amount_total || 0;
     isMonthly = amount <= 5000;
     isJp = !(data.client_reference_id || "").includes("lang=cn");
-    console.log(`[checkout.session.completed] email=${email} plan=${isMonthly ? "monthly" : "yearly"}`);
+    console.log(`[checkout.session.completed] plan=${isMonthly ? "monthly" : "yearly"}`);
     subject = isJp
       ? `【AI知識庫】ご購読ありがとうございます — ${isMonthly ? "月額プラン" : "年額プラン"}`
       : `【AI知识库】订阅确认 — ${isMonthly ? "月度方案" : "年度方案"}`;
@@ -316,11 +320,10 @@ export default async function handler(event) {
     isMonthly = amount <= 5000;
     const nextPeriodEnd = data.lines?.data?.[0]?.period?.end || data.period_end;
     isJp = !(data.customer_address?.country === "CN");
-    console.log(`[invoice.paid] email=${email} plan=${isMonthly ? "monthly" : "yearly"}`);
+    console.log(`[invoice.paid] plan=${isMonthly ? "monthly" : "yearly"}`);
 
-    // Skip the first invoice (handled by checkout.session.completed)
     if (data.billing_reason === "subscription_create") {
-      console.log(`[invoice.paid] Skipping first invoice for ${email} (handled by checkout.session.completed)`);
+      console.log(`[invoice.paid] Skipping first invoice (handled by checkout.session.completed)`);
       return new Response(JSON.stringify({ ok: true, type, action: "skipped_first_invoice" }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
 
@@ -334,13 +337,12 @@ export default async function handler(event) {
       console.error("No email in subscription:", data.id);
       return new Response(JSON.stringify({ error: "No email", type }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
-    // Determine plan from subscription items
     const items = data.items?.data || [];
     const subAmount = items.reduce((sum, item) => sum + ((item.price?.unit_amount || 0) * (item.quantity || 1)), 0);
     isMonthly = subAmount <= 5000;
     const endedAt = data.ended_at || data.canceled_at;
-    isJp = true; // default JP for cancellation
-    console.log(`[customer.subscription.deleted] email=${email} plan=${isMonthly ? "monthly" : "yearly"}`);
+    isJp = true;
+    console.log(`[customer.subscription.deleted] plan=${isMonthly ? "monthly" : "yearly"}`);
     subject = isJp
       ? `【AI知識庫】ご購読終了のお知らせ`
       : `【AI知识库】订阅到期通知`;
@@ -373,13 +375,13 @@ export default async function handler(event) {
     const result = await res.json();
     if (!res.ok) {
       console.error("Resend error:", JSON.stringify(result));
-      return new Response(JSON.stringify({ error: "Resend API error", detail: result }), { status: 502, headers: { "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ error: "Resend API error" }), { status: 502, headers: { "Content-Type": "application/json" } });
     }
 
-    console.log(`[${type}] Email sent to ${email}: ${result.id}`);
+    console.log(`[${type}] Email sent: ${result.id}`);
     return new Response(JSON.stringify({ ok: true, type, email_id: result.id }), { status: 200, headers: { "Content-Type": "application/json" } });
   } catch (err) {
-    console.error("Email send error:", err);
+    console.error("Email send error");
     return new Response(JSON.stringify({ error: "Email send failed" }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 }

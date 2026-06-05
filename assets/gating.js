@@ -3,30 +3,21 @@
  * Free articles: do NOT include this script.
  * Locked articles: include this script to show preview + paywall.
  *
- * Unlock methods (in order):
+ * Unlock methods:
  *   1. Already unlocked (localStorage kb_subscriber = true)
  *   2. Email verification — calls /api/check-subscription to query Stripe
- *   3. Access code (legacy fallback)
+ *   3. Access code — calls /api/check-subscription?code=xxx (server-side verification)
  *
  * Usage: <script src="../assets/gating.js"></script> at end of <body>
+ *
+ * SECURITY: All verification happens server-side. No hardcoded bypasses.
+ * No admin hash, no hardcoded emails, no client-side code comparison.
  */
 (function () {
   if (document.querySelector('.gating-applied')) return;
 
-  // Admin bypass via URL hash — bookmark with #admin to auto-unlock on any device
-  if (window.location.hash === '#admin') {
-    localStorage.setItem('kb_email', 'yokonaora@gmail.com');
-    localStorage.setItem('kb_subscriber', 'true');
-  }
-
-  // Already unlocked via payment or previous email verification
+  // Already unlocked via payment or previous email/code verification
   if (localStorage.getItem('kb_subscriber') === 'true') return;
-
-  // Admin bypass via stored email
-  if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
-    localStorage.setItem('kb_subscriber', 'true');
-    return;
-  }
 
   var container = document.querySelector('.article-content');
   if (!container) return;
@@ -69,7 +60,7 @@
     '</div>' +
     '<p id="gating-error" style="font-size:10px;color:#c44d34;margin-top:6px;display:none;">メールアドレスの確認に失敗しました。購読が有効かご確認ください。</p>' +
     '<p id="gating-loading" style="font-size:10px;color:#9a9490;margin-top:6px;display:none;">確認中...</p>' +
-    // Access code (legacy fallback)
+    // Access code (server-side verified)
     '<p style="font-size:9px;color:#c0bbb5;margin-top:18px;">アクセスコードをお持ちですか？</p>' +
     '<div style="display:flex;gap:6px;justify-content:center;margin-top:4px;">' +
     '<input id="gating-code" type="text" placeholder="アクセスコード" style="padding:5px 10px;border:1px solid #ddd;border-radius:2px;font-family:inherit;font-size:10px;width:150px;outline:none;">' +
@@ -82,25 +73,18 @@
   wrapper.style.overflow = 'hidden';
   wrapper.appendChild(overlay);
 
-  function unlock() {
+  function unlock(email) {
     localStorage.setItem('kb_subscriber', 'true');
+    if (email) localStorage.setItem('kb_email', email);
     wrapper.style.maxHeight = 'none';
     wrapper.style.overflow = 'visible';
     overlay.style.display = 'none';
   }
 
-  // ── Email verification ──
+  // ── Email verification (server-side via Stripe) ──
   document.getElementById('gating-verify').addEventListener('click', function () {
     var email = document.getElementById('gating-email').value.trim();
     if (!email) return;
-
-    // Admin bypass
-    if (email === 'yokonaora@gmail.com') {
-      localStorage.setItem('kb_email', email);
-      localStorage.setItem('kb_subscriber', 'true');
-      unlock();
-      return;
-    }
 
     document.getElementById('gating-error').style.display = 'none';
     document.getElementById('gating-loading').style.display = '';
@@ -112,8 +96,7 @@
         document.getElementById('gating-loading').style.display = 'none';
         document.getElementById('gating-verify').disabled = false;
         if (data.active) {
-          localStorage.setItem('kb_email', email);
-          unlock();
+          unlock(email);
         } else {
           document.getElementById('gating-error').style.display = '';
         }
@@ -129,24 +112,31 @@
     if (e.key === 'Enter') document.getElementById('gating-verify').click();
   });
 
-  // ── Access code (legacy) ──
-  var VALID_HASH = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92';
-
-  async function checkCode(code) {
-    var msgBuffer = new TextEncoder().encode(code.trim());
-    var hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    var hashArray = Array.from(new Uint8Array(hashBuffer));
-    var hashHex = hashArray.map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
-    return hashHex === VALID_HASH;
-  }
-
+  // ── Access code verification (server-side, not client hash) ──
   document.getElementById('gating-unlock').addEventListener('click', function () {
-    var code = document.getElementById('gating-code').value;
-    checkCode(code).then(function (valid) {
-      if (valid) {
-        unlock();
-      }
-    });
+    var code = document.getElementById('gating-code').value.trim();
+    if (!code) return;
+
+    document.getElementById('gating-error').style.display = 'none';
+    document.getElementById('gating-loading').style.display = '';
+    document.getElementById('gating-unlock').disabled = true;
+
+    fetch('/api/check-subscription?code=' + encodeURIComponent(code))
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        document.getElementById('gating-loading').style.display = 'none';
+        document.getElementById('gating-unlock').disabled = false;
+        if (data.active) {
+          unlock(null);
+        } else {
+          document.getElementById('gating-error').style.display = '';
+        }
+      })
+      .catch(function () {
+        document.getElementById('gating-loading').style.display = 'none';
+        document.getElementById('gating-unlock').disabled = false;
+        document.getElementById('gating-error').style.display = '';
+      });
   });
 
   document.getElementById('gating-code').addEventListener('keydown', function (e) {
