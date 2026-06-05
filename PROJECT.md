@@ -115,7 +115,8 @@ Variables needed:
 | `STRIPE_SECRET_KEY` | Cloudflare + .env | Stripe API |
 | `STRIPE_WEBHOOK_SECRET` | Cloudflare + .env | Webhook signature verification |
 | `RESEND_API_KEY` | Cloudflare + .env | Email delivery |
-| `ADMIN_KEY` | Cloudflare | Admin page auth (default: admin2026) |
+| `ADMIN_KEY` | Cloudflare | Admin page auth (強固なランダム値、デフォルトなし) |
+| `ACCESS_CODE` | Cloudflare | 購読完了メールのアクセスコード (デフォルトなし) |
 | `CLOUDFLARE_API_TOKEN` | Local only | wrangler deploy |
 
 ## Deploy
@@ -144,7 +145,7 @@ kb-site/
 ├── index.html              # Home (articles, tools, pricing, FAQ)
 ├── checkout.html           # Payment page (Stripe Payment Links)
 ├── success.html            # Post-payment thank you
-├── admin.html              # Customer management (auth: admin2026)
+├── admin.html              # Customer management (auth: ADMIN_KEY env var)
 ├── free-prompts.html       # Free 5 prompts lead magnet
 ├── tokushoho.html          # 特定商取引法 (legal)
 ├── CNAME                   # kb.snsaladdin.com
@@ -169,5 +170,37 @@ kb-site/
 │   └── weekly-update.json      # Baseline state
 ├── images/                 # Article images
 ├── videos/                 # Article videos
-└── netlify/                # Legacy Netlify config (deprecated)
+└── netlify/                # Legacy Netlify config (deprecated, not deployed)
+
+## Security (2026-06-05 审计后更新)
+
+### 认证方式
+- **Admin**: `ADMIN_KEY` 环境变量 → 服务端验证 (不再用客户端 hash)
+- **付费墙**: Stripe 邮箱验证 → `/api/check-subscription?email=`
+- **Access Code**: `ACCESS_CODE` 环境变量 → `/api/check-subscription?code=`
+- **Webhook**: Stripe 签名验证 (`stripe-signature` header)
+
+### 已移除的安全漏洞
+- `admin2026` 默认密码 → 必须设置 `ADMIN_KEY` 环境变量
+- `yokonaora@gmail.com` 硬编码后门 → 已删除
+- `#admin` URL hash 绕过 → 已删除
+- `aiknowledge2026` 硬编码 access code → 改为 `ACCESS_CODE` 环境变量
+- 客户端 SHA-256 hash 验证 → 改为服务端验证
+- 电话号码 PII 暴露 → 已脱敏
+- CORS `*` 通配符 → 限制为 `https://kb.snsaladdin.com`
+- API 错误消息泄露内部信息 → 已清理
+
+### 安全头 (Cloudflare `_headers`)
+- HSTS (max-age=1年)
+- Content-Security-Policy
+- X-Frame-Options: DENY
+- Permissions-Policy
+
+### 修改文件时注意
+- **实际部署平台**: Cloudflare Pages (不是 Netlify)
+- **函数目录**: `functions/api/` (不是 `netlify/functions/`)
+- **环境变量**: Cloudflare Dashboard → Workers & Pages → ai-knowledge-base-v3 → Settings
+- **敏感文件屏蔽**: `_redirects` + `_headers`
+- **验证部署**: `curl -sI https://kb.snsaladdin.com/` 检查 `Server: cloudflare`
+- **无硬编码**: 所有密钥走 `context.env.XXX`，代码中不存在 `|| "default"` 回退值
 ```
