@@ -1,11 +1,34 @@
 export async function onRequest(context) {
-  const keys = Object.keys(context.env || {});
+  const rawKeys = Object.keys(context.env || {});
+
+  // Check exact key names — show if there are hidden spaces
+  const keyDetails = {};
+  for (const k of rawKeys) {
+    keyDetails[k] = {
+      length: k.length,
+      hasLeadingSpace: k.startsWith(" "),
+      hasTrailingSpace: k.endsWith(" "),
+      hex: Buffer.from(k).toString("hex"),
+    };
+  }
+
   const check = {
     RESEND_API_KEY: !!context.env.RESEND_API_KEY,
     STRIPE_SECRET_KEY: !!context.env.STRIPE_SECRET_KEY,
     STRIPE_WEBHOOK_SECRET: !!context.env.STRIPE_WEBHOOK_SECRET,
+    ADMIN_KEY: !!context.env.ADMIN_KEY,
+    ACCESS_CODE: !!context.env.ACCESS_CODE,
   };
-  return new Response(JSON.stringify({ keys, check }, null, 2), {
+
+  // Also try the potentially-spaced versions
+  const spacedCheck = {};
+  for (const k of rawKeys) {
+    if (k.includes("ADMIN") || k.includes("ACCESS")) {
+      spacedCheck[k] = !!context.env[k];
+    }
+  }
+
+  return new Response(JSON.stringify({ keys: rawKeys, keyDetails, check, spacedCheck }, null, 2), {
     status: 200,
     headers: { "Content-Type": "application/json" },
   });
