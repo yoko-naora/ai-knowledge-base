@@ -27,7 +27,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 - [x] DNS: CNAME `kb` → `ai-knowledge-base-v3.pages.dev.` (value-domain, TTL 180s)
 - [x] SSL: Cloudflare 自動証明書
-- [x] 全ページ静的生成 (index, articles/001-025, prompts/index, detail, checkout, success, admin, tokushoho, free-prompts)
+- [x] 全ページ静的生成 (index, articles/001-026, prompts/index, detail, checkout, success, admin, tokushoho, free-prompts)
 - [x] 中日バイリンガル対応 (nav, footer, article, prompts)
 - [x] Stripe Payment Links (月額 ¥2,980 / 年額 ¥30,000)
 - [x] Stripe Webhook → Resend 購読完了メール (2026-05-30 再検証・全リンク正常確認済)
@@ -67,6 +67,9 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] prompts/detail.html 即時語言切換（無頁面刷新，CustomEvent 驅動）
 - [x] 語言切換架構統一 — main.js 入口 → langchange event → detail 監聽，消除 switchLang 衝突
 - [x] 補完 Seedance 動画 id=26（Sam Altman偷拍主题）
+- [x] 2026-06-07: Article 026 创建 + 首页卡片 ([Hermes])
+- [x] 2026-06-07: CLAUDE.md + AGENTS.md 三端共享规则文件 ([Claude])
+- [x] 2026-06-07: 多Agent分工确立（Claude=后端+Hermes=前端+Codex=测试/内容）
 
 ## Architecture Notes (2026-05-27)
 
@@ -149,8 +152,10 @@ kb-site/
 ├── free-prompts.html       # Free 5 prompts lead magnet
 ├── tokushoho.html          # 特定商取引法 (legal)
 ├── CNAME                   # kb.snsaladdin.com
+├── CLAUDE.md               # 三端共享规则（真源）
+├── AGENTS.md               # 薄桥接 → CLAUDE.md（Codex 入口）
 ├── TEST.md                 # テスト手順・テストデータ (see: feedback-test-rule)
-├── articles/               # 001.html - 025.html (26 articles)
+├── articles/               # 001.html - 026.html (27 articles)
 ├── prompts/
 │   ├── index.html          # Prompt listing
 │   ├── detail.html         # Prompt detail (copy btn, lang switch)
