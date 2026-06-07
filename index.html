@@ -22,10 +22,10 @@
 :root {
   --ink: #1a1814;
   --ink-muted: #5a5650;
-  --ink-faint: #9a9490;
+  --ink-faint: #6B6561;
   --paper: #faf9f6;
   --paper-warm: #f2ede5;
-  --gold: #b8925a;
+  --gold: #8B6E3C;
   --gold-lt: #d4af7a;
   --accent: #2c5f7a;
   --accent-lt: #e8f2f7;
@@ -140,14 +140,14 @@ h1 em { font-style: normal; color: var(--gold); font-weight: 600; }
 .who-card { background: #fff; padding: 36px 32px; display: flex; gap: 16px; align-items: flex-start; transition: background .2s; }
 .who-card:hover { background: var(--accent-lt); }
 .who-icon { font-size: 24px; flex-shrink: 0; width: 40px; text-align: center; }
-.who-card h4 { font-family: var(--serif); font-size: 14px; font-weight: 400; margin-bottom: 6px; color: var(--ink); }
+.who-card h3 { font-family: var(--serif); font-size: 14px; font-weight: 400; margin-bottom: 6px; color: var(--ink); }
 .who-card p { font-size: 12px; color: var(--ink-muted); line-height: 1.8; }
 
 /* PAIN POINTS */
 .pain-sec { background: var(--paper-warm); }
 .pain-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 60px; }
 .pain-card { background: var(--paper); padding: 32px; border-radius: 2px; border-left: 2px solid var(--gold-lt); }
-.pain-card h4 { font-family: var(--serif); font-size: 14px; font-weight: 400; margin-bottom: 8px; color: var(--ink); }
+.pain-card h3 { font-family: var(--serif); font-size: 14px; font-weight: 400; margin-bottom: 8px; color: var(--ink); }
 .pain-card p { font-size: 12px; color: var(--ink-muted); line-height: 1.9; }
 .pain-resolution { margin-top: 48px; text-align: center; padding: 32px; background: #fff; border-radius: 2px; }
 .pain-resolution p { font-size: 15px; color: var(--ink); line-height: 2.2; }
@@ -185,7 +185,7 @@ h1 em { font-style: normal; color: var(--gold); font-weight: 600; }
 .value-card { background: #fff; padding: 32px 24px; text-align: center; transition: transform .2s; }
 .value-card:hover { transform: translateY(-3px); }
 .value-icon { font-size: 28px; margin-bottom: 14px; }
-.value-card h4 { font-family: var(--serif); font-size: 13px; font-weight: 400; margin-bottom: 6px; }
+.value-card h3 { font-family: var(--serif); font-size: 13px; font-weight: 400; margin-bottom: 6px; }
 .value-card p { font-size: 11px; color: var(--ink-muted); line-height: 1.7; }
 
 /* PRICING */
@@ -409,42 +409,42 @@ footer a:hover { color: var(--gold); }
     <div class="who-card">
       <div class="who-icon">💰</div>
       <div>
-        <h4><span class="lang-content cn">想用AI开展副业·变现的人</span><span class="lang-content jp">AIで副業・変現を始めたい人</span></h4>
+        <h3><span class="lang-content cn">想用AI开展副业·变现的人</span><span class="lang-content jp">AIで副業・変現を始めたい人</span></h3>
         <p><span class="lang-content cn">从X达人们的实际案例中，学习月入5~10万日元的真实方法。</span><span class="lang-content jp">実際に月5〜10万円を達成した手法を、Xの達人たちの実例から学べます。</span></p>
       </div>
     </div>
     <div class="who-card">
       <div class="who-icon">🛠️</div>
       <div>
-        <h4><span class="lang-content cn">想将最新AI工具用于工作的人</span><span class="lang-content jp">最新AIツールを仕事に活かしたい人</span></h4>
+        <h3><span class="lang-content cn">想将最新AI工具用于工作的人</span><span class="lang-content jp">最新AIツールを仕事に活かしたい人</span></h3>
         <p><span class="lang-content cn">Claude Code·GPT-Image-2·Cursor等，每周为您带来最新工具的实践知识。</span><span class="lang-content jp">Claude Code・GPT-Image-2・Cursorなど、毎週新しいツールの実践知が届きます。</span></p>
       </div>
     </div>
     <div class="who-card">
       <div class="who-icon">🇨🇳</div>
       <div>
-        <h4><span class="lang-content cn">想第一时间获取中国AI信息的人</span><span class="lang-content jp">中国発のAI情報をいち早くキャッチしたい人</span></h4>
+        <h3><span class="lang-content cn">想第一时间获取中国AI信息的人</span><span class="lang-content jp">中国発のAI情報をいち早くキャッチしたい人</span></h3>
         <p><span class="lang-content cn">跨越中文壁垒，用中文阅读世界最前沿的AI应用案例。</span><span class="lang-content jp">中国語の壁を越えて、世界最前線のAI活用事例を日本語で読めます。</span></p>
       </div>
     </div>
     <div class="who-card">
       <div class="who-icon">📚</div>
       <div>
-        <h4><span class="lang-content cn">想系统性积累AI知识的人</span><span class="lang-content jp">体系的にAI知識を積み上げたい人</span></h4>
+        <h3><span class="lang-content cn">想系统性积累AI知识的人</span><span class="lang-content jp">体系的にAI知識を積み上げたい人</span></h3>
         <p><span class="lang-content cn">不是碎片化信息，而是每周2~3篇精选文章，稳步构建知识体系。</span><span class="lang-content jp">断片的な情報ではなく、毎週2〜3本の厳選記事で着実に知識をビルドできます。</span></p>
       </div>
     </div>
     <div class="who-card">
       <div class="who-icon">🔰</div>
       <div>
-        <h4><span class="lang-content cn">AI初学者〜中级者</span><span class="lang-content jp">AI初心者〜中級者</span></h4>
+        <h3><span class="lang-content cn">AI初学者〜中级者</span><span class="lang-content jp">AI初心者〜中級者</span></h3>
         <p><span class="lang-content cn">附带专业术语通俗解说。初学者也能读懂，中级者也会有新发现。</span><span class="lang-content jp">専門用語を噛み砕いた解説付き。初心者でも読みやすく、中級者には新しい発見があります。</span></p>
       </div>
     </div>
     <div class="who-card">
       <div class="who-icon">⏳</div>
       <div>
-        <h4><span class="lang-content cn">想缩短信息收集时间的人</span><span class="lang-content jp">情報収集の時間を短縮したい人</span></h4>
+        <h3><span class="lang-content cn">想缩短信息收集时间的人</span><span class="lang-content jp">情報収集の時間を短縮したい人</span></h3>
         <p><span class="lang-content cn">不必每天刷几小时X，阳子精选的精华，10分钟读完。</span><span class="lang-content jp">毎日Xを何時間もスクロールする代わりに、陽子が選んだエッセンスだけを10分で。</span></p>
       </div>
     </div>
@@ -458,19 +458,19 @@ footer a:hover { color: var(--gold); }
   <p class="sec-body"><span class="lang-content cn">X上充斥着大量优质信息。但将其直接转化为「学习」，非常困难。</span><span class="lang-content jp">Xには素晴らしい情報があふれています。でも、それをそのまま「学び」に変えるのは至難の業です。</span></p>
   <div class="pain-grid">
     <div class="pain-card">
-      <h4><span class="lang-content cn">信息太多，不知道从哪里入手</span><span class="lang-content jp">情報が多すぎて、どこから手をつければいいかわからない</span></h4>
+      <h3><span class="lang-content cn">信息太多，不知道从哪里入手</span><span class="lang-content jp">情報が多すぎて、どこから手をつければいいかわからない</span></h3>
       <p><span class="lang-content cn">每天数千条AI相关帖子。从中甄别真正有价值的信息，需要行业知识和大量时间。</span><span class="lang-content jp">毎日数千件のAI関連ポスト。その中から本当に価値のある情報を見極めるには、業界知識と膨大な時間が必要です。</span></p>
     </div>
     <div class="pain-card">
-      <h4><span class="lang-content cn">中文语言壁垒</span><span class="lang-content jp">中国語の壁がある</span></h4>
+      <h3><span class="lang-content cn">中文语言壁垒</span><span class="lang-content jp">中国語の壁がある</span></h3>
       <p><span class="lang-content cn">越来越多的前沿AI应用案例来自中文圈。机器翻译无法传达细微差异，实践知识会丢失。</span><span class="lang-content jp">最先端のAI活用事例は中国語圏から発信されることが増えています。機械翻訳ではニュアンスが伝わらず、実践知がこぼれ落ちます。</span></p>
     </div>
     <div class="pain-card">
-      <h4><span class="lang-content cn">碎片化、缺乏体系</span><span class="lang-content jp">断片的で体系化されていない</span></h4>
+      <h3><span class="lang-content cn">碎片化、缺乏体系</span><span class="lang-content jp">断片的で体系化されていない</span></h3>
       <p><span class="lang-content cn">一条帖子140字。背景知识和前提条件被省略，「所以，到底怎么做？」无从得知。</span><span class="lang-content jp">1つのポストは140字。背景知識や前提条件が省略されていて、「で、どうやってやるの？」がわからない。</span></p>
     </div>
     <div class="pain-card">
-      <h4><span class="lang-content cn">不知道该找谁请教</span><span class="lang-content jp">誰に相談すればいいかわからない</span></h4>
+      <h3><span class="lang-content cn">不知道该找谁请教</span><span class="lang-content jp">誰に相談すればいいかわからない</span></h3>
       <p><span class="lang-content cn">周围没有精通AI的人，遇到困难时无法解决，学习就停滞不前。</span><span class="lang-content jp">周りにAIを使いこなしている人がいないと、つまずいた時に解決できず、そのまま学習が止まってしまいます。</span></p>
     </div>
   </div>
@@ -491,6 +491,18 @@ footer a:hover { color: var(--gold); }
   <h2 class="sec-title">毎週更新される<br>実践的AIコンテンツ</h2>
   <p class="sec-body">Xで話題のAI達人たちの知識を厳選。工具推薦・変現術・プロンプト設計まで、すぐ使える内容だけを届けます。</p>
   <div class="articles">
+    <!-- 026 -->
+    <a href="articles/026.html" class="art-card">
+      <div class="art-no">026</div>
+      <div class="art-img-wrap">
+        <img src="articles/images/026/cover.jpg" alt="AI服装广告布料一致性" loading="lazy">
+      </div>
+      <div class="art-body">
+        <div class="art-tag"><span class="lang-content cn">AIツール</span><span class="lang-content jp">AIツール</span></div>
+        <div class="art-title"><span class="lang-content cn">AI 服装广告布料一致性工作流</span><span class="lang-content jp">AI服装広告の生地一貫性ワークフロー</span></div>
+        <div class="art-author">@invideoOfficial · 2026-06-07</div>
+      </div>
+    </a>
     <!-- 015 -->
     <a href="articles/015.html" class="art-card">
       <div class="art-no">015</div>
@@ -777,22 +789,22 @@ footer a:hover { color: var(--gold); }
   <div class="value-grid">
     <div class="value-card">
       <div class="value-icon">📰</div>
-      <h4><span class="lang-content cn">每周2〜3篇精选文章</span><span class="lang-content jp">毎週2〜3本の厳選記事</span></h4>
+      <h3><span class="lang-content cn">每周2〜3篇精选文章</span><span class="lang-content jp">毎週2〜3本の厳選記事</span></h3>
       <p><span class="lang-content cn">X上热门的AI实践知识，中日双语呈现</span><span class="lang-content jp">Xで話題のAI実践知を中日バイリンガルで</span></p>
     </div>
     <div class="value-card">
       <div class="value-icon">🔖</div>
-      <h4><span class="lang-content cn">45+ 精选提示词</span><span class="lang-content jp"><span class="lang-content cn">45+ 精选提示词</span><span class="lang-content jp">45+ 厳選プロンプト</span></span></h4>
+      <h3><span class="lang-content cn">45+ 精选提示词</span><span class="lang-content jp"><span class="lang-content cn">45+ 精选提示词</span><span class="lang-content jp">45+ 厳選プロンプト</span></span></h3>
       <p><span class="lang-content cn">即复制即用的提示词库</span><span class="lang-content jp">即コピペで使えるプロンプトライブラリ</span></p>
     </div>
     <div class="value-card">
       <div class="value-icon">🛠️</div>
-      <h4><span class="lang-content cn">阳子推荐工具详解</span><span class="lang-content jp">陽子のおすすめツール解説</span></h4>
+      <h3><span class="lang-content cn">阳子推荐工具详解</span><span class="lang-content jp">陽子のおすすめツール解説</span></h3>
       <p><span class="lang-content cn">只介绍亲测好用的工具</span><span class="lang-content jp">実際に使って良かったツールだけを詳しく</span></p>
     </div>
     <div class="value-card">
       <div class="value-icon">📂</div>
-      <h4><span class="lang-content cn">历史归档全部公开</span><span class="lang-content jp">過去アーカイブ全公開</span></h4>
+      <h3><span class="lang-content cn">历史归档全部公开</span><span class="lang-content jp">過去アーカイブ全公開</span></h3>
       <p><span class="lang-content cn">可访问创刊以来全部文章（年付）</span><span class="lang-content jp">創刊以来の全記事にアクセス可能（年額）</span></p>
     </div>
   </div>
@@ -1003,7 +1015,7 @@ function handleLead(e) {
       '<p style="font-size:13px;color:#5a5650;margin:0 0 20px;line-height:1.8;">' + (isJp ? 'メールが届かない場合は、迷惑メールフォルダをご確認ください。' : '如果没有收到，请检查垃圾邮件文件夹。') + '</p>' +
       '<a href="free-prompts.html" style="display:inline-block;background:#1a1814;color:#faf9f6;font-size:13px;font-weight:500;letter-spacing:.08em;text-decoration:none;padding:12px 32px;border-radius:2px;margin-bottom:12px;">' + (isJp ? '5選をWebで見る →' : '查看完整5选 →') + '</a>' +
       '<br>' +
-      '<a href="#" onclick="window.scrollTo({top:0,behavior:\'smooth\'});return false;" style="font-size:12px;color:#b8925a;text-decoration:none;">' + (isJp ? 'トップに戻る ↑' : '回到首页 ↑') + '</a>' +
+      '<a href="#" onclick="window.scrollTo({top:0,behavior:\'smooth\'});return false;" style="font-size:12px;color:var(--gold);text-decoration:none;">' + (isJp ? 'トップに戻る ↑' : '回到首页 ↑') + '</a>' +
     '</div>';
   return false;
 }
