@@ -70,6 +70,21 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] 2026-06-07: Article 026 创建 + 首页卡片 ([Hermes])
 - [x] 2026-06-07: CLAUDE.md + AGENTS.md 三端共享规则文件 ([Claude])
 - [x] 2026-06-07: 多Agent分工确立（Claude=后端+Hermes=前端+Codex=测试/内容）
+- [x] 2026-06-08: 四层架构搭建 — Foundation (_context/ + _registry/) + Blocks (_blocks/ + STYLE-GUIDE.md) + Skills (_skills/routes/ 6条生产线 + qc.md) ([Claude])
+- [x] 2026-06-08: 创作中心产品定义 (PRODUCT-BRIEF.md) — 从0开始3入口 + 参考某文3入口 ([Claude])
+- [x] 2026-06-08: 品牌视觉锁 (VISUAL-DNA.md + STYLE-GUIDE.md) — 杂志高级风 + 订阅者4风格路由 ([Claude])
+- [x] 2026-06-08: yijian-chengpian 首次公众号生产测试通过 — 选题→写作→封面→草稿箱，端到端验证 ([Claude])
+
+## Architecture Notes (2026-06-08) · 四层架构
+
+```
+Layer 1 · Foundation → CLAUDE.md + _context/ + _registry/
+Layer 2 · Blocks     → _blocks/ (guizang模板 + baoyu预设 + STYLE-GUIDE.md)
+Layer 3 · Skills     → _skills/routes/ (6调度规则，只调不写) + qc.md
+Layer 4 · Projects   → output/
+```
+
+核心原则：不再一个 SKILL.md 全包。16 个 skill 各司其职，CLAUDE.md 管路由，STYLE-GUIDE.md 锁视觉参数。
 
 ## Architecture Notes (2026-05-27)
 
@@ -85,11 +100,11 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## Next Actions (優先順)
 
-1. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
-2. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
-3. **税額生産検証** — 実購読者発生後、Stripe Tax +10% のデータ確認（admin 表示インフラ完了済）
-4. **週次メール本番** — 購読者獲得後、初回本番送信
-5. **テスト自動化** — TEST.md の curl テストを CI に組み込む（任意）
+1. **创作中心前端** — 6 入口 UI 页面（`creator.html`），订阅者登录后可访问
+2. **端到端生产测试** — 用真实选题跑通 scratch-wechat + scratch-xhs 两条线
+3. **订阅者风格选项集成** — 4 风格选择器 + 预设参数传参
+4. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
+5. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
 
 ## Key Links
 
