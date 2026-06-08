@@ -8,6 +8,7 @@ Every agent working on this project reads this file first.
 ## Project Overview
 
 AI知识库会员制サイト。月額 ¥2,980 / 年額 ¥30,000 購読。AI活用記事・プロンプト・ツール情報。
+**v2：新增创作中心——订阅者可输入话题/文章，产出各平台成品。**
 
 - **URL:** https://kb.snsaladdin.com
 - **Repo:** `yoko-naora/ai-knowledge-base` (main branch)
@@ -15,13 +16,111 @@ AI知识库会员制サイト。月額 ¥2,980 / 年額 ¥30,000 購読。AI活�
 - **Host:** Cloudflare Pages (`ai-knowledge-base-v3`), GitHub auto-deploy on push
 - **Main index:** `C:\Users\jding\PROJECTS.md`
 
+## Four-Layer Architecture
+
+```
+Layer 1 · Foundation  → CLAUDE.md + _context/ + _registry/
+Layer 2 · Blocks      → _blocks/ (guizang 模板 + baoyu 预设 + STYLE-GUIDE.md)
+Layer 3 · Skills      → _skills/routes/ (6 条调度规则) + qc.md
+Layer 4 · Projects    → output/ 产出目录
+```
+
+### Layer 1 · Foundation（地基）
+
+| 文件 | 内容 |
+|------|------|
+| `_context/BRAND.md` | SNS Aladdin 品牌语调、禁用词、受众 |
+| `_context/VISUAL-DNA.md` | 杂志高级风 Identity Test + 订阅者 4 风格 |
+| `_context/PRODUCT-BRIEF.md` | 产品定义、创作中心 6 入口、发布策略 |
+| `_registry/SKILLS.md` | 所有可用 skill 索引（内容/视觉/发布） |
+| `_registry/BLOCKS.md` | 所有视觉积木索引（guizang/baoyu/wewrite） |
+
+### Layer 2 · Blocks（积木）
+
+**视觉路由总锁：`_blocks/STYLE-GUIDE.md`——任何视觉产出前必须查此表。**
+
+| 目录 | 内容 |
+|------|------|
+| `_blocks/guizang/templates/` | editorial-card.html + swiss-card.html（种子模板） |
+| `_blocks/baoyu/cover-presets/` | magazine/tech/warm 封面 preset |
+| `_blocks/baoyu/xhs-presets/` | knowledge-card/warm-share/sketch-summary/cute-share 小红书 preset |
+
+### Layer 3 · Skills（调度规则）
+
+| 文件 | 场景 |
+|------|------|
+| `_skills/routes/scratch-wechat.md` | 从0开始 → 公众号长文 |
+| `_skills/routes/scratch-xhs.md` | 从0开始 → 小红书滚图 |
+| `_skills/routes/scratch-moments.md` | 从0开始 → 朋友圈图文 |
+| `_skills/routes/reference-wechat.md` | 参考某文 → 公众号仿写 |
+| `_skills/routes/reference-xhs.md` | 参考某文 → 小红书仿写 |
+| `_skills/routes/reference-moments.md` | 参考某文 → 朋友圈改编 |
+| `_skills/qc.md` | 质检规则（AI 味检测/高风险/标题优化） |
+
+## Creative Center Routing（创作中心调度）
+
+### 用户触发 → 读对应 route 文件 → 按顺序调 skill
+
+```
+用户说"写一篇公众号关于XX" → 读 scratch-wechat.md → 执行
+用户说"参考这篇文章写小红书" → 读 reference-xhs.md → 执行
+```
+
+### 通用生产流水线
+
+```
+输入（话题/URL）
+  ↓
+选题（writing-fragments → 3 选题 → AskUserQuestion 选 1）
+  ↓
+写作（writing-shape → 按平台规则写）
+  ↓
+质检（dbs-ai-check → 自动修 → 复检 → 最多 3 轮）
+  高风险内容 → 提醒用户；其余静默
+  ↓
+配图（读 STYLE-GUIDE.md → 查表确定工具和积木 → 执行）
+  ↓
+交付（告知用户成品路径 + 下一步手动操作）
+```
+
+## Visual Production Rules（视觉生产铁律）
+
+### 🔴 Pre-flight Checklist（配图前必须全部 Yes）
+
+| # | 检查项 | 状态 |
+|---|--------|:--:|
+| 1 | 已读 `_blocks/STYLE-GUIDE.md`，确定了风格和工具 | ⬜ |
+| 2 | 如果用 guizang → 已拷种子模板，未手写 HTML/CSS | ⬜ |
+| 3 | 如果用 baoyu → 已读对应 preset 文件，写了 prompt 到 prompts/ | ⬜ |
+| 4 | 已确定 recipe/布局（每页一个 recipe） | ⬜ |
+| 5 | 验证脚本已跑（guizang: `validate-social-deck.mjs`；baoyu: 检查中文可读） | ⬜ |
+
+任一为 No → 阻断，不得交付。
+
+### 工具选择原则
+
+| 需求 | 工具 | 原因 |
+|------|------|------|
+| 文字必须 100% 准确 | guizang（HTML → Playwright 截图） | AI 生图中文错误率高 |
+| 需要视觉冲击/氛围 | baoyu-cover-image（AI 生图） | CSS 做不出手绘/水彩 |
+| 数据对比/流程图 | baoyu-infographic | 21 布局 × 22 风格 |
+| 文字转微信 HTML | wewrite | 16 套主题 |
+
+### 禁止事项
+
+1. 手写 HTML/CSS 替代种子模板
+2. 跳过 STYLE-GUIDE.md 凭感觉选工具
+3. Swiss 和 Editorial 在同一套图中混搭
+4. AI 生图用在文字必须准确的卡上
+5. emoji 出现在任何视觉产出里
+
+---
+
 ## ⚠️ CRITICAL: Working Directory
 
-**The working directory is `C:\Users\jding\kb-site`. There is NO `ai-knowledge-base` directory.**
+**The working directory is `C:\Users\jding\kb-site`.**
 
-History: Claude once edited code in `C:\Users\jding\ai-knowledge-base\` and pushed, but the user's actual directory is `kb-site`. Two directories pointing to the same remote but NOT synced locally — user saw no changes, wasted hours debugging a nonexistent "bug."
-
-**Rule:** Before editing ANY file, confirm you are in `C:\Users\jding\kb-site`. Never clone a new copy. If the user gives a `file:///` path, use that directory.
+**Rule:** Before editing ANY file, confirm you are in `C:\Users\jding\kb-site`. Never clone a new copy.
 
 ## Architecture
 
@@ -66,11 +165,7 @@ main.js switchLang()          ← THE ONLY switchLang function. ONE.
      → detail.html listens → renderPrompt()
 ```
 
-**NEVER write a second `switchLang` function.** Any page needing lang-aware refresh listens to `langchange` event.
-
-CSS rules: `.lang-content.cn` / `.lang-content.jp` controlled by `body.show-jp` in `style.css:227-236`.
-
-Script load order: `main.js` MUST load before page-specific scripts.
+**NEVER write a second `switchLang` function.**
 
 ## Design System
 
@@ -89,55 +184,28 @@ Script load order: `main.js` MUST load before page-specific scripts.
 
 **Forbidden:** `Noto Sans SC`, `-apple-system`, `SF Mono`, font-weight 300, `rem` units (use `px`).
 
-Full spec in memory: `kb-site-design-system`.
-
 ## Work Principles (ALL agents must follow)
 
 ### 1. Commit after every change
 ```
 git add -A && git commit -m "<agent>: <what>" && git push
 ```
-Push = auto-deploy. Git history = rollback safety. Don't wait for user to ask.
 
 ### 2. Check blast radius before infra changes
-Before deleting, renaming, or changing DNS/env vars/credentials, ask:
-1. What depends on this?
-2. What breaks if I change/delete it?
-3. How do I verify after?
 
 ### 3. Log immediately after task completion
-Update PROJECT.md with [x] on completed items BEFORE user says "收工". User's PC may crash.
 
-### 4. 收工 (end-of-day) protocol
-When user says "收工":
-- Step 1: Update PROJECT.md (completed ✓, Issues, Next re-sorted)
-- Step 2: `git status` → commit any stragglers, confirm pushed
-- Step 3: Brief report (today's results 1 line + tomorrow's first step 1 line)
+### 4. 收工 protocol
+- Step 1: Update PROJECT.md (completed ✓, Issues, Next)
+- Step 2: `git status` → commit stragglers, confirm pushed
+- Step 3: Brief report (today + tomorrow)
 
-### 5. 开工 (start-of-day) protocol
-When user says "开工":
-1. Read `C:\Users\jding\PROJECTS.md` (FIXED PATH, never Glob-search)
+### 5. 开工 protocol
+1. Read `C:\Users\jding\PROJECTS.md`
 2. Read each project's PROJECT.md
-3. Brief report (each project status + today's top priority)
+3. Brief report
 
 ## Testing Rules
-
-### Every feature = code + test data + expected result
-Never deploy without verifying. Test steps live in code comments AND TEST.md.
-
-### Test format in file headers:
-```
-// TEST:
-//   curl -s "<URL>" | python3 -c "<check>"
-//   预期: field = value
-```
-
-### Test what you changed
-- Changed only admin-customers → test only admin API
-- Changed shared logic → test all impact surfaces
-- Run one verification after every change
-
-### Test data
 
 | Use | Value |
 |-----|-------|
@@ -151,31 +219,14 @@ Full test manual: `TEST.md`.
 
 ## Multi-Agent Collaboration Rules
 
-**Only ONE agent edits code at a time.** Multiple agents editing simultaneously = merge conflicts.
-
-### Before you start work:
-1. `git pull` — get latest changes from other agents
-2. Check recent commits for other agents' work
-
-### When you finish work:
-1. `git add -A && git commit -m "[AgentName] <description>" && git push`
-2. Tag commits with your agent name: `[Claude]`, `[Hermes]`, `[Codex]`
-3. If making a big change, declare "占用" (occupying) in commit message or branch name
-
-### Conflict resolution:
+- **Only ONE agent edits code at a time.**
+- Before start: `git pull`
+- After finish: `git add -A && git commit -m "[AgentName] <description>" && git push`
 - Never `git push --force`
-- If conflict: `git pull --rebase`, resolve, then push
-- If unsure, create a branch: `git checkout -b <agent>-<feature>` then merge after
-
-### Skill installation:
-- Install to `C:\Users\jding\.agents\skills\` (single source of truth)
-- Run `C:\Users\jding\.agents\sync-skills.ps1` after install
-- All 3 agents share skills via symlinks — install once, all see it
 
 ## Deploy
 
-GitHub auto-deploy on push to `main`. Manual deploy if needed:
-
+GitHub auto-deploy on push to `main`. Manual deploy:
 ```bash
 cd C:\Users\jding\kb-site
 npx wrangler pages deploy . --project-name=ai-knowledge-base-v3 --branch=main --commit-dirty=true
@@ -185,40 +236,34 @@ npx wrangler pages deploy . --project-name=ai-knowledge-base-v3 --branch=main --
 
 ```
 kb-site/
-├── index.html              # Home (articles, tools, pricing, FAQ)
-├── checkout.html           # Payment page (Stripe Payment Links)
-├── success.html            # Post-payment thank you
-├── admin.html              # Customer management (auth: admin2026)
-├── free-prompts.html       # Free 5 prompts lead magnet
-├── tokushoho.html          # 特定商取引法 (legal)
-├── CNAME                   # kb.snsaladdin.com
-├── _headers                # Cloudflare security headers
-├── _redirects              # Sensitive file blocking
-├── CLAUDE.md               # ← THIS FILE — single source of truth
-├── AGENTS.md               # Thin bridge → CLAUDE.md (for Codex compat)
-├── PROJECT.md              # Project progress, issues, next actions
-├── TEST.md                 # Test procedures and test data
-├── articles/               # 001.html - 026.html
-├── prompts/
-│   ├── index.html          # Prompt listing
-│   ├── detail.html         # Prompt detail (copy btn, lang switch listener)
-│   └── data.json           # Prompts data
-├── assets/
-│   ├── css/style.css       # Shared article styles
-│   ├── js/main.js          # Shared JS (switchLang, admin bypass, pageview)
-│   └── gating.js           # Paywall gating logic
-├── functions/api/          # ★ Deployed functions (Cloudflare Pages)
-│   ├── stripe-webhook.js
-│   ├── check-subscription.js
-│   ├── send-lead-email.js
-│   ├── admin-customers.js
-│   └── env-check.js
-├── scripts/
-│   ├── send-weekly-update.mjs
-│   └── weekly-update.json
-├── images/                 # Article images
-├── videos/                 # Article videos
-└── netlify/                # LEGACY — DO NOT EDIT
+├── CLAUDE.md               ← THIS FILE — single source of truth
+├── AGENTS.md               ← Thin bridge → CLAUDE.md
+├── PROJECT.md              ← Project progress
+├── TEST.md                 ← Test procedures
+│
+├── _context/               ← Layer 1 · Foundation
+│   ├── BRAND.md
+│   ├── VISUAL-DNA.md
+│   └── PRODUCT-BRIEF.md
+├── _registry/              ← Layer 1 · Index
+│   ├── SKILLS.md
+│   └── BLOCKS.md
+├── _blocks/                ← Layer 2 · Blocks
+│   ├── STYLE-GUIDE.md      ← Visual routing lock
+│   ├── guizang/templates/
+│   └── baoyu/cover-presets/ + xhs-presets/
+├── _skills/                ← Layer 3 · Skills
+│   ├── routes/（6 调度文件）
+│   └── qc.md
+│
+├── index.html              ← Home
+├── articles/               ← 001.html - 026.html
+├── articles-src/           ← Markdown source (new)
+├── prompts/                ← Prompt listing
+├── output/                 ← Layer 4 · Output
+├── functions/api/          ← Cloudflare Functions
+├── assets/                 ← CSS/JS/images
+└── netlify/                ← LEGACY — DO NOT EDIT
 ```
 
 ## Key Links
@@ -230,15 +275,17 @@ kb-site/
 | Stripe | https://dashboard.stripe.com |
 | Resend | https://resend.com |
 | GitHub | https://github.com/yoko-naora/ai-knowledge-base |
-| DNS | https://www.value-domain.com |
 
 ## Quick Reference: Common Pitfalls
 
-1. **DON'T** edit `netlify/functions/` — it's legacy source, not deployed
+1. **DON'T** edit `netlify/functions/` — legacy, not deployed
 2. **DON'T** create a second `switchLang` function — use `langchange` event
 3. **DON'T** use `rem` units — use `px`
-4. **DON'T** hardcode secrets — use env vars, no `|| "fallback"`
+4. **DON'T** hardcode secrets — use env vars
 5. **DON'T** force push — use `pull --rebase`
 6. **DON'T** work in `ai-knowledge-base` directory — use `kb-site`
 7. **DON'T** Glob-search for PROJECT.md on 开工 — path is `C:\Users\jding\PROJECTS.md`
 8. **DON'T** expose full phone numbers in `admin-customers.js`
+9. **DON'T** skip STYLE-GUIDE.md before visual production
+10. **DON'T** hand-write HTML/CSS for guizang cards — copy seed template
+11. **DON'T** use AI-generated images for text-accurate cards
