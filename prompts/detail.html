@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>提示词详情 · AI知识库</title>
+<title>提示词详情 · 用AI看图作图</title>
 <link rel="stylesheet" href="../assets/css/style.css">
 <style>
 /* Detail page styles */
 .detail-container { max-width: 900px; margin: 64px auto 0; padding: 40px 24px 80px; }
 .detail-nav { margin-bottom: 24px; }
-.detail-nav a { color: #FF6B35; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+.detail-nav a { color: #FF6B35; text-decoration: none; font-weight: 500; font-size: 14px; }
 .detail-nav a:hover { text-decoration: underline; }
 
 .detail-header { margin-bottom: 32px; }
-.detail-cat { display: inline-block; background: #f0f0f0; color: #666; font-size: 0.75rem; padding: 3px 12px; border-radius: 12px; margin-bottom: 12px; }
+.detail-cat { display: inline-block; background: #f0f0f0; color: #666; font-size: 11px; padding: 3px 12px; border-radius: 12px; margin-bottom: 12px; }
 .detail-title { font-size: 1.6rem; font-weight: 700; line-height: 1.4; margin-bottom: 8px; }
-.detail-meta { font-size: 0.82rem; color: #999; display: flex; gap: 16px; align-items: center; }
+.detail-meta { font-size: 12px; color: #999; display: flex; gap: 16px; align-items: center; }
 
 /* Media section */
 .detail-media { margin-bottom: 40px; }
@@ -24,18 +24,18 @@
 
 /* Prompt section */
 .prompt-block { margin-bottom: 32px; }
-.prompt-label { font-size: 0.78rem; font-weight: 600; color: #FF6B35; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase; border-bottom: 2px solid #FF6B35; padding-bottom: 4px; display: inline-block; }
+.prompt-label { font-size: 11px; font-weight: 600; color: #FF6B35; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase; border-bottom: 2px solid #FF6B35; padding-bottom: 4px; display: inline-block; }
 .prompt-content {
   background: #fafafa;
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 20px 24px;
-  font-size: 0.9rem;
+  font-size: 13px;
   line-height: 1.7;
   white-space: pre-wrap;
   word-break: break-word;
   color: #333;
-  font-family: -apple-system, "Noto Sans SC", "Noto Sans JP", monospace, sans-serif;
+  font-family: 'Noto Sans JP', 'Courier New', monospace, sans-serif;
 }
 .prompt-content.empty {
   border: 2px dashed #ddd;
@@ -43,13 +43,13 @@
   color: #bbb;
   text-align: center;
   padding: 40px;
-  font-size: 0.9rem;
+  font-size: 13px;
 }
 .prompt-content.empty em { font-style: italic; }
 
 /* Copy button */
 .copy-btn-wrap { text-align: right; margin-top: 10px; }
-.copy-btn { display: inline-block; background: #fff; border: 1px solid #FF6B35; color: #FF6B35; padding: 4px 16px; border-radius: 6px; font-size: 0.82rem; cursor: pointer; transition: .2s; }
+.copy-btn { display: inline-block; background: #fff; border: 1px solid #FF6B35; color: #FF6B35; padding: 4px 16px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: .2s; }
 .copy-btn:hover { background: #FF6B35; color: #fff; }
 .copy-btn.copied { background: #4CAF50; border-color: #4CAF50; color: #fff; }
 
@@ -59,7 +59,7 @@
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 28px 32px;
-  font-size: 0.95rem;
+  font-size: 14px;
   line-height: 1.8;
   white-space: pre-wrap;
   word-break: break-word;
@@ -70,7 +70,7 @@
 .detail-footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #eee; text-align: center; }
 .detail-footer a { color: #FF6B35; text-decoration: none; font-weight: 500; }
 .detail-footer a:hover { text-decoration: underline; }
-.next-link { display: inline-block; background: #FF6B35; color: #fff !important; padding: 6px 18px; border-radius: 20px; font-size: 0.9rem; margin-left: 8px; }
+.next-link { display: inline-block; background: #FF6B35; color: #fff !important; padding: 6px 18px; border-radius: 20px; font-size: 13px; margin-left: 8px; }
 .next-link:hover { background: #e55a2b; text-decoration: none !important; }
 
 /* Loading & Error */
@@ -96,7 +96,7 @@
   width: 100%; aspect-ratio: 16/9;
   background: #f0f0f0; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  color: #ccc; font-size: 3rem;
+  color: #ccc; font-size: 48px;
 }
 
 /* Multiple images mixed */
@@ -118,28 +118,24 @@
   background: rgba(26,24,20,0.78); color: #faf9f6;
   border-radius: 22px;
   display: flex; align-items: center; gap: 6px;
-  font-size: 0.8rem; z-index: 999;
+  font-size: 12px; z-index: 999;
   text-decoration: none; cursor: pointer; white-space: nowrap;
   transition: opacity .2s, background .2s; opacity: .55;
 }
 .floating-arrow:hover { opacity: 1; background: #1a1814; }
 .floating-arrow-left  { left: 16px; }
 .floating-arrow-right { right: 16px; }
-.floating-arrow .arrow-icon { font-size: 1.1rem; }
+.floating-arrow .arrow-icon { font-size: 16px; }
 @media (max-width: 768px) { .floating-arrow { display: none; } }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">AI<span>知识库</span></div>
+  <a class="logo" href="../insights.html">用AI看图作图</a>
+  <button class="menu-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.textContent==='☰'?'✕':'☰'" aria-label="Menu">☰</button>
   <ul class="nav-links">
-    <li><a href="../insights.html"><span class="lang-content cn">首页</span><span class="lang-content jp">TOPページ</span></a></li>
-    <li><a href="../insights.html#articles"><span class="lang-content cn">最新技术</span><span class="lang-content jp">最新技術</span></a></li>
-    <li><a href="index.html"><span class="lang-content cn">最新提示词</span><span class="lang-content jp">最新プロンプト</span></a></li>
-    <li><a href="../insights.html#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a></li>
-    <li><a href="../insights.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a></li>
-    <li><a href="../insights.html#faq">FAQ</a></li>
+    <li><a href="index.html"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></a></li>
   </ul>
   <div class="lang-switch">
     <button class="active" onclick="switchLang('cn')">中文</button>
@@ -157,12 +153,10 @@
 <footer>
   <div class="links">
     <a href="../insights.html">文章列表</a>
-    <a href="index.html">最新提示词</a>
-    <a href="../insights.html#tools">推荐工具</a>
-    <a href="../insights.html#pricing">定价</a>
+    <a href="index.html">提示词</a>
     <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
   </div>
-  <div class="copyright">© 2026 AI知识库</div>
+  <div class="copyright">© 2026 用AI看图作图</div>
 </footer>
 
 <script src="../assets/js/main.js?v=6"></script>

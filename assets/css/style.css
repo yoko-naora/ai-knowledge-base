@@ -27,6 +27,7 @@ nav .logo { font-family: var(--serif); font-weight: 600; font-size: 15px; letter
 nav .logo span { color: #FF6B35; }
 nav .nav-links { display: flex; gap: 28px; list-style: none; font-size: 11px; }
 nav .nav-links a { text-decoration: none; color: #1A1A2E; font-weight: 500; }
+nav .menu-toggle { display: none; background: none; border: 1px solid #ddd; padding: 6px 12px; font-size: 16px; cursor: pointer; color: #1A1A2E; font-family: inherit; }
 nav .lang-switch { display: flex; gap: 8px; }
 nav .lang-switch button {
   background: none; border: 1px solid #ddd; border-radius: 20px;
@@ -321,8 +322,12 @@ footer .line-label { color: #888; font-size: 11px; }
   nav .nav-links { gap: 14px; font-size: 10px; }
 }
 @media (max-width: 768px) {
-  nav { padding: 0 20px; }
-  nav .nav-links { display: none; }
+  nav { padding: 0 20px; flex-wrap: wrap; height: auto; min-height: 56px; }
+  nav .menu-toggle { display: block; }
+  nav .nav-links { display: none; width: 100%; flex-direction: column; gap: 0; padding-bottom: 12px; }
+  nav .nav-links.open { display: flex; }
+  nav .nav-links li { width: 100%; }
+  nav .nav-links a { display: block; padding: 10px 0; font-size: 13px; border-bottom: 1px solid #eee; }
   .hero { padding: 60px 20px 50px; }
   .hero h1 { font-size: 2rem; }
   .article-grid, .prompt-grid { padding: 0 20px 40px; grid-template-columns: 1fr; }
