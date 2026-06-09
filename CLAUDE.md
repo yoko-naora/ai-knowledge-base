@@ -195,12 +195,21 @@ git add -A && git commit -m "<agent>: <what>" && git push
 
 ### 3. Log immediately after task completion
 
-### 4. 收工 protocol
+### 4. 决策变更 = 立即清理旧产物（铁律）
+**When a plan is abandoned or a decision is reversed, delete ALL related files IMMEDIATELY.**
+- Old task files (CODEX-TASK.md, DESIGN-RACE-*.md, etc.) → `git rm`
+- Stale branches → delete
+- Outdated references in CLAUDE.md / PROJECT.md → update
+- **Why:** 僵尸文件会误导下一个 Agent，浪费开工时间。这不是"以后再说"的事，是决策变更的一部分。
+- **Test:** 新 Agent 开工时，读到的每一个文件都应该是当前有效的。
+
+### 5. 收工 protocol
+- Step 0: **审计** — 有没有今天淘汰的文件/分支？有就立刻删
 - Step 1: Update PROJECT.md (completed ✓, Issues, Next)
 - Step 2: `git status` → commit stragglers, confirm pushed
 - Step 3: Brief report (today + tomorrow)
 
-### 5. 开工 protocol
+### 6. 开工 protocol
 1. Read `C:\Users\jding\PROJECTS.md`
 2. Read each project's PROJECT.md
 3. Brief report
