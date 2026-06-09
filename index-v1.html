@@ -135,10 +135,10 @@ section{width:100%;max-width:800px;padding:140px 24px 100px}
 
 /* ── Footer ── */
 footer-wrap{width:100%;border-top:1px solid var(--border)}
-footer{max-width:800px;margin:0 auto;padding:36px 24px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-faint)}
-footer a{color:var(--ink-faint);text-decoration:none;margin-left:20px;transition:color .2s}
+footer{max-width:800px;margin:0 auto;padding:36px 24px;text-align:center;font-size:11px;color:var(--ink-faint);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;row-gap:8px}
+footer a{color:var(--ink-faint);text-decoration:none;transition:color .2s}
 footer a:hover{color:var(--gold)}
-footer .sep{color:var(--ink-faint);opacity:.4;font-size:9px}
+footer .sep{color:var(--border);margin:0 4px;font-size:9px}
 
 /* ── Responsive ── */
 @media(max-width:900px){
@@ -154,8 +154,7 @@ footer .sep{color:var(--ink-faint);opacity:.4;font-size:9px}
   .pricing-grid{grid-template-columns:1fr}
   .free-teaser form{flex-direction:column;align-items:center}
   .free-teaser input{width:100%;max-width:320px}
-  footer{flex-direction:column;gap:12px;text-align:center}
-  footer a{margin:0 8px}
+  footer{gap:4px}
 }
 @media(max-width:500px){
   section{padding:100px 16px 60px}
@@ -239,8 +238,15 @@ footer .sep{color:var(--ink-faint);opacity:.4;font-size:9px}
 </section>
 <div class="footer-wrap">
 <footer>
-  <span><span class="lang-content cn">© 2026 SNS Aladdin 株式会社</span><span class="lang-content jp">© 2026 SNS Aladdin 株式会社</span></span>
-  <span><a href="insights.html"><span class="lang-content cn">精选文章</span><span class="lang-content jp">記事一覧</span></a><a href="prompts/index.html"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></a><a href="free-prompts.html"><span class="lang-content cn">免费5选</span><span class="lang-content jp">無料5選</span></a><a href="tokushoho.html"><span class="lang-content cn">特定商取引法</span><span class="lang-content jp">特定商取引法</span></a></span>
+  <span class="lang-content cn">© 2026 SNS Aladdin 株式会社</span><span class="lang-content jp">© 2026 SNS Aladdin 株式会社</span>
+  <span class="sep">|</span>
+  <a href="insights.html"><span class="lang-content cn">精选文章</span><span class="lang-content jp">記事一覧</span></a>
+  <span class="sep">|</span>
+  <a href="prompts/index.html"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></a>
+  <span class="sep">|</span>
+  <a href="free-prompts.html"><span class="lang-content cn">免费5选</span><span class="lang-content jp">無料5選</span></a>
+  <span class="sep">|</span>
+  <a href="tokushoho.html"><span class="lang-content cn">特定商取引法</span><span class="lang-content jp">特定商取引法</span></a>
 </footer>
 </div>
 <script src="assets/js/main.js?v=7"></script>
