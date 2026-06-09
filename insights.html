@@ -345,16 +345,6 @@ footer a:hover { color: var(--gold); }
 <section class="hero">
   <div class="hero-text">
     <p class="eyebrow fu">Weekly AI Intelligence</p>
-    <img id="heroImg" src="index-c.png" alt="用AI看图作图" style="width:100%; display:block; margin:0 auto 24px;">
-    <div class="hero-stats fu d3">
-      <div><div class="stat-n">25<span class="stat-u">+</span></div><div class="stat-l"><span class="lang-content cn">精选文章</span><span class="lang-content jp">厳選記事</span></div></div>
-      <div><div class="stat-n">45<span class="stat-u">+</span></div><div class="stat-l">プロンプト</div></div>
-      <div><div class="stat-n"><span class="lang-content cn">每周</span><span class="lang-content jp">毎週</span><span class="stat-u">2-3</span></div><div class="stat-l"><span class="lang-content cn">篇更新</span><span class="lang-content jp">本更新</span></div></div>
-    </div>
-    <div class="hero-btns fu d4">
-      <a href="#pricing" class="hero-btn"><span class="lang-content cn">開始訂閱</span><span class="lang-content jp">購読を始める</span> <span>→</span></a>
-      <a href="#articles" class="hero-btn outline"><span class="lang-content cn">免費試讀</span><span class="lang-content jp">無料サンプルを見る</span></a>
-    </div>
   </div>
   <div class="hero-photo-wrap">
     <p class="carousel-caption"><span class="lang-content cn">一键复制，让你的客户看到你的产品</span><span class="lang-content jp"><span class="lang-content cn">一键复制，让你的客户看到你的产品</span><span class="lang-content jp">コピペ＆ワンクリックで、お客様に見せる</span></span></p>
@@ -827,8 +817,6 @@ function switchLang(lang) {
   document.querySelectorAll('.lang-switch button').forEach(function(btn) {
     btn.classList.toggle('active', btn.textContent === (lang === 'cn' ? '中文' : '日本語'));
   });
-  var hero = document.getElementById('heroImg');
-  if (hero) hero.src = lang === 'jp' ? 'index-j.png' : 'index-c.png';
   localStorage.setItem('kb-lang', lang);
 }
 (function() {
