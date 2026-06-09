@@ -120,14 +120,6 @@ body.show-jp .lang-content.jp { display: block; }
 .art-tag { font-size: 9px; font-weight: 500; letter-spacing: .14em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
 .art-title { font-family: var(--serif); font-size: 14px; font-weight: 400; line-height: 1.65; margin-bottom: 10px; }
 .art-author { font-size: 11px; color: var(--ink-faint); }
-.art-badge {
-  position: absolute; top: 12px; right: 12px;
-  font-size: 9px; font-weight: 500; letter-spacing: .08em;
-  padding: 4px 10px; border-radius: 2px;
-}
-.art-badge.free { background: #e8f5e9; color: #2e7d32; }
-.art-badge.locked { background: var(--accent-lt); color: var(--accent); }
-
 /* VALUE STACKING */
 .value-sec { background: var(--paper); }
 .value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 60px; }
@@ -291,9 +283,7 @@ footer a:hover { color: var(--gold); }
     <!-- 026 -->
     <a href="articles/026.html" class="art-card" data-category="frontier">
       <div class="art-no">026</div>
-      <div class="art-img-wrap">
-        <img src="articles/images/026/cover.jpg" alt="AI服装广告布料一致性" loading="lazy">
-      </div>
+      <img class="art-thumb" src="articles/images/026/cover.jpg" alt="AI服装广告布料一致性" loading="lazy">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AIツール</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">AI 服装广告布料一致性工作流</span><span class="lang-content jp">AI服装広告の生地一貫性ワークフロー</span></div>
@@ -303,8 +293,7 @@ footer a:hover { color: var(--gold); }
     <!-- 015 -->
     <a href="articles/015.html" class="art-card" data-category="frontier">
       <div class="art-no">015</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/015/HIAethcbEAAJX38.jpg" alt="">
+            <img class="art-thumb" src="articles/images/015/HIAethcbEAAJX38.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">工具推荐</span><span class="lang-content jp">工具推薦</span></div>
         <div class="art-title"><span class="lang-content cn">工具推荐：15个干活的AI工具</span><span class="lang-content jp">仕事に役立つ15のAIツール完全ガイド</span></div>
@@ -314,8 +303,7 @@ footer a:hover { color: var(--gold); }
 <!-- 014 -->
     <a href="articles/014.html" class="art-card" data-category="frontier">
       <div class="art-no">014</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/014/image_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/014/image_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag">Claude Code</div>
         <div class="art-title"><span class="lang-content cn">Claude Code + 飞书 Agent 办公玩法5例</span><span class="lang-content jp">Claude Code + Feishu Agent 業務活用法（5選）</span></div>
@@ -325,8 +313,7 @@ footer a:hover { color: var(--gold); }
 <!-- 013 -->
     <a href="articles/013.html" class="art-card" data-category="frontier">
       <div class="art-no">013</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/013/image_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/013/image_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag">Skill</div>
         <div class="art-title"><span class="lang-content cn">产品调研Skill：10分钟搞定竞品调研</span><span class="lang-content jp">プロダクトリサーチSkill：10分で競合調査を完了</span></div>
@@ -336,8 +323,7 @@ footer a:hover { color: var(--gold); }
 <!-- 025 -->
     <a href="articles/025.html" class="art-card" data-category="money">
       <div class="art-no">025</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/025/HIFcYnNbcAEznQ7.jpg" alt="">
+            <img class="art-thumb" src="articles/images/025/HIFcYnNbcAEznQ7.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
         <div class="art-title"><span class="lang-content cn">不做中转，不卖课，如何用 AI 月入 10万</span><span class="lang-content jp">転売も講座販売もなし——AIで月収10万元を稼ぐ方法</span></div>
@@ -347,8 +333,7 @@ footer a:hover { color: var(--gold); }
 <!-- 024 -->
     <a href="articles/024.html" class="art-card" data-category="practice">
       <div class="art-no">024</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/024/HIHeHv-agAEdq5H.jpg" alt="">
+            <img class="art-thumb" src="articles/images/024/HIHeHv-agAEdq5H.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI写作术</span><span class="lang-content jp">AI文章術</span></div>
         <div class="art-title"><span class="lang-content cn">只需10分钟，让AI比亲妈都懂你</span><span class="lang-content jp">たった10分で、AIが親よりもあなたを理解する方法</span></div>
@@ -358,8 +343,7 @@ footer a:hover { color: var(--gold); }
 <!-- 023 -->
     <a href="articles/023.html" class="art-card" data-category="money">
       <div class="art-no">023</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/023/HBLufA5akAU8IRp.jpg" alt="">
+            <img class="art-thumb" src="articles/images/023/HBLufA5akAU8IRp.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
         <div class="art-title"><span class="lang-content cn">2026年X创作者收益完全指南：从零到收款</span><span class="lang-content jp">2026年Xクリエイター収益完全ガイド：ゼロから入金まで</span></div>
@@ -369,8 +353,7 @@ footer a:hover { color: var(--gold); }
 <!-- 022 -->
     <a href="articles/022.html" class="art-card" data-category="practice">
       <div class="art-no">022</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/022/HIILg2SagAAhd5Q.jpg" alt="">
+            <img class="art-thumb" src="articles/images/022/HIILg2SagAAhd5Q.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">知识</span><span class="lang-content jp">知識</span></div>
         <div class="art-title"><span class="lang-content cn">90%的人分不清：终端、命令行、Shell的区别</span><span class="lang-content jp">ターミナル・コマンドライン・Shellの違いを徹底解説</span></div>
@@ -380,8 +363,7 @@ footer a:hover { color: var(--gold); }
 <!-- 021 -->
     <a href="articles/021.html" class="art-card" data-category="money">
       <div class="art-no">021</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/021/HIHrdX-akAA15mI.jpg" alt="">
+            <img class="art-thumb" src="articles/images/021/HIHrdX-akAA15mI.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
         <div class="art-title"><span class="lang-content cn">AI 电子书正在闷声赚大钱：亚马逊 Kindle 写作上架全流程</span><span class="lang-content jp">AI電子書籍が静かに大儲け中：Amazon Kindle執筆・出版の完全フロー</span></div>
@@ -391,8 +373,7 @@ footer a:hover { color: var(--gold); }
 <!-- 020 -->
     <a href="articles/020.html" class="art-card" data-category="frontier">
       <div class="art-no">020</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/020/HIIA4LebMAA_UGp.jpg" alt="">
+            <img class="art-thumb" src="articles/images/020/HIIA4LebMAA_UGp.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">工具推荐</span><span class="lang-content jp">工具推薦</span></div>
         <div class="art-title"><span class="lang-content cn">GPT2: 文本转视觉 x 最强提示词 x 力荐！</span><span class="lang-content jp">GPT2: テキスト→ビジュアル変換 x 最強プロンプト x 激推し！</span></div>
@@ -402,8 +383,7 @@ footer a:hover { color: var(--gold); }
 <!-- 019 -->
     <a href="articles/019.html" class="art-card" data-category="frontier">
       <div class="art-no">019</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/019/HIHrgT9bkAA3yPk.jpg" alt="">
+            <img class="art-thumb" src="articles/images/019/HIHrgT9bkAA3yPk.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">把这篇文章丢给 Agent，它会帮你搭一套 AI 内容工厂</span><span class="lang-content jp">この記事をAgentに渡せば、AIコンテンツ工場が完成する</span></div>
@@ -413,8 +393,7 @@ footer a:hover { color: var(--gold); }
 <!-- 018 -->
     <a href="articles/018.html" class="art-card" data-category="frontier">
       <div class="art-no">018</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/018/HH_Y2gpWcAAl2uX.jpg" alt="">
+            <img class="art-thumb" src="articles/images/018/HH_Y2gpWcAAl2uX.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">深度拆解：AI Agent Harness 的构造【译】</span><span class="lang-content jp">徹底解剖：AI Agent Harness の構造【訳】</span></div>
@@ -424,8 +403,7 @@ footer a:hover { color: var(--gold); }
 <!-- 017 -->
     <a href="articles/017.html" class="art-card" data-category="frontier">
       <div class="art-no">017</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/017/HIAlj-KaIAAvGu2.jpg" alt="">
+            <img class="art-thumb" src="articles/images/017/HIAlj-KaIAAvGu2.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">Codex App 边玩边赚钱实战教学：不为人知的使用秘诀</span><span class="lang-content jp">Codex Appで遊びながら稼ぐ実戦ガイド：知られざる活用秘訣</span></div>
@@ -435,8 +413,7 @@ footer a:hover { color: var(--gold); }
 <!-- 016 -->
     <a href="articles/016.html" class="art-card" data-category="frontier">
       <div class="art-no">016</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/016/HHmv0vaakAAf2oq.jpg" alt="">
+            <img class="art-thumb" src="articles/images/016/HHmv0vaakAAf2oq.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">Codex App 从0到1完整入门教程：超级APP的细节抽丝剥茧</span><span class="lang-content jp">Codex App ゼロから始める完全入門ガイド：スーパーアプリの全貌を徹底解説</span></div>
@@ -446,8 +423,7 @@ footer a:hover { color: var(--gold); }
 <!-- 012 -->
     <a href="articles/012.html" class="art-card" data-category="practice">
       <div class="art-no">012</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/012/01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/012/01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">团队运营</span><span class="lang-content jp">チーム運営</span></div>
         <div class="art-title"><span class="lang-content cn">AI时代到底该怎么管一个工程团队</span><span class="lang-content jp">AI時代におけるエンジニアリングチームの正しいマネジメントとは</span></div>
@@ -457,8 +433,7 @@ footer a:hover { color: var(--gold); }
 <!-- 011 -->
     <a href="articles/011.html" class="art-card" data-category="practice">
       <div class="art-no">011</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/011/cover.svg" alt="">
+            <img class="art-thumb" src="articles/images/011/cover.svg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">成本优化</span><span class="lang-content jp">コスト最適化</span></div>
         <div class="art-title"><span class="lang-content cn">Kimi K2.6 替代 Opus 省钱指南</span><span class="lang-content jp">Kimi K2.6 で Opus を代替する節約ガイド</span></div>
@@ -468,8 +443,7 @@ footer a:hover { color: var(--gold); }
 <!-- 010 -->
     <a href="articles/010.html" class="art-card" data-category="money">
       <div class="art-no">010</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/010/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/010/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
         <div class="art-title"><span class="lang-content cn">AI 简历优化第1周赚1260元</span><span class="lang-content jp">AIで履歴書の最適化、第1週で1260元</span></div>
@@ -479,8 +453,7 @@ footer a:hover { color: var(--gold); }
 <!-- 009 -->
     <a href="articles/009.html" class="art-card" data-category="money">
       <div class="art-no">009</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/009/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/009/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">副业·变现</span><span class="lang-content jp">副業・変現</span></div>
         <div class="art-title"><span class="lang-content cn">企业级 RAG 月入 10 万实战指南</span><span class="lang-content jp">エンタープライズ RAG で月収 10 万円を実現する実践ガイド</span></div>
@@ -490,8 +463,7 @@ footer a:hover { color: var(--gold); }
 <!-- 008 -->
     <a href="articles/008.html" class="art-card" data-category="frontier">
       <div class="art-no">008</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/008/HH5IaB6WEAEFE2w.jpg" alt="">
+            <img class="art-thumb" src="articles/images/008/HH5IaB6WEAEFE2w.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">Seedance 2.0 过脸方法合集</span><span class="lang-content jp">Seedance 2.0 顔認証回避方法集</span></div>
@@ -501,8 +473,7 @@ footer a:hover { color: var(--gold); }
 <!-- 007 -->
     <a href="articles/007.html" class="art-card" data-category="practice">
       <div class="art-no">007</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/007/HIC-SQ6.jpg" alt="">
+            <img class="art-thumb" src="articles/images/007/HIC-SQ6.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">提示词设计</span><span class="lang-content jp">プロンプト設計</span></div>
         <div class="art-title"><span class="lang-content cn">AI作图全平台提示词模板（10个场景）</span><span class="lang-content jp">AI作画プラットフォーム完全ガイド（10シーン）</span></div>
@@ -512,8 +483,7 @@ footer a:hover { color: var(--gold); }
 <!-- 006 -->
     <a href="articles/006.html" class="art-card" data-category="frontier">
       <div class="art-no">006</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/006/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/006/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">个人 Agent 自建实战：EvoPaw</span><span class="lang-content jp">個人エージェント構築実践：EvoPaw</span></div>
@@ -523,8 +493,7 @@ footer a:hover { color: var(--gold); }
 <!-- 005 -->
     <a href="articles/005.html" class="art-card" data-category="frontier">
       <div class="art-no">005</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/005/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/005/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">GPT-Image-2 + XCrawl AI 主图自动化工作流</span><span class="lang-content jp">GPT-Image-2 + XCrawl AI商品画像自動化ワークフロー</span></div>
@@ -534,8 +503,7 @@ footer a:hover { color: var(--gold); }
 <!-- 004 -->
     <a href="articles/004.html" class="art-card" data-category="practice">
       <div class="art-no">004</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/004/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/004/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">提示词设计</span><span class="lang-content jp">プロンプト設計</span></div>
         <div class="art-title"><span class="lang-content cn">提示词不是咒语，是审美决策系统</span><span class="lang-content jp">プロンプトは呪文じゃない、美的判断システム</span></div>
@@ -545,8 +513,7 @@ footer a:hover { color: var(--gold); }
 <!-- 003 -->
     <a href="articles/003.html" class="art-card" data-category="money">
       <div class="art-no">003</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/003/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/003/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">获客</span><span class="lang-content jp">集客</span></div>
         <div class="art-title"><span class="lang-content cn">Google Maps + Claude 本地商家网站获客方法</span><span class="lang-content jp">Google Maps + Claude で地元ビジネスのWeb集客</span></div>
@@ -556,8 +523,7 @@ footer a:hover { color: var(--gold); }
 <!-- 002 -->
     <a href="articles/002.html" class="art-card" data-category="frontier">
       <div class="art-no">002</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/002/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/002/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">Codex + HyperFrames 正在吃掉剪辑行业</span><span class="lang-content jp">Codex + HyperFrames が編集業界を飲み込む</span></div>
@@ -567,8 +533,7 @@ footer a:hover { color: var(--gold); }
 <!-- 001 -->
     <a href="articles/001.html" class="art-card" data-category="frontier">
       <div class="art-no">001</div>
-      <div class="art-badge free"><span class="lang-content cn">免费</span><span class="lang-content jp">無料</span></div>
-      <img class="art-thumb" src="articles/images/001/img_01.jpg" alt="">
+            <img class="art-thumb" src="articles/images/001/img_01.jpg" alt="">
       <div class="art-body">
         <div class="art-tag"><span class="lang-content cn">AI工具</span><span class="lang-content jp">AIツール</span></div>
         <div class="art-title"><span class="lang-content cn">Codex + GPT-Image-2 视频产出工作流</span><span class="lang-content jp">Codex + GPT-Image-2 動画制作ワークフロー</span></div>
