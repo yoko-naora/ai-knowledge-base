@@ -77,12 +77,25 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] 2026-06-09: 首页重构方案确定 — 新 index.html=Landing Page（视频→痛点→案例→购买），旧 index→insights.html（3板块筛选）([Claude])
 - [x] 2026-06-09: 旧 index.html → insights.html 备份完成 ([Claude])
 
-## In Progress (2026-06-09)
+## Completed (2026-06-09)
 
-- [ ] **新 index.html 重写** — 第一版视觉效果未达标，待按 frontend-design 流程重写（选定 A/B/C/D 参考方向后执行）
-- [ ] **去付费墙** — 文章·提示词页删除 gating.js 引用
-- [ ] **insights.html 板块化** — 3 板块筛选标签 + 26 篇文章分类打标
-- [ ] **全局 nav 更新** — 所有页面 nav 指向 insights.html
+- [x] 去付费墙：删除 gating.js + main.js admin bypass + prompts/detail.html 死代码
+- [x] insights.html 板块化：3 筛选标签（前沿追踪14/上手实战6/搞钱案例6）+ 26篇文章分类
+- [x] 全局 nav 更新：33 页面 index.html → insights.html
+- [x] **insights.html 重组**：删 About/Who/Pain/免费试读/Lead Magnet，保留轮播+文章列表+定价+FINAL CTA
+- [x] insights.html 去冗余：删 ~100行死 CSS + 所有 emoji 图标 + 免费/付费 badge
+- [x] 全站导航统一：用AI看图作图\|大神工具\|大神文章\|大神提示词\|定价\|订阅
+- [x] 全站脚注统一：©用AI看图作图\|SNS Aladdin\|特定商取引法\|Community badges\|Line QR
+- [x] Logo 改名：AI知識庫 → 用AI看图作图
+- [x] 文案改名：最新技术→大神文章，最新提示词→大神提示词
+- [x] Skill 同步基础设施修复：Hermes 50+ 损坏符号链接修复 + sync-skills.ps1 创建
+- [x] HERMES-RULES.md 创建：开工5条检查+Skill铁律+硬写禁令
+
+## In Progress
+
+- [ ] **新 index.html 重写** — index-v1.html 修缮中（案例图放大、真图替换、导航统一）
+- [ ] **首页替换** — index-v1.html → index.html（待用户确认）
+- [ ] **大神工具页** — 待建
 
 ## Architecture Notes (2026-06-08) · 四层架构
 
