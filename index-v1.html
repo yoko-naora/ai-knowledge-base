@@ -1,0 +1,252 @@
+<!-- V1+V2 Combined | 底色/主色/字体/氛围 = V1 | 单列居中布局 = V2 -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI知識庫 · 陽子のAI精选 | 让每个人都能用AI做好内容</title>
+<meta name="description" content="别人用AI已经赚到钱了。你不会？从这里开始。每周精选AI大神实战分享，中文+日文双语。月額¥2,980。">
+<meta property="og:title" content="AI知識庫 · 陽子のAI精选">
+<meta property="og:description" content="别人用AI已经赚到钱了。你不会？从这里开始。">
+<meta property="og:image" content="https://kb.snsaladdin.com/hero-collage.jpg">
+<meta property="og:url" content="https://kb.snsaladdin.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="自己2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#fafaf9;--paper-lt:#f3f0e8;
+  --ink:#0a0a0b;--ink-muted:#5a5650;--ink-faint:#8a8580;
+  --gold:#b8925a;--gold-dark:#8B6E3C;--gold-lt:#e6d5b5;
+  --border:rgba(10,10,11,.1);--border-lt:rgba(10,10,11,.05);
+  --sans:'Noto Sans JP',sans-serif;--serif:'Noto Serif JP',serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;align-items:center}
+.lang-content.cn{display:block}
+.lang-content.jp{display:none}
+body.show-jp .lang-content.cn{display:none}
+body.show-jp .lang-content.jp{display:block}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;display:none}
+
+/* ── Nav ── */
+.nav-wrap{width:100%;position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,250,249,.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+nav{max-width:800px;margin:0 auto;padding:22px 24px;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:var(--ink);text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center;list-style:none}
+.nav-links a{font-size:11px;color:var(--ink-muted);text-decoration:none;letter-spacing:.08em;transition:color .25s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-size:10px;font-weight:500;letter-spacing:.12em;padding:10px 24px;background:var(--gold);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:background .25s}
+.nav-cta:hover{background:var(--gold-dark)}
+.lang-switch{display:flex;gap:4px;margin-left:8px}
+.lang-switch button{background:none;border:1px solid var(--border);padding:2px 10px;cursor:pointer;font-size:10px;font-family:var(--sans);color:var(--ink-muted);transition:all .2s}
+.lang-switch button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);padding:6px 12px;font-size:16px;cursor:pointer;color:var(--ink);font-family:var(--sans)}
+
+/* ── Sections ── */
+section{width:100%;max-width:800px;padding:140px 24px 100px}
+.section-label{font-size:10px;font-weight:500;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
+.section-head{font-family:var(--serif);font-size:clamp(22px,2.8vw,36px);font-weight:400;line-height:1.45;margin-bottom:12px}
+
+/* ── Hero ── */
+#hero{padding-top:180px;padding-bottom:80px;text-align:center}
+.hero-kicker{font-size:10px;letter-spacing:.28em;color:var(--gold);font-weight:500;margin-bottom:32px}
+.hero-headline{font-family:var(--serif);font-size:clamp(34px,5.2vw,66px);font-weight:400;line-height:1.3;letter-spacing:.02em;max-width:680px;margin:0 auto 20px}
+.hero-headline em{font-style:normal;color:var(--gold);font-weight:600}
+.hero-sub{font-size:14px;color:var(--ink-muted);line-height:2;max-width:440px;margin:0 auto 48px}
+.hero-video-wrap{max-width:640px;margin:0 auto;position:relative;aspect-ratio:16/9;background:var(--ink);box-shadow:12px 12px 0 rgba(10,10,11,.06)}
+.hero-video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.hero-video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(250,249,246,.35);font-family:var(--serif);font-size:15px;gap:12px}
+.hero-video-placeholder .play-sym{font-size:40px;color:rgba(184,146,90,.5);font-family:var(--serif)}
+.scroll-hint{margin-top:56px;font-size:10px;letter-spacing:.18em;color:var(--ink-faint);display:flex;align-items:center;justify-content:center;gap:10px}
+.scroll-hint .line{display:inline-block;width:40px;height:1px;background:var(--ink-faint)}
+.scroll-hint .arrow{animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ── Pain ── */
+#pain{background:var(--paper-lt);position:relative}
+#pain::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");background-size:400px 400px;opacity:.35;mix-blend-mode:multiply;z-index:0}
+#pain>*{position:relative;z-index:1}
+.pain-grid{display:flex;flex-direction:column;gap:0;max-width:520px;margin:32px auto 0}
+.pain-item{display:flex;gap:18px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--border-lt)}
+.pain-item:last-child{border-bottom:none;padding-bottom:0}
+.pain-num{font-family:var(--serif);font-size:18px;color:var(--gold);flex-shrink:0;width:36px;text-align:right;padding-top:2px}
+.pain-text{font-size:clamp(18px,2.2vw,28px);color:var(--ink);line-height:1.7}
+.pain-text strong{font-weight:600}
+.pain-pivot{max-width:520px;margin:48px auto 0;padding-top:40px;border-top:2px solid var(--gold);position:relative;text-align:center}
+.pain-pivot::before{content:'——';position:absolute;top:-10px;left:0;font-family:var(--serif);font-size:12px;color:var(--gold);letter-spacing:.2em;background:var(--paper-lt);padding-right:12px}
+.pain-pivot-line{font-family:var(--serif);font-size:clamp(17px,2vw,24px);font-weight:400;line-height:1.6;letter-spacing:.04em;color:var(--gold)}
+
+/* ── Cases ── */
+.cases-list{display:flex;flex-direction:column;gap:2px;background:var(--border-lt);margin-top:40px;border-top:1px solid var(--border)}
+
+.case-item{display:flex;gap:24px;padding:28px 24px;background:var(--paper);transition:background .25s;align-items:flex-start}
+.case-img{flex-shrink:0;width:180px}
+.case-img-inner{aspect-ratio:3/2;overflow:hidden;border:1px solid var(--border-lt)}
+.case-img-inner img{width:100%;height:100%;object-fit:cover;display:block}
+.case-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;opacity:.6}
+.case-img-placeholder span{font-size:12px;letter-spacing:.1em;color:var(--ink-faint)}
+.case-body{flex:1;min-width:0}
+.case-body .case-icon{font-size:20px;margin-bottom:8px;display:inline-block}
+@media(max-width:700px){
+  .case-item{flex-direction:column}
+  .case-img{width:100%;max-width:300px}
+}
+
+.case-item:hover{background:var(--paper-lt)}
+.case-icon{font-size:28px;flex-shrink:0;width:32px;text-align:center}
+.case-body{flex:1}
+.case-industry{font-size:9px;font-weight:500;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.case-quote{font-size:12px;color:var(--ink-muted);line-height:2;margin-bottom:10px}
+.case-result{font-size:11px;font-weight:500;color:var(--gold-dark);padding-top:10px;border-top:1px solid var(--border-lt)}
+
+/* ── Pricing ── */
+#pricing{background:var(--ink);color:rgba(250,249,246,.9)}
+#pricing .section-label{color:var(--gold-lt)}
+.pricing-intro{font-size:13px;color:rgba(250,249,246,.45);margin-bottom:36px}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:560px;margin:0 auto}
+.p-card{border:1px solid rgba(255,255,255,.1);padding:40px 32px;position:relative;transition:border-color .25s;background:rgba(255,255,255,.02)}
+.p-card:hover{border-color:rgba(184,146,90,.35)}
+.p-card.feat{border-color:var(--gold);background:rgba(184,146,90,.05)}
+.p-badge{position:absolute;top:-1px;right:20px;background:var(--gold);color:#fff;font-size:9px;font-weight:500;letter-spacing:.1em;padding:3px 12px}
+.p-plan{font-family:var(--serif);font-size:13px;font-weight:400;margin-bottom:16px}
+.p-price{font-family:var(--serif);font-size:34px;font-weight:400;line-height:1;margin-bottom:12px}
+.p-price small{font-size:13px;color:rgba(250,249,246,.4);font-family:var(--sans)}
+.p-desc{font-size:11px;color:rgba(250,249,246,.4);line-height:1.8;margin-bottom:24px;min-height:36px}
+.p-cta{display:block;width:100%;padding:13px;text-align:center;font-size:11px;font-weight:500;letter-spacing:.1em;cursor:pointer;text-decoration:none;transition:all .25s;font-family:var(--sans)}
+.p-cta.primary{background:var(--gold);color:#fff;border:none}
+.p-cta.primary:hover{background:#a07840}
+.p-cta.secondary{background:transparent;color:rgba(250,249,246,.7);border:1px solid rgba(255,255,255,.12)}
+.p-cta.secondary:hover{background:rgba(255,255,255,.04);color:#fff}
+.free-teaser{margin-top:44px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
+.free-teaser-label{font-size:12px;color:rgba(250,249,246,.5);margin-bottom:14px}
+.free-teaser form{display:flex;gap:8px}
+.free-teaser input{padding:10px 14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#fff;font-family:var(--sans);font-size:12px;outline:none;width:260px}
+.free-teaser input::placeholder{color:rgba(255,255,255,.2)}
+.free-teaser input:focus{border-color:var(--gold)}
+.free-teaser button{padding:10px 22px;background:var(--gold);color:#fff;border:none;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.08em;cursor:pointer;transition:background .25s;white-space:nowrap}
+.free-teaser button:hover{background:#a07840}
+.free-teaser .msg{font-size:11px;margin-top:10px;display:none}
+.free-teaser .msg.success{color:#5a9e6f}
+.free-teaser .msg.error{color:#c44d34}
+
+/* ── Footer ── */
+footer-wrap{width:100%;border-top:1px solid var(--border)}
+footer{max-width:800px;margin:0 auto;padding:36px 24px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-faint)}
+footer a{color:var(--ink-faint);text-decoration:none;margin-left:20px;transition:color .2s}
+footer a:hover{color:var(--gold)}
+footer .sep{color:var(--ink-faint);opacity:.4;font-size:9px}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  nav{padding:14px 20px;flex-wrap:wrap}
+  .menu-toggle{display:block}
+  .nav-links{display:none;width:100%;flex-direction:column;gap:0;padding-top:12px}
+  .nav-links.open{display:flex}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;padding:10px 0;font-size:13px;border-bottom:1px solid var(--border-lt)}
+  .nav-cta{margin-left:auto}
+  section{padding:120px 20px 80px}
+  #hero{padding-top:150px}
+  .pricing-grid{grid-template-columns:1fr}
+  .free-teaser form{flex-direction:column;align-items:center}
+  .free-teaser input{width:100%;max-width:320px}
+  footer{flex-direction:column;gap:12px;text-align:center}
+  footer a{margin:0 8px}
+}
+@media(max-width:500px){
+  section{padding:100px 16px 60px}
+  #hero{padding-top:130px}
+  .hero-headline{font-size:28px}
+  .pain-text{font-size:clamp(16px,2.5vw,22px)}
+  .case-item{padding:20px 16px}
+  .p-card{padding:28px 20px}
+  footer{padding:24px 16px}
+}
+</style>
+</head>
+<body>
+<div class="nav-wrap">
+<nav>
+  <a class="nav-logo" href="#">AI 知識庫</a>
+  <button class="menu-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.textContent==='☰'?'✕':'☰'" aria-label="Menu">☰</button>
+  <ul class="nav-links">
+    <li><a href="insights.html"><span class="lang-content cn">精选文章</span><span class="lang-content jp">記事一覧</span></a></li>
+    <li><a href="prompts/index.html"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></a></li>
+    <li><a href="creator.html"><span class="lang-content cn">创作中心</span><span class="lang-content jp">創作センター</span></a></li>
+    <li class="lang-switch"><button onclick="switchLang('cn')" class="active">中文</button><button onclick="switchLang('jp')">日本語</button></li>
+  </ul>
+  <a class="nav-cta" href="#pricing"><span class="lang-content cn">立即订阅</span><span class="lang-content jp">今すぐ購読</span></a>
+</nav>
+</div>
+<section id="hero">
+  <p class="hero-kicker"><span class="lang-content cn">AI内容生产线</span><span class="lang-content jp">AIコンテンツ生産ライン</span></p>
+  <h1 class="hero-headline"><span class="lang-content cn"><em>会用AI</em>的人，已经不是普通人了</span><span class="lang-content jp"><em>AIを使える</em>人は、もう凡人じゃない</span></h1>
+  <p class="hero-sub"><span class="lang-content cn">3分钟看懂，如何用AI快速做出杂志级内容。</span><span class="lang-content jp">3分でわかる、AIで雑誌レベルのコンテンツを作る方法。</span></p>
+  <div class="hero-video-wrap" id="videoWrap"><div class="hero-video-placeholder" id="videoPlaceholder"><span class="play-sym">▶</span><span class="lang-content cn">3分钟使用教程</span><span class="lang-content jp">3分チュートリアル</span><span style="font-size:11px;opacity:.5"><span class="lang-content cn">视频制作中</span><span class="lang-content jp">準備中</span></span></div></div>
+  <div class="scroll-hint"><span class="line"></span><span class="lang-content cn">向下滚动</span><span class="lang-content jp">スクロール</span><span class="arrow">↓</span></div>
+</section>
+<section id="pain">
+  <p class="section-label"><span class="lang-content cn">你是不是也这样？</span><span class="lang-content jp">あなたもこんなことない？</span></p>
+  <div class="pain-grid">
+    <div class="pain-item"><span class="pain-num">01</span><p class="pain-text"><span class="lang-content cn"><strong>别人的小红书配图像杂志，你的像截图。</strong></span><span class="lang-content jp"><strong>他人のSNS投稿は雑誌みたいに綺麗なのに、あなたのはスクショみたい。</strong></span></p></div>
+    <div class="pain-item"><span class="pain-num">02</span><p class="pain-text"><span class="lang-content cn"><strong>一篇公众号憋三天，发出去两位数阅读。</strong></span><span class="lang-content jp"><strong>記事を書くのに3日かけたのに、読まれたのは2桁。</strong></span></p></div>
+    <div class="pain-item"><span class="pain-num">03</span><p class="pain-text"><span class="lang-content cn"><strong>想做内容获客，图太丑，流量起不来。</strong></span><span class="lang-content jp"><strong>コンテンツで集客したいけど、画像がダサくて誰も見てくれない。</strong></span></p></div>
+    <div class="pain-item"><span class="pain-num">04</span><p class="pain-text"><span class="lang-content cn"><strong>做内容的时间比做业务还多，本末倒置。</strong></span><span class="lang-content jp"><strong>コンテンツ作りに本業より時間を取られて、本末転倒。</strong></span></p></div>
+    <div class="pain-item"><span class="pain-num">05</span><p class="pain-text"><span class="lang-content cn"><strong>课买了一堆，资料领了100份，还是不知道如何下手。</strong></span><span class="lang-content jp"><strong>講座を買いあさり、資料を100枚もらっても、どこから手をつければいいかわからない。</strong></span></p></div>
+    <div class="pain-item"><span class="pain-num">06</span><p class="pain-text"><span class="lang-content cn"><strong>每换一个平台，文案图都得重做一遍。</strong></span><span class="lang-content jp"><strong>プラットフォームを変えるたびに、文章も画像も作り直し。</strong></span></p></div>
+    <div class="pain-item"><span class="pain-num">07</span><p class="pain-text"><span class="lang-content cn"><strong>高品质的产品，客户看着像地摊货。</strong></span><span class="lang-content jp"><strong>せっかくの高品質な商品が、見せ方ひとつで安物に見られてしまう。</strong></span></p></div>
+  </div>
+  <div class="pain-pivot"><p class="pain-pivot-line"><span class="lang-content cn">不是你不行，<br>是你的生产工具跟不上。</span><span class="lang-content jp">あなたがダメなんじゃない。<br>生産ツールが追いついていないだけ。</span></p></div>
+</section>
+<section id="cases">
+  <h2 class="section-head"><span class="lang-content cn">同一套工具，不同的行业，都在拿到结果。</span><span class="lang-content jp">同じツールで、違う業界、みんなが結果を出しています。</span></h2>
+        <div class="cases-list">
+    <div class="case-item">
+      <div class="case-img"><div class="case-img-inner"><div class="case-img-placeholder" style="background:#e8d5c5"><span>家居定制</span></div></div></div>
+      <div class="case-body"><p class="case-industry"><span class="lang-content cn">家居定制</span><span class="lang-content jp">オーダー家具</span></p><p class="case-quote"><span class="lang-content cn">以前拍一套案例图，找设计师排版要等3天。现在拍完照→选模板→10分钟出7张杂志级图，一个案源引来5个客户。</span><span class="lang-content jp">以前は事例写真のレイアウトにデザイナー待ちで3日。今は撮影→テンプレ選択→10分で雑誌レベルの画像7枚。1つの事例から5件の問い合わせ。</span></p><p class="case-result"><span class="lang-content cn">10分钟出图 · 1案源→5客户</span><span class="lang-content jp">10分で画像 · 1事例→5件成約</span></p></div>
+    </div>
+    <div class="case-item">
+      <div class="case-img"><div class="case-img-inner"><img src="prompts/images/MrLarus_2051943360521228321_4.jpg" alt="服装穿搭" loading="lazy"></div></div>
+      <div class="case-body"><p class="case-industry"><span class="lang-content cn">服装穿搭</span><span class="lang-content jp">アパレル</span></p><p class="case-quote"><span class="lang-content cn">每天上新3件，要拍要修要写文案，一个人忙不完。用了AI之后，一套图5分钟，手机拍→套模板→发圈，一个月私域卖了12万。</span><span class="lang-content jp">毎日3着の新商品。撮影・補正・文章作成を一人で回せなかった。AI導入後は1セット5分。撮影→テンプレ→SNS投稿で、月商12万円を達成。</span></p><p class="case-result"><span class="lang-content cn">5分钟出图 · 月销12万</span><span class="lang-content jp">5分で投稿 · 月商12万円</span></p></div>
+    </div>
+    <div class="case-item">
+      <div class="case-img"><div class="case-img-inner"><div class="case-img-placeholder" style="background:#d4c5a9"><span>餐饮餐厅</span></div></div></div>
+      <div class="case-body"><p class="case-industry"><span class="lang-content cn">餐饮餐厅</span><span class="lang-content jp">飲食店</span></p><p class="case-quote"><span class="lang-content cn">菜做得好，拍出来不好看。请人拍一套3000块。现在自己拍自己出图，新菜品发抖音，一晚上来了40桌。</span><span class="lang-content jp">料理は美味しいのに写真はイマイチ。プロ撮影は1回3000元。今は自分で撮って自分で加工。新メニューを投稿したら、その夜40組来店。</span></p><p class="case-result"><span class="lang-content cn">省¥3000/次 · 一晚来40桌</span><span class="lang-content jp">撮影費3000元節約 · 一夜40組来店</span></p></div>
+    </div>
+    <div class="case-item">
+      <div class="case-img"><div class="case-img-inner"><div class="case-img-placeholder" style="background:#c5d5e0"><span>教育培训</span></div></div></div>
+      <div class="case-body"><p class="case-industry"><span class="lang-content cn">教育培训</span><span class="lang-content jp">教育・研修</span></p><p class="case-quote"><span class="lang-content cn">招生全靠朋友圈发文字，没人看。想做内容但不会设计，图太丑不敢发。用了AI知识库后，每天一条知识卡，朋友圈咨询量翻了3倍，一期课3天招满。</span><span class="lang-content jp">募集はテキストだけのSNS投稿。誰も見てくれない。コンテンツを作りたくてもデザインができず、ダサくて投稿できなかった。AI知識庫を使い始めてから、毎日1枚の知識カードを投稿。問い合わせが3倍に増え、講座が3日で満席に。</span></p><p class="case-result"><span class="lang-content cn">咨询量×3 · 3天招满一期</span><span class="lang-content jp">問合せ3倍 · 3日で満席</span></p></div>
+    </div>
+    <div class="case-item">
+      <div class="case-img"><div class="case-img-inner"><div class="case-img-placeholder" style="background:#d0c8c0"><span>二手车行</span></div></div></div>
+      <div class="case-body"><p class="case-industry"><span class="lang-content cn">二手车行</span><span class="lang-content jp">中古車販売</span></p><p class="case-quote"><span class="lang-content cn">同样的车、同样的价格，同行图拍得好就卖得快。以前一台车写描述+修图要2小时，现在扫一眼→拍6张→套模板→15分钟上架。专业感上来，溢价5000照样有人买。</span><span class="lang-content jp">同じ車、同じ価格。でも写真が上手い方が早く売れる。以前は1台の説明文+画像処理に2時間。今はサッと確認→6枚撮影→テンプレ適用→15分で出品。プロ感が出て、5000元高くても売れるように。</span></p><p class="case-result"><span class="lang-content cn">15分钟上架 · 溢价¥5,000</span><span class="lang-content jp">15分で出品 · 5000元のプレミアム</span></p></div>
+    </div>
+    </div>
+  </div>
+</section>
+<section id="pricing">
+  <h2 class="section-head" style="color:#fff"><span class="lang-content cn">一天不到一杯咖啡钱</span><span class="lang-content jp">1日たったのコーヒー1杯分</span></h2>
+  <p class="pricing-intro"><span class="lang-content cn">全文章 · 全提示词 · 创作中心，随时查阅。</span><span class="lang-content jp">全記事 · 全プロンプト · 創作センター、いつでもアクセス。</span></p>
+  <div class="pricing-grid">
+    <div class="p-card"><p class="p-plan"><span class="lang-content cn">月额订阅</span><span class="lang-content jp">月額プラン</span></p><p class="p-price">¥2,980 <small>/ <span class="lang-content cn">月</span><span class="lang-content jp">月</span></small></p><p class="p-desc"><span class="lang-content cn">全文章·全提示词·创作中心</span><span class="lang-content jp">全記事·全プロンプト·創作センター</span></p><a class="p-cta secondary" href="checkout.html?plan=monthly"><span class="lang-content cn">立即订阅 →</span><span class="lang-content jp">今すぐ購読 →</span></a></div>
+    <div class="p-card feat"><span class="p-badge"><span class="lang-content cn">最省</span><span class="lang-content jp">お得</span></span><p class="p-plan"><span class="lang-content cn">年额订阅</span><span class="lang-content jp">年額プラン</span></p><p class="p-price">¥30,000 <small>/ <span class="lang-content cn">年</span><span class="lang-content jp">年</span></small></p><p class="p-desc"><span class="lang-content cn">月额同内容 · 省 ¥5,760 · 2个月免费</span><span class="lang-content jp">月額と同内容 · ¥5,760お得 · 実質2ヶ月無料</span></p><a class="p-cta primary" href="checkout.html?plan=yearly"><span class="lang-content cn">立即订阅 →</span><span class="lang-content jp">今すぐ購読 →</span></a></div>
+  </div>
+  <div class="free-teaser"><p class="free-teaser-label"><span class="lang-content cn">先看5条免费提示词？留下邮箱，立刻发送。</span><span class="lang-content jp">まずは無料で5つのプロンプト？メールアドレスを入力してください。</span></p><form id="leadForm" onsubmit="submitLead(event)"><input type="email" id="leadEmail" required placeholder="your@email.com"><button type="submit"><span class="lang-content cn">免费领取</span><span class="lang-content jp">無料で受け取る</span></button></form><p class="msg" id="leadMsg"></p></div>
+</section>
+<div class="footer-wrap">
+<footer>
+  <span><span class="lang-content cn">© 2026 SNS Aladdin 株式会社</span><span class="lang-content jp">© 2026 SNS Aladdin 株式会社</span></span>
+  <span><a href="insights.html"><span class="lang-content cn">精选文章</span><span class="lang-content jp">記事一覧</span></a><a href="prompts/index.html"><span class="lang-content cn">提示词</span><span class="lang-content jp">プロンプト</span></a><a href="free-prompts.html"><span class="lang-content cn">免费5选</span><span class="lang-content jp">無料5選</span></a><a href="tokushoho.html"><span class="lang-content cn">特定商取引法</span><span class="lang-content jp">特定商取引法</span></a></span>
+</footer>
+</div>
+<script src="assets/js/main.js?v=7"></script>
+<script>
+function submitLead(e){e.preventDefault();var email=document.getElementById('leadEmail').value.trim();var msg=document.getElementById('leadMsg');if(!email)return;msg.style.display='block';msg.className='msg';msg.textContent='...';fetch('/api/send-lead-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})}).then(function(r){return r.json()}).then(function(d){msg.className=d.error?'msg error':'msg success';msg.textContent=d.error||(document.body.classList.contains('show-jp')?'送信しました！メールをご確認ください。':'已发送！请检查邮箱。');if(!d.error)document.getElementById('leadEmail').value='';}).catch(function(){msg.className='msg error';msg.textContent=document.body.classList.contains('show-jp')?'送信に失敗しました。後でもう一度お試しください。':'发送失败，请稍后再试。';});}
+(function(){var vid=window.YOUTUBE_VIDEO_ID;if(!vid)return;var wrap=document.getElementById('videoWrap');var ph=document.getElementById('videoPlaceholder');if(!wrap||!ph)return;ph.style.display='none';var iframe=document.createElement('iframe');iframe.src='https://www.youtube.com/embed/'+vid+'?rel=0&modestbranding=1';iframe.title='Tutorial';iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';iframe.allowFullscreen=true;wrap.appendChild(iframe);})();
+</script>
+</body>
+</html>
