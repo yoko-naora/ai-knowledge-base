@@ -121,17 +121,12 @@ section{width:100%;max-width:800px;padding:140px 24px 100px}
 .p-cta.primary:hover{background:#a07840}
 .p-cta.secondary{background:transparent;color:rgba(250,249,246,.7);border:1px solid rgba(255,255,255,.12)}
 .p-cta.secondary:hover{background:rgba(255,255,255,.04);color:#fff}
-.free-teaser{margin-top:44px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08)}
-.free-teaser-label{font-size:12px;color:rgba(250,249,246,.5);margin-bottom:14px}
-.free-teaser form{display:flex;gap:8px}
-.free-teaser input{padding:10px 14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:#fff;font-family:var(--sans);font-size:12px;outline:none;width:260px}
-.free-teaser input::placeholder{color:rgba(255,255,255,.2)}
-.free-teaser input:focus{border-color:var(--gold)}
-.free-teaser button{padding:10px 22px;background:var(--gold);color:#fff;border:none;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.08em;cursor:pointer;transition:background .25s;white-space:nowrap}
-.free-teaser button:hover{background:#a07840}
-.free-teaser .msg{font-size:11px;margin-top:10px;display:none}
-.free-teaser .msg.success{color:#5a9e6f}
-.free-teaser .msg.error{color:#c44d34}
+#free-lead{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+#free-lead input:focus{border-color:var(--gold);outline:none}
+#free-lead button:hover{background:var(--gold-dark)}
+.msg{font-size:11px;margin-top:10px;text-align:center;display:none}
+.msg.success{color:#2e7d32}
+.msg.error{color:#c44d34}
 
 /* ── Footer ── */
 footer-wrap{width:100%;border-top:1px solid var(--border)}
@@ -152,8 +147,8 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
   section{padding:120px 20px 80px}
   #hero{padding-top:150px}
   .pricing-grid{grid-template-columns:1fr}
-  .free-teaser form{flex-direction:column;align-items:center}
-  .free-teaser input{width:100%;max-width:320px}
+  #free-lead form{flex-direction:column;align-items:center}
+  #free-lead input{width:100%;max-width:320px}
   footer{gap:4px}
 }
 @media(max-width:500px){
@@ -234,7 +229,16 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
     <div class="p-card"><p class="p-plan"><span class="lang-content cn">月额订阅</span><span class="lang-content jp">月額プラン</span></p><p class="p-price">¥2,980 <small>/ <span class="lang-content cn">月</span><span class="lang-content jp">月</span></small></p><p class="p-desc"><span class="lang-content cn">全文章·全提示词·创作中心</span><span class="lang-content jp">全記事·全プロンプト·創作センター</span></p><a class="p-cta secondary" href="checkout.html?plan=monthly"><span class="lang-content cn">立即订阅 →</span><span class="lang-content jp">今すぐ購読 →</span></a></div>
     <div class="p-card feat"><span class="p-badge"><span class="lang-content cn">最省</span><span class="lang-content jp">お得</span></span><p class="p-plan"><span class="lang-content cn">年额订阅</span><span class="lang-content jp">年額プラン</span></p><p class="p-price">¥30,000 <small>/ <span class="lang-content cn">年</span><span class="lang-content jp">年</span></small></p><p class="p-desc"><span class="lang-content cn">月额同内容 · 省 ¥5,760 · 2个月免费</span><span class="lang-content jp">月額と同内容 · ¥5,760お得 · 実質2ヶ月無料</span></p><a class="p-cta primary" href="checkout.html?plan=yearly"><span class="lang-content cn">立即订阅 →</span><span class="lang-content jp">今すぐ購読 →</span></a></div>
   </div>
-  <div class="free-teaser"><p class="free-teaser-label"><span class="lang-content cn">先看5条免费提示词？留下邮箱，立刻发送。</span><span class="lang-content jp">まずは無料で5つのプロンプト？メールアドレスを入力してください。</span></p><form id="leadForm" onsubmit="submitLead(event)"><input type="email" id="leadEmail" required placeholder="your@email.com"><button type="submit"><span class="lang-content cn">免费领取</span><span class="lang-content jp">無料で受け取る</span></button></form><p class="msg" id="leadMsg"></p></div>
+</div>
+</section>
+<section id="free-lead">
+  <h2 class="section-head"><span class="lang-content cn">先看5条免费提示词</span><span class="lang-content jp">まずは無料で5つのプロンプト</span></h2>
+  <p style="font-size:13px;color:var(--ink-muted);margin-bottom:24px;text-align:center"><span class="lang-content cn">留下邮箱，立刻发送到你的收件箱。</span><span class="lang-content jp">メールアドレスを入力すると、すぐに受信できます。</span></p>
+  <form id="leadForm" onsubmit="submitLead(event)" style="display:flex;gap:8px;max-width:420px;margin:0 auto">
+    <input type="email" id="leadEmail" required placeholder="your@email.com" style="flex:1;padding:12px 16px;border:1px solid var(--border);font-family:var(--sans);font-size:13px;outline:none;background:#fff">
+    <button type="submit" style="padding:12px 28px;background:var(--gold);color:#fff;border:none;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.06em;cursor:pointer;white-space:nowrap"><span class="lang-content cn">免费领取</span><span class="lang-content jp">無料で受け取る</span></button>
+  </form>
+  <p class="msg" id="leadMsg" style="font-size:11px;margin-top:10px;text-align:center;display:none"></p>
 </section>
 <div class="footer-wrap">
 <footer>
