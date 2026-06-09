@@ -120,58 +120,6 @@ body.show-jp .lang-content.jp { display: block; }
 .art-tag { font-size: 9px; font-weight: 500; letter-spacing: .14em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
 .art-title { font-family: var(--serif); font-size: 14px; font-weight: 400; line-height: 1.65; margin-bottom: 10px; }
 .art-author { font-size: 11px; color: var(--ink-faint); }
-/* VALUE STACKING */
-.value-sec { background: var(--paper); }
-.value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 60px; }
-.value-card { background: #fff; padding: 32px 24px; text-align: center; transition: transform .2s; }
-.value-card:hover { transform: translateY(-3px); }
-.value-card h3 { font-family: var(--serif); font-size: 13px; font-weight: 400; margin-bottom: 6px; }
-.value-card p { font-size: 11px; color: var(--ink-muted); line-height: 1.7; }
-
-/* PRICING */
-.pricing-sec { background: var(--ink); color: rgba(250,249,246,.9); }
-.pricing-sec .sec-title { color: #fff; }
-.pricing-sec .sec-body { color: rgba(250,249,246,.55); }
-.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 60px; max-width: 720px; }
-.p-card { border: 1px solid rgba(255,255,255,.1); border-radius: 2px; padding: 40px; position: relative; transition: border-color .2s; }
-.p-card:hover { border-color: rgba(184,146,90,.4); }
-.p-card.feat { border-color: var(--gold); background: rgba(184,146,90,.05); }
-.p-badge { position: absolute; top: -1px; right: 20px; background: var(--gold); color: #fff; font-size: 9px; font-weight: 500; letter-spacing: .1em; padding: 4px 12px; border-radius: 0 0 4px 4px; }
-.p-badge.urgency { background: var(--red); animation: pulse-badge 2s ease infinite; }
-@keyframes pulse-badge { 0%,100% { opacity: 1; } 50% { opacity: .75; } }
-.p-plan { font-size: 10px; letter-spacing: .16em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; }
-.p-price { font-family: var(--serif); font-size: 44px; font-weight: 400; line-height: 1; }
-.p-per { font-size: 12px; color: rgba(250,249,246,.4); margin-left: 3px; }
-.p-note { font-size: 11px; color: rgba(250,249,246,.35); margin-top: 6px; margin-bottom: 28px; }
-.p-list { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
-.p-list li { font-size: 12px; color: rgba(250,249,246,.7); display: flex; align-items: flex-start; gap: 10px; line-height: 1.6; }
-.p-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
-.p-list li.off { color: rgba(250,249,246,.22); }
-.p-list li.off::before { color: rgba(255,255,255,.1); }
-.p-btn { display: block; width: 100%; padding: 13px; text-align: center; font-size: 12px; font-weight: 500; letter-spacing: .1em; text-decoration: none; border-radius: 2px; transition: .2s; cursor: pointer; border: none; }
-.p-btn.outline { border: 1px solid rgba(255,255,255,.18); color: rgba(250,249,246,.8); background: transparent; }
-.p-btn.outline:hover { background: rgba(255,255,255,.05); }
-.p-btn.gold { background: var(--gold); color: #fff; border: none; }
-.p-btn.gold:hover { background: #a07840; }
-
-/* REVIEWS */
-.reviews-sec { background: var(--paper-warm); }
-.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 60px; }
-.rev-card { background: var(--paper); padding: 28px; border-radius: 2px; }
-.rev-text { font-size: 12px; color: var(--ink-muted); line-height: 1.95; margin-bottom: 18px; }
-.rev-author { font-size: 11px; color: var(--ink-faint); display: flex; align-items: center; gap: 9px; }
-.rev-av { width: 28px; height: 28px; border-radius: 50%; background: var(--accent-lt); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: var(--accent); flex-shrink: 0; }
-
-/* FAQ */
-.faq-sec { background: var(--paper-warm); }
-.faq-wrap { max-width: 760px; margin-top: 60px; }
-.faq-item { border-bottom: 1px solid var(--border); padding: 24px 0; cursor: pointer; }
-.faq-q { font-family: var(--serif); font-size: 14px; font-weight: 400; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; user-select: none; }
-.faq-icon { color: var(--gold); font-size: 22px; line-height: 1; flex-shrink: 0; transition: transform .25s; }
-.faq-item.open .faq-icon { transform: rotate(45deg); }
-.faq-a { font-size: 12px; color: var(--ink-muted); line-height: 2; max-height: 0; overflow: hidden; transition: max-height .3s ease, padding .3s; }
-.faq-item.open .faq-a { max-height: 200px; padding-top: 12px; }
-
 /* FINAL CTA */
 .final-cta { background: var(--gold); color: #fff; padding: 100px 80px; text-align: center; }
 .final-sub { font-size: 14px; color: rgba(255,255,255,.82); line-height: 2; margin-bottom: 48px; }
@@ -220,9 +168,6 @@ footer a:hover { color: var(--gold); }
   .hero-card { right: 40px; bottom: 12px; max-width: 150px; font-size: 11px; padding: 14px 18px; }
   .sec { padding: 60px 28px; }
   .articles { grid-template-columns: 1fr; }
-  .value-grid { grid-template-columns: repeat(2, 1fr); }
-  .pricing-grid { grid-template-columns: 1fr; }
-  .reviews-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; gap: 16px; padding: 28px; text-align: center; }
   .final-cta { padding: 60px 28px; }
 }
@@ -240,7 +185,6 @@ footer a:hover { color: var(--gold); }
     <li><a href="prompts/index.html"><span class="lang-content cn">大神提示词</span><span class="lang-content jp">大神プロンプト</span></a></li>
     <li><a href="#tools"><span class="lang-content cn">推荐工具</span><span class="lang-content jp">おすすめツール</span></a></li>
     <li><a href="#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a></li>
-    <li><a href="#faq"><span class="lang-content cn">FAQ</span><span class="lang-content jp">FAQ</span></a></li>
   </ul>
   <div class="lang-switch">
     <button class="active" onclick="switchLang('cn')">中文</button>
@@ -543,118 +487,6 @@ footer a:hover { color: var(--gold); }
   </div>
 </section>
 
-<!-- VALUE STACKING -->
-<section class="value-sec sec" id="tools">
-  <p class="sec-label">What You Get</p>
-  <h2 class="sec-title"><span class="lang-content cn">订阅后您将获得</span><span class="lang-content jp">購読すると得られるもの</span></h2>
-  <p class="sec-body"><span class="lang-content cn">不仅仅是文章翻译。是可实践的知识包。</span><span class="lang-content jp">単なる記事の翻訳ではありません。実践に使える知識パッケージです。</span></p>
-  <div class="value-grid">
-    <div class="value-card">
-            <h3><span class="lang-content cn">每周2〜3篇精选文章</span><span class="lang-content jp">毎週2〜3本の厳選記事</span></h3>
-      <p><span class="lang-content cn">X上热门的AI实践知识，中日双语呈现</span><span class="lang-content jp">Xで話題のAI実践知を中日バイリンガルで</span></p>
-    </div>
-    <div class="value-card">
-            <h3><span class="lang-content cn">45+ 精选提示词</span><span class="lang-content jp"><span class="lang-content cn">45+ 精选提示词</span><span class="lang-content jp">45+ 厳選プロンプト</span></span></h3>
-      <p><span class="lang-content cn">即复制即用的提示词库</span><span class="lang-content jp">即コピペで使えるプロンプトライブラリ</span></p>
-    </div>
-    <div class="value-card">
-            <h3><span class="lang-content cn">阳子推荐工具详解</span><span class="lang-content jp">陽子のおすすめツール解説</span></h3>
-      <p><span class="lang-content cn">只介绍亲测好用的工具</span><span class="lang-content jp">実際に使って良かったツールだけを詳しく</span></p>
-    </div>
-    <div class="value-card">
-            <h3><span class="lang-content cn">历史归档全部公开</span><span class="lang-content jp">過去アーカイブ全公開</span></h3>
-      <p><span class="lang-content cn">可访问创刊以来全部文章（年付）</span><span class="lang-content jp">創刊以来の全記事にアクセス可能（年額）</span></p>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section class="reviews-sec sec">
-  <p class="sec-label">Reviews</p>
-  <h2 class="sec-title"><span class="lang-content cn">读者心声</span><span class="lang-content jp">読者の声</span></h2>
-  <div class="reviews-grid">
-    <div class="rev-card">
-            <p class="rev-text"><span class="lang-content cn">不懂中文也能轻松获取世界最前沿的AI信息。每周一的更新已成了期待。</span><span class="lang-content jp">中国語ができなくても、世界最前線のAI情報がわかりやすく届く。毎週月曜日の更新が楽しみになっています。</span></p>
-      <div class="rev-author"><div class="rev-av">MT</div><span><span class="lang-content cn">市场人·女性·30代</span><span class="lang-content jp">マーケター・女性・30代</span></span></div>
-    </div>
-    <div class="rev-card">
-            <p class="rev-text"><span class="lang-content cn">提示词库真的很实用。工具讲解也很细致，副业点子不断涌现。</span><span class="lang-content jp">プロンプトライブラリが本当に使える。気になるツールの解説も丁寧で、副業のアイデアがどんどん湧いてきます。</span></p>
-      <div class="rev-author"><div class="rev-av">KS</div><span><span class="lang-content cn">自由职业·男性·40代</span><span class="lang-content jp">フリーランス・男性・40代</span></span></div>
-    </div>
-    <div class="rev-card">
-            <p class="rev-text"><span class="lang-content cn">年度方案的社群比想象中更活跃。能直接向阳子提问，学习速度大大提升。</span><span class="lang-content jp">年額プランのコミュニティが想像以上に活発。陽子さんに直接質問できるのが大きくて、学習スピードが上がりました。</span></p>
-      <div class="rev-author"><div class="rev-av">AY</div><span><span class="lang-content cn">公司职员·女性·30代</span><span class="lang-content jp">会社員・女性・30代</span></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-sec sec" id="pricing">
-  <p class="sec-label">Pricing</p>
-  <h2 class="sec-title"><span class="lang-content cn">簡潔雙方案</span><span class="lang-content jp">シンプルな2プラン</span></h2>
-  <p class="sec-body"><span class="lang-content cn">先从月度开始。不合适随时可解约。</span><span class="lang-content jp">まずは月額から。合わなければいつでも解約できます。</span></p>
-  <div class="pricing-grid">
-    <div class="p-card">
-      <p class="p-plan"><span class="lang-content cn">月度方案</span><span class="lang-content jp">月額プラン</span></p>
-      <div class="p-price">¥2,980<span class="p-per">/月</span></div>
-      <p class="p-note"><span class="lang-content cn">含税·随时解约</span><span class="lang-content jp">税込・いつでも解約可</span></p>
-      <ul class="p-list">
-        <li><span class="lang-content cn">全文章无限阅读（中日双语）</span><span class="lang-content jp">全記事読み放題（中日バイリンガル）</span></li>
-        <li><span class="lang-content cn">45+ 精选提示词无限使用（每周更新）</span><span class="lang-content jp">45+ 厳選プロンプト見放題（毎週更新）</span></li>
-        <li><span class="lang-content cn">每月 10〜15 篇更新 最新Ai技能文章</span><span class="lang-content jp">毎月 10〜15 本更新 最新AIスキル記事</span></li>
-        <li><span class="lang-content cn">每月2次3小时直播学习会</span><span class="lang-content jp">毎月2回 3時間Live勉強会</span></li>
-        <li class="off"><span class="lang-content cn">1对1 商业计划审查</span><span class="lang-content jp">1対1 ビジネスプラン精査</span></li>
-        <li class="off"><span class="lang-content cn">21天账号涨粉计划提案</span><span class="lang-content jp">21日間アカウント成長計画提案</span></li>
-        <li class="off"><span class="lang-content cn">专属社群参与</span><span class="lang-content jp">専用コミュニティ参加</span></li>
-      </ul>
-      <a href="checkout.html?plan=monthly" class="p-btn outline"><span class="lang-content cn">月度訂閱 →</span><span class="lang-content jp">月額で始める →</span></a>
-    </div>
-    <div class="p-card feat">
-      <div class="p-badge urgency"><span class="lang-content cn">首次限定</span><span class="lang-content jp">初回限定</span></div>
-      <p class="p-plan"><span class="lang-content cn">年度方案</span><span class="lang-content jp">年額プラン</span></p>
-      <div class="p-price">¥30,000<span class="p-per">/年</span></div>
-      <p class="p-note"><span class="lang-content cn">月均 ¥2,500 · 1个月免费 · 含税</span><span class="lang-content jp">月あたり ¥2,500 · 1ヶ月無料 · 税込</span></p>
-      <ul class="p-list">
-        <li><span class="lang-content cn">全文章无限阅读（中日双语）</span><span class="lang-content jp">全記事読み放題（中日バイリンガル）</span></li>
-        <li><span class="lang-content cn">45+ 精选提示词无限使用（每周更新）</span><span class="lang-content jp">45+ 厳選プロンプト見放題（毎週更新）</span></li>
-        <li><span class="lang-content cn">每月 10〜15 篇更新 最新Ai技能文章</span><span class="lang-content jp">毎月 10〜15 本更新 最新AIスキル記事</span></li>
-        <li><span class="lang-content cn">每月2次3小时直播学习会</span><span class="lang-content jp">毎月2回 3時間Live勉強会</span></li>
-        <li><span class="lang-content cn">1对1 商业计划审查</span><span class="lang-content jp">1対1 ビジネスプラン精査</span></li>
-        <li><span class="lang-content cn">21天账号涨粉计划提案</span><span class="lang-content jp">21日間アカウント成長計画提案</span></li>
-        <li><span class="lang-content cn">专属社群参与</span><span class="lang-content jp">専用コミュニティ参加</span></li>
-      </ul>
-      <a href="checkout.html?plan=yearly" class="p-btn gold"><span class="lang-content cn">年度訂閱（1個月免費）→</span><span class="lang-content jp">年額で始める（1ヶ月無料）→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-sec sec" id="faq">
-  <p class="sec-label">FAQ</p>
-  <h2 class="sec-title"><span class="lang-content cn">常见问题</span><span class="lang-content jp">よくある質問</span></h2>
-  <div class="faq-wrap">
-    <div class="faq-item">
-      <div class="faq-q"><span class="lang-content cn">不懂中文也可以吗？</span><span class="lang-content jp">中国語がわからなくても大丈夫ですか？</span><span class="faq-icon">+</span></div>
-      <div class="faq-a"><span class="lang-content cn">是的，全文章以中日双语提供。仅靠中文即可完全阅读。日文仅作为参考附带，请放心。</span><span class="lang-content jp">はい、全記事が中日バイリンガルで提供されます。日本語だけで完全に読めます。中国語は参考として添えているだけですので、ご安心ください。</span></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q"><span class="lang-content cn">适合什么样的人？</span><span class="lang-content jp">どんな人向けのコンテンツですか？</span><span class="faq-icon">+</span></div>
-      <div class="faq-a"><span class="lang-content cn">特别推荐给对AI副业·变现感兴趣的人、想在工作中活用最新工具的人、想捕捉中国AI信息的人。从初学者到实践者皆可广泛使用。</span><span class="lang-content jp">AI副業・変現に興味がある方、最新ツールを仕事に活かしたい方、中国発のAI情報にアンテナを張りたい方に特におすすめです。初心者から実践者まで幅広くご活用いただけます。</span></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q"><span class="lang-content cn">随时可以解约吗？</span><span class="lang-content jp">解約はいつでもできますか？</span><span class="faq-icon">+</span></div>
-      <div class="faq-a"><span class="lang-content cn">是的。月度方案随时可解约，从下次更新起停止。年度方案也可停止次年续费（不提供按日退款）。</span><span class="lang-content jp">はい。月額プランはいつでも解約可能で、次回更新から停止されます。年額プランも次年度更新を停止できます（日割り返金はありません）。</span></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q"><span class="lang-content cn">支持哪些支付方式？</span><span class="lang-content jp">支払い方法は何がありますか？</span><span class="faq-icon">+</span></div>
-      <div class="faq-a"><span class="lang-content cn">支持信用卡（Visa / Mastercard / Amex）。支付由Stripe安全处理。本站不保存任何卡信息。</span><span class="lang-content jp">クレジットカード（Visa / Mastercard / Amex）に対応しています。決済はStripeが安全に処理します。当サイトではカード情報を一切保存しません。</span></div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q"><span class="lang-content cn">可以免费试用吗？</span><span class="lang-content jp">無料で試せますか？</span><span class="faq-icon">+</span></div>
-      <div class="faq-a"><span class="lang-content cn">是的。最新3篇文章（#013〜015）免费全文公开。请先确认阅读体验和内容质量后，再考虑订阅。</span><span class="lang-content jp">はい。最新3記事（#013〜015）は無料で全文公開しています。まずは読み心地や内容の質を確かめてから、購読をご検討ください。</span></div>
-    </div>
-  </div>
-</section>
 
 <!-- FINAL CTA -->
 <section class="final-cta">
@@ -666,7 +498,6 @@ footer a:hover { color: var(--gold); }
     <a href="checkout.html?plan=monthly" style="display:inline-flex;align-items:center;gap:12px;padding:18px 52px;background:transparent;color:#fff;font-size:13px;font-weight:500;letter-spacing:.12em;text-decoration:none;border-radius:2px;border:1px solid rgba(255,255,255,.4);transition:.2s;"><span class="lang-content cn">月度 ¥2,980 試試看 →</span><span class="lang-content jp">月額 ¥2,980 で試す →</span></a>
   </div>
 </section>
-
 <!-- FOOTER -->
 <footer>
   <span>© 2026 用AI看图作图</span>
@@ -698,13 +529,6 @@ function switchLang(lang) {
   switchLang(saved);
 })();
 
-// FAQ toggle
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.querySelector('.faq-q').addEventListener('click', () => {
-    item.classList.toggle('open');
-  });
-});
-
 // Scroll animations for pricing/review/who/pain/value cards only (not article cards)
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => {
@@ -716,7 +540,7 @@ const obs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.p-card, .rev-card, .value-card').forEach(el => {
+document.querySelectorAll('.p-card, .rev-card, .value-card').forEach(el => { // dead refs kept for safety
   el.style.opacity = '0';
   el.style.transform = 'translateY(16px)';
   el.style.transition = 'opacity .5s ease, transform .5s ease';
