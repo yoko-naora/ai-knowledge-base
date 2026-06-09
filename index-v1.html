@@ -83,17 +83,18 @@ section{width:100%;max-width:800px;padding:140px 24px 100px}
 /* ── Cases ── */
 .cases-list{display:flex;flex-direction:column;gap:2px;background:var(--border-lt);margin-top:40px;border-top:1px solid var(--border)}
 
-.case-item{display:flex;gap:24px;padding:28px 24px;background:var(--paper);transition:background .25s;align-items:flex-start}
-.case-img{flex-shrink:0;width:180px}
-.case-img-inner{aspect-ratio:3/2;overflow:hidden;border:1px solid var(--border-lt)}
+.case-item{display:flex;gap:32px;padding:40px 24px;background:var(--paper);transition:background .25s;align-items:center}
+.case-img{flex-shrink:0;width:380px}
+.case-img-inner{aspect-ratio:4/3;overflow:hidden;border:1px solid var(--border-lt)}
 .case-img-inner img{width:100%;height:100%;object-fit:cover;display:block}
-.case-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;opacity:.6}
-.case-img-placeholder span{font-size:12px;letter-spacing:.1em;color:var(--ink-faint)}
-.case-body{flex:1;min-width:0}
+.case-img-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--paper-lt)}
+.case-img-placeholder span{font-size:14px;letter-spacing:.08em;color:var(--ink-faint)}
+.case-body{flex:1;min-width:0;max-width:420px}
 .case-body .case-icon{font-size:20px;margin-bottom:8px;display:inline-block}
 @media(max-width:700px){
-  .case-item{flex-direction:column}
-  .case-img{width:100%;max-width:300px}
+  .case-item{flex-direction:column;padding:24px 16px}
+  .case-img{width:100%}
+  .case-body{max-width:none}
 }
 
 .case-item:hover{background:var(--paper-lt)}
@@ -197,7 +198,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
   <h2 class="section-head"><span class="lang-content cn">同一套工具，不同的行业，都在拿到结果。</span><span class="lang-content jp">同じツールで、違う業界、みんなが結果を出しています。</span></h2>
         <div class="cases-list">
     <div class="case-item">
-      <div class="case-img"><div class="case-img-inner"><div class="case-img-placeholder" style="background:#e8d5c5"><span>家居定制</span></div></div></div>
+      <div class="case-img"><div class="case-img-inner"><img src="images/case-furniture.jpg" alt="家居定制" loading="lazy"></div></div>
       <div class="case-body"><p class="case-industry"><span class="lang-content cn">家居定制</span><span class="lang-content jp">オーダー家具</span></p><p class="case-quote"><span class="lang-content cn">以前拍一套案例图，找设计师排版要等3天。现在拍完照→选模板→10分钟出7张杂志级图，一个案源引来5个客户。</span><span class="lang-content jp">以前は事例写真のレイアウトにデザイナー待ちで3日。今は撮影→テンプレ選択→10分で雑誌レベルの画像7枚。1つの事例から5件の問い合わせ。</span></p><p class="case-result"><span class="lang-content cn">10分钟出图 · 1案源→5客户</span><span class="lang-content jp">10分で画像 · 1事例→5件成約</span></p></div>
     </div>
     <div class="case-item">
@@ -205,7 +206,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <div class="case-body"><p class="case-industry"><span class="lang-content cn">服装穿搭</span><span class="lang-content jp">アパレル</span></p><p class="case-quote"><span class="lang-content cn">每天上新3件，要拍要修要写文案，一个人忙不完。用了AI之后，一套图5分钟，手机拍→套模板→发圈，一个月私域卖了12万。</span><span class="lang-content jp">毎日3着の新商品。撮影・補正・文章作成を一人で回せなかった。AI導入後は1セット5分。撮影→テンプレ→SNS投稿で、月商12万円を達成。</span></p><p class="case-result"><span class="lang-content cn">5分钟出图 · 月销12万</span><span class="lang-content jp">5分で投稿 · 月商12万円</span></p></div>
     </div>
     <div class="case-item">
-      <div class="case-img"><div class="case-img-inner"><div class="case-img-placeholder" style="background:#d4c5a9"><span>餐饮餐厅</span></div></div></div>
+      <div class="case-img"><div class="case-img-inner"><img src="images/case-food.jpg" alt="餐饮餐厅" loading="lazy"></div></div>
       <div class="case-body"><p class="case-industry"><span class="lang-content cn">餐饮餐厅</span><span class="lang-content jp">飲食店</span></p><p class="case-quote"><span class="lang-content cn">菜做得好，拍出来不好看。请人拍一套3000块。现在自己拍自己出图，新菜品发抖音，一晚上来了40桌。</span><span class="lang-content jp">料理は美味しいのに写真はイマイチ。プロ撮影は1回3000元。今は自分で撮って自分で加工。新メニューを投稿したら、その夜40組来店。</span></p><p class="case-result"><span class="lang-content cn">省¥3000/次 · 一晚来40桌</span><span class="lang-content jp">撮影費3000元節約 · 一夜40組来店</span></p></div>
     </div>
     <div class="case-item">
