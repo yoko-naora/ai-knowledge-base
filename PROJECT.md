@@ -74,6 +74,15 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] 2026-06-08: 创作中心产品定义 (PRODUCT-BRIEF.md) — 从0开始3入口 + 参考某文3入口 ([Claude])
 - [x] 2026-06-08: 品牌视觉锁 (VISUAL-DNA.md + STYLE-GUIDE.md) — 杂志高级风 + 订阅者4风格路由 ([Claude])
 - [x] 2026-06-08: yijian-chengpian 首次公众号生产测试通过 — 选题→写作→封面→草稿箱，端到端验证 ([Claude])
+- [x] 2026-06-09: 首页重构方案确定 — 新 index.html=Landing Page（视频→痛点→案例→购买），旧 index→insights.html（3板块筛选）([Claude])
+- [x] 2026-06-09: 旧 index.html → insights.html 备份完成 ([Claude])
+
+## In Progress (2026-06-09)
+
+- [ ] **新 index.html 重写** — 第一版视觉效果未达标，待按 frontend-design 流程重写（选定 A/B/C/D 参考方向后执行）
+- [ ] **去付费墙** — 文章·提示词页删除 gating.js 引用
+- [ ] **insights.html 板块化** — 3 板块筛选标签 + 26 篇文章分类打标
+- [ ] **全局 nav 更新** — 所有页面 nav 指向 insights.html
 
 ## Architecture Notes (2026-06-08) · 四层架构
 
@@ -98,13 +107,17 @@ Layer 4 · Projects   → output/
 | 2 | 購読者 0 名、週次メール未本番送信 | Low | 集客待ち |
 | 3 | DNS 一部 ISP で未伝播（24h TTL 残存） | Low | 待機中 |
 
-## Next Actions (優先順)
+## Next Actions (優先順) · 使用 Skill
 
-1. **创作中心前端** — 6 入口 UI 页面（`creator.html`），订阅者登录后可访问
-2. **端到端生产测试** — 用真实选题跑通 scratch-wechat + scratch-xhs 两条线
-3. **订阅者风格选项集成** — 4 风格选择器 + 预设参数传参
-4. **集客開始** — X (yoko/Ai_shukyaku) から kb サイトへの導線
-5. **TikTok 復帰配信実行** — 直播脚本 + 滚图準備完了、配信日決定
+| # | 任务 | Skill | 说明 |
+|---|------|-------|------|
+| 1 | 新 index.html 重写 | `frontend-design` | 选定参考方向后，严格按 frontend-design 流程：定美学方向→写代码→迭代（⏳ 等待选定方向） |
+| 2 | 去付费墙 | 无（纯文本编辑） | grep gating.js → 逐文件删除引用行 |
+| 3 | insights.html 板块化 | 无（复用现有模式） | 复制旧 index + 加筛选标签 + 文章分类 |
+| 4 | 全局 nav 更新 | 无（纯文本编辑） | 所有页面 nav 新增 insights.html 链接 |
+| 5 | 部署验证 | 无（git + curl） | commit + push → Cloudflare Pages 自动部署 |
+| 6 | 创作中心前端 | `frontend-design` | 后续单独规划 |
+| 7 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
 
 ## Key Links
 

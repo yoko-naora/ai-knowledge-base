@@ -8,18 +8,6 @@ function switchLang(lang) {
   document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
 }
 
-// Admin bypass — proactive check before gating.js runs
-// Works via #admin hash (first visit) or stored email (subsequent visits)
-if (window.location.hash === '#admin') {
-  localStorage.setItem('kb_email', 'yokonaora@gmail.com');
-  localStorage.setItem('kb_subscriber', 'true');
-  if (window.history && window.history.replaceState) {
-    window.history.replaceState(null, '', window.location.pathname + window.location.search);
-  }
-} else if (localStorage.getItem('kb_email') === 'yokonaora@gmail.com') {
-  localStorage.setItem('kb_subscriber', 'true');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('kb-lang') || 'cn';
   switchLang(saved);

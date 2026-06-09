@@ -256,10 +256,12 @@ kb-site/
 │   ├── routes/（6 调度文件）
 │   └── qc.md
 │
-├── index.html              ← Home
+├── index.html              ← Landing Page（视频→痛点→案例→购买，2026-06-09 重构中）
+├── insights.html           ← 文章列表（3板块筛选：前沿追踪/上手实战/搞钱案例）
 ├── articles/               ← 001.html - 026.html
 ├── articles-src/           ← Markdown source (new)
 ├── prompts/                ← Prompt listing
+├── creator.html            ← 创作中心（规划中，未建）
 ├── output/                 ← Layer 4 · Output
 ├── functions/api/          ← Cloudflare Functions
 ├── assets/                 ← CSS/JS/images
