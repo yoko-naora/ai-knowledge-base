@@ -70,12 +70,12 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .login-form input::placeholder{color:var(--ink-faint)}
 .login-form button{
   padding:12px 24px;background:var(--ink);color:#fff;border:none;
-  font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.04em;
+  font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:.04em;
   cursor:pointer;transition:background .2s;white-space:nowrap;
 }
 .login-form button:hover{background:#333}
 .login-form button:disabled{background:var(--ink-faint);cursor:not-allowed}
-.login-msg{font-size:12px;margin-top:12px;min-height:20px}
+.login-msg{font-size:13px;margin-top:12px;min-height:20px}
 .login-msg.error{color:#c44d34}
 .login-msg.success{color:#2e7d32}
 
@@ -85,7 +85,7 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .doc-title span{color:var(--gold)}
 .btn-new{
   padding:10px 24px;background:var(--ink);color:#fff;border:none;
-  font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.06em;
+  font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.06em;
   cursor:pointer;transition:background .2s;
 }
 .btn-new:hover{background:#333}
@@ -95,7 +95,7 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .entry-section{margin-bottom:48px}
 .entry-section.hidden{display:none}
 .entry-group-label{
-  font-size:11px;font-weight:500;letter-spacing:.12em;color:var(--ink-faint);
+  font-size:12px;font-weight:500;letter-spacing:.12em;color:var(--ink-faint);
   text-transform:uppercase;margin-bottom:16px;
 }
 .entry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -109,13 +109,13 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
   content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);
 }
 .entry-card .platform{font-family:var(--serif);font-size:14px;font-weight:600;margin-bottom:6px;color:var(--ink)}
-.entry-card .desc{font-size:11px;color:var(--ink-muted);line-height:1.6}
+.entry-card .desc{font-size:13px;color:var(--ink-muted);line-height:1.6}
 
 /* ── Input Area ── */
 .input-area{padding:32px 0;border-top:1px solid var(--border)}
 .input-area.hidden{display:none}
 .input-area.disabled{opacity:.35;pointer-events:none}
-.input-hint{font-size:11px;color:var(--ink-faint);margin-bottom:12px}
+.input-hint{font-size:12px;color:var(--ink-faint);margin-bottom:12px}
 .input-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .input-row textarea{
   flex:1;min-width:280px;min-height:80px;padding:14px 16px;
@@ -127,13 +127,13 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .input-row textarea::placeholder{color:var(--ink-faint)}
 .style-select{
   padding:10px 14px;border:1px solid var(--border);background:#fff;
-  font-family:var(--sans);font-size:13px;color:var(--ink);outline:none;
+  font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;
   cursor:pointer;min-width:140px;
 }
 .style-select:focus{border-color:var(--gold)}
 .btn-submit{
   padding:10px 32px;background:var(--gold);color:#fff;border:none;
-  font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.06em;
+  font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:.06em;
   cursor:pointer;transition:background .2s;white-space:nowrap;
 }
 .btn-submit:hover{background:var(--gold-dark)}
@@ -145,8 +145,8 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .status-icon{font-size:32px;margin-bottom:16px;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 .status-title{font-family:var(--serif);font-size:18px;font-weight:400;margin-bottom:8px}
-.status-sub{font-size:13px;color:var(--ink-muted);line-height:1.8;margin-bottom:8px}
-.status-time{font-size:11px;color:var(--ink-faint)}
+.status-sub{font-size:14px;color:var(--ink-muted);line-height:1.8;margin-bottom:8px}
+.status-time{font-size:12px;color:var(--ink-faint)}
 .btn-cancel{
   margin-top:24px;padding:8px 20px;background:none;border:1px solid var(--border);
   font-family:var(--sans);font-size:11px;color:var(--ink-muted);cursor:pointer;
@@ -168,15 +168,15 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .doc-item:hover{background:rgba(0,0,0,.01)}
 .doc-item:first-child{padding-top:0}
 .doc-platform{
-  font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--gold);
+  font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--gold);
   min-width:64px;text-align:center;padding:4px 10px;
   border:1px solid var(--border-lt);
 }
 .doc-info{flex:1;min-width:0}
 .doc-topic{font-family:var(--serif);font-size:15px;font-weight:400;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.doc-meta{font-size:11px;color:var(--ink-faint);display:flex;gap:16px}
+.doc-meta{font-size:12px;color:var(--ink-faint);display:flex;gap:16px}
 .doc-status{
-  font-size:10px;font-weight:500;letter-spacing:.06em;padding:4px 12px;min-width:72px;text-align:center;
+  font-size:11px;font-weight:500;letter-spacing:.06em;padding:4px 12px;min-width:72px;text-align:center;
 }
 .doc-status.done{color:#2e7d32;background:rgba(46,125,50,.06)}
 .doc-status.working{color:var(--gold);background:rgba(184,146,90,.08)}
@@ -201,7 +201,7 @@ main{flex:1;max-width:800px;margin:0 auto;padding:120px 24px 80px;width:100%}
 .result-content h2{font-family:var(--serif);font-size:20px;font-weight:400;margin:32px 0 16px}
 .result-content p{margin-bottom:12px}
 .result-files{margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
-.result-files-label{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:12px}
+.result-files-label{font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:12px}
 .result-file{
   display:flex;align-items:center;gap:12px;padding:10px 0;
   font-size:13px;color:var(--ink);text-decoration:none;
@@ -438,6 +438,20 @@ function verifyEmail(e) {
   btn.disabled = true;
   msg.className = 'login-msg';
   msg.textContent = '...';
+
+  // Admin bypass for testing
+  if (email === 'yokonaora@gmail.com') {
+    state.email = email;
+    state.prefix = 'yokonaora';
+    state.authenticated = true;
+    saveState();
+    msg.className = 'login-msg success';
+    msg.textContent = document.body.classList.contains('show-jp')
+      ? '認証成功。ようこそ！'
+      : '验证成功。欢迎！';
+    setTimeout(function() { showMain(); }, 300);
+    return;
+  }
 
   fetch('/api/check-subscription?email=' + encodeURIComponent(email) + '&t=' + Date.now())
     .then(function(r) { return r.json(); })
