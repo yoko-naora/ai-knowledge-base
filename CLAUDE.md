@@ -8,7 +8,7 @@ Every agent working on this project reads this file first.
 ## Project Overview
 
 AI知识库会员制サイト。月額 ¥2,980 / 年額 ¥30,000 購読。AI活用記事・プロンプト・ツール情報。
-**v2：创作中心——订阅者输入话题/文章，产出各平台成品。creator.html 已建，今日重点页。**
+**v2：创作中心——creator.html MVP 已完成。订阅者输入话题/文章URL，产出各平台成品。**
 
 - **URL:** https://kb.snsaladdin.com
 - **Repo:** `yoko-naora/ai-knowledge-base` (main branch)
@@ -273,6 +273,7 @@ kb-site/
 │
 ├── index.html              ← Landing Page（竖列案例+实图，已上线）
 ├── index-old.html          ← 旧版 Landing Page（卡片网格+emoji，备份）
+├── creator.html            ← 创作中心（6入口→表单→状态轮询→文稿列表，MVP）
 ├── insights.html           ← 文章列表（3板块筛选：前沿追踪/上手实战/搞钱案例）
 ├── articles/               ← 001.html - 026.html
 ├── articles-src/           ← Markdown source (new)

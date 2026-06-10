@@ -93,11 +93,13 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## In Progress
 
-- [ ] **v2 创作中心** — creator.html，订阅者输入话题→产出各平台成品，今日重点
+- [ ] **创作中心后端 API** — /api/create-task, task-status, task-result, my-tasks（当前 MVP 用 localStorage 模拟）
+- [ ] **success.html → creator.html token 集成**
 - [ ] **大神工具页** — 待建
 
 ## Completed (2026-06-10)
 
+- [x] **creator.html MVP 完成** — 登录验证+6入口选择+表单提交+制作状态轮询+文稿列表+成品详情+中日双语+响应式，impeccable shape → frontend-design 实现
 - [x] index-v1 → index.html 上线（竖列案例+实图，替换旧卡片网格版）
 - [x] 痛点文字 vw 换行 bug 修复（clamp→固定字号 20px/17px）
 - [x] CLAUDE.md 规则更新：新增 #4 决策变更=立即清理旧产物 / 收工加 Step 0 审计
