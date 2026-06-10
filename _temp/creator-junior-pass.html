@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!--
+  Junior Pass · creator.html 设计方向 Demo
+  huashu-design · 2026-06-10
+
+  ASSUMPTIONS:
+  1. 工具页 = 安静专业，不是杂志氛围——杂志感只在成品里体现
+  2. 入口卡是灵魂——要大、有区分度、让人想点，像选模板不像选菜单
+  3. 文稿列表像书架——每条有分量，不是 to-do list
+  4. 笔记本 1m + 手机 1cm，16px 正文底线
+  5. 两组入口（从0/参考）视觉上有区分但不割裂
+
+  PLACEHOLDERS:
+  - 稿件缩略图（灰色块，标注"待补"）
+  - 成品预览（无后端 API，mock 数据）
+  - 图标全部用文字标签代替（如"长文""图文""滚图"），不用 emoji
+
+  DIRECTION:
+  - 入口卡：左图标区 + 右文字区，hover 时图标区微微放大
+  - 入口卡之间用微妙差异区分（长文=宽厚感，朋友圈=轻快感，小红书的=视觉感）
+  - 每组 3 卡，组间有标签隔开
+  - 文稿列表：足够行间距，标题衬线，像翻阅自己写过的东西
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>创作中心 · 用AI看图作图</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#faf9f6;--ink:#1a1814;--ink-muted:#5a5650;--ink-faint:#8a8580;
+  --gold:#b8925a;--gold-dark:#8B6E3C;--gold-lt:#d4af7a;
+  --border:rgba(26,24,20,.10);--border-lt:rgba(26,24,20,.06);
+  --serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',sans-serif;
+  --s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-2xl:48px;--s-3xl:64px;--s-4xl:96px;
+  --t-caption:12px;--t-small:14px;--t-body:16px;--t-lead:20px;--t-h3:25px;--t-h2:31px;--t-h1:39px;
+}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:var(--t-body);line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Demo Wrapper ── */
+.demo-wrapper{max-width:920px;margin:0 auto;padding:80px var(--s-xl) 120px}
+.demo-label{font-size:var(--t-caption);color:var(--ink-faint);letter-spacing:.12em;margin-bottom:var(--s-2xl);text-transform:uppercase;padding-bottom:var(--s-sm);border-bottom:1px solid var(--border)}
+.demo-label strong{color:var(--gold);font-weight:500}
+
+/* ══════════════════════════════════════════════════
+   SECTION A · 入口卡片（灵魂区）
+   ══════════════════════════════════════════════════ */
+.entry-header{margin-bottom:var(--s-2xl)}
+.entry-header h2{font-family:var(--serif);font-size:var(--t-h1);font-weight:400;margin-bottom:var(--s-xs)}
+.entry-header p{font-size:var(--t-body);color:var(--ink-muted);max-width:52ch}
+
+.entry-group{margin-bottom:var(--s-2xl);padding:var(--s-lg)}
+.entry-group.scratch{background:rgba(184,146,90,.04)}
+.entry-group.reference{background:rgba(26,24,20,.02)}
+.entry-group-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.14em;color:var(--ink-faint);margin-bottom:var(--s-md);text-transform:uppercase}
+
+/* ── 卡片网格 ── */
+.entry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-sm)}
+
+/* ── 入口卡片 · 重构重点 ── */
+.entry-card{
+  display:flex;flex-direction:column;gap:var(--s-md);
+  padding:var(--s-2xl) var(--s-lg) var(--s-lg);
+  border:1px solid var(--border-lt);background:#fff;
+  cursor:pointer;transition:all .25s ease-out;
+  position:relative;overflow:hidden;
+  min-height:200px;
+}
+/* 左缘色条——真实平台识别色，一目了然 */
+.entry-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+  transition:width .25s ease-out;
+}
+.entry-card.wechat::before{background:#07C160}
+.entry-card.moments::before{background:var(--gold)}
+.entry-card.xhs::before{background:#FF2442}
+
+.entry-card:hover{transform:translateY(-2px);box-shadow:0 4px 24px rgba(26,24,20,.10);border-color:var(--border)}
+.entry-card:hover::before{width:6px}
+
+/* 卡片图标区 */
+.entry-card .card-icon{width:36px;height:36px;flex-shrink:0;margin-bottom:var(--s-xs)}
+.entry-card .card-icon img{width:100%;height:100%;display:block}
+
+/* 卡片文字 */
+.entry-card .card-title{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;color:var(--ink);line-height:1.3}
+
+/* 卡片标题 */
+.entry-card .card-title{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;color:var(--ink);line-height:1.3}
+
+/* 卡片描述 */
+.entry-card .card-desc{font-size:var(--t-small);color:var(--ink-muted);line-height:1.7}
+
+/* 卡片底部——输入提示 */
+.entry-card .card-hint{font-size:var(--t-caption);color:var(--ink-faint);margin-top:auto;padding-top:var(--s-md);border-top:1px solid var(--border-lt);transition:color .25s}
+.entry-card:hover .card-hint{color:var(--ink-muted)}
+
+/* ══════════════════════════════════════════════════
+   SECTION B · 文稿列表（书架感）
+   ══════════════════════════════════════════════════ */
+.doc-header{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-bottom:var(--s-2xl);margin-top:var(--s-4xl);flex-wrap:wrap;gap:var(--s-md);
+}
+.doc-title{font-family:var(--serif);font-size:var(--t-h1);font-weight:400}
+.doc-title span{color:var(--gold)}
+
+/* ── 文稿条目 ── */
+.doc-item{
+  display:flex;align-items:center;gap:var(--s-lg);
+  padding:var(--s-lg) 0;
+  border-bottom:1px solid var(--border-lt);
+  cursor:pointer;transition:all .15s;
+}
+.doc-item:hover{background:rgba(0,0,0,.007)}
+.doc-item:first-child{padding-top:0}
+
+/* 平台标签——薄边框，像邮戳 */
+.doc-platform{
+  font-size:var(--t-caption);font-weight:500;letter-spacing:.08em;
+  color:var(--gold);min-width:72px;text-align:center;
+  padding:4px 12px;border:1px solid var(--border-lt);
+  flex-shrink:0;font-family:var(--sans);
+}
+
+/* 文稿信息 */
+.doc-info{flex:1;min-width:0}
+.doc-topic{
+  font-size:var(--t-body);font-family:var(--serif);font-weight:400;
+  margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.doc-meta{font-size:var(--t-caption);color:var(--ink-faint);display:flex;gap:var(--s-md)}
+
+/* 状态标签 */
+.doc-status{
+  font-size:var(--t-caption);font-weight:500;letter-spacing:.06em;
+  padding:4px 14px;min-width:76px;text-align:center;flex-shrink:0;
+}
+.doc-status.done{color:#2e7d32;background:rgba(46,125,50,.05)}
+.doc-status.working{color:var(--gold);background:rgba(184,146,90,.06)}
+
+/* ══════════════════════════════════════════════════
+   SECTION C · 空状态
+   ══════════════════════════════════════════════════ */
+.doc-empty{
+  text-align:center;padding:var(--s-4xl) var(--s-lg);
+  border:1px dashed var(--border-lt);
+}
+.doc-empty .empty-mark{
+  font-family:var(--serif);font-size:48px;color:var(--border);margin-bottom:var(--s-lg);
+}
+.doc-empty .empty-title{font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-xs)}
+.doc-empty .empty-sub{font-size:var(--t-body);color:var(--ink-muted)}
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════ */
+@media(max-width:750px){
+  .entry-grid{grid-template-columns:1fr}
+  .entry-card{min-height:auto;padding:var(--s-lg) var(--s-md);flex-direction:row;flex-wrap:wrap;align-items:center;gap:var(--s-sm)}
+  .entry-card .card-icon{width:28px;height:28px;flex-shrink:0}
+  .entry-card .card-title{font-size:var(--t-body);flex:1}
+  .entry-card .card-desc{width:100%;font-size:var(--t-caption)}
+  .entry-card .card-hint{width:100%;padding-top:var(--s-xs);margin-top:0;border-top:none}
+  .entry-group{padding:var(--s-sm)}
+  .doc-item{gap:var(--s-sm);flex-wrap:wrap;padding:var(--s-sm) 0}
+  .doc-platform{min-width:auto}
+  .doc-topic{font-size:var(--t-small)}
+  .demo-wrapper{padding:40px var(--s-md) 80px}
+  .entry-header h2{font-size:var(--t-h2)}
+  .doc-title{font-size:var(--t-h2)}
+}
+
+/* ── DESIGN NOTES（仅 Junior Pass 可见，正式版删） ── */
+.design-note{
+  background:rgba(184,146,90,.06);border-left:3px solid var(--gold);
+  padding:var(--s-md);margin:var(--s-md) 0;font-size:var(--t-caption);
+  color:var(--ink-muted);line-height:1.8;
+}
+.design-note strong{color:var(--gold-dark);font-weight:500}
+</style>
+</head>
+<body>
+<div class="demo-wrapper">
+
+<p class="demo-label">Junior Pass · <strong>创作中心</strong> 设计方向</p>
+
+<!-- ═══════════ SECTION A · 入口卡片 ═══════════ -->
+<div class="entry-header">
+  <h2>新建文稿</h2>
+  <p>选择平台和起点，输入你的话题。风格可以后面再调。</p>
+</div>
+
+<div class="entry-group scratch">
+  <p class="entry-group-label">从 0 开始写</p>
+  <div class="design-note">
+    <strong>设计意图：</strong>金色微暖底色区分"创作"组。三张卡左缘常驻识别色——深墨(长文)、金色(朋友圈)、浅金(小红书)。一扫就知道谁是谁。<strong>待讨论：</strong>卡片是否需要缩略图预览？目前用大字平台名代替。
+  </div>
+  <div class="entry-grid">
+    <!-- 公众号 -->
+    <div class="entry-card wechat">
+      <div class="card-icon"><img src="../assets/platform-icons/wechat.svg" alt="公众号"></div>
+      <div class="card-title">公众号长文</div>
+      <div class="card-desc">输入话题，生成完整的文章、封面和微信排版。适合深度干货。</div>
+      <div class="card-hint">输入话题开始 →</div>
+    </div>
+    <!-- 朋友圈 -->
+    <div class="entry-card moments">
+      <div class="card-icon"><img src="../assets/platform-icons/moments.svg" alt="朋友圈"></div>
+      <div class="card-title">朋友圈图文</div>
+      <div class="card-desc">一句话出短文案加配图。适合日常分享、快速输出。</div>
+      <div class="card-hint">输入话题开始 →</div>
+    </div>
+    <!-- 小红书 -->
+    <div class="entry-card xhs">
+      <div class="card-icon"><img src="../assets/platform-icons/xiaohongshu.svg" alt="小红书"></div>
+      <div class="card-title">小红书滚图</div>
+      <div class="card-desc">话题变 5-8 张轮播图加发布文案。适合视觉化表达。</div>
+      <div class="card-hint">输入话题开始 →</div>
+    </div>
+  </div>
+</div>
+
+<div class="entry-group reference" style="margin-top:var(--s-xl)">
+  <p class="entry-group-label">参考某文改写</p>
+  <div class="design-note">
+    <strong>设计意图：</strong>灰色微冷底色区分"参考"组。卡片结构和上面一致，但 hint 从「输入话题」变「粘贴 URL」。两组底色不同——暖金=创作，灰冷=参考，不用读标签就能区分。
+  </div>
+  <div class="entry-grid">
+    <div class="entry-card wechat">
+      <div class="card-icon"><img src="../assets/platform-icons/wechat.svg" alt="公众号"></div>
+      <div class="card-title">公众号仿写</div>
+      <div class="card-desc">粘贴文章 URL，分析结构语气，仿写你的版本。</div>
+      <div class="card-hint">粘贴 URL 开始 →</div>
+    </div>
+    <div class="entry-card moments">
+      <div class="card-icon"><img src="../assets/platform-icons/moments.svg" alt="朋友圈"></div>
+      <div class="card-title">朋友圈改编</div>
+      <div class="card-desc">原文观点变朋友圈口语化短文案加配图。</div>
+      <div class="card-hint">粘贴 URL 开始 →</div>
+    </div>
+    <div class="entry-card xhs">
+      <div class="card-icon"><img src="../assets/platform-icons/xiaohongshu.svg" alt="小红书"></div>
+      <div class="card-title">小红书仿写</div>
+      <div class="card-desc">参考原文结构，出小红书风格的仿写滚图。</div>
+      <div class="card-hint">粘贴 URL 开始 →</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION B · 文稿列表 ═══════════ -->
+<div class="doc-header">
+  <h2 class="doc-title"><span>yokonaora</span>的文稿</h2>
+  <p style="font-size:var(--t-small);color:var(--ink-faint)">2 篇</p>
+</div>
+
+<div class="design-note">
+  <strong>设计意图：</strong>文稿列表要有"翻阅自己作品"的感觉，不是任务列表。行距宽松，标题用衬线字，平台标签像邮戳。<strong>待讨论：</strong>已完成的是否需要缩略图预览？手机端缩略图放不下怎么办？
+</div>
+
+<!-- 文稿条目 -->
+<div class="doc-item">
+  <div class="doc-platform">小红书</div>
+  <div class="doc-info">
+    <div class="doc-topic">用AI做内容获客的3个底层逻辑</div>
+    <div class="doc-meta"><span>2026-06-10</span><span>杂志高级风</span></div>
+  </div>
+  <span class="doc-status done">已完成</span>
+</div>
+
+<div class="doc-item">
+  <div class="doc-platform">公众号</div>
+  <div class="doc-info">
+    <div class="doc-topic">一人企业如何建立内容流水线</div>
+    <div class="doc-meta"><span>2026-06-09</span><span>极简科技风</span></div>
+  </div>
+  <span class="doc-status working">制作中</span>
+</div>
+
+<!-- 空状态示意 -->
+<div style="margin-top:var(--s-3xl)">
+  <p class="entry-group-label">空状态（无文稿时）</p>
+  <div class="doc-empty">
+    <div class="empty-mark">—</div>
+    <p class="empty-title">还没有文稿</p>
+    <p class="empty-sub">点击上方任一入口，开始你的第一篇。</p>
+  </div>
+</div>
+
+</div>
+</body>
+</html>

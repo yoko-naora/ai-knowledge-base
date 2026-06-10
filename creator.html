@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><span class="lang-content cn">创作中心</span><span class="lang-content jp">創作センター</span> · 用AI看图作图</title>
+<title>创作中心 · 用AI看图作图</title>
 <meta name="description" content="订阅者创作中心。输入话题或参考文章，产出各平台成品。">
 <link rel="icon" type="image/png" href="自己2026.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,11 +16,7 @@
   --gold:#b8925a;--gold-dark:#8B6E3C;
   --border:rgba(26,24,20,.10);--border-lt:rgba(26,24,20,.06);
   --serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',sans-serif;
-
-  /* Spacing scale (4pt) */
   --s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-2xl:48px;--s-3xl:64px;--s-4xl:96px;
-
-  /* Type scale (1.25 ratio, px) */
   --t-caption:12px;--t-small:14px;--t-body:16px;--t-lead:20px;--t-h3:25px;--t-h2:31px;--t-h1:39px;
 }
 html{scroll-behavior:smooth}
@@ -35,7 +31,7 @@ body{
 body.show-jp .lang-content.cn{display:none}
 body.show-jp .lang-content.jp{display:block}
 
-/* ── Nav (imported from index.html) ── */
+/* ── Nav ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   padding:18px 60px;display:flex;justify-content:space-between;align-items:center;
@@ -54,7 +50,7 @@ nav{
 .menu-toggle{display:none;background:none;border:1px solid var(--border);padding:6px 12px;font-size:16px;cursor:pointer;color:var(--ink);font-family:var(--sans)}
 
 /* ── Main ── */
-main{flex:1;max-width:880px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl);width:100%}
+main{flex:1;max-width:920px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl);width:100%}
 
 /* ── Login ── */
 .login-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center}
@@ -73,7 +69,7 @@ main{flex:1;max-width:880px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 
 /* ── Doc Header ── */
 .doc-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:var(--s-3xl);flex-wrap:wrap;gap:var(--s-md)}
-.doc-title{font-family:var(--serif);font-size:var(--t-h2);font-weight:400;letter-spacing:.04em}
+.doc-title{font-family:var(--serif);font-size:var(--t-h1);font-weight:400}
 .doc-title span{color:var(--gold)}
 .btn-new{padding:12px var(--s-lg);background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-small);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s}
 .btn-new:hover{background:#333}
@@ -82,14 +78,40 @@ main{flex:1;max-width:880px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 /* ── Entry Section ── */
 .entry-section{margin-bottom:var(--s-3xl)}
 .entry-section.hidden{display:none}
-.entry-group-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.14em;color:var(--ink-faint);text-transform:uppercase;margin-bottom:var(--s-md)}
+.entry-group{margin-bottom:var(--s-2xl);padding:var(--s-lg)}
+.entry-group.scratch{background:rgba(184,146,90,.04)}
+.entry-group.reference{background:rgba(26,24,20,.02)}
+.entry-group-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.14em;color:var(--ink-faint);margin-bottom:var(--s-md);text-transform:uppercase}
 .entry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-sm)}
-.entry-card{padding:var(--s-xl) var(--s-lg);border:1px solid var(--border-lt);cursor:pointer;transition:all .2s;position:relative;background:var(--paper)}
-.entry-card:hover{border-color:var(--gold);background:#fff;transform:translateY(-1px);box-shadow:0 2px 12px rgba(26,24,20,.06)}
-.entry-card.selected{border-color:var(--gold);background:#fff;box-shadow:0 2px 16px rgba(26,24,20,.08)}
-.entry-card.selected::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold)}
-.entry-card .platform{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;margin-bottom:var(--s-xs);color:var(--ink)}
-.entry-card .desc{font-size:var(--t-small);color:var(--ink-muted);line-height:1.7;max-width:28ch}
+
+/* ── Entry Card ── */
+.entry-card{
+  display:flex;flex-direction:column;gap:var(--s-md);
+  padding:var(--s-2xl) var(--s-lg) var(--s-lg);
+  border:1px solid var(--border-lt);background:#fff;
+  cursor:pointer;transition:all .25s ease-out;
+  position:relative;overflow:hidden;
+  min-height:200px;
+}
+.entry-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+  transition:width .25s ease-out;
+}
+.entry-card.wechat::before{background:#07C160}
+.entry-card.moments::before{background:var(--gold)}
+.entry-card.xhs::before{background:#FF2442}
+
+.entry-card:hover{transform:translateY(-2px);box-shadow:0 4px 24px rgba(26,24,20,.10);border-color:var(--border)}
+.entry-card:hover::before{width:6px}
+.entry-card.selected{border-color:var(--gold);box-shadow:0 2px 16px rgba(26,24,20,.08)}
+.entry-card.selected::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold)}
+
+.entry-card .card-icon{width:28px;height:28px;flex-shrink:0;margin-bottom:var(--s-xs)}
+.entry-card .card-icon img{width:100%;height:100%;display:block}
+.entry-card .card-title{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;color:var(--ink);line-height:1.3}
+.entry-card .card-desc{font-size:var(--t-small);color:var(--ink-muted);line-height:1.7}
+.entry-card .card-hint{font-size:var(--t-caption);color:var(--ink-faint);margin-top:auto;padding-top:var(--s-md);border-top:1px solid var(--border-lt);transition:color .25s}
+.entry-card:hover .card-hint{color:var(--ink-muted)}
 
 /* ── Input Area ── */
 .input-area{padding:var(--s-2xl) 0;border-top:1px solid var(--border)}
@@ -121,20 +143,20 @@ main{flex:1;max-width:880px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .doc-list{margin-top:var(--s-md)}
 .doc-list.hidden{display:none}
 .doc-empty{text-align:center;padding:var(--s-4xl) var(--s-lg)}
-.doc-empty .empty-mark{font-size:40px;margin-bottom:var(--s-lg);opacity:.35;font-family:var(--serif)}
+.doc-empty .empty-mark{font-family:var(--serif);font-size:48px;color:var(--border);margin-bottom:var(--s-lg)}
 .doc-empty .empty-title{font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-xs)}
 .doc-empty .empty-sub{font-size:var(--t-body);color:var(--ink-muted);margin-bottom:var(--s-lg)}
 .doc-item{display:flex;align-items:center;gap:var(--s-lg);padding:var(--s-lg) 0;border-bottom:1px solid var(--border-lt);cursor:default;transition:background .15s}
 .doc-item.clickable{cursor:pointer}
-.doc-item.clickable:hover{background:rgba(0,0,0,.01)}
+.doc-item.clickable:hover{background:rgba(0,0,0,.007)}
 .doc-item:first-child{padding-top:0}
 .doc-platform{font-size:var(--t-caption);font-weight:500;letter-spacing:.08em;color:var(--gold);min-width:72px;text-align:center;padding:4px 12px;border:1px solid var(--border-lt);flex-shrink:0}
 .doc-info{flex:1;min-width:0}
 .doc-topic{font-size:var(--t-body);font-family:var(--serif);font-weight:400;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .doc-meta{font-size:var(--t-caption);color:var(--ink-faint);display:flex;gap:var(--s-md)}
 .doc-status{font-size:var(--t-caption);font-weight:500;letter-spacing:.06em;padding:4px 14px;min-width:76px;text-align:center;flex-shrink:0}
-.doc-status.done{color:#2e7d32;background:rgba(46,125,50,.06)}
-.doc-status.working{color:var(--gold);background:rgba(184,146,90,.08)}
+.doc-status.done{color:#2e7d32;background:rgba(46,125,50,.05)}
+.doc-status.working{color:var(--gold);background:rgba(184,146,90,.06)}
 .doc-delete{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:var(--t-small);padding:var(--s-xs);transition:color .2s;font-family:var(--sans)}
 .doc-delete:hover{color:#c44d34}
 
@@ -170,11 +192,16 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
   .doc-item{gap:var(--s-sm)}
   footer{padding:var(--s-lg) 20px}
 }
-@media(max-width:500px){
+@media(max-width:600px){
   nav{padding:10px var(--s-md)}
   main{padding:90px var(--s-md) var(--s-xl)}
   .entry-grid{grid-template-columns:1fr}
-  .entry-card{padding:var(--s-lg)}
+  .entry-card{min-height:auto;padding:var(--s-lg) var(--s-md);flex-direction:row;flex-wrap:wrap;align-items:center;gap:var(--s-sm)}
+  .entry-card .card-icon{width:24px;height:24px;margin-bottom:0}
+  .entry-card .card-title{font-size:var(--t-body);flex:1}
+  .entry-card .card-desc{width:100%;font-size:var(--t-caption)}
+  .entry-card .card-hint{width:100%;padding-top:var(--s-xs);margin-top:0;border-top:none}
+  .entry-group{padding:var(--s-sm)}
   .input-row textarea{min-width:100%}
   .input-row{flex-direction:column}
   .style-select{width:100%}
@@ -182,9 +209,10 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
   .login-form{flex-direction:column}
   .login-form button{width:100%}
   .doc-header{flex-direction:column;align-items:flex-start}
-  .doc-item{flex-wrap:wrap}
+  .doc-title{font-size:var(--t-h2)}
+  .doc-item{flex-wrap:wrap;gap:var(--s-sm);padding:var(--s-sm) 0}
   .doc-platform{min-width:auto}
-  .doc-meta{flex-wrap:wrap;gap:8px}
+  .doc-topic{font-size:var(--t-small)}
   .result-header{flex-direction:column-reverse;gap:var(--s-sm)}
   footer{padding:var(--s-lg) var(--s-md)}
 }
@@ -209,7 +237,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
 </nav>
 
 <main>
-  <!-- ── Login ── -->
+  <!-- Login -->
   <div class="login-wrap" id="loginWrap">
     <h1><span class="lang-content cn">创作中心</span><span class="lang-content jp">創作センター</span></h1>
     <p class="sub"><span class="lang-content cn">输入你的订阅邮箱，验证身份后即可使用。</span><span class="lang-content jp">購読メールアドレスを入力して、認証後にご利用いただけます。</span></p>
@@ -220,50 +248,68 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
     <p class="login-msg" id="loginMsg"></p>
   </div>
 
-  <!-- ── Main Content ── -->
+  <!-- Main Content -->
   <div id="mainContent" style="display:none">
 
-    <div class="doc-header">
+    <div class="doc-header" id="viewDocHeader">
       <h2 class="doc-title" id="docTitle"><span>—</span><span class="lang-content cn">的文稿</span><span class="lang-content jp">の文稿</span></h2>
       <button class="btn-new" id="btnNew" onclick="startNew()">
         <span class="lang-content cn">+ 新建文稿</span><span class="lang-content jp">+ 新規作成</span>
       </button>
     </div>
 
+    <!-- Entry Section -->
     <div class="entry-section hidden" id="entrySection">
-      <p class="entry-group-label"><span class="lang-content cn">从 0 开始写</span><span class="lang-content jp">ゼロから書く</span></p>
-      <div class="entry-grid" id="entryScratch">
-        <div class="entry-card" data-platform="wechat" data-mode="scratch" onclick="selectEntry(this)">
-          <p class="platform"><span class="lang-content cn">公众号长文</span><span class="lang-content jp">公众号長文</span></p>
-          <p class="desc"><span class="lang-content cn">输入话题，生成完整的文章 + 封面 + 微信排版</span><span class="lang-content jp">トピックから記事＋カバー＋微信排版を生成</span></p>
-        </div>
-        <div class="entry-card" data-platform="moments" data-mode="scratch" onclick="selectEntry(this)">
-          <p class="platform"><span class="lang-content cn">朋友圈图文</span><span class="lang-content jp">朋友圈画像＋文</span></p>
-          <p class="desc"><span class="lang-content cn">一句话出短文案 + 配图</span><span class="lang-content jp">短文＋画像をセットで</span></p>
-        </div>
-        <div class="entry-card" data-platform="xhs" data-mode="scratch" onclick="selectEntry(this)">
-          <p class="platform"><span class="lang-content cn">小红书滚图</span><span class="lang-content jp">小紅書カルーセル</span></p>
-          <p class="desc"><span class="lang-content cn">话题 → 5-8 张轮播图 + 发布文案</span><span class="lang-content jp">トピック→5-8枚の画像＋投稿文</span></p>
+      <div class="entry-group scratch">
+        <p class="entry-group-label"><span class="lang-content cn">从 0 开始写</span><span class="lang-content jp">ゼロから書く</span></p>
+        <div class="entry-grid">
+          <div class="entry-card wechat" data-platform="wechat" data-mode="scratch" onclick="selectEntry(this)">
+            <div class="card-icon"><img src="assets/platform-icons/wechat.svg" alt="公众号"></div>
+            <div class="card-title"><span class="lang-content cn">公众号长文</span><span class="lang-content jp">公众号長文</span></div>
+            <div class="card-desc"><span class="lang-content cn">输入话题，生成完整的文章、封面和微信排版。适合深度干货。</span><span class="lang-content jp">トピックから記事、カバー、微信排版を生成。深い内容に最適。</span></div>
+            <div class="card-hint"><span class="lang-content cn">输入话题开始 →</span><span class="lang-content jp">トピックを入力 →</span></div>
+          </div>
+          <div class="entry-card moments" data-platform="moments" data-mode="scratch" onclick="selectEntry(this)">
+            <div class="card-icon"><img src="assets/platform-icons/moments.svg" alt="朋友圈"></div>
+            <div class="card-title"><span class="lang-content cn">朋友圈图文</span><span class="lang-content jp">朋友圈画像＋文</span></div>
+            <div class="card-desc"><span class="lang-content cn">一句话出短文案加配图。适合日常分享、快速输出。</span><span class="lang-content jp">短文＋画像をセットで。日常共有に最適。</span></div>
+            <div class="card-hint"><span class="lang-content cn">输入话题开始 →</span><span class="lang-content jp">トピックを入力 →</span></div>
+          </div>
+          <div class="entry-card xhs" data-platform="xhs" data-mode="scratch" onclick="selectEntry(this)">
+            <div class="card-icon"><img src="assets/platform-icons/xiaohongshu.svg" alt="小红书"></div>
+            <div class="card-title"><span class="lang-content cn">小红书滚图</span><span class="lang-content jp">小紅書カルーセル</span></div>
+            <div class="card-desc"><span class="lang-content cn">话题变 5-8 张轮播图加发布文案。适合视觉化表达。</span><span class="lang-content jp">トピック→5-8枚の画像＋投稿文。ビジュアル表現に。</span></div>
+            <div class="card-hint"><span class="lang-content cn">输入话题开始 →</span><span class="lang-content jp">トピックを入力 →</span></div>
+          </div>
         </div>
       </div>
 
-      <p class="entry-group-label" style="margin-top:var(--s-xl)"><span class="lang-content cn">参考某文改写</span><span class="lang-content jp">記事を参考に書く</span></p>
-      <div class="entry-grid" id="entryRef">
-        <div class="entry-card" data-platform="wechat" data-mode="ref" onclick="selectEntry(this)">
-          <p class="platform"><span class="lang-content cn">公众号仿写</span><span class="lang-content jp">公众号模寫</span></p>
-          <p class="desc"><span class="lang-content cn">粘贴文章 URL，分析结构后仿写</span><span class="lang-content jp">記事URL→構造分析→模寫</span></p>
-        </div>
-        <div class="entry-card" data-platform="moments" data-mode="ref" onclick="selectEntry(this)">
-          <p class="platform"><span class="lang-content cn">朋友圈改编</span><span class="lang-content jp">朋友圈翻案</span></p>
-          <p class="desc"><span class="lang-content cn">原文观点 → 朋友圈口语化改编</span><span class="lang-content jp">記事→口語短文に翻案</span></p>
-        </div>
-        <div class="entry-card" data-platform="xhs" data-mode="ref" onclick="selectEntry(this)">
-          <p class="platform"><span class="lang-content cn">小红书仿写</span><span class="lang-content jp">小紅書模寫</span></p>
-          <p class="desc"><span class="lang-content cn">粘贴 URL，出小红书风格仿写</span><span class="lang-content jp">URL→小紅書風に模寫</span></p>
+      <div class="entry-group reference">
+        <p class="entry-group-label"><span class="lang-content cn">参考某文改写</span><span class="lang-content jp">記事を参考に書く</span></p>
+        <div class="entry-grid">
+          <div class="entry-card wechat" data-platform="wechat" data-mode="ref" onclick="selectEntry(this)">
+            <div class="card-icon"><img src="assets/platform-icons/wechat.svg" alt="公众号"></div>
+            <div class="card-title"><span class="lang-content cn">公众号仿写</span><span class="lang-content jp">公众号模寫</span></div>
+            <div class="card-desc"><span class="lang-content cn">粘贴文章 URL，分析结构语气，仿写你的版本。</span><span class="lang-content jp">記事URL→構造分析→模寫。</span></div>
+            <div class="card-hint"><span class="lang-content cn">粘贴 URL 开始 →</span><span class="lang-content jp">URLを貼り付け →</span></div>
+          </div>
+          <div class="entry-card moments" data-platform="moments" data-mode="ref" onclick="selectEntry(this)">
+            <div class="card-icon"><img src="assets/platform-icons/moments.svg" alt="朋友圈"></div>
+            <div class="card-title"><span class="lang-content cn">朋友圈改编</span><span class="lang-content jp">朋友圈翻案</span></div>
+            <div class="card-desc"><span class="lang-content cn">原文观点变朋友圈口语化短文案加配图。</span><span class="lang-content jp">記事→口語短文に翻案。</span></div>
+            <div class="card-hint"><span class="lang-content cn">粘贴 URL 开始 →</span><span class="lang-content jp">URLを貼り付け →</span></div>
+          </div>
+          <div class="entry-card xhs" data-platform="xhs" data-mode="ref" onclick="selectEntry(this)">
+            <div class="card-icon"><img src="assets/platform-icons/xiaohongshu.svg" alt="小红书"></div>
+            <div class="card-title"><span class="lang-content cn">小红书仿写</span><span class="lang-content jp">小紅書模寫</span></div>
+            <div class="card-desc"><span class="lang-content cn">参考原文结构，出小红书风格的仿写滚图。</span><span class="lang-content jp">URL→小紅書風に模寫。</span></div>
+            <div class="card-hint"><span class="lang-content cn">粘贴 URL 开始 →</span><span class="lang-content jp">URLを貼り付け →</span></div>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- Input Area -->
     <div class="input-area hidden disabled" id="inputArea">
       <p class="input-hint" id="inputHint"><span class="lang-content cn">输入话题</span><span class="lang-content jp">トピックを入力</span></p>
       <div class="input-row">
@@ -280,6 +326,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       </div>
     </div>
 
+    <!-- Status -->
     <div class="status-wrap hidden" id="statusWrap">
       <span class="status-dot"></span>
       <p class="status-title" id="statusTitle"><span class="lang-content cn">制作中</span><span class="lang-content jp">作成中</span></p>
@@ -288,14 +335,16 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <button class="btn-cancel" onclick="cancelTask()"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
     </div>
 
+    <!-- Doc List -->
     <div class="doc-list" id="docList">
       <div class="doc-empty" id="docEmpty">
         <div class="empty-mark">—</div>
         <p class="empty-title"><span class="lang-content cn">还没有文稿</span><span class="lang-content jp">まだ文稿がありません</span></p>
-        <p class="empty-sub"><span class="lang-content cn">点击「新建文稿」，开始你的第一篇。</span><span class="lang-content jp">「新規作成」をクリックして、はじめての文稿を作りましょう。</span></p>
+        <p class="empty-sub"><span class="lang-content cn">点击上方任一入口，开始你的第一篇。</span><span class="lang-content jp">上の入口から、はじめての文稿を作りましょう。</span></p>
       </div>
     </div>
 
+    <!-- Result -->
     <div class="result-wrap hidden" id="resultWrap">
       <div class="result-header">
         <h2 class="result-title" id="resultTitle"></h2>
@@ -331,8 +380,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
 var state = {
   email: '', prefix: '', authenticated: false,
   selectedPlatform: null, selectedMode: null,
-  currentTaskId: null, pollTimer: null, viewingTaskId: null,
-  _statusStart: null
+  currentTaskId: null, pollTimer: null, viewingTaskId: null, _statusStart: null
 };
 
 function loadState() {
@@ -341,7 +389,6 @@ function loadState() {
 function saveState() {
   try { sessionStorage.setItem('creator-state', JSON.stringify({ email: state.email, prefix: state.prefix, authenticated: state.authenticated })); } catch(e) {}
 }
-
 function getTasks() {
   try { return JSON.parse(localStorage.getItem('creator-tasks-' + state.email) || '[]'); } catch(e) { return []; }
 }
@@ -349,12 +396,10 @@ function saveTasks(tasks) {
   try { localStorage.setItem('creator-tasks-' + state.email, JSON.stringify(tasks)); } catch(e) {}
 }
 
-/* ── Login ── */
 function verifyEmail(e) {
   e.preventDefault();
   var email = document.getElementById('loginEmail').value.trim();
-  var msg = document.getElementById('loginMsg');
-  var btn = document.getElementById('loginBtn');
+  var msg = document.getElementById('loginMsg'), btn = document.getElementById('loginBtn');
   if (!email) return;
   btn.disabled = true; msg.className = 'login-msg'; msg.textContent = '...';
 
@@ -398,13 +443,11 @@ function updateDocTitle() {
   document.getElementById('docTitle').querySelector('span').textContent = state.prefix;
 }
 
-/* ── Entry Selection ── */
 function startNew() {
   state.selectedPlatform = null; state.selectedMode = null; state.currentTaskId = null;
   if (state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
   document.querySelectorAll('.entry-card').forEach(function(c) { c.classList.remove('selected'); });
   document.getElementById('topicInput').value = '';
-
   document.getElementById('entrySection').classList.remove('hidden');
   document.getElementById('inputArea').classList.remove('hidden');
   document.getElementById('inputArea').classList.add('disabled');
@@ -425,8 +468,7 @@ function selectEntry(card) {
 }
 
 function updateInputHint() {
-  var hint = document.getElementById('inputHint');
-  var mode = state.selectedMode; var plat = state.selectedPlatform;
+  var hint = document.getElementById('inputHint'), mode = state.selectedMode, plat = state.selectedPlatform;
   var isJP = document.body.classList.contains('show-jp');
   if (!mode || !plat) { hint.textContent = isJP ? 'まず入口を選んでください' : '先选择一个入口'; return; }
   hint.textContent = mode === 'scratch'
@@ -434,17 +476,13 @@ function updateInputHint() {
     : (isJP ? '参考にしたい記事のURLを貼り付けてください' : '粘贴你想参考的文章 URL');
 }
 
-/* ── Submit ── */
 function submitTask() {
   var topic = document.getElementById('topicInput').value.trim();
   if (!state.selectedPlatform || !state.selectedMode || !topic) return;
-
   var style = document.getElementById('styleSelect').value;
   var taskId = 'task-' + Date.now();
-  var platformNames = {wechat:'公众号',moments:'朋友圈',xhs:'小红书'};
-
-  var task = { id: taskId, platform: state.selectedPlatform, mode: state.selectedMode, topic: topic, style: style, status: 'working', createdAt: new Date().toISOString(), platformLabel: platformNames[state.selectedPlatform] || state.selectedPlatform };
-
+  var pn = {wechat:'公众号',moments:'朋友圈',xhs:'小红书'};
+  var task = { id: taskId, platform: state.selectedPlatform, mode: state.selectedMode, topic: topic, style: style, status: 'working', createdAt: new Date().toISOString(), platformLabel: pn[state.selectedPlatform] || state.selectedPlatform };
   var tasks = getTasks(); tasks.unshift(task); saveTasks(tasks);
   state.currentTaskId = taskId; state._statusStart = Date.now();
 
@@ -453,26 +491,24 @@ function submitTask() {
   document.getElementById('resultWrap').classList.add('hidden');
   document.getElementById('statusWrap').classList.remove('hidden');
   updateStatusTime();
-
   state.pollTimer = setInterval(function() { checkTaskStatus(taskId); updateStatusTime(); }, 3000);
-
   var delay = 5000 + Math.random() * 10000;
   setTimeout(function() { completeTask(taskId); }, delay);
 }
 
 function checkTaskStatus(taskId) {
-  var tasks = getTasks(); var task = tasks.find(function(t) { return t.id === taskId; });
+  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === taskId; });
   if (task && task.status === 'done') { clearInterval(state.pollTimer); state.pollTimer = null; showResult(taskId); }
 }
 
 function completeTask(taskId) {
-  var tasks = getTasks(); var task = tasks.find(function(t) { return t.id === taskId; });
+  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === taskId; });
   if (task) { task.status = 'done'; task.completedAt = new Date().toISOString(); task.result = generateMockResult(task); saveTasks(tasks); }
 }
 
 function cancelTask() {
   if (state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
-  var tasks = getTasks(); var task = tasks.find(function(t) { return t.id === state.currentTaskId; });
+  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === state.currentTaskId; });
   if (task) { task.status = 'cancelled'; saveTasks(tasks); }
   document.getElementById('statusWrap').classList.add('hidden');
   document.getElementById('btnNew').disabled = false;
@@ -480,37 +516,26 @@ function cancelTask() {
 }
 
 function showResult(taskId) {
-  var tasks = getTasks(); var task = tasks.find(function(t) { return t.id === taskId; });
+  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === taskId; });
   if (!task || !task.result) return;
   state.viewingTaskId = taskId;
   document.getElementById('statusWrap').classList.add('hidden');
   document.getElementById('docList').classList.add('hidden');
-
-  var rw = document.getElementById('resultWrap'); rw.classList.remove('hidden');
+  document.getElementById('resultWrap').classList.remove('hidden');
   document.getElementById('resultTitle').textContent = task.topic;
 
-  var isJP = document.body.classList.contains('show-jp');
-  var r = task.result;
-  var html = '';
-
+  var isJP = document.body.classList.contains('show-jp'), r = task.result, html = '';
   if (task.platform === 'xhs') {
     html = '<h2>' + (isJP ? r.titleJP : r.title) + '</h2>' +
-      (r.pages || []).map(function(p, i) {
-        return '<p><strong>' + (i + 1) + '. ' + (isJP ? (p.jp || p.cn) : p.cn) + '</strong><br>' + (isJP ? (p.bodyJP || p.bodyCN) : p.bodyCN) + '</p>';
-      }).join('');
+      (r.pages || []).map(function(p, i) { return '<p><strong>' + (i + 1) + '. ' + (isJP ? (p.jp || p.cn) : p.cn) + '</strong><br>' + (isJP ? (p.bodyJP || p.bodyCN) : p.bodyCN) + '</p>'; }).join('');
   } else if (task.platform === 'moments') {
     html = '<p>' + (isJP ? r.textJP.replace(/\n/g,'<br>') : r.text.replace(/\n/g,'<br>')) + '</p>';
   } else {
     var md = isJP ? r.markdownJP : r.markdown;
-    html = md.split('\n\n').map(function(para) {
-      if (para.indexOf('## ') === 0) return '<h2>' + para.slice(3) + '</h2>';
-      return '<p>' + para + '</p>';
-    }).join('');
+    html = md.split('\n\n').map(function(p) { return p.indexOf('## ') === 0 ? '<h2>' + p.slice(3) + '</h2>' : '<p>' + p + '</p>'; }).join('');
   }
   document.getElementById('resultContent').innerHTML = html;
-
-  var filesDiv = document.getElementById('resultFiles');
-  filesDiv.innerHTML = '<p class="result-files-label">' + (isJP ? 'ダウンロード' : '下载文件') + '</p>' +
+  document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? 'ダウンロード' : '下载文件') + '</p>' +
     (r.files || []).map(function(f) { return '<a class="result-file" href="#" onclick="return false">📄 ' + f + '</a>'; }).join('');
 }
 
@@ -522,16 +547,13 @@ function backToList() {
 }
 
 function updateStatusTime() {
-  var el = document.getElementById('statusTime');
-  if (!el) return;
+  var el = document.getElementById('statusTime'); if (!el) return;
   var sec = Math.floor((Date.now() - (state._statusStart || Date.now())) / 1000);
   var isJP = document.body.classList.contains('show-jp');
   el.textContent = (isJP ? '経過時間: ' : '已等待: ') + Math.floor(sec / 60) + '分' + (sec % 60) + '秒';
 }
 
-/* ── Mock ── */
 function generateMockResult(task) {
-  var t = task.topic;
   if (task.platform === 'xhs') {
     return { title: '用AI做内容获客的3个底层逻辑', titleJP: 'AIでコンテンツ集客をする3つの基本',
       pages: [
@@ -543,71 +565,55 @@ function generateMockResult(task) {
       ], files:['01-cover.png','02-step1.png','03-step2.png','04-step3.png','05-step4.png','06-step5.png','07-cta.png','caption.md'] };
   }
   if (task.platform === 'moments') {
-    return { text: t + '，做了三年，最深的体会不是技巧，是节奏。\n\n不用天天发。一周两篇好的，比天天水贴管用。\n\n关键是每次发完看数据：谁点了、谁问了。下次写给那个人看。',
-      textJP: t + '。3年やってきて、一番の気づきはテクニックじゃなく、リズム。\n\n毎日投稿しなくていい。週2回の良い投稿が、毎日の量産より効く。\n\n大事なのは投稿後のデータ：誰がいいねしたか、誰がDMしてきたか。次はその人のために書く。',
+    return { text: '做了三年，最深的体会不是技巧，是节奏。\n\n不用天天发。一周两篇好的，比天天水贴管用。\n\n关键是每次发完看数据：谁点了、谁问了。下次写给那个人看。',
+      textJP: '3年やってきて、一番の気づきはテクニックじゃなく、リズム。\n\n毎日投稿しなくていい。週2回の良い投稿が、毎日の量産より効く。\n\n大事なのは投稿後のデータ：誰がいいねしたか、誰がDMしてきたか。次はその人のために書く。',
       files:['image-01.png','image-02.png','image-03.png'] };
   }
-  return { markdown: '# ' + t + '\n\n## 为什么这个问题值得关注\n\n在过去的一年里，越来越多的个体创业者开始用AI工具做内容。但大多数人的问题是：知道AI能做，但不知道从哪里开始。\n\n这篇文章不是讲工具有多好，而是讲一个可执行的流程。\n\n## 核心方法\n\n### 1. 先定方向，再选工具\n\n不要一上来就研究哪个AI好用。先想清楚：你要写给谁看？他们最关心什么？\n\n### 2. 建立你自己的内容流水线\n\n收集→选题→初稿→修改→配图→发布。每一步都可以用AI加速，但每一步都需要你的判断。\n\n### 3. 持续做，别停下来\n\n第一个月可能没效果。第三个月开始有咨询。第六个月客户自己找上门。',
-    markdownJP: '# ' + t + '\n\n## なぜこの問題が重要なのか\n\nこの1年、多くの個人事業主がAIツールでコンテンツを作り始めた。しかし多くの人が直面する問題は：AIで何ができるかは知っていても、どこから始めればいいかわからない。\n\n## コアメソッド\n\n### 1. 方向を決めてから、ツールを選ぶ\n\nどのAIがいいか調べる前に：誰に向けて書くのか？その人が一番気になることは？\n\n### 2. 自分のコンテンツパイプラインを作る\n\n収集→选题→初稿→修正→配图→公開。すべてのステップでAIが加速できる。でもすべてのステップにあなたの判断が必要。\n\n### 3. 続けること\n\n最初の1ヶ月は効果が見えないかも。3ヶ月目から問い合わせが来始める。6ヶ月目には客が向こうから来る。',
+  return { markdown: '# ' + task.topic + '\n\n## 为什么这个问题值得关注\n\n越来越多的个体创业者开始用AI工具做内容。但大多数人的问题是：知道AI能做，但不知道从哪里开始。\n\n## 核心方法\n\n### 1. 先定方向，再选工具\n\n不要一上来就研究哪个AI好用。先想清楚：你要写给谁看？他们最关心什么？\n\n### 2. 建立你自己的内容流水线\n\n收集→选题→初稿→修改→配图→发布。每一步都可以用AI加速，但每一步都需要你的判断。\n\n### 3. 持续做，别停下来\n\n第一个月可能没效果。第三个月开始有咨询。第六个月客户自己找上门。',
+    markdownJP: '# ' + task.topic + '\n\n## なぜこの問題が重要なのか\n\n多くの個人事業主がAIツールでコンテンツを作り始めた。しかし多くの人が直面する問題は：AIで何ができるかは知っていても、どこから始めればいいかわからない。\n\n## コアメソッド\n\n### 1. 方向を決めてから、ツールを選ぶ\n\nどのAIがいいか調べる前に：誰に向けて書くのか？その人が一番気になることは？\n\n### 2. 自分のコンテンツパイプラインを作る\n\n収集→选题→初稿→修正→配图→公開。すべてのステップでAIが加速できる。でもすべてのステップにあなたの判断が必要。\n\n### 3. 続けること\n\n最初の1ヶ月は効果が見えないかも。3ヶ月目から問い合わせが来始める。6ヶ月目には客が向こうから来る。',
     files:['article.md','cover-21x9.png','cover-1x1.png','article.html'] };
 }
 
-/* ── Doc List ── */
 function renderDocList() {
-  var list = document.getElementById('docList'); var empty = document.getElementById('docEmpty');
+  var list = document.getElementById('docList'), empty = document.getElementById('docEmpty');
   list.querySelectorAll('.doc-item').forEach(function(i) { i.remove(); });
   var tasks = getTasks().filter(function(t) { return t.status !== 'cancelled'; });
-
   if (tasks.length === 0) { empty.style.display = 'block'; list.classList.remove('hidden'); return; }
   empty.style.display = 'none'; list.classList.remove('hidden');
 
   var isJP = document.body.classList.contains('show-jp');
-  var pCN = {wechat:'公众号',moments:'朋友圈',xhs:'小红书'};
-  var pJP = {wechat:'公众号',moments:'朋友圈',xhs:'小紅書'};
-  var sCN = {magazine:'杂志',sketch:'手绘',tech:'极简',warm:'温暖'};
-  var sJP = {magazine:'雑誌',sketch:'手描き',tech:'テック',warm:'あたたか'};
+  var pCN = {wechat:'公众号',moments:'朋友圈',xhs:'小红书'}, pJP = {wechat:'公众号',moments:'朋友圈',xhs:'小紅書'};
+  var sCN = {magazine:'杂志',sketch:'手绘',tech:'极简',warm:'温暖'}, sJP = {magazine:'雑誌',sketch:'手描き',tech:'テック',warm:'あたたか'};
 
   tasks.forEach(function(t) {
     var item = document.createElement('div');
     item.className = 'doc-item' + (t.status === 'done' ? ' clickable' : '');
     var platform = isJP ? (pJP[t.platform] || t.platform) : (pCN[t.platform] || t.platform);
     var statusText = t.status === 'done' ? (isJP ? '完了' : '已完成') : (isJP ? '作成中' : '制作中');
-    var statusClass = t.status === 'done' ? 'done' : 'working';
-    var d = new Date(t.createdAt);
-    var dateStr = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-
-    item.innerHTML =
-      '<div class="doc-platform">' + platform + '</div>' +
+    var d = new Date(t.createdAt), dateStr = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    item.innerHTML = '<div class="doc-platform">' + platform + '</div>' +
       '<div class="doc-info"><div class="doc-topic">' + (t.topic || '—') + '</div>' +
       '<div class="doc-meta"><span>' + dateStr + '</span><span>' + (isJP ? sJP[t.style] : sCN[t.style]) + '</span></div></div>' +
-      '<span class="doc-status ' + statusClass + '">' + statusText + '</span>' +
+      '<span class="doc-status ' + (t.status === 'done' ? 'done' : 'working') + '">' + statusText + '</span>' +
       '<button class="doc-delete" onclick="event.stopPropagation();deleteDoc(\'' + t.id + '\')">✕</button>';
-    if (t.status === 'done') { item.onclick = function() { showResult(t.id); }; }
+    if (t.status === 'done') item.onclick = function() { showResult(t.id); };
     list.appendChild(item);
   });
 }
 
-function deleteDoc(taskId) {
-  saveTasks(getTasks().filter(function(t) { return t.id !== taskId; }));
-  renderDocList();
-}
+function deleteDoc(taskId) { saveTasks(getTasks().filter(function(t) { return t.id !== taskId; })); renderDocList(); }
 
-/* ── Language change listener ── */
 document.addEventListener('langchange', function() {
   updateInputHint(); updateDocTitle(); renderDocList();
   if (state.viewingTaskId) showResult(state.viewingTaskId);
 });
 
-/* ── Init ── */
 loadState();
-var urlParams = new URLSearchParams(window.location.search);
-var token = urlParams.get('token');
+var urlParams = new URLSearchParams(window.location.search), token = urlParams.get('token');
 if (token) {
   fetch('/api/check-subscription?token=' + encodeURIComponent(token) + '&t=' + Date.now())
     .then(function(r) { return r.json(); })
-    .then(function(d) {
-      if (d.subscribed && d.email) { state.email = d.email; state.prefix = d.email.split('@')[0]; state.authenticated = true; saveState(); showMain(); window.history.replaceState({}, '', '/creator.html'); }
-    }).catch(function(){});
+    .then(function(d) { if (d.subscribed && d.email) { state.email = d.email; state.prefix = d.email.split('@')[0]; state.authenticated = true; saveState(); showMain(); window.history.replaceState({}, '', '/creator.html'); } }).catch(function(){});
 } else if (state.authenticated) { showMain(); }
 </script>
 </body>
