@@ -8,7 +8,6 @@ Every agent working on this project reads this file first.
 ## Project Overview
 
 AI知识库会员制サイト。月額 ¥2,980 / 年額 ¥30,000 購読。AI活用記事・プロンプト・ツール情報。
-**v2：新增创作中心——订阅者可输入话题/文章，产出各平台成品。**
 
 - **URL:** https://kb.snsaladdin.com
 - **Repo:** `yoko-naora/ai-knowledge-base` (main branch)
@@ -228,10 +227,15 @@ Full test manual: `TEST.md`.
 
 ## Multi-Agent Collaboration Rules
 
-- **Only ONE agent edits code at a time.**
+**Claude Code / Hermes / Codex 三端并行工作。**
+
+### 协作基础
 - Before start: `git pull`
 - After finish: `git add -A && git commit -m "[AgentName] <description>" && git push`
 - Never `git push --force`
+
+### 任务分配规则
+> ⚠️ **待定** — 三端如何拆分任务、避免冲突，稍后讨论追加。
 
 ## Deploy
 
@@ -246,7 +250,8 @@ npx wrangler pages deploy . --project-name=ai-knowledge-base-v3 --branch=main --
 ```
 kb-site/
 ├── CLAUDE.md               ← THIS FILE — single source of truth
-├── AGENTS.md               ← Thin bridge → CLAUDE.md
+├── AGENTS.md               ← Thin bridge → CLAUDE.md（Codex 入口）
+├── HERMES-RULES.md          ← Hermes 强制规则（开工5条+Skill铁律+硬写禁令）
 ├── PROJECT.md              ← Project progress
 ├── TEST.md                 ← Test procedures
 │
@@ -265,7 +270,8 @@ kb-site/
 │   ├── routes/（6 调度文件）
 │   └── qc.md
 │
-├── index.html              ← Landing Page（视频→痛点→案例→购买，2026-06-09 重构中）
+├── index.html              ← Landing Page（当前生产版，卡片网格+emoji）
+├── index-v1.html           ← 新版 Landing Page（竖列案例+实图，修缮中，完成后替换index.html）
 ├── insights.html           ← 文章列表（3板块筛选：前沿追踪/上手实战/搞钱案例）
 ├── articles/               ← 001.html - 026.html
 ├── articles-src/           ← Markdown source (new)
