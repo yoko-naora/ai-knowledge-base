@@ -294,6 +294,16 @@ kb-site/
 | Resend | https://resend.com |
 | GitHub | https://github.com/yoko-naora/ai-knowledge-base |
 
+## 指挥 → 文件更新对应表
+
+| 用户说 | 要做什么 |
+|--------|---------|
+| 「做完了」「改好了」「修好了」「上线了」 | 更新 `PROJECT.md`：Completed 加条目，In Progress 移除，Next Actions 刷新 |
+| 「删了」「不用了」「换方案」 | 更新 `PROJECT.md` + `git rm` 相关文件（见 Work Principle #4） |
+| 「收工」 | 执行收工 protocol 全部 4 步 |
+| 「开工」 | 读 PROJECTS.md → PROJECT.md → 简报 |
+| 改了 CLAUDE.md 本身 | commit message 标注 `[Claude]`（其他 agent 同理） |
+
 ## Quick Reference: Common Pitfalls
 
 1. **DON'T** edit `netlify/functions/` — legacy, not deployed

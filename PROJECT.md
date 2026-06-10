@@ -93,9 +93,15 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## In Progress
 
-- [ ] **新 index.html 重写** — index-v1.html 修缮中（案例图放大、真图替换、导航统一）
-- [ ] **首页替换** — index-v1.html → index.html（待用户确认）
+- [ ] **v2 创作中心** — creator.html，订阅者输入话题→产出各平台成品，今日重点
 - [ ] **大神工具页** — 待建
+
+## Completed (2026-06-10)
+
+- [x] index-v1 → index.html 上线（竖列案例+实图，替换旧卡片网格版）
+- [x] 痛点文字 vw 换行 bug 修复（clamp→固定字号 20px/17px）
+- [x] CLAUDE.md 规则更新：新增 #4 决策变更=立即清理旧产物 / 收工加 Step 0 审计
+- [x] 废弃文件清理：CODEX-TASK.md, DESIGN-RACE-01/02.md, REVIEW-RACE-01.md, IMPECCABLE_TESTPLAN.md
 
 ## Architecture Notes (2026-06-08) · 四层架构
 
@@ -124,13 +130,9 @@ Layer 4 · Projects   → output/
 
 | # | 任务 | Skill | 说明 |
 |---|------|-------|------|
-| 1 | 新 index.html 重写 | `frontend-design` | 选定参考方向后，严格按 frontend-design 流程：定美学方向→写代码→迭代（⏳ 等待选定方向） |
-| 2 | 去付费墙 | 无（纯文本编辑） | grep gating.js → 逐文件删除引用行 |
-| 3 | insights.html 板块化 | 无（复用现有模式） | 复制旧 index + 加筛选标签 + 文章分类 |
-| 4 | 全局 nav 更新 | 无（纯文本编辑） | 所有页面 nav 新增 insights.html 链接 |
-| 5 | 部署验证 | 无（git + curl） | commit + push → Cloudflare Pages 自动部署 |
-| 6 | 创作中心前端 | `frontend-design` | 后续单独规划 |
-| 7 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
+| 1 | 创作中心前端 creator.html | `frontend-design` | **今日重点** — 订阅者输入话题→产出各平台成品 |
+| 2 | 大神工具页 | — | 待建 |
+| 3 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
 
 ## Key Links
 
