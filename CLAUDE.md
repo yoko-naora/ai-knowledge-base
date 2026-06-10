@@ -193,9 +193,17 @@ git add -A && git commit -m "<agent>: <what>" && git push
 
 ### 2. Check blast radius before infra changes
 
-### 3. Log immediately after task completion
+### 3. 视觉产出 = 必须走设计流程（铁律，违反=重来）
+**任何涉及 kb-site 的 HTML/CSS 视觉产出，禁止跳过设计直接写代码。**
+- 新页面、新组件、重设计 → `huashu-design`：四问 → Junior Pass → 用户确认 → Full Pass
+- 调字号、修 bug、改文案 → 可以直接改
+- **判断边界**：只要动了 layout/色彩/组件结构/spacing/视觉层级中任意两项 → 就是设计任务，必须走流程
+- **Why:** 我反复犯同一个错误——把设计当工程做。这条规则是最后一次补丁。
+- **违反后果:** 用户说「你又自己瞎做」→ 立刻停止、删代码、走流程重来
 
-### 4. 决策变更 = 立即清理旧产物（铁律）
+### 4. Log immediately after task completion
+
+### 5. 决策变更 = 立即清理旧产物（铁律）
 **When a plan is abandoned or a decision is reversed, delete ALL related files IMMEDIATELY.**
 - Old task files (CODEX-TASK.md, DESIGN-RACE-*.md, etc.) → `git rm`
 - Stale branches → delete
@@ -203,13 +211,13 @@ git add -A && git commit -m "<agent>: <what>" && git push
 - **Why:** 僵尸文件会误导下一个 Agent，浪费开工时间。这不是"以后再说"的事，是决策变更的一部分。
 - **Test:** 新 Agent 开工时，读到的每一个文件都应该是当前有效的。
 
-### 5. 收工 protocol
+### 6. 收工 protocol
 - Step 0: **审计** — 有没有今天淘汰的文件/分支？有就立刻删
 - Step 1: Update PROJECT.md (completed ✓, Issues, Next)
 - Step 2: `git status` → commit stragglers, confirm pushed
 - Step 3: Brief report (today + tomorrow)
 
-### 6. 开工 protocol
+### 7. 开工 protocol
 1. Read `C:\Users\jding\PROJECTS.md`
 2. Read each project's PROJECT.md
 3. Brief report
