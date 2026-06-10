@@ -164,12 +164,51 @@ main{flex:1;max-width:920px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .result-wrap{padding:var(--s-lg) 0}
 .result-wrap.hidden{display:none}
 .result-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--s-2xl);flex-wrap:wrap;gap:var(--s-md)}
+.result-title-row{display:flex;align-items:center;gap:var(--s-sm);flex-wrap:wrap}
+.result-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid var(--border-lt);font-size:var(--t-caption);font-weight:500;letter-spacing:.06em;flex-shrink:0}
+.result-badge img{width:18px;height:18px}
+.result-badge.wechat{color:#07C160;border-color:rgba(7,193,96,.25)}
+.result-badge.xhs{color:#FF2442;border-color:rgba(255,36,66,.25)}
+.result-badge.moments{color:var(--gold);border-color:rgba(184,146,90,.25)}
 .result-title{font-family:var(--serif);font-size:var(--t-h2);font-weight:400}
 .btn-back{padding:8px var(--s-lg);background:none;border:1px solid var(--border);font-family:var(--sans);font-size:var(--t-small);color:var(--ink-muted);cursor:pointer;transition:all .2s}
 .btn-back:hover{border-color:var(--ink-muted);color:var(--ink)}
-.result-content{font-size:var(--t-body);line-height:2;color:var(--ink);max-width:65ch}
-.result-content h2{font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin:var(--s-2xl) 0 var(--s-md)}
-.result-content p{margin-bottom:var(--s-md)}
+
+/* Result: 公众号 Article View */
+.result-article{max-width:65ch}
+.result-article .cover-card{
+  background:var(--ink);color:rgba(250,249,246,.9);padding:var(--s-3xl) var(--s-2xl);
+  margin-bottom:var(--s-2xl);text-align:center;
+}
+.result-article .cover-card h2{font-family:var(--serif);font-size:var(--t-h2);font-weight:400;line-height:1.4;margin-bottom:var(--s-sm)}
+.result-article .cover-card .byline{font-size:var(--t-caption);color:rgba(250,249,246,.4)}
+.result-article h2{font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin:var(--s-2xl) 0 var(--s-md)}
+.result-article h2:first-child{margin-top:0}
+.result-article p{font-size:var(--t-body);line-height:2;margin-bottom:var(--s-md)}
+
+/* Result: 小红书 Cards */
+.result-xhs-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--s-sm);margin-bottom:var(--s-2xl)}
+.result-xhs-card{
+  border:1px solid var(--border-lt);background:#fff;padding:var(--s-lg);
+  aspect-ratio:3/4;display:flex;flex-direction:column;
+}
+.result-xhs-card .page-num{font-size:var(--t-caption);color:var(--ink-faint);margin-bottom:var(--s-md)}
+.result-xhs-card .page-title{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;margin-bottom:var(--s-sm);line-height:1.4}
+.result-xhs-card .page-body{font-size:var(--t-small);color:var(--ink-muted);line-height:1.8;flex:1}
+
+/* Result: 朋友圈 Post */
+.result-moments-post{
+  max-width:480px;background:#fff;border:1px solid var(--border-lt);padding:var(--s-lg);
+  margin-bottom:var(--s-2xl);
+}
+.result-moments-post .post-text{font-size:var(--t-body);line-height:2;margin-bottom:var(--s-md)}
+
+/* Result: Caption */
+.result-caption{margin-top:var(--s-2xl);padding:var(--s-lg);background:rgba(26,24,20,.02);border:1px solid var(--border-lt)}
+.result-caption-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:var(--s-xs)}
+.result-caption p{font-size:var(--t-small);color:var(--ink-muted);line-height:1.9;white-space:pre-wrap}
+
+/* Result: Files */
 .result-files{margin-top:var(--s-xl);padding-top:var(--s-lg);border-top:1px solid var(--border)}
 .result-files-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:var(--s-sm)}
 .result-file{display:flex;align-items:center;gap:var(--s-sm);padding:var(--s-xs) 0;font-size:var(--t-small);color:var(--ink);text-decoration:none}
@@ -347,10 +386,13 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
     <!-- Result -->
     <div class="result-wrap hidden" id="resultWrap">
       <div class="result-header">
-        <h2 class="result-title" id="resultTitle"></h2>
+        <div class="result-title-row">
+          <span class="result-badge" id="resultBadge"></span>
+          <h2 class="result-title" id="resultTitle"></h2>
+        </div>
         <button class="btn-back" onclick="backToList()">← <span class="lang-content cn">返回列表</span><span class="lang-content jp">一覧に戻る</span></button>
       </div>
-      <div class="result-content" id="resultContent"></div>
+      <div id="resultContent"></div>
       <div class="result-files" id="resultFiles"></div>
     </div>
 
@@ -525,14 +567,34 @@ function showResult(taskId) {
   document.getElementById('resultTitle').textContent = task.topic;
 
   var isJP = document.body.classList.contains('show-jp'), r = task.result, html = '';
+  var icons = {wechat:'assets/platform-icons/wechat.svg', xhs:'assets/platform-icons/xiaohongshu.svg', moments:'assets/platform-icons/moments.svg'};
+  var pNames = {wechat: (isJP?'公众号':'公众号'), xhs: (isJP?'小紅書':'小红书'), moments: (isJP?'朋友圈':'朋友圈')};
+  var badge = document.getElementById('resultBadge');
+  badge.className = 'result-badge ' + task.platform;
+  badge.innerHTML = '<img src="' + icons[task.platform] + '" alt="">' + pNames[task.platform];
+
   if (task.platform === 'xhs') {
-    html = '<h2>' + (isJP ? r.titleJP : r.title) + '</h2>' +
-      (r.pages || []).map(function(p, i) { return '<p><strong>' + (i + 1) + '. ' + (isJP ? (p.jp || p.cn) : p.cn) + '</strong><br>' + (isJP ? (p.bodyJP || p.bodyCN) : p.bodyCN) + '</p>'; }).join('');
+    html = '<div class="result-xhs-cards">' +
+      (r.pages || []).map(function(p, i) {
+        return '<div class="result-xhs-card"><div class="page-num">' + (i === 0 ? 'Cover' : 'Page ' + (i+1)) + '</div><div class="page-title">' + (isJP ? (p.jp || p.cn) : p.cn) + '</div><div class="page-body">' + (isJP ? (p.bodyJP || p.bodyCN) : p.bodyCN) + '</div></div>';
+      }).join('') + '</div>';
+    if (r.title || r.titleJP) {
+      html += '<div class="result-caption"><div class="result-caption-label">' + (isJP ? '投稿文' : '发布文案') + '</div><p>' + (isJP && r.titleJP ? r.titleJP : (r.title || '')) + '</p></div>';
+    }
   } else if (task.platform === 'moments') {
-    html = '<p>' + (isJP ? r.textJP.replace(/\n/g,'<br>') : r.text.replace(/\n/g,'<br>')) + '</p>';
+    html = '<div class="result-moments-post"><div class="post-text">' + (isJP ? r.textJP.replace(/\n/g,'<br>') : r.text.replace(/\n/g,'<br>')) + '</div></div>';
   } else {
     var md = isJP ? r.markdownJP : r.markdown;
-    html = md.split('\n\n').map(function(p) { return p.indexOf('## ') === 0 ? '<h2>' + p.slice(3) + '</h2>' : '<p>' + p + '</p>'; }).join('');
+    var titleMatch = md.match(/^# (.+)/m);
+    var coverTitle = titleMatch ? titleMatch[1] : task.topic;
+    var bodyMD = md.replace(/^# .+\n\n?/, '');
+    html = '<div class="result-article">' +
+      '<div class="cover-card"><h2>' + coverTitle + '</h2><div class="byline">' + (isJP ? '用AI看图作图 · 創作センター' : '用AI看图作图 · 创作中心') + '</div></div>' +
+      bodyMD.split('\n\n').map(function(p) {
+        if (p.indexOf('## ') === 0) return '<h2>' + p.slice(3) + '</h2>';
+        if (p.indexOf('### ') === 0) return '<h3 style="font-family:var(--serif);font-size:var(--t-lead);font-weight:600;margin:var(--s-lg) 0 var(--s-xs)">' + p.slice(4) + '</h3>';
+        return '<p>' + p + '</p>';
+      }).join('') + '</div>';
   }
   document.getElementById('resultContent').innerHTML = html;
   document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? 'ダウンロード' : '下载文件') + '</p>' +
