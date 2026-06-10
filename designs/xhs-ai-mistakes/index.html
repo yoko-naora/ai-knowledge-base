@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>AI误区 · Stripe Design System</title>
+<link rel="stylesheet" href="_ds/stripe/tokens.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.sheet{display:flex;flex-direction:column;align-items:center;gap:var(--space-8);padding:var(--space-8);background:var(--muted)}
+.p{width:1080px;height:1440px;overflow:hidden;flex-shrink:0;font-family:var(--font-body);position:relative}
+.lbl{text-align:center;font-size:var(--text-xs);color:var(--muted);font-family:var(--font-mono);margin-top:-36px;margin-bottom:40px}
+
+/* ── ALL pages use ONLY var(--*) tokens from the Stripe system ── */
+
+/* P1 · Cover */
+.p1{background:var(--bg);display:flex;flex-direction:column;justify-content:flex-end;padding:var(--section-y-desktop) var(--container-gutter-desktop);position:relative}
+.p1::before{content:'';position:absolute;top:0;right:0;width:55%;height:55%;background:radial-gradient(circle at 70% 30%,var(--accent),transparent 70%);opacity:.06}
+.p1 .tag{font-size:var(--text-sm);font-weight:600;letter-spacing:var(--tracking-display);color:var(--accent);margin-bottom:var(--space-5);position:relative}
+.p1 h1{font-family:var(--font-display);font-size:var(--text-4xl);font-weight:300;line-height:var(--leading-tight);letter-spacing:-.03em;color:var(--fg);position:relative}
+.p1 h1 b{font-weight:700;color:var(--accent)}
+.p1 .sub{font-size:var(--text-base);color:var(--muted);margin-top:var(--space-3);max-width:28ch;position:relative;font-weight:300}
+.p1 .strip{display:flex;gap:var(--space-3);margin-top:var(--space-6);padding-top:var(--space-4);border-top:1px solid var(--border);position:relative}
+.p1 .strip span{font-size:var(--text-sm);color:var(--muted);font-weight:300}
+
+/* P2 · Grid */
+.p2{background:var(--bg);padding:var(--container-gutter-desktop);display:flex;flex-direction:column}
+.p2 h2{font-family:var(--font-display);font-size:var(--text-2xl);font-weight:300;color:var(--accent);letter-spacing:var(--tracking-display);margin-bottom:var(--space-6)}
+.p2 .grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4) var(--space-5);flex:1}
+.p2 .card{display:flex;gap:var(--space-3);padding:var(--space-4);border-radius:var(--radius-md);border:1px solid var(--border);background:var(--bg);box-shadow:var(--elev-raised)}
+.p2 .card .n{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:300;color:var(--accent);min-width:52px;line-height:1;letter-spacing:var(--tracking-display)}
+.p2 .card .t{font-size:var(--text-lg);font-weight:500;color:var(--fg);margin-bottom:var(--space-1)}
+.p2 .card .d{font-size:var(--text-sm);color:var(--muted);font-weight:300;line-height:var(--leading-body)}
+
+/* P3 · Quote */
+.p3{background:var(--fg);display:flex;align-items:center;justify-content:center;padding:var(--section-y-desktop) var(--container-gutter-desktop);position:relative}
+.p3::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,var(--accent),transparent 70%);opacity:.12}
+.p3 blockquote{text-align:center;position:relative}
+.p3 blockquote p{font-family:var(--font-display);font-size:var(--text-4xl);font-weight:300;color:var(--bg);line-height:var(--leading-tight);letter-spacing:var(--tracking-display)}
+.p3 blockquote p b{font-weight:700;color:var(--accent-active)}
+.p3 blockquote footer{font-size:var(--text-sm);color:var(--muted);margin-top:var(--space-6);font-weight:300}
+
+/* P4 · Split */
+.p4{background:var(--bg);display:flex;padding:0}
+.p4 .L{width:52%;padding:var(--container-gutter-desktop);display:flex;flex-direction:column;justify-content:center}
+.p4 .R{width:48%;background:linear-gradient(160deg,var(--accent),var(--accent-active));display:flex;align-items:center;justify-content:center}
+.p4 .R span{font-size:200px;font-weight:300;color:var(--bg);opacity:.08;line-height:1}
+.p4 .L .label{font-size:var(--text-xs);font-weight:500;color:var(--accent);letter-spacing:var(--tracking-display);margin-bottom:var(--space-3)}
+.p4 .L h3{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:300;color:var(--fg);line-height:var(--leading-tight);letter-spacing:var(--tracking-display);margin-bottom:var(--space-5)}
+.p4 .L p{font-size:var(--text-base);color:var(--muted);font-weight:300;line-height:var(--leading-body);margin-bottom:var(--space-3)}
+.p4 .L p b{font-weight:500;color:var(--fg)}
+
+/* P5 · Close */
+.p5{background:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--section-y-desktop) var(--container-gutter-desktop)}
+.p5 h2{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:300;color:var(--bg);line-height:var(--leading-tight);letter-spacing:var(--tracking-display);margin-bottom:var(--space-3)}
+.p5 h2 b{color:var(--accent-hover);font-weight:700}
+.p5 .sub{font-size:var(--text-base);color:var(--muted);font-weight:300;margin-bottom:var(--space-6);line-height:var(--leading-body)}
+.p5 .foot{font-size:var(--text-xs);color:var(--border-soft);font-weight:300;letter-spacing:var(--tracking-display)}
+</style></head><body>
+<div class="sheet">
+
+<div class="p p1"><p class="tag">AI · Learning</p><h1>我学AI<br>第一年，<br><b>全做错了</b></h1><p class="sub">五个误区，每个都实打实踩过。写给正在学AI的你。</p><div class="strip"><span>收藏=会了</span><span>对AI没耐心</span><span>只写不发</span><span>低估AI</span><span>跟AI较劲</span></div></div><div class="lbl">01 · Cover</div>
+
+<div class="p p2"><h2>五个误区</h2><div class="grid"><div class="card"><span class="n">01</span><div><div class="t">收藏 = 会了</div><div class="d">存了 200 条提示词，用过的不到 10 条</div></div></div><div class="card"><span class="n">02</span><div><div class="t">对 AI 没耐心</div><div class="d">AI 第一稿被删掉，却不想自己的第一稿也很烂</div></div></div><div class="card"><span class="n">03</span><div><div class="t">只写不发</div><div class="d">三个月写十几篇全在电脑里，总觉得还差一点</div></div></div><div class="card"><span class="n">04</span><div><div class="t">以为 AI 只是提效</div><div class="d">AI 最大价值不是提速，是让你敢写不会的东西</div></div></div><div class="card"><span class="n">05</span><div><div class="t">跟 AI 较劲</div><div class="d">它是工具。不是导师、朋友、镜子</div></div></div></div></div><div class="lbl">02 · The 5</div>
+
+<div class="p p3"><blockquote><p>不是文章<br><b>没写好。</b></p><p style="margin-top:var(--space-4)">是我在拖。</p><footer>— 误区三 · 只写不发</footer></blockquote></div><div class="lbl">03 · Quote</div>
+
+<div class="p p4"><div class="L"><p class="label">误区四</p><h3>AI 真正的<br>价值</h3><p>一开始算账：AI 一分钟 500 字，我 50 字，效率 10 倍。</p><p><b>但这不是最大的价值。AI 让你敢写你本来不敢写的东西。</b></p><p>上周写了一篇 AI 绘画，我完全不懂。放以前根本不会碰。现在 AI 搭框架、补知识、给例子，我只需要判断。</p></div><div class="R"><span>04</span></div></div><div class="lbl">04 · Deep Dive</div>
+
+<div class="p p5"><h2>知道，<br>就是<b>改掉</b>的<br>一半。</h2><p class="sub">五个误区的背后是同一个东西：<br>把 AI 当成了考试，而不是工具。</p><p class="foot">用AI看图作图 · 让每个人都能用AI做好内容</p></div><div class="lbl">05 · Closing</div>
+
+</div></body></html>

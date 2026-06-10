@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>三角形180° · Apple</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.sheet{display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px;background:#d2d2d7}
+.p{width:1080px;height:1440px;overflow:hidden;flex-shrink:0;font-family:'Noto Sans JP',sans-serif;position:relative}
+.lbl{text-align:center;font-size:14px;color:#999;font-family:monospace;margin-top:-36px;margin-bottom:48px}
+
+/* Apple: black↔pale gray rhythm, SF-style semibold, blue accent, clean */
+.a01{background:#000;color:#f5f5f7;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 96px}
+.a01 svg{width:180px;height:160px;margin-bottom:56px}
+.a01 svg polygon{fill:none;stroke:#2997ff;stroke-width:2.5;stroke-linejoin:round}
+.a01 svg text{fill:#2997ff;font-family:'Noto Serif JP',serif;font-size:26px;text-anchor:middle}
+.a01 h1{font-size:72px;font-weight:600;line-height:1.1;letter-spacing:-.02em;color:#f5f5f7}
+.a01 h1 b{color:#2997ff}
+.a01 .sub{font-size:26px;color:#6e6e73;margin-top:28px;font-weight:300}
+
+.a02{background:#f5f5f7;padding:96px 80px;display:flex;flex-direction:column}
+.a02 .label{font-size:18px;font-weight:600;color:#0071e3;letter-spacing:.12em;margin-bottom:16px}
+.a02 h2{font-size:56px;font-weight:600;color:#1d1d1f;line-height:1.15;letter-spacing:-.02em;margin-bottom:48px}
+.a02 .proof{flex:1;display:flex;align-items:center;justify-content:center}
+.a02 svg line,.a02 svg polyline{stroke:#1d1d1f;stroke-width:2;stroke-linecap:round}
+.a02 svg line.d{stroke-dasharray:8,6;stroke:#86868b}
+.a02 svg text{font-family:'Noto Serif JP',serif;fill:#1d1d1f;font-size:30px;text-anchor:middle}
+.a02 svg text.blue{fill:#0071e3;font-weight:600}
+.a02 svg text.sm{font-size:20px;fill:#6e6e73}
+.a02 svg circle{fill:#2997ff}
+
+.a03{background:#000;color:#f5f5f7;display:flex;flex-direction:column;padding:96px 80px}
+.a03 .label{font-size:16px;font-weight:600;color:#2997ff;letter-spacing:.12em;margin-bottom:32px}
+.a03 h2{font-size:48px;font-weight:600;color:#f5f5f7;letter-spacing:-.02em;margin-bottom:56px}
+.a03 .steps{display:flex;flex-direction:column;gap:36px;flex:1}
+.a03 .step{display:flex;gap:24px;align-items:flex-start}
+.a03 .step .dot{width:12px;height:12px;border-radius:50%;background:#2997ff;flex-shrink:0;margin-top:10px}
+.a03 .step .t{font-size:28px;font-weight:600;color:#f5f5f7;margin-bottom:4px}
+.a03 .step .d{font-size:20px;color:#6e6e73;line-height:1.7;font-weight:300}
+
+.a04{background:#f5f5f7;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 96px}
+.a04 .big{font-size:200px;font-weight:700;color:#0071e3;line-height:1;margin-bottom:40px;letter-spacing:-.04em}
+.a04 p{font-size:28px;color:#1d1d1f;font-weight:600;max-width:20ch;line-height:1.5}
+.a04 p.sub{font-size:22px;color:#6e6e73;font-weight:300;margin-top:20px}
+
+.a05{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 96px}
+.a05 h2{font-size:64px;font-weight:600;color:#f5f5f7;line-height:1.15;letter-spacing:-.02em;margin-bottom:24px}
+.a05 h2 b{color:#2997ff}
+.a05 .sub{font-size:24px;color:#6e6e73;font-weight:300;margin-bottom:48px}
+.a05 .foot{font-size:18px;color:#86868b;font-weight:300}
+</style></head><body>
+<div class="sheet">
+<div class="p a01"><svg viewBox="0 0 180 160"><polygon points="90,10 170,145 10,145"/><text x="90" y="48">A</text><text x="178" y="170">B</text><text x="8" y="170">C</text></svg><h1>三角形的三个角，<br>为什么是<b>180°</b>？</h1><p class="sub">不是背的。是可以看出来的。</p></div><div class="lbl">01 · Cover · Apple</div>
+
+<div class="p a02"><p class="label">Visual Proof</p><h2>过顶点画一条<br>平行于底边的线</h2><div class="proof"><svg viewBox="0 0 600 480"><line x1="60" y1="100" x2="540" y2="100"/><line x1="80" y1="140" x2="520" y2="140" class="d"/><polyline points="100,140 300,380 500,140" stroke="#0071e3" stroke-width="2.5"/><line x1="300" y1="100" x2="300" y2="140" stroke="#0071e3" stroke-width="2"/><circle cx="100" cy="140" r="4"/><circle cx="300" cy="380" r="4"/><circle cx="500" cy="140" r="4"/><circle cx="300" cy="100" r="4"/><text x="155" y="135" class="sm">∠B</text><text x="460" y="135" class="sm">∠C</text><text x="305" y="155" class="sm">∠A</text><text x="300" y="85" class="blue" font-size="24">B' C'</text></svg></div></div><div class="lbl">02 · Proof · Apple</div>
+
+<div class="p a03"><p class="label">Step by Step</p><h2>三个角拼成<br>一条直线</h2><div class="steps"><div class="step"><span class="dot"></span><div><div class="t">① 过顶点A画BC的平行线</div><div class="d">上面和下面的线永不相交。这是关键一步。</div></div></div><div class="step"><span class="dot"></span><div><div class="t">② ∠B和∠B'是内错角，相等</div><div class="d">平行线被AB穿过，内错角相等。∠C同理。</div></div></div><div class="step"><span class="dot"></span><div><div class="t">③ ∠A+∠B'+∠C'=一条直线=180°</div><div class="d">三个角拼在一起刚好是一条直线。所以∠A+∠B+∠C=180°。</div></div></div></div></div><div class="lbl">03 · Steps · Apple</div>
+
+<div class="p a04"><div class="big">180°</div><p>不是巧合。任何三角形都成立。</p><p class="sub">数学不是背公式。是"原来如此"的那个瞬间。</p></div><div class="lbl">04 · Insight · Apple</div>
+
+<div class="p a05"><h2>看见，<br>就<b>记住</b>了。</h2><p class="sub">下次有人问你为什么三角形是180°，<br>画给他看。</p><p class="foot">用AI看图作图 · 让每个人都能用AI做好内容</p></div><div class="lbl">05 · Closing · Apple</div>
+</div></body></html>

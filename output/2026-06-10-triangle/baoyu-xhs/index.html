@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>三角形180度 · 小红书</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.sheet{display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px;background:#c4bfb6}
+.p{width:1080px;height:1440px;overflow:hidden;flex-shrink:0;font-family:'Noto Sans JP',sans-serif;position:relative}
+.lbl{text-align:center;font-size:14px;color:#999;font-family:monospace;margin-top:-36px;margin-bottom:48px}
+
+/* ═══════════ 01 · COVER ═══════════ */
+.page01{
+  background:#2d2a26;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:120px 96px;
+}
+.page01 .triangle-svg{width:200px;height:180px;margin-bottom:56px}
+.page01 .triangle-svg polygon{fill:none;stroke:#e8c45a;stroke-width:3;stroke-linejoin:round}
+.page01 .triangle-svg text{fill:#e8c45a;font-family:'Noto Serif JP',serif;font-size:28px;text-anchor:middle}
+.page01 h1{font-family:'Noto Serif JP',serif;font-size:76px;font-weight:600;line-height:1.2;color:#f0ebe0;letter-spacing:.02em}
+.page01 h1 em{font-style:normal;color:#e8c45a}
+.page01 .sub{font-size:24px;color:rgba(240,235,224,.45);margin-top:32px;line-height:1.6}
+
+/* ═══════════ 02 · THE PROOF ═══════════ */
+.page02{background:#f5f2ed;padding:88px 80px;display:flex;flex-direction:column}
+.page02 .step-label{font-size:18px;font-weight:600;letter-spacing:.14em;color:#8c7a5c;margin-bottom:16px}
+.page02 h2{font-family:'Noto Serif JP',serif;font-size:52px;font-weight:600;color:#2d2a26;line-height:1.2;margin-bottom:48px}
+.page02 .proof-area{flex:1;display:flex;align-items:center;justify-content:center}
+/* SVG proof diagram */
+.page02 .geo{width:100%;max-width:700px}
+.page02 .geo line,.page02 .geo polyline{stroke:#2d2a26;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.page02 .geo line.dash{stroke-dasharray:8,6;stroke:#a09080}
+.page02 .geo line.highlight{stroke:#d4843a;stroke-width:3}
+.page02 .geo text{font-family:'Noto Serif JP',serif;fill:#2d2a26;font-size:32px;text-anchor:middle}
+.page02 .geo text.accent{fill:#d4843a;font-weight:600}
+.page02 .geo text.small{font-size:22px;fill:#8c7a5c}
+.page02 .geo circle{fill:#e8c45a;stroke:none}
+.page02 .geo .angle{fill:none;stroke:rgba(212,132,58,.3);stroke-width:20;stroke-linecap:round}
+
+/* ═══════════ 03 · STEP-BY-STEP ═══════════ */
+.page03{background:#fff;padding:88px 80px;display:flex;flex-direction:column}
+.page03 .label{font-size:18px;font-weight:600;letter-spacing:.14em;color:#8c7a5c;margin-bottom:24px}
+.page03 h2{font-family:'Noto Serif JP',serif;font-size:48px;font-weight:600;color:#2d2a26;margin-bottom:56px}
+.page03 .steps{display:flex;flex-direction:column;gap:28px;flex:1}
+.page03 .step{display:flex;gap:24px;align-items:flex-start}
+.page03 .step .dot{width:16px;height:16px;border-radius:50%;background:#e8c45a;flex-shrink:0;margin-top:8px}
+.page03 .step .dot.n1{background:#d4843a}
+.page03 .step .dot.n2{background:#c4965a}
+.page03 .step .dot.n3{background:#e8c45a}
+.page03 .step .txt{flex:1}
+.page03 .step .txt strong{font-size:28px;font-weight:600;color:#2d2a26;display:block;margin-bottom:4px}
+.page03 .step .txt p{font-size:20px;color:#6b5c48;line-height:1.7}
+
+/* ═══════════ 04 · WHY IT MATTERS ═══════════ */
+.page04{background:#2d2a26;color:#f5f2ed;display:flex;flex-direction:column;justify-content:center;padding:96px 80px}
+.page04 .eye{font-family:'Noto Serif JP',serif;font-size:120px;font-weight:700;line-height:1;color:#e8c45a;margin-bottom:32px}
+.page04 p{font-size:28px;color:rgba(245,242,237,.6);line-height:1.9;max-width:26ch}
+.page04 p strong{color:#f5f2ed;font-weight:500}
+
+/* ═══════════ 05 · TAKEAWAY ═══════════ */
+.page05{background:#e8c45a;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 96px}
+.page05 .triangle-svg{width:140px;height:120px;margin-bottom:48px}
+.page05 .triangle-svg polygon{fill:none;stroke:#2d2a26;stroke-width:2.5;stroke-linejoin:round}
+.page05 h2{font-family:'Noto Serif JP',serif;font-size:68px;font-weight:600;color:#2d2a26;line-height:1.2;margin-bottom:24px}
+.page05 .sub{font-size:24px;color:rgba(45,42,38,.5);line-height:1.8;margin-bottom:48px}
+.page05 .tag{font-size:18px;color:rgba(45,42,38,.35);letter-spacing:.08em}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<!-- 01 · COVER -->
+<div class="p page01">
+  <svg class="triangle-svg" viewBox="0 0 200 180">
+    <polygon points="100,15 185,165 15,165"/>
+    <text x="100" y="55">A</text>
+    <text x="185" y="185">B</text>
+    <text x="15" y="185">C</text>
+  </svg>
+  <h1>三角形的三个角，<br>加起来为什么是<br><em>180°</em> ？</h1>
+  <p class="sub">不是背的。是可以看出来的。</p>
+</div>
+<div class="lbl">01 · Cover</div>
+
+<!-- 02 · THE PROOF -->
+<div class="p page02">
+  <p class="step-label">可视化证明</p>
+  <h2>过顶点画一条<br>平行于底边的线</h2>
+  <div class="proof-area">
+    <svg class="geo" viewBox="0 0 640 520">
+      <!-- Parallel top line -->
+      <line x1="40" y1="100" x2="600" y2="100" stroke="#2d2a26" stroke-width="2"/>
+      <!-- Dashed parallels hint -->
+      <line x1="80" y1="140" x2="560" y2="140" class="dash"/>
+      <!-- Triangle -->
+      <polyline points="100,140 320,400 540,140" fill="none" stroke="#d4843a" stroke-width="3"/>
+      <!-- Top vertex -->
+      <line x1="320" y1="100" x2="320" y2="140" stroke="#d4843a" stroke-width="2.5"/>
+      <!-- Angle arcs -->
+      <path d="M 320,170 A 50,50 0 0,0 280,190" class="angle"/>
+      <path d="M 320,170 A 50,50 0 0,1 360,190" class="angle"/>
+      <path d="M 115,140 A 30,30 0 0,0 90,170" class="angle"/>
+      <path d="M 540,140 A 30,30 0 0,1 565,170" class="angle"/>
+      <path d="M 305,95 A 25,25 0 0,0 290,110" fill="none" stroke="rgba(232,196,90,.4)" stroke-width="18" stroke-linecap="round"/>
+      <path d="M 305,95 A 25,25 0 0,1 320,110" fill="none" stroke="rgba(212,132,58,.4)" stroke-width="18" stroke-linecap="round"/>
+      <!-- Labels -->
+      <text x="300" y="410" class="accent">内错角相等</text>
+      <text x="155" y="135" class="small">∠B</text>
+      <text x="500" y="135" class="small">∠C</text>
+      <text x="330" y="160" class="small">∠A</text>
+      <!-- Dots at vertices -->
+      <circle cx="100" cy="140" r="5"/>
+      <circle cx="320" cy="400" r="5"/>
+      <circle cx="540" cy="140" r="5"/>
+      <circle cx="320" cy="100" r="5"/>
+    </svg>
+  </div>
+</div>
+<div class="lbl">02 · The Visual Proof</div>
+
+<!-- 03 · STEP BY STEP -->
+<div class="p page03">
+  <p class="label">一步一步来</p>
+  <h2>三个角拼成一条直线</h2>
+  <div class="steps">
+    <div class="step"><span class="dot n1"></span><div class="txt"><strong>① 过顶点 A 画 BC 的平行线</strong><p>这是关键的一步。上面和下面的线永不相交。</p></div></div>
+    <div class="step"><span class="dot n2"></span><div class="txt"><strong>② ∠B 和 ∠B' 是内错角，相等</strong><p>平行线被 AB 穿过，内错角相等。∠C 同理。</p></div></div>
+    <div class="step"><span class="dot n3"></span><div class="txt"><strong>③ ∠A + ∠B' + ∠C' = 一条直线 = 180°</strong><p>三个角拼在一起刚好是一条直线。所以 ∠A+∠B+∠C=180°。</p></div></div>
+  </div>
+</div>
+<div class="lbl">03 · Step By Step</div>
+
+<!-- 04 · WHY IT MATTERS -->
+<div class="p page04">
+  <div class="eye">180°</div>
+  <p>不是巧合。<strong>任何三角形的三个角都能通过平行线"搬"到一起，拼成一条直线。</strong></p>
+  <p style="margin-top:24px">数学不是背公式。<br>数学是"原来如此"的那个瞬间。</p>
+</div>
+<div class="lbl">04 · Why It Matters</div>
+
+<!-- 05 · TAKEAWAY -->
+<div class="p page05">
+  <svg class="triangle-svg" viewBox="0 0 140 120">
+    <polygon points="70,10 130,105 10,105"/>
+  </svg>
+  <h2>看见，<br>就记住了。</h2>
+  <p class="sub">下次有人问你为什么三角形是180°，<br>画给他看。</p>
+  <p class="tag">用AI看图作图 · 让每个人都能用AI做好内容</p>
+</div>
+<div class="lbl">05 · Closing</div>
+
+</div></body></html>

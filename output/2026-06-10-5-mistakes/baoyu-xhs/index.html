@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我学AI第一年，全做错了 · 小红书</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ── Poster Shell ── */
+.sheet{display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px;background:#e8e4dc}
+.poster{
+  width:1080px;height:1440px;overflow:hidden;position:relative;
+  flex-shrink:0;font-family:'Noto Sans JP',sans-serif;
+}
+
+/* ══════════════ PAGE 01 · COVER ══════════════ */
+.p01{
+  background:linear-gradient(160deg,#0f1729 0%,#1a2744 40%,#1e3348 100%);
+  color:#e8e4dc;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:96px 88px 120px;
+}
+.p01 .tag{font-size:20px;font-weight:500;letter-spacing:.16em;color:rgba(232,228,220,.5);margin-bottom:32px;text-transform:uppercase}
+.p01 h1{font-family:'Noto Serif JP',serif;font-size:108px;font-weight:700;line-height:1.1;letter-spacing:.02em;margin-bottom:24px}
+.p01 .sub{font-size:28px;color:rgba(232,228,220,.6);line-height:1.6;max-width:28ch}
+.p01 .accent{color:#e8945a}
+.p01 .strip{display:flex;gap:24px;margin-top:64px;padding-top:32px;border-top:1px solid rgba(232,228,220,.12)}
+.p01 .strip span{font-size:20px;color:rgba(232,228,220,.4);letter-spacing:.08em}
+
+/* ══════════════ PAGE 02 · LIST ══════════════ */
+.p02{background:#faf8f4;padding:96px 88px;display:flex;flex-direction:column}
+.p02 .sec-label{font-size:18px;font-weight:500;letter-spacing:.14em;color:#b0a89a;margin-bottom:16px}
+.p02 h2{font-family:'Noto Serif JP',serif;font-size:64px;font-weight:600;line-height:1.2;color:#1a1a1a;margin-bottom:56px}
+.p02 .mistakes{display:flex;flex-direction:column;gap:0;flex:1}
+.p02 .mistake{display:flex;align-items:flex-start;gap:32px;padding:28px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.p02 .mistake .num{font-family:'Noto Serif JP',serif;font-size:42px;font-weight:600;color:#1a2744;min-width:56px;line-height:1}
+.p02 .mistake .body{flex:1}
+.p02 .mistake .head{font-size:28px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.p02 .mistake .desc{font-size:20px;color:#807a70;line-height:1.5}
+
+/* ══════════════ PAGE 03 · QUOTE ══════════════ */
+.p03{background:#1a2744;color:#e8e4dc;display:flex;align-items:center;justify-content:center;padding:120px 88px}
+.p03 blockquote{text-align:center}
+.p03 blockquote p{font-family:'Noto Serif JP',serif;font-size:96px;font-weight:600;line-height:1.2;letter-spacing:.02em}
+.p03 blockquote p em{font-style:normal;color:#e8945a}
+.p03 blockquote footer{font-size:22px;color:rgba(232,228,220,.35);margin-top:48px;letter-spacing:.08em}
+
+/* ══════════════ PAGE 04 · STORY ══════════════ */
+.p04{background:#faf8f4;display:flex;padding:0}
+.p04 .left{width:52%;padding:96px 72px 96px 88px;display:flex;flex-direction:column;justify-content:center}
+.p04 .right{width:48%;background:linear-gradient(180deg,#e8945a 0%,#d47840 100%);display:flex;align-items:center;justify-content:center;padding:88px}
+.p04 .right .big-num{font-family:'Noto Serif JP',serif;font-size:240px;font-weight:700;color:rgba(255,255,255,.15);line-height:1}
+.p04 .label{font-size:18px;font-weight:500;letter-spacing:.14em;color:#b0a89a;margin-bottom:16px}
+.p04 h3{font-family:'Noto Serif JP',serif;font-size:48px;font-weight:600;line-height:1.2;color:#1a1a1a;margin-bottom:32px}
+.p04 .left p{font-size:24px;color:#605a50;line-height:1.8;margin-bottom:20px}
+.p04 .left p strong{color:#1a1a1a}
+
+/* ══════════════ PAGE 05 · CLOSING ══════════════ */
+.p05{background:#e8945a;color:#1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 88px}
+.p05 h2{font-family:'Noto Serif JP',serif;font-size:88px;font-weight:600;line-height:1.15;letter-spacing:.02em;margin-bottom:16px}
+.p05 .sub{font-size:28px;color:rgba(26,26,26,.5);margin-bottom:64px}
+.p05 .cta{font-size:22px;font-weight:500;letter-spacing:.08em;color:rgba(26,26,26,.5)}
+
+/* ── Labels ── */
+.poster-label{text-align:center;font-size:14px;color:#999;font-family:monospace;margin-top:-36px;margin-bottom:48px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<!-- 01 · COVER -->
+<div class="poster p01">
+  <p class="tag">第一人称 · 经验分享</p>
+  <h1>我学AI<br>第一年，<br><span class="accent">全做错了</span></h1>
+  <p class="sub">五个误区，每个都实打实踩过。写给正在学AI的你。</p>
+  <div class="strip">
+    <span>收藏=会了</span><span>对AI没耐心</span><span>只写不发</span><span>低估AI</span><span>跟AI较劲</span>
+  </div>
+</div>
+<div class="poster-label">01 · Cover</div>
+
+<!-- 02 · LIST -->
+<div class="poster p02">
+  <p class="sec-label">五个误区</p>
+  <h2>我踩过的坑</h2>
+  <div class="mistakes">
+    <div class="mistake"><span class="num">01</span><div class="body"><div class="head">收藏 = 会了</div><div class="desc">存了 200 条提示词，用过的不到 10 条。</div></div></div>
+    <div class="mistake"><span class="num">02</span><div class="body"><div class="head">对 AI 没耐心</div><div class="desc">AI 第一稿被删掉，却没想过自己的第一稿也很烂。</div></div></div>
+    <div class="mistake"><span class="num">03</span><div class="body"><div class="head">只写不发</div><div class="desc">三个月写十几篇，全在电脑里。总觉得还差一点。</div></div></div>
+    <div class="mistake"><span class="num">04</span><div class="body"><div class="head">以为 AI 只是提效</div><div class="desc">AI 最大的价值不是提速——是让你敢写不会的东西。</div></div></div>
+    <div class="mistake"><span class="num">05</span><div class="body"><div class="head">跟 AI 较劲</div><div class="desc">它是工具。不是导师、不是朋友、不是镜子。</div></div></div>
+  </div>
+</div>
+<div class="poster-label">02 · The 5 Mistakes</div>
+
+<!-- 03 · QUOTE -->
+<div class="poster p03">
+  <blockquote>
+    <p>不是文章<br><em>没写好。</em></p>
+    <p style="margin-top:24px">是我在拖。</p>
+    <footer>— 误区三 · 只写不发</footer>
+  </blockquote>
+</div>
+<div class="poster-label">03 · Pull Quote</div>
+
+<!-- 04 · STORY -->
+<div class="poster p04">
+  <div class="left">
+    <p class="label">误区四</p>
+    <h3>AI 真正的<br>价值</h3>
+    <p>一开始我算账：AI 一分钟 500 字，我 50 字，效率提升 10 倍。赚了。</p>
+    <p>但这不是最大的价值。</p>
+    <p><strong>AI 让你敢写你本来不敢写的东西。</strong></p>
+    <p>上周写了一篇 AI 绘画的内容。我完全不懂 AI 绘画。放以前根本不会碰。现在我让 AI 搭框架、补知识、给例子。我只需要判断。</p>
+  </div>
+  <div class="right">
+    <span class="big-num">04</span>
+  </div>
+</div>
+<div class="poster-label">04 · Deep Dive</div>
+
+<!-- 05 · CLOSING -->
+<div class="poster p05">
+  <h2>知道，<br>就是改掉的<br>一半。</h2>
+  <p class="sub">五个误区的背后是同一个东西：<br>把 AI 当成了考试，而不是工具。</p>
+  <p class="cta">用AI看图作图 · 让每个人都能用AI做好内容</p>
+</div>
+<div class="poster-label">05 · Closing</div>
+
+</div>
+</body>
+</html>

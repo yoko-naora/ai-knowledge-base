@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>Style Preview · 3 Topics × 3 Directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600;700&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#e8e4de;font-family:'Noto Sans JP',sans-serif;color:#1a1a1a}
+.canvas{max-width:1400px;margin:0 auto;padding:48px 32px}
+
+/* Section header */
+.topic-header{margin:64px 0 32px;padding-bottom:16px;border-bottom:2px solid rgba(0,0,0,.08)}
+.topic-header h2{font-family:'Noto Serif JP',serif;font-size:28px;font-weight:600;margin-bottom:4px}
+.topic-header .sub{font-size:14px;color:#888}
+
+/* Artboard grid */
+.artboards{display:flex;gap:24px;overflow-x:auto;padding-bottom:16px;scroll-snap-type:x mandatory}
+.artboard{flex:0 0 360px;scroll-snap-align:start;display:flex;flex-direction:column}
+.artboard-label{font-size:13px;font-weight:500;color:#666;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.artboard-label .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.artboard-frame{border:1px solid rgba(0,0,0,.1);border-radius:6px;overflow:hidden;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.08);aspect-ratio:3/4;position:relative}
+
+/* ── Artboard contents: mini posters ── */
+
+/* Style A: Stripe — white, navy, purple */
+.s-stripe{background:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;height:100%;position:relative}
+.s-stripe::before{content:'';position:absolute;top:0;right:0;width:60%;height:50%;background:radial-gradient(circle at 70% 30%,rgba(83,58,253,.08),transparent 70%)}
+.s-stripe .tag{font-size:10px;font-weight:600;letter-spacing:.14em;color:#533afd;margin-bottom:16px;position:relative}
+.s-stripe h3{font-size:36px;font-weight:300;line-height:1.08;letter-spacing:-.03em;color:#061b31;position:relative}
+.s-stripe h3 b{font-weight:700;color:#533afd}
+.s-stripe .sub{font-size:11px;color:#64748d;margin-top:12px;font-weight:300;position:relative;line-height:1.6}
+.s-stripe .tags{display:flex;gap:10px;margin-top:24px;padding-top:14px;border-top:1px solid #e5edf5;position:relative}
+.s-stripe .tags span{font-size:9px;color:#64748d;font-weight:300}
+
+/* Style B: Apple — black/light binary, blue accent */
+.s-apple{background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:32px;height:100%;color:#f5f5f7}
+.s-apple svg{width:60px;height:54px;margin-bottom:24px}
+.s-apple svg polygon{fill:none;stroke:#2997ff;stroke-width:1.5}
+.s-apple h3{font-size:28px;font-weight:600;line-height:1.12;letter-spacing:-.02em}
+.s-apple h3 b{color:#2997ff}
+.s-apple .sub{font-size:12px;color:#6e6e73;margin-top:12px;font-weight:300}
+
+/* Style C: Luxury — black, Oswald bold */
+.s-luxury{background:#000;display:flex;flex-direction:column;justify-content:flex-end;padding:28px;height:100%;position:relative}
+.s-luxury::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(250,250,250,.03),transparent 60%)}
+.s-luxury .tag{font-family:'Oswald',sans-serif;font-size:10px;font-weight:400;letter-spacing:.2em;color:rgba(250,250,250,.2);margin-bottom:20px;text-transform:uppercase;position:relative}
+.s-luxury h3{font-family:'Oswald',sans-serif;font-size:48px;font-weight:700;line-height:.95;color:#FAFAFA;letter-spacing:-.01em;text-transform:uppercase;position:relative}
+.s-luxury h3 em{font-family:'Noto Serif JP',serif;font-weight:400;font-style:normal;font-size:20px;color:rgba(250,250,250,.2);display:block;text-transform:none;letter-spacing:.02em}
+.s-luxury .line{width:40px;height:1px;background:rgba(250,250,250,.12);margin-top:20px;position:relative}
+
+.artboard-label .dot.a{background:#533afd}
+.artboard-label .dot.b{background:#2997ff}
+.artboard-label .dot.c{background:#fafafa;border:1px solid #ccc}
+
+/* Triangle topic specific */
+.s-tri-a{background:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px;height:100%}
+.s-tri-a svg{width:80px;height:70px;margin-bottom:24px}
+.s-tri-a svg polygon{fill:none;stroke:#1d1d1f;stroke-width:1.5;stroke-linejoin:round}
+.s-tri-a svg text{fill:#1d1d1f;font-family:'Noto Serif JP',serif;font-size:12px;text-anchor:middle}
+.s-tri-a h3{font-family:'Noto Serif JP',serif;font-size:30px;font-weight:600;text-align:center;line-height:1.2;color:#1d1d1f}
+.s-tri-a h3 b{color:#0071e3}
+
+.s-tri-b{background:#f5efe4;display:flex;flex-direction:column;justify-content:center;padding:32px;height:100%}
+.s-tri-b .num{font-family:'Noto Serif JP',serif;font-size:80px;font-weight:700;color:rgba(44,26,14,.06);line-height:1;margin-bottom:16px}
+.s-tri-b h3{font-family:'Noto Serif JP',serif;font-size:34px;font-weight:600;line-height:1.15;color:#2c1a0e}
+.s-tri-b h3 b{color:#8c5c3c}
+
+.s-tri-c{background:#2d2a26;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px;height:100%;text-align:center}
+.s-tri-c svg{width:80px;height:70px;margin-bottom:24px}
+.s-tri-c svg polygon{fill:none;stroke:#e8c45a;stroke-width:1.5}
+.s-tri-c h3{font-family:'Noto Serif JP',serif;font-size:30px;font-weight:600;line-height:1.2;color:#f0ebe0}
+.s-tri-c h3 b{color:#e8c45a}
+
+/* Scarf topic specific */
+.s-scf-a{background:linear-gradient(165deg,#f5ede4,#efe2d4,#e8d5c4);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:32px;height:100%;text-align:center;position:relative}
+.s-scf-a::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-20,100 C60,80 140,160 220,120' fill='none' stroke='%23b8785a' stroke-width='1' opacity='.12'/%3E%3C/svg%3E")}
+.s-scf-a .line{width:30px;height:1px;background:#b8785a;margin-bottom:24px;position:relative}
+.s-scf-a h3{font-family:'Noto Serif JP',serif;font-size:38px;font-weight:600;line-height:1.15;color:#3a2020;position:relative}
+.s-scf-a h3 em{font-family:'Playfair Display',serif;font-style:italic;color:#b8785a;font-weight:400;font-size:44px}
+.s-scf-a .tag-text{font-size:11px;color:#a07050;margin-top:16px;position:relative;letter-spacing:.14em}
+
+.s-scf-b{background:#000;display:flex;flex-direction:column;justify-content:center;padding:32px;height:100%}
+.s-scf-b .tag{font-family:'Oswald',sans-serif;font-size:10px;font-weight:400;letter-spacing:.2em;color:rgba(250,250,250,.2);margin-bottom:24px;text-transform:uppercase}
+.s-scf-b h3{font-family:'Oswald',sans-serif;font-size:52px;font-weight:700;line-height:.95;color:#FAFAFA;letter-spacing:-.01em;text-transform:uppercase}
+.s-scf-b h3 em{font-family:'Noto Serif JP',serif;font-weight:400;font-style:normal;font-size:22px;color:rgba(250,250,250,.2);display:block;text-transform:none;margin-top:8px;letter-spacing:.02em}
+
+.s-scf-c{background:#faf8f4;display:flex;flex-direction:column;justify-content:center;padding:32px;height:100%}
+.s-scf-c .label{font-size:10px;font-weight:600;letter-spacing:.14em;color:#c0a090;margin-bottom:16px}
+.s-scf-c h3{font-family:'Noto Serif JP',serif;font-size:36px;font-weight:600;line-height:1.15;color:#3a2020}
+.s-scf-c h3 b{color:#b8785a}
+.s-scf-c .tag-row{display:flex;gap:12px;margin-top:20px}
+.s-scf-c .tag-row span{font-size:10px;color:#a08070;padding:4px 10px;border:1px solid rgba(184,120,90,.15)}
+
+@media(max-width:800px){.artboard{flex:0 0 280px}.canvas{padding:32px 16px}}
+</style></head><body>
+<div class="canvas">
+
+<!-- ═══════════ TOPIC 1 · AI ═══════════ -->
+<div class="topic-header"><h2>AI学习误区</h2><div class="sub">「我学AI第一年，全做错了」· Cover 页</div></div>
+<div class="artboards">
+  <div class="artboard"><div class="artboard-label"><span class="dot a"></span> Stripe · 科技安静</div><div class="artboard-frame"><div class="s-stripe"><p class="tag">AI · Learning</p><h3>我学AI<br>第一年，<br><b>全做错了</b></h3><p class="sub">五个误区，每个都实打实踩过</p><div class="tags"><span>收藏=会了</span><span>对AI没耐心</span><span>只写不发</span></div></div></div></div>
+  <div class="artboard"><div class="artboard-label"><span class="dot b"></span> Apple · 黑白节奏</div><div class="artboard-frame"><div class="s-apple"><svg viewBox="0 0 60 54"><polygon points="30,3 56,48 4,48"/></svg><h3>我学AI<br>第一年，<br><b>全做错了</b></h3><p class="sub">写给正在学AI的你</p></div></div></div>
+  <div class="artboard"><div class="artboard-label"><span class="dot c"></span> Luxury · 暗黑粗字体</div><div class="artboard-frame"><div class="s-luxury"><p class="tag">Learn · Fail · Grow</p><h3>全做错了<em>我学AI第一年</em></h3><div class="line"></div></div></div></div>
+</div>
+
+<!-- ═══════════ TOPIC 2 · TRIANGLE ═══════════ -->
+<div class="topic-header"><h2>三角形 180°</h2><div class="sub">「为什么是180°？」· Cover 页</div></div>
+<div class="artboards">
+  <div class="artboard"><div class="artboard-label"><span class="dot b"></span> Apple · 教育极简</div><div class="artboard-frame"><div class="s-tri-a"><svg viewBox="0 0 80 70"><polygon points="40,4 74,62 6,62"/><text x="40" y="22">A</text><text x="78" y="68">B</text><text x="2" y="68">C</text></svg><h3>三角形，<br>为什么是<b>180°</b>？</h3></div></div></div>
+  <div class="artboard"><div class="artboard-label"><span class="dot" style="background:#8c5c3c"></span> Ink · 暖棕书香</div><div class="artboard-frame"><div class="s-tri-b"><div class="num">180°</div><h3>不是背的。<br><b>是可以看出来的。</b></h3></div></div></div>
+  <div class="artboard"><div class="artboard-label"><span class="dot" style="background:#e8c45a"></span> Chalk · 黑板几何</div><div class="artboard-frame"><div class="s-tri-c"><svg viewBox="0 0 80 70"><polygon points="40,4 74,62 6,62"/></svg><h3>三个角，<br><b>拼成一条直线</b></h3></div></div></div>
+</div>
+
+<!-- ═══════════ TOPIC 3 · SCARF ═══════════ -->
+<div class="topic-header"><h2>丝巾10种搭配</h2><div class="sub">「一条丝巾的十种搭配」· Cover 页</div></div>
+<div class="artboards">
+  <div class="artboard"><div class="artboard-label"><span class="dot" style="background:#b8785a"></span> Silk · 丝绸柔光</div><div class="artboard-frame"><div class="s-scf-a"><div class="line"></div><h3>一条丝巾的<br><em>10</em> 种搭配</h3><p class="tag-text">SILK · STYLE</p></div></div></div>
+  <div class="artboard"><div class="artboard-label"><span class="dot c"></span> Luxury · 暗黑时装</div><div class="artboard-frame"><div class="s-scf-b"><p class="tag">Silk · Style</p><h3>10 Ways<em>一条丝巾的十种搭配</em></h3></div></div></div>
+  <div class="artboard"><div class="artboard-label"><span class="dot" style="background:#a08070"></span> Editorial · 暖调杂志</div><div class="artboard-frame"><div class="s-scf-c"><p class="label">FASHION · LOOKBOOK</p><h3>一条丝巾<br><b>10</b> 种搭配</h3><div class="tag-row"><span>法式结</span><span>手腕绕</span><span>包头巾</span><span>包柄</span></div></div></div></div>
+</div>
+
+</div></body></html>

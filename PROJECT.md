@@ -99,11 +99,17 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 ## Completed (2026-06-10)
 
-- [x] **creator.html MVP 完成** — 登录验证+6入口选择+表单提交+制作状态轮询+文稿列表+成品详情+中日双语+响应式，impeccable shape → frontend-design 实现
+- [x] **creator.html 设计完成** — huashu-design Junior→Full Pass，三平台真实logo，分组底色，左缘识别色，4pt间距+1.25字级，手机横排卡片
+- [x] **成品展示页重设计** — 公众号暗底封面+小红书卡片网格+朋友圈post样式，平台badge
+- [x] **公众号生产管线端到端验证** — writing-fragments→writing-shape→dbs-ai-check→guizang-social-card-skill→wewrite，产出完整文章+封面+排版
+- [x] **baoyu-design skill 安装** — 正确接入设计系统流水线（compile→import→bind→build）
+- [x] **open-design 安装** — 152套 DESIGN.md 设计系统就位
+- [x] **Stripe 设计系统绑定** — 首次正确使用 baoyu 流程：compile→import-design-system→读_ds_prompt→只用var(--*)token 产出5页XHS滚图
+- [x] **Design Canvas 风格预览** — 3话题×3方向并排对比
 - [x] index-v1 → index.html 上线（竖列案例+实图，替换旧卡片网格版）
-- [x] 痛点文字 vw 换行 bug 修复（clamp→固定字号 20px/17px）
-- [x] CLAUDE.md 规则更新：新增 #4 决策变更=立即清理旧产物 / 收工加 Step 0 审计
-- [x] 废弃文件清理：CODEX-TASK.md, DESIGN-RACE-01/02.md, REVIEW-RACE-01.md, IMPECCABLE_TESTPLAN.md
+- [x] 痛点文字 vw 换行 bug 修复（clamp→固定字号）
+- [x] CLAUDE.md 规则更新：Work Principle #3 视觉产出必须走设计流程 / #4 决策清理 / 指挥→更新对应表 / 三端并行协作
+- [x] 废弃文件清理 × 2 轮：CODEX-TASK.md, DESIGN-RACE*, REVIEW-RACE*, IMPECCABLE_TESTPLAN
 
 ## Architecture Notes (2026-06-08) · 四层架构
 

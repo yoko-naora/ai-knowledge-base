@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>Style C · Ink</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.sheet{display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px;background:#d5cfc6}
+.p{width:1080px;height:1440px;overflow:hidden;flex-shrink:0;font-family:'Noto Serif JP',serif;position:relative}
+.lbl{text-align:center;font-size:14px;color:#999;font-family:monospace;margin-top:-36px;margin-bottom:48px}
+
+/* C01 */
+.c01{background:#f5efe4;display:flex;flex-direction:column;justify-content:center;padding:112px 96px}
+.c01 .kicker{font-family:'Noto Sans JP',sans-serif;font-size:18px;font-weight:500;letter-spacing:.18em;color:#8c5c3c;margin-bottom:48px;text-transform:uppercase}
+.c01 h1{font-size:116px;font-weight:600;line-height:1.08;color:#2c1a0e;letter-spacing:.01em}
+.c01 h1 i{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;color:#8c5c3c}
+.c01 .sub{font-family:'Noto Sans JP',sans-serif;font-size:26px;color:#6b5a4e;margin-top:40px;line-height:1.7;max-width:30ch}
+.c01 .ornament{width:48px;height:1px;background:#8c5c3c;margin:48px 0}
+.c01 .tags{display:flex;gap:20px;font-family:'Noto Sans JP',sans-serif;font-size:18px;color:#a08c78;letter-spacing:.06em}
+
+/* C02 */
+.c02{background:#faf7f2;display:flex;flex-direction:column;padding:96px}
+.c02 .issue{font-family:'Noto Sans JP',sans-serif;font-size:16px;color:#a08c78;letter-spacing:.14em;margin-bottom:48px}
+.c02 ol{list-style:none;counter-reset:m;flex:1;display:flex;flex-direction:column;gap:0}
+.c02 ol li{counter-increment:m;display:flex;gap:28px;padding:32px 0;border-bottom:1px solid rgba(44,26,14,.08);align-items:baseline}
+.c02 ol li::before{content:counter(m,decimal-leading-zero);font-size:36px;font-weight:600;color:#8c5c3c;min-width:56px}
+.c02 ol li h3{font-size:30px;font-weight:600;color:#2c1a0e;margin-bottom:4px}
+.c02 ol li p{font-family:'Noto Sans JP',sans-serif;font-size:20px;color:#6b5a4e;line-height:1.5}
+
+/* C03 */
+.c03{background:#2c1a0e;display:flex;align-items:center;justify-content:center;padding:120px 96px}
+.c03 blockquote{text-align:center;color:#f5efe4}
+.c03 blockquote p{font-size:88px;font-weight:600;line-height:1.15}
+.c03 blockquote p em{font-style:normal;color:#c4956a}
+.c03 blockquote footer{font-family:'Noto Sans JP',sans-serif;font-size:20px;color:rgba(245,239,228,.3);margin-top:56px;letter-spacing:.08em}
+
+/* C04 */
+.c04{background:#f5efe4;padding:96px;display:flex;flex-direction:column;justify-content:center}
+.c04 .tag{font-family:'Noto Sans JP',sans-serif;font-size:16px;font-weight:500;letter-spacing:.14em;color:#8c5c3c;margin-bottom:48px}
+.c04 h3{font-size:64px;font-weight:600;color:#2c1a0e;line-height:1.15;margin-bottom:48px}
+.c04 .body{display:flex;gap:48px}
+.c04 .body .col{flex:1}
+.c04 .body p{font-family:'Noto Sans JP',sans-serif;font-size:22px;color:#4a3a2e;line-height:2;margin-bottom:20px}
+.c04 .body p.lead{font-size:28px;color:#2c1a0e;font-weight:500;line-height:1.6}
+
+/* C05 */
+.c05{background:#faf7f2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 96px}
+.c05 h2{font-size:72px;font-weight:600;color:#2c1a0e;line-height:1.2;margin-bottom:32px}
+.c05 h2 span{color:#8c5c3c}
+.c05 .sub{font-family:'Noto Sans JP',sans-serif;font-size:24px;color:#6b5a4e;line-height:1.9;margin-bottom:64px}
+.c05 .fin{font-family:'Noto Sans JP',sans-serif;font-size:18px;color:#a08c78;letter-spacing:.08em}
+</style></head><body>
+<div class="sheet">
+<div class="p c01"><p class="kicker">第一人称 · 经验分享</p><h1>我学AI<br>第一年，<br><i>全做错了</i></h1><p class="sub">五个误区，每个都实打实踩过。写给正在学AI的你。</p><div class="ornament"></div><div class="tags"><span>收藏=会了</span><span>对AI没耐心</span><span>只写不发</span><span>低估AI</span><span>跟AI较劲</span></div></div><div class="lbl">01 · Cover</div>
+<div class="p c02"><p class="issue">THE 5 MISTAKES</p><ol><li><h3>收藏 = 会了</h3><p>存了 200 条提示词，用过的不到 10 条</p></li><li><h3>对 AI 没耐心</h3><p>AI 写的第一稿总是被删掉</p></li><li><h3>只写不发</h3><p>三个月写了十几篇，全在电脑里。总觉得还差一点</p></li><li><h3>以为 AI 只是提效</h3><p>AI 最大的价值不是提速——是让你敢写不会的东西</p></li><li><h3>跟 AI 较劲</h3><p>它是工具。不是导师、不是朋友、不是镜子</p></li></ol></div><div class="lbl">02 · The List</div>
+<div class="p c03"><blockquote><p>不是文章<br><em>没写好。</em></p><p style="margin-top:28px">是我在拖。</p><footer>— 误区三 · 只写不发</footer></blockquote></div><div class="lbl">03 · Statement</div>
+<div class="p c04"><p class="tag">MISTAKE 04</p><h3>AI 真正的价值</h3><div class="body"><div class="col"><p class="lead">一开始算账：AI 一分钟 500 字，我 50 字，效率提升 10 倍。</p><p>但这不是最大的价值。</p></div><div class="col"><p>最大的价值是：AI 让你敢写你本来不敢写的东西。</p><p>上周写了一篇 AI 绘画的内容。我完全不懂 AI 绘画。放以前根本不会碰。现在我让 AI 搭框架、补知识、给例子。我只需要判断。</p></div></div></div><div class="lbl">04 · Deep Dive</div>
+<div class="p c05"><h2>知道，<br>就是<span>改掉</span>的<br>一半。</h2><p class="sub">五个误区的背后是同一个东西：<br>把 AI 当成了考试，而不是工具。</p><p class="fin">用AI看图作图 · 让每个人都能用AI做好内容</p></div><div class="lbl">05 · Closing</div>
+</div></body></html>

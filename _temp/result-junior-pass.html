@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--
+  Junior Pass · 成品展示页 设计方向
+  huashu-design · 2026-06-10
+
+  ASSUMPTIONS:
+  1. 这是"交付时刻"——用户等了几分钟后看到的reward，要有作品感
+  2. 三个平台产出形态完全不同，不能一套模板套三个
+  3. 公众号=文章页感 / 小红书=画廊感 / 朋友圈=社交post感
+  4. 底部文件下载清楚但不抢戏
+
+  DIRECTION:
+  - 顶部：平台badge（小logo+名字）+ 标题 + 返回按钮
+  - 公众号：深色封面卡（像杂志封面）→ 正文排版
+  - 小红书：3:4卡片网格，每张像一页轮播截图
+  - 朋友圈：白色卡片，像微信聊天截图的感觉
+  - 下载区：底部薄分隔，文件列表
+
+  PLACEHOLDERS:
+  - 没有真图，小红书卡片用灰色块+文字模拟
+  - 没有真封面图，公众号封面用深色背景+标题文字
+  - 文件下载链接无实际功能
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成品展示 · Junior Pass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#faf9f6;--ink:#1a1814;--ink-muted:#5a5650;--ink-faint:#8a8580;
+  --gold:#b8925a;--border:rgba(26,24,20,.10);--border-lt:rgba(26,24,20,.06);
+  --serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',sans-serif;
+  --s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-2xl:48px;--s-3xl:64px;--s-4xl:96px;
+  --t-caption:12px;--t-small:14px;--t-body:16px;--t-lead:20px;--t-h3:25px;--t-h2:31px;--t-h1:39px;
+}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:var(--t-body);line-height:1.7;-webkit-font-smoothing:antialiased;
+}
+.wrapper{max-width:800px;margin:0 auto;padding:60px var(--s-xl) 120px}
+.section-label{font-size:var(--t-caption);color:var(--ink-faint);letter-spacing:.12em;margin-bottom:var(--s-2xl);text-transform:uppercase;padding-bottom:var(--s-sm);border-bottom:1px solid var(--border)}
+.section-label strong{color:var(--gold);font-weight:500}
+
+/* ── 通用：顶部header ── */
+.result-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--s-2xl);flex-wrap:wrap;gap:var(--s-md)}
+.result-title-row{display:flex;align-items:center;gap:var(--s-sm);flex-wrap:wrap}
+.result-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border:1px solid;font-size:var(--t-caption);font-weight:500;letter-spacing:.06em}
+.result-badge img{width:18px;height:18px}
+.result-badge.wechat{color:#07C160;border-color:rgba(7,193,96,.25)}
+.result-badge.xhs{color:#FF2442;border-color:rgba(255,36,66,.25)}
+.result-badge.moments{color:var(--gold);border-color:rgba(184,146,90,.25)}
+.result-title{font-family:var(--serif);font-size:var(--t-h2);font-weight:400}
+
+/* ── 公众号 · 文章感 ── */
+.article-view{max-width:65ch}
+.article-cover{
+  position:relative;background:var(--ink);margin-bottom:var(--s-2xl);
+  aspect-ratio:2/1;overflow:hidden;display:flex;align-items:flex-end;
+}
+.article-cover .cover-img{
+  position:absolute;inset:0;background:linear-gradient(135deg,#2a2520 0%,#3a3530 30%,#1a1814 100%);
+  /* placeholder — 真图替换此渐变 */
+}
+.article-cover .cover-text{
+  position:relative;z-index:1;padding:var(--s-2xl);width:100%;
+  background:linear-gradient(transparent,rgba(0,0,0,.7));
+}
+.article-cover h2{font-family:var(--serif);font-size:var(--t-h1);font-weight:400;line-height:1.3;margin-bottom:var(--s-xs);color:#fff}
+.article-cover .byline{font-size:var(--t-caption);color:rgba(255,255,255,.4);letter-spacing:.08em}
+.article-view h3{font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin:var(--s-2xl) 0 var(--s-sm)}
+.article-view p{font-size:var(--t-body);line-height:2;margin-bottom:var(--s-md);color:var(--ink-muted)}
+.article-view p strong{color:var(--ink)}
+
+/* ── 小红书 · 桌面网格 / 手机横滚 ── */
+.xhs-gallery{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-sm);
+  margin-bottom:var(--s-2xl);
+}
+.xhs-card{
+  border:1px solid var(--border-lt);background:#fff;padding:var(--s-lg);
+  aspect-ratio:3/4;display:flex;flex-direction:column;
+}
+.xhs-card .idx{font-size:var(--t-caption);color:var(--ink-faint);margin-bottom:auto}
+.xhs-card .head{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;line-height:1.4;margin-bottom:var(--s-xs)}
+.xhs-card .txt{font-size:var(--t-small);color:var(--ink-muted);line-height:1.8}
+
+@media(max-width:600px){
+  .xhs-gallery{
+    display:flex;gap:var(--s-sm);overflow-x:auto;scroll-snap-type:x mandatory;
+    padding-bottom:var(--s-sm);-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .xhs-gallery::-webkit-scrollbar{display:none}
+  .xhs-gallery .xhs-card{flex:0 0 260px;scroll-snap-align:start}
+  .xhs-scroll-hint{display:block}
+}
+@media(min-width:601px){
+  .xhs-scroll-hint{display:none}
+}
+
+/* ── 朋友圈 · post感 ── */
+.moments-post{
+  max-width:420px;background:#fff;border:1px solid var(--border-lt);padding:var(--s-lg);
+}
+.moments-post .text{font-size:var(--t-body);line-height:2.2;margin-bottom:var(--s-md)}
+
+/* ── 下载区 ── */
+.downloads{margin-top:var(--s-xl);padding-top:var(--s-lg);border-top:1px solid var(--border)}
+.downloads-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:var(--s-sm)}
+.downloads a{display:flex;align-items:center;gap:var(--s-sm);padding:6px 0;font-size:var(--t-small);color:var(--ink);text-decoration:none}
+.downloads a:hover{color:var(--gold)}
+
+/* ── Design Notes ── */
+.note{background:rgba(184,146,90,.06);border-left:3px solid var(--gold);padding:var(--s-md);margin:var(--s-md) 0;font-size:var(--t-caption);color:var(--ink-muted);line-height:1.8}
+.note strong{color:var(--gold-dark);font-weight:500}
+
+@media(max-width:500px){
+  .wrapper{padding:40px var(--s-md) 80px}
+  .xhs-scroll .xhs-card{flex:0 0 240px}
+  .result-title{font-size:var(--t-h3)}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<p class="section-label">Junior Pass · <strong>成品展示</strong> 三种平台样式</p>
+
+<!-- ═══════════ 公众号 ═══════════ -->
+<div class="result-header">
+  <div class="result-title-row">
+    <span class="result-badge wechat"><img src="../assets/platform-icons/wechat.svg" alt="">公众号</span>
+    <h2 class="result-title">用AI做内容获客的3个底层逻辑</h2>
+  </div>
+  <a href="#" style="font-size:var(--t-small);color:var(--ink-muted);text-decoration:none">← 返回列表</a>
+</div>
+
+<div class="note">
+  <strong>设计意图：</strong>公众号=文章页感。封面区 2:1 大图（渐变占位→等真图替换），标题叠加在底部。像杂志的封面故事。正文排版宽松，衬线标题+无衬线正文。
+</div>
+
+<div class="article-view">
+  <div class="article-cover">
+    <div class="cover-img"></div>
+    <div class="cover-text">
+      <h2>用AI做内容获客的3个底层逻辑</h2>
+      <div class="byline">用AI看图作图 · 创作中心</div>
+    </div>
+  </div>
+  <h3>为什么这个问题值得关注</h3>
+  <p>越来越多的个体创业者开始用AI工具做内容。但大多数人的问题是：知道AI能做，但不知道从哪里开始。这篇文章不是讲工具有多好，而是讲一个可执行的流程。</p>
+  <h3>核心方法</h3>
+  <p><strong>1. 先定方向，再选工具。</strong>不要一上来就研究哪个AI好用。先想清楚：你要写给谁看？他们最关心什么？</p>
+  <p><strong>2. 建立你自己的内容流水线。</strong>收集→选题→初稿→修改→配图→发布。每一步都可以用AI加速，但每一步都需要你的判断。</p>
+  <p><strong>3. 持续做，别停下来。</strong>第一个月可能没效果。第三个月开始有咨询。第六个月客户自己找上门。</p>
+</div>
+
+<div class="downloads">
+  <div class="downloads-label">下载文件</div>
+  <a href="#">📄 article.md</a>
+  <a href="#">📄 cover-21x9.png</a>
+  <a href="#">📄 cover-1x1.png</a>
+  <a href="#">📄 article.html</a>
+</div>
+
+<!-- ═══════════ 小红书 ═══════════ -->
+<div style="margin-top:var(--s-4xl)">
+<div class="result-header">
+  <div class="result-title-row">
+    <span class="result-badge xhs"><img src="../assets/platform-icons/xiaohongshu.svg" alt="">小红书</span>
+    <h2 class="result-title">用AI做内容获客的3个底层逻辑</h2>
+  </div>
+  <a href="#" style="font-size:var(--t-small);color:var(--ink-muted);text-decoration:none">← 返回列表</a>
+</div>
+
+<div class="note">
+  <strong>设计意图：</strong>小红书=自适应。桌面3列网格平铺→手机变成横滚+snap吸附。桌面不需要装，手机自然滑。
+</div>
+
+<div class="xhs-gallery">
+  <div class="xhs-card"><div class="idx">Cover</div><div class="head">用AI做内容获客的3个底层逻辑</div><div class="txt">不是什么都写，而是选一个你最能讲的角度</div></div>
+  <div class="xhs-card"><div class="idx">Page 2</div><div class="head">第一步：找到你的内容锚点</div><div class="txt">选一个你最能讲、别人最想听的角度，反复讲透</div></div>
+  <div class="xhs-card"><div class="idx">Page 3</div><div class="head">第二步：建立素材流水线</div><div class="txt">每天收集3个问题→每周产出2篇→每月复盘1次</div></div>
+  <div class="xhs-card"><div class="idx">Page 4</div><div class="head">第三步：一鱼多吃</div><div class="txt">一篇长文→拆成5条朋友圈→改成小红书→录成短视频</div></div>
+  <div class="xhs-card"><div class="idx">Page 5</div><div class="head">第四步：让工具替你干</div><div class="txt">AI写初稿→你改关键段落→AI配图→你调细节</div></div>
+  <div class="xhs-card"><div class="idx">Page 6</div><div class="head">第五步：持续迭代</div><div class="txt">第一版不发。放一夜，第二天再看，改三处</div></div>
+  <div class="xhs-card"><div class="idx">Page 7</div><div class="head">开始你的第一篇</div><div class="txt">用AI看图作图，让每个人都能用AI做好内容</div></div>
+</div>
+<p class="xhs-scroll-hint">← 左右滑动查看 →</p>
+
+<div class="downloads">
+  <div class="downloads-label">下载文件</div>
+  <a href="#">📄 01-cover.png</a>
+  <a href="#">📄 02-step1.png ~ 07-cta.png</a>
+  <a href="#">📄 caption.md</a>
+</div>
+</div>
+
+<!-- ═══════════ 朋友圈 ═══════════ -->
+<div style="margin-top:var(--s-4xl)">
+<div class="result-header">
+  <div class="result-title-row">
+    <span class="result-badge moments"><img src="../assets/platform-icons/moments.svg" alt="">朋友圈</span>
+    <h2 class="result-title">创业三年悟出的一个道理</h2>
+  </div>
+  <a href="#" style="font-size:var(--t-small);color:var(--ink-muted);text-decoration:none">← 返回列表</a>
+</div>
+
+<div class="note">
+  <strong>设计意图：</strong>朋友圈=简洁post感。白色卡片，短文案，行距宽口语化。不加模拟头像——保持干净。
+</div>
+
+<div class="moments-post">
+  <div class="text">做了三年，最深的体会不是技巧，是节奏。<br><br>不用天天发。一周两篇好的，比天天水贴管用。<br><br>关键是每次发完看数据：谁点了、谁问了。下次写给那个人看。</div>
+</div>
+
+<div class="downloads">
+  <div class="downloads-label">下载文件</div>
+  <a href="#">📄 image-01.png</a>
+  <a href="#">📄 image-02.png</a>
+  <a href="#">📄 image-03.png</a>
+</div>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>丝巾10种搭配 · 小红书</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@300;400;500&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+.sheet{display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px;background:#d4c8bc}
+.p{width:1080px;height:1440px;overflow:hidden;flex-shrink:0;font-family:'Noto Sans JP',sans-serif;position:relative}
+.lbl{text-align:center;font-size:14px;color:#999;font-family:monospace;margin-top:-36px;margin-bottom:48px}
+
+/* ═══════════ SHARED MOTIF ═══════════ */
+.flow{position:absolute;inset:0;pointer-events:none}
+.flow svg{width:100%;height:100%}
+.flow path{fill:none;stroke-width:1;opacity:.12}
+
+/* ═══════════ 01 · COVER ═══════════ */
+.p01{background:linear-gradient(165deg,#f5ede4 0%,#efe2d4 50%,#e8d5c4 100%);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 96px}
+.p01 .flow path{stroke:#b8785a}
+.p01 .ornament{width:60px;height:2px;background:#b8785a;margin-bottom:56px}
+.p01 .tag{font-size:20px;font-weight:400;letter-spacing:.2em;color:#a07050;margin-bottom:40px;text-transform:uppercase}
+.p01 h1{font-family:'Noto Serif JP',serif;font-size:88px;font-weight:600;line-height:1.15;color:#3a2020;letter-spacing:.02em}
+.p01 h1 em{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;color:#b8785a}
+.p01 .sub{font-size:26px;color:#8c6a5a;margin-top:36px;line-height:1.7}
+
+/* ═══════════ 02 · STYLES 1-5 ═══════════ */
+.p02{background:#fdf9f5;display:flex;flex-direction:column;padding:96px 80px}
+.p02 .idx{font-size:16px;font-weight:500;letter-spacing:.14em;color:#c0a090;margin-bottom:32px}
+.p02 h2{font-family:'Noto Serif JP',serif;font-size:48px;font-weight:600;color:#3a2020;margin-bottom:48px}
+.p02 .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;flex:1}
+.p02 .item{display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid rgba(184,120,90,.12)}
+.p02 .item .n{font-family:'Playfair Display',serif;font-size:36px;color:#b8785a;min-width:48px;text-align:center}
+.p02 .item .name{font-size:26px;font-weight:500;color:#3a2020;margin-bottom:2px}
+.p02 .item .desc{font-size:18px;color:#a08070;line-height:1.4}
+
+/* ═══════════ 03 · STYLES 6-10 ═══════════ */
+.p03{background:#fdf9f5;display:flex;flex-direction:column;padding:96px 80px}
+.p03 .idx{font-size:16px;font-weight:500;letter-spacing:.14em;color:#c0a090;margin-bottom:48px}
+.p03 .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 40px;flex:1}
+.p03 .item{display:flex;align-items:center;gap:20px;padding:20px 0;border-bottom:1px solid rgba(184,120,90,.12)}
+.p03 .item .n{font-family:'Playfair Display',serif;font-size:36px;color:#b8785a;min-width:48px;text-align:center}
+.p03 .item .name{font-size:26px;font-weight:500;color:#3a2020;margin-bottom:2px}
+.p03 .item .desc{font-size:18px;color:#a08070;line-height:1.4}
+
+/* ═══════════ 04 · PHILOSOPHY ═══════════ */
+.p04{background:#3a2020;color:#f5ede4;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 96px}
+.p04 .flow path{stroke:#b8785a}
+.p04 blockquote p{font-family:'Noto Serif JP',serif;font-size:56px;font-weight:400;line-height:1.35;letter-spacing:.02em}
+.p04 blockquote p i{font-family:'Playfair Display',serif;font-style:italic;color:#c89578}
+.p04 blockquote footer{font-size:22px;color:rgba(245,237,228,.3);margin-top:56px;letter-spacing:.08em}
+
+/* ═══════════ 05 · THE RULE ═══════════ */
+.p05{background:#fdf9f5;display:flex;align-items:center;padding:96px 80px;gap:64px}
+.p05 .left-num{font-family:'Playfair Display',serif;font-size:180px;color:#b8785a;opacity:.2;line-height:1;min-width:140px;text-align:center}
+.p05 .right-text{flex:1}
+.p05 .right-text .label{font-size:16px;font-weight:500;letter-spacing:.14em;color:#c0a090;margin-bottom:16px}
+.p05 .right-text h3{font-family:'Noto Serif JP',serif;font-size:44px;font-weight:600;color:#3a2020;line-height:1.2;margin-bottom:32px}
+.p05 .right-text p{font-size:22px;color:#8c6a5a;line-height:2;margin-bottom:16px}
+
+/* ═══════════ 06 · CLOSING ═══════════ */
+.p06{background:linear-gradient(165deg,#efe2d4,#e8d5c4);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 96px}
+.p06 .flow path{stroke:#b8785a}
+.p06 .ornament{width:48px;height:2px;background:#b8785a;margin-bottom:48px}
+.p06 h2{font-family:'Noto Serif JP',serif;font-size:64px;font-weight:600;color:#3a2020;line-height:1.2;margin-bottom:24px}
+.p06 .sub{font-size:24px;color:#8c6a5a;line-height:1.9;margin-bottom:56px}
+.p06 .foot{font-size:18px;color:#c0a090;letter-spacing:.08em}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<!-- 01 · COVER -->
+<div class="p p01">
+  <div class="flow"><svg viewBox="0 0 1080 1440"><path d="M-100,400 C150,300 300,500 500,350 S800,450 1080,300"/><path d="M-100,600 C200,500 400,700 600,550 S900,650 1180,500"/><path d="M-50,800 C100,700 350,900 550,750 S850,850 1130,700" opacity=".06"/></svg></div>
+  <div class="ornament"></div>
+  <p class="tag">Silk · Style</p>
+  <h1>一条丝巾的<br><em>10</em> 种搭配</h1>
+  <p class="sub">不换衣服，只换一种系法。<br>一条丝巾就够了。</p>
+</div>
+<div class="lbl">01 · Cover</div>
+
+<!-- 02 · STYLES 1-5 -->
+<div class="p p02">
+  <p class="idx">LOOK 01–05</p>
+  <h2>基础篇：人人都能系</h2>
+  <div class="grid">
+    <div class="item"><span class="n">01</span><div><div class="name">颈间法式结</div><div class="desc">对折绕颈，松松打一个结</div></div></div>
+    <div class="item"><span class="n">02</span><div><div class="name">手腕绕圈</div><div class="desc">细长条绕两圈，像一只手镯</div></div></div>
+    <div class="item"><span class="n">03</span><div><div class="name">包头巾系法</div><div class="desc">三角对折，脑后打结。度假感</div></div></div>
+    <div class="item"><span class="n">04</span><div><div class="name">包柄缠绕</div><div class="desc">绕在包带上，旧包变新包</div></div></div>
+    <div class="item"><span class="n">05</span><div><div class="name">腰带式</div><div class="desc">穿过裤耳，比皮带温柔十倍</div></div></div>
+  </div>
+</div>
+<div class="lbl">02 · Basics 1-5</div>
+
+<!-- 03 · STYLES 6-10 -->
+<div class="p p03">
+  <p class="idx">LOOK 06–10</p>
+  <div class="grid">
+    <div class="item"><span class="n">06</span><div><div class="name">披肩式</div><div class="desc">大方巾展开，搭在肩上。空调房必备</div></div></div>
+    <div class="item"><span class="n">07</span><div><div class="name">低马尾绑带</div><div class="desc">细长条穿过发圈。背影杀</div></div></div>
+    <div class="item"><span class="n">08</span><div><div class="name">领口内搭</div><div class="desc">塞进衬衫领子里。只露一角</div></div></div>
+    <div class="item"><span class="n">09</span><div><div class="name">帽檐装饰</div><div class="desc">绕在草帽上。立刻像刚从南法回来</div></div></div>
+    <div class="item"><span class="n">10</span><div><div class="name">挂墙当画</div><div class="desc">好看的丝巾本身就是艺术品。裱起来</div></div></div>
+  </div>
+</div>
+<div class="lbl">03 · Styles 6-10</div>
+
+<!-- 04 · PHILOSOPHY -->
+<div class="p p04">
+  <div class="flow"><svg viewBox="0 0 1080 1440"><path d="M200,-50 C350,200 150,400 300,600 S500,900 400,1490"/><path d="M800,-50 C650,200 850,400 700,600 S500,900 600,1490" opacity=".06"/></svg></div>
+  <blockquote>
+    <p>丝巾是成年女性<br>最便宜的奢侈品。<br><i>不打折的那种。</i></p>
+    <footer>— 搭配哲学</footer>
+  </blockquote>
+</div>
+<div class="lbl">04 · Philosophy</div>
+
+<!-- 05 · THE RULE -->
+<div class="p p05">
+  <div class="left-num">1</div>
+  <div class="right-text">
+    <p class="label">搭配铁律</p>
+    <h3>全身只有一个<br>重点就够了</h3>
+    <p>丝巾已经很抢眼了。衣服、包包、鞋子都让它当主角。你只需要一件好丝巾，剩下的做减法。</p>
+  </div>
+</div>
+<div class="lbl">05 · The Rule</div>
+
+<!-- 06 · CLOSING -->
+<div class="p p06">
+  <div class="flow"><svg viewBox="0 0 1080 1440"><path d="M-50,300 C150,250 300,400 500,300 S800,400 1130,300"/></svg></div>
+  <div class="ornament"></div>
+  <h2>一条丝巾，<br>十种人生。</h2>
+  <p class="sub">今天你系哪一种？</p>
+  <p class="foot">用AI看图作图 · 让每个人都能用AI做好内容</p>
+</div>
+<div class="lbl">06 · Closing</div>
+
+</div></body></html>

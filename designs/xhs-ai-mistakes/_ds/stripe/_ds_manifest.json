@@ -1,0 +1,351 @@
+{
+  "namespace": "Stripe_2bed20",
+  "components": [],
+  "startingPoints": [],
+  "cards": [],
+  "globalCssPaths": [
+    "tokens.css"
+  ],
+  "tokens": [
+    {
+      "name": "--bg",
+      "value": "#ffffff",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--surface",
+      "value": "#ffffff",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--surface-warm",
+      "value": "#f6f9fc",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--fg",
+      "value": "#061b31",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--fg-2",
+      "value": "#273951",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--muted",
+      "value": "#64748d",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--meta",
+      "value": "var(--muted)",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--border",
+      "value": "#e5edf5",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--border-soft",
+      "value": "var(--border)",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--accent",
+      "value": "#533afd",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--accent-on",
+      "value": "#ffffff",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--accent-hover",
+      "value": "#4434d4",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--accent-active",
+      "value": "#2e2b8c",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--success",
+      "value": "#15be53",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--warn",
+      "value": "#9b6829",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--danger",
+      "value": "#ea2261",
+      "kind": "color",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--font-display",
+      "value": "\"sohne-var\", \"Söhne\", \"Sohne\",\r\n    \"SF Pro Display\", -apple-system, BlinkMacSystemFont,\r\n    system-ui, \"Helvetica Neue\", Arial, sans-serif",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--font-body",
+      "value": "\"sohne-var\", \"Söhne\", \"Sohne\",\r\n    \"SF Pro Display\", -apple-system, BlinkMacSystemFont,\r\n    system-ui, \"Helvetica Neue\", Arial, sans-serif",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--font-mono",
+      "value": "\"SourceCodePro\", \"Source Code Pro\",\r\n    ui-monospace, \"SF Mono\", \"JetBrains Mono\",\r\n    Menlo, Monaco, Consolas, monospace",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-xs",
+      "value": "12px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-sm",
+      "value": "14px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-base",
+      "value": "16px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-lg",
+      "value": "18px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-xl",
+      "value": "22px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-2xl",
+      "value": "32px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-3xl",
+      "value": "48px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--text-4xl",
+      "value": "56px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--leading-body",
+      "value": "1.40",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--leading-tight",
+      "value": "1.10",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--tracking-display",
+      "value": "-0.02em",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-1",
+      "value": "4px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-2",
+      "value": "8px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-3",
+      "value": "12px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-4",
+      "value": "16px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-5",
+      "value": "20px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-6",
+      "value": "24px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-8",
+      "value": "32px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--space-12",
+      "value": "48px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--section-y-desktop",
+      "value": "96px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--section-y-tablet",
+      "value": "64px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--section-y-phone",
+      "value": "40px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--radius-sm",
+      "value": "4px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--radius-md",
+      "value": "6px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--radius-lg",
+      "value": "8px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--radius-pill",
+      "value": "9999px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--elev-flat",
+      "value": "none",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--elev-ring",
+      "value": "0 0 0 1px var(--border)",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--elev-raised",
+      "value": "rgba(50, 50, 93, 0.25)  0px 30px 45px -30px,\r\n    rgba(0,   0,  0, 0.10)  0px 18px 36px -18px",
+      "kind": "shadow",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--focus-ring",
+      "value": "0 0 0 2px var(--accent),\r\n    0 0 0 5px color-mix(in oklab, var(--accent), transparent 75%)",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--motion-fast",
+      "value": "150ms",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--motion-base",
+      "value": "200ms",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--ease-standard",
+      "value": "cubic-bezier(0.2, 0, 0, 1)",
+      "kind": "other",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--container-max",
+      "value": "1080px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--container-gutter-desktop",
+      "value": "32px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--container-gutter-tablet",
+      "value": "24px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    },
+    {
+      "name": "--container-gutter-phone",
+      "value": "16px",
+      "kind": "spacing",
+      "definedIn": "tokens.css"
+    }
+  ],
+  "themes": [],
+  "fonts": [],
+  "brandFonts": [],
+  "source": "spa"
+}

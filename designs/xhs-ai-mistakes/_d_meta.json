@@ -1,0 +1,15 @@
+{
+  "type": "design",
+  "designSystems": [
+    {
+      "name": "Stripe",
+      "slug": "stripe",
+      "namespace": "Stripe_2bed20",
+      "dsFolder": "_ds/stripe",
+      "sourcePath": "../.claude/skills/open-design/design-systems/stripe"
+    }
+  ],
+  "primaryDesignSystem": "stripe",
+  "createdAt": "2026-06-10T05:20:21.315Z",
+  "updatedAt": "2026-06-10T05:20:21.315Z"
+}
