@@ -128,6 +128,40 @@ main{flex:1;max-width:920px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .btn-submit:hover{background:var(--gold-dark)}
 .btn-submit:disabled{background:var(--ink-faint);cursor:not-allowed}
 
+/* ── Fragments Step ── */
+.fragments-step{padding:var(--s-2xl) 0;border-top:1px solid var(--border)}
+.fragments-step.hidden{display:none}
+.fragments-header{margin-bottom:var(--s-xl)}
+.fragments-progress{font-size:var(--t-caption);color:var(--ink-faint);letter-spacing:.08em;margin-bottom:var(--s-sm)}
+.fragments-question{font-family:var(--serif);font-size:var(--t-lead);font-weight:400;color:var(--ink);line-height:1.6;margin-bottom:var(--s-lg)}
+.fragments-question .q-num{color:var(--gold);margin-right:var(--s-xs)}
+.fragments-answer{width:100%;min-height:120px;padding:var(--s-md);border:1px solid var(--border);background:#fff;font-family:var(--sans);font-size:var(--t-body);line-height:1.8;outline:none;resize:vertical;transition:border-color .2s;margin-bottom:var(--s-md)}
+.fragments-answer:focus{border-color:var(--gold)}
+.fragments-answer::placeholder{color:var(--ink-faint)}
+.fragments-actions{display:flex;gap:var(--s-sm);flex-wrap:wrap;align-items:center}
+.btn-next{padding:12px var(--s-lg);background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-small);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s}
+.btn-next:hover{background:#333}
+.btn-skip{padding:12px var(--s-lg);background:none;border:1px solid var(--border);font-family:var(--sans);font-size:var(--t-small);color:var(--ink-muted);cursor:pointer;transition:all .2s}
+.btn-skip:hover{border-color:var(--ink-muted);color:var(--ink)}
+.btn-finish{padding:12px var(--s-lg);background:var(--gold);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-small);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s;margin-left:auto}
+.btn-finish:hover{background:var(--gold-dark)}
+.fragments-collected{margin-top:var(--s-xl);padding-top:var(--s-lg);border-top:1px solid var(--border-lt)}
+.fragments-collected-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.08em;color:var(--ink-faint);margin-bottom:var(--s-sm)}
+.fragment-item{padding:var(--s-sm) 0;border-bottom:1px solid var(--border-lt)}
+.fragment-q{font-size:var(--t-small);color:var(--ink-muted);margin-bottom:2px}
+.fragment-a{font-size:var(--t-body);color:var(--ink);line-height:1.7}
+.fragment-empty{font-size:var(--t-small);color:var(--ink-faint);font-style:italic}
+
+/* ── Fragments Result ── */
+.fragments-result{max-width:65ch}
+.fragments-result h2{font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin:var(--s-2xl) 0 var(--s-md)}
+.fragments-result .topic-line{font-family:var(--serif);font-size:var(--t-h2);font-weight:400;margin-bottom:var(--s-2xl);padding-bottom:var(--s-lg);border-bottom:1px solid var(--border)}
+.fragments-result .qa-block{margin-bottom:var(--s-lg)}
+.fragments-result .qa-q{font-size:var(--t-small);color:var(--ink-muted);margin-bottom:2px}
+.fragments-result .qa-a{font-size:var(--t-body);line-height:2}
+.fragments-result .btn-copy-all{padding:12px var(--s-xl);background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-small);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s;margin-top:var(--s-xl)}
+.fragments-result .btn-copy-all:hover{background:#333}
+
 /* ── Status ── */
 .status-wrap{padding:var(--s-4xl) 0;text-align:center}
 .status-wrap.hidden{display:none}
@@ -374,6 +408,25 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <button class="btn-cancel" onclick="cancelTask()"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
     </div>
 
+    <!-- Fragments Step -->
+    <div class="fragments-step hidden" id="fragmentsStep">
+      <div class="fragments-header">
+        <p class="fragments-progress" id="fragProgress"><span class="lang-content cn">素材收集</span><span class="lang-content jp">素材収集</span> <span id="fragNum">1/5</span></p>
+        <p class="fragments-question" id="fragQuestion"></p>
+      </div>
+      <textarea class="fragments-answer" id="fragAnswer" placeholder="写下你的想法..."></textarea>
+      <div class="fragments-actions">
+        <button class="btn-next" id="btnNext" onclick="nextFragment()"><span class="lang-content cn">下一问</span><span class="lang-content jp">次へ</span></button>
+        <button class="btn-skip" onclick="skipFragment()"><span class="lang-content cn">跳过</span><span class="lang-content jp">スキップ</span></button>
+        <button class="btn-finish" onclick="finishFragments()"><span class="lang-content cn">完成收集</span><span class="lang-content jp">完了</span></button>
+        <button class="btn-cancel" onclick="cancelTask()" style="margin-left:auto"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
+      </div>
+      <div class="fragments-collected" id="fragCollected">
+        <p class="fragments-collected-label"><span class="lang-content cn">已收集</span><span class="lang-content jp">収集済み</span> (<span id="fragCount">0</span>)</p>
+        <div id="fragList"></div>
+      </div>
+    </div>
+
     <!-- Doc List -->
     <div class="doc-list" id="docList">
       <div class="doc-empty" id="docEmpty">
@@ -526,59 +579,202 @@ function updateInputHint() {
     : (isJP ? '参考にしたい記事のURLを貼り付けてください' : '粘贴你想参考的文章 URL');
 }
 
+// ── Question Banks ──
+var questionBanks = {
+  wechat: {
+    scratch: [
+      {q: '为什么选这个话题？它跟你有什么关系？', qJP: 'なぜこのトピックを選んだのですか？あなたとどう関係していますか？'},
+      {q: '读者看完这篇文章，最想获得什么？（一个核心收获）', qJP: '読者がこの記事を読んで一番得たいものは何ですか？'},
+      {q: '关于这个话题，你有什么独特的看法或经历？', qJP: 'このトピックについて、あなた独自の視点や経験はありますか？'},
+      {q: '有没有具体的案例、故事或数据可以分享？', qJP: '具体的な事例やストーリー、データはありますか？'},
+      {q: '如果有人不同意你的观点，他们会说什么？你怎么回应？', qJP: '反対意見があるとしたら、どんなもので、どう答えますか？'}
+    ],
+    ref: [
+      {q: '参考文章最打动你的点是什么？', qJP: '参考記事で一番心に響いた点は何ですか？'},
+      {q: '你的版本和原文最大的不同在哪里？', qJP: 'あなたのバージョンと原文の最大の違いは？'},
+      {q: '你的读者和原文读者有什么不同？', qJP: 'あなたの読者と原文の読者はどう違いますか？'},
+      {q: '你在这个话题上有什么原文没提到的角度？', qJP: '原文にない、あなたならではの視点は？'},
+      {q: '你想保留原文的哪些特点？（结构/语气/节奏）', qJP: '原文のどんな特徴を残したいですか？（構成/語調/リズム）'}
+    ]
+  },
+  xhs: {
+    scratch: [
+      {q: '如果只能用一句话说出核心观点，是什么？（16字以内）', qJP: '一言で核心を言うと？（16文字以内）'},
+      {q: '列出3-5个关键要点，每个一句话', qJP: 'キーポイントを3-5つ、各1文で'},
+      {q: '你自己在这个话题上的真实经历是什么？', qJP: 'このトピックでのあなたの実体験は？'},
+      {q: '读者在这个话题上最容易踩的坑是什么？', qJP: '読者がこのトピックでハマりやすい落とし穴は？'},
+      {q: '看完你的内容，你希望读者做什么？', qJP: 'あなたのコンテンツを見た後、読者に何をしてほしい？'}
+    ],
+    ref: [
+      {q: '参考内容最吸引你的是什么？（观点/视觉/结构）', qJP: '参考コンテンツの一番の魅力は？（内容/ビジュアル/構成）'},
+      {q: '你想保留原文的哪些视觉特点？', qJP: '原文のどんなビジュアル特徴を残したい？'},
+      {q: '你的版本核心观点是什么？（一句话）', qJP: 'あなたのバージョンの核心は？（一言で）'},
+      {q: '你的受众和原文受众有什么不同？', qJP: 'あなたのオーディエンスと原文の違いは？'},
+      {q: '列出3-5个你要讲的关键点', qJP: '伝えたいキーポイントを3-5つ挙げて'}
+    ]
+  },
+  moments: {
+    scratch: [
+      {q: '今天发生了什么，让你想说这个话题？', qJP: '今日、何があってこの話題を話したくなった？'},
+      {q: '用一句话说出你最真实的感受', qJP: '一番リアルな気持ちを一言で'},
+      {q: '你希望朋友看完后有什么反应？', qJP: '友達が見たらどう反応してほしい？'},
+      {q: '有没有一个具体的瞬间或画面可以描述？', qJP: '具体的な瞬間やイメージを描写できる？'}
+    ],
+    ref: [
+      {q: '原文最触动你的一句话是什么？', qJP: '原文で一番響いた一言は？'},
+      {q: '用你自己的话、你自己的语气重说一遍这个观点', qJP: '自分の言葉、自分の語調でこのポイントを言い直して'},
+      {q: '你的朋友会怎么接这句话？', qJP: 'あなたの友達なら、この言葉にどう返す？'},
+      {q: '有什么你自己的小故事可以和这个观点配？', qJP: 'このポイントに合う、あなた自身の小さなエピソードは？'}
+    ]
+  }
+};
+
+function getQuestions(platform, mode) {
+  var bank = questionBanks[platform] || questionBanks['wechat'];
+  return bank[mode] || bank['scratch'];
+}
+
+// ── Fragments State ──
+var fragState = { questions: [], currentIdx: 0, collected: [], taskId: null };
+
+function showFragmentsStep(taskId, platform, mode) {
+  fragState.questions = getQuestions(platform, mode);
+  fragState.currentIdx = 0;
+  fragState.collected = [];
+  fragState.taskId = taskId;
+  renderFragmentsList();
+  showCurrentQuestion();
+  document.getElementById('fragmentsStep').classList.remove('hidden');
+}
+
+function showCurrentQuestion() {
+  var idx = fragState.currentIdx;
+  var qs = fragState.questions;
+  var isJP = document.body.classList.contains('show-jp');
+  if (idx >= qs.length) {
+    document.getElementById('fragQuestion').textContent = isJP ? '質問は以上です。「完了」を押して素材を保存してください。' : '问题问完了。点「完成收集」保存素材。';
+    document.getElementById('fragAnswer').style.display = 'none';
+    document.getElementById('btnNext').style.display = 'none';
+    document.getElementById('fragNum').textContent = qs.length + '/' + qs.length;
+    return;
+  }
+  document.getElementById('fragAnswer').style.display = '';
+  document.getElementById('btnNext').style.display = '';
+  document.getElementById('fragNum').textContent = (idx + 1) + '/' + qs.length;
+  document.getElementById('fragQuestion').innerHTML = '<span class="q-num">' + (idx + 1) + '.</span>' + (isJP ? (qs[idx].qJP || qs[idx].q) : qs[idx].q);
+  document.getElementById('fragAnswer').value = '';
+  document.getElementById('fragAnswer').focus();
+}
+
+function nextFragment() {
+  var answer = document.getElementById('fragAnswer').value.trim();
+  var idx = fragState.currentIdx;
+  var qs = fragState.questions;
+  if (idx < qs.length && answer) {
+    fragState.collected.push({ q: qs[idx].q, qJP: qs[idx].qJP, a: answer });
+  }
+  fragState.currentIdx++;
+  renderFragmentsList();
+  showCurrentQuestion();
+}
+
+function skipFragment() {
+  fragState.currentIdx++;
+  renderFragmentsList();
+  showCurrentQuestion();
+}
+
+function renderFragmentsList() {
+  var list = document.getElementById('fragList');
+  var isJP = document.body.classList.contains('show-jp');
+  document.getElementById('fragCount').textContent = fragState.collected.length;
+  if (fragState.collected.length === 0) {
+    list.innerHTML = '<p class="fragment-empty">' + (isJP ? 'まだ素材がありません。上の質問に答えてください。' : '还没有素材。回答上面的问题开始收集。') + '</p>';
+    return;
+  }
+  list.innerHTML = fragState.collected.map(function(item, i) {
+    return '<div class="fragment-item"><div class="fragment-q">' + (i + 1) + '. ' + (isJP ? (item.qJP || item.q) : item.q) + '</div><div class="fragment-a">' + item.a + '</div></div>';
+  }).join('');
+}
+
 function submitTask() {
   var topic = document.getElementById('topicInput').value.trim();
   if (!state.selectedPlatform || !state.selectedMode || !topic) return;
   var style = document.getElementById('styleSelect').value;
   var taskId = 'task-' + Date.now();
   var pn = {wechat:'公众号',moments:'朋友圈',xhs:'小红书'};
-  var task = { id: taskId, platform: state.selectedPlatform, mode: state.selectedMode, topic: topic, style: style, status: 'working', createdAt: new Date().toISOString(), platformLabel: pn[state.selectedPlatform] || state.selectedPlatform };
+  var task = { id: taskId, platform: state.selectedPlatform, mode: state.selectedMode, topic: topic, style: style, status: 'collecting', createdAt: new Date().toISOString(), platformLabel: pn[state.selectedPlatform] || state.selectedPlatform };
   var tasks = getTasks(); tasks.unshift(task); saveTasks(tasks);
-  state.currentTaskId = taskId; state._statusStart = Date.now();
-
+  state.currentTaskId = taskId;
   document.getElementById('entrySection').classList.add('hidden');
   document.getElementById('inputArea').classList.add('hidden');
+  document.getElementById('statusWrap').classList.add('hidden');
   document.getElementById('resultWrap').classList.add('hidden');
-  document.getElementById('statusWrap').classList.remove('hidden');
-  updateStatusTime();
-  state.pollTimer = setInterval(function() { checkTaskStatus(taskId); updateStatusTime(); }, 3000);
-  var delay = 5000 + Math.random() * 10000;
-  setTimeout(function() { completeTask(taskId); }, delay);
-}
-
-function checkTaskStatus(taskId) {
-  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === taskId; });
-  if (task && task.status === 'done') { clearInterval(state.pollTimer); state.pollTimer = null; showResult(taskId); }
-}
-
-function completeTask(taskId) {
-  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === taskId; });
-  if (task) { task.status = 'done'; task.completedAt = new Date().toISOString(); task.result = generateMockResult(task); saveTasks(tasks); }
+  document.getElementById('docList').classList.add('hidden');
+  showFragmentsStep(taskId, state.selectedPlatform, state.selectedMode);
 }
 
 function cancelTask() {
-  if (state.pollTimer) { clearInterval(state.pollTimer); state.pollTimer = null; }
   var tasks = getTasks(), task = tasks.find(function(t) { return t.id === state.currentTaskId; });
   if (task) { task.status = 'cancelled'; saveTasks(tasks); }
-  document.getElementById('statusWrap').classList.add('hidden');
+  document.getElementById('fragmentsStep').classList.add('hidden');
   document.getElementById('btnNew').disabled = false;
+  state.currentTaskId = null;
   renderDocList(); document.getElementById('docList').classList.remove('hidden');
+}
+
+function finishFragments() {
+  var answer = document.getElementById('fragAnswer').value.trim();
+  var idx = fragState.currentIdx;
+  var qs = fragState.questions;
+  if (idx < qs.length && answer) {
+    fragState.collected.push({ q: qs[idx].q, qJP: qs[idx].qJP, a: answer });
+  }
+  document.getElementById('fragmentsStep').classList.add('hidden');
+  var tasks = getTasks();
+  var task = tasks.find(function(t) { return t.id === fragState.taskId; });
+  if (task) {
+    task.status = 'done';
+    task.completedAt = new Date().toISOString();
+    task.fragments = fragState.collected.slice();
+    saveTasks(tasks);
+  }
+  state.currentTaskId = null;
+  document.getElementById('btnNew').disabled = false;
+  showResult(fragState.taskId);
 }
 
 function showResult(taskId) {
   var tasks = getTasks(), task = tasks.find(function(t) { return t.id === taskId; });
-  if (!task || !task.result) return;
+  if (!task) return;
   state.viewingTaskId = taskId;
   document.getElementById('statusWrap').classList.add('hidden');
   document.getElementById('docList').classList.add('hidden');
   document.getElementById('resultWrap').classList.remove('hidden');
   document.getElementById('resultTitle').textContent = task.topic;
 
-  var isJP = document.body.classList.contains('show-jp'), r = task.result, html = '';
+  var isJP = document.body.classList.contains('show-jp');
   var icons = {wechat:'assets/platform-icons/wechat.svg', xhs:'assets/platform-icons/xiaohongshu.svg', moments:'assets/platform-icons/moments.svg'};
   var pNames = {wechat: (isJP?'公众号':'公众号'), xhs: (isJP?'小紅書':'小红书'), moments: (isJP?'朋友圈':'朋友圈')};
   var badge = document.getElementById('resultBadge');
   badge.className = 'result-badge ' + task.platform;
+  badge.innerHTML = '<img src="' + icons[task.platform] + '" alt="">' + pNames[task.platform];
+
+  // Show fragments result if available
+  if (task.fragments && task.fragments.length > 0) {
+    var html = '<div class="fragments-result"><div class="topic-line">' + task.topic + '</div>';
+    task.fragments.forEach(function(f, i) {
+      html += '<div class="qa-block"><div class="qa-q">' + (i + 1) + '. ' + (isJP ? (f.qJP || f.q) : f.q) + '</div><div class="qa-a">' + f.a + '</div></div>';
+    });
+    html += '<button class="btn-copy-all" onclick="copyFragments()">' + (isJP ? '素材をコピー' : '复制全部素材') + '</button></div>';
+    document.getElementById('resultContent').innerHTML = html;
+    document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? '次のステップ' : '下一步') + '</p><p style="font-size:var(--t-small);color:var(--ink-muted)">' + (isJP ? 'この素材をコピーして Claude / Codex に渡し、writing-shape で文章化してください。' : '复制这些素材，交给 Claude 或 Codex，用 writing-shape 写成文章。') + '</p>';
+    return;
+  }
+
+  // Legacy: mock result
+  if (!task.result) return;
+  var r = task.result, html = '';
   badge.innerHTML = '<img src="' + icons[task.platform] + '" alt="">' + pNames[task.platform];
 
   if (task.platform === 'xhs') {
@@ -672,6 +868,20 @@ function renderDocList() {
 }
 
 function deleteDoc(taskId) { saveTasks(getTasks().filter(function(t) { return t.id !== taskId; })); renderDocList(); }
+
+function copyFragments() {
+  var tasks = getTasks(), task = tasks.find(function(t) { return t.id === state.viewingTaskId; });
+  if (!task || !task.fragments) return;
+  var isJP = document.body.classList.contains('show-jp');
+  var text = task.topic + '\n\n';
+  task.fragments.forEach(function(f, i) {
+    text += 'Q' + (i + 1) + ': ' + (isJP ? (f.qJP || f.q) : f.q) + '\n';
+    text += 'A' + (i + 1) + ': ' + f.a + '\n\n';
+  });
+  navigator.clipboard.writeText(text).then(function() {
+    alert(isJP ? 'コピーしました！' : '已复制！');
+  });
+}
 
 document.addEventListener('langchange', function() {
   updateInputHint(); updateDocTitle(); renderDocList();
