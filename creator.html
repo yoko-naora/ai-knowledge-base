@@ -180,15 +180,18 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .cover-option.selected{border-color:var(--gold);box-shadow:0 4px 20px rgba(184,146,90,.2)}
 .cover-option.selected::after{content:'✓';position:absolute;top:8px;right:12px;font-size:14px;color:var(--gold);font-weight:700}
 .cover-preview{aspect-ratio:21/9;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--s-lg);text-align:center;position:relative;overflow:hidden}
-.cover-preview.editorial{background:var(--ink);color:rgba(250,249,246,.9)}
-.cover-preview.minimal{background:#fff;color:var(--ink);border-bottom:1px solid var(--border)}
-.cover-preview.bold{background:linear-gradient(135deg,#1a1814 0%,#3a3530 100%);color:#fff}
-.cover-preview .cv-title{font-family:var(--serif);font-size:13px;font-weight:600;line-height:1.4;max-width:90%}
-.cover-preview .cv-byline{font-size:9px;opacity:.4;margin-top:6px}
-.cover-preview .cv-accent{position:absolute;bottom:0;left:0;right:0;height:3px}
+.cover-preview.editorial{background:var(--ink);color:rgba(250,249,246,.92)}
+.cover-preview.editorial .cv-pattern{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(184,146,90,.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(184,146,90,.05) 0%,transparent 50%);pointer-events:none}
+.cover-preview.minimal{background:#fff;color:var(--ink);border:1px solid var(--border)}
+.cover-preview.minimal .cv-pattern{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 0%,transparent 40%,rgba(0,0,0,.01) 100%);pointer-events:none}
+.cover-preview.bold{background:linear-gradient(135deg,#1a1814 0%,#3a3530 50%,#1a1814 100%);color:#fff}
+.cover-preview.bold .cv-pattern{position:absolute;inset:0;background:linear-gradient(45deg,rgba(184,146,90,.1) 0%,transparent 40%),linear-gradient(-45deg,rgba(196,77,52,.08) 0%,transparent 40%);pointer-events:none}
+.cover-preview .cv-title{font-family:var(--serif);font-size:14px;font-weight:700;line-height:1.4;max-width:85%;position:relative;z-index:1;letter-spacing:.02em}
+.cover-preview .cv-byline{font-size:9px;opacity:.35;margin-top:8px;position:relative;z-index:1;letter-spacing:.08em}
+.cover-preview .cv-accent{position:absolute;bottom:0;left:0;right:0;height:3px;z-index:1}
 .cover-preview.editorial .cv-accent{background:var(--gold)}
 .cover-preview.minimal .cv-accent{background:var(--ink)}
-.cover-preview.bold .cv-accent{background:linear-gradient(90deg,var(--gold),#c44d34)}
+.cover-preview.bold .cv-accent{background:linear-gradient(90deg,var(--gold),#c44d34,var(--gold))}
 .cover-label{font-size:var(--t-caption);font-weight:500;padding:var(--s-sm) var(--s-md);text-align:center;letter-spacing:.04em;color:var(--ink-muted)}
 .cover-option.selected .cover-label{color:var(--gold)}
 
@@ -851,20 +854,24 @@ function renderStep5(content,actions){
   if(S.platform==='wechat')renderCoverStep(content,actions);
   else renderImageStep(content,actions);
 }
+function getLastPrefs(){try{return JSON.parse(localStorage.getItem('creator-prefs')||'{}');}catch(e){return{};}}
+function saveLastPref(key,val){var p=getLastPrefs();p[key]=val;try{localStorage.setItem('creator-prefs',JSON.stringify(p));}catch(e){}}
+
 function renderCoverStep(content,actions){
   var isJP=jp(),t=getTask(S.taskId),title=t&&t.title?t.title:(isJP?'タイトル未定':'未命名');
-  var cvStyle=t&&t.coverStyle?t.coverStyle:'editorial';
+  var prefs=getLastPrefs();
+  var cvStyle=t&&t.coverStyle?t.coverStyle:(prefs.lastCover||'editorial');
   content.innerHTML='<h3 class="step-title">'+(isJP?'表紙スタイルを選ぶ':'选择封面风格')+'</h3>'+
     '<p class="step-desc">'+(isJP?'3つの表紙スタイルから選んでください。':'从下面3种封面风格中选择。')+'</p>'+
     '<div class="cover-grid">'+
-      coverOption(cvStyle==='editorial','editorial',title,isJP?'雑誌スタイル':'杂志高级风',isJP?'黒背景＋金アクセント':'深色背景+金accent',isJP)+
-      coverOption(cvStyle==='minimal','minimal',title,isJP?'ミニマル':'极简白底',isJP?'白背景＋黒タイトル':'白底+黑字标题',isJP)+
-      coverOption(cvStyle==='bold','bold',title,isJP?'インパクト':'冲击渐变',isJP?'黒→灰グラデーション＋暖色差し色':'深色渐变+暖色accent',isJP)+
-    '</div>';
+      coverOption(cvStyle==='editorial','editorial',title,isJP?'雑誌スタイル':'杂志高级风',isJP?'深色底+金色标题，杂志封面质感':'深色底+金色标题，杂志封面质感',isJP)+
+      coverOption(cvStyle==='minimal','minimal',title,isJP?'ミニマル':'极简白底',isJP?'白底+大标题，干净利落':'白底+大标题，干净利落',isJP)+
+      coverOption(cvStyle==='bold','bold',title,isJP?'インパクト':'冲击渐变',isJP?'深色渐变+暖色点缀，视觉冲击力强':'深色渐变+暖色点缀，视觉冲击力强',isJP)+
+    '</div>'+
+    (prefs.lastCover?'<p style="font-size:var(--t-caption);color:var(--ink-faint);margin-top:var(--s-sm)">'+(isJP?'前回の選択: ':'上次选择: ')+(prefs.lastCover==='editorial'?(isJP?'雑誌':'杂志'):prefs.lastCover==='minimal'?(isJP?'ミニマル':'极简'):(isJP?'インパクト':'冲击'))+' · '+(isJP?'今回も同じものが選ばれています':'本次已自动选中同款')+'</p>':'');
   actions.innerHTML='<button class="btn-back" onclick="actionBack(4)">← '+(isJP?'題名に戻る':'返回标题')+'</button>'+
     '<button class="btn-next" onclick="confirmCover()">'+(isJP?'表紙を確定':'确认封面')+'</button>'+
     '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
-  /* wire up clicks */
   setTimeout(function(){
     document.querySelectorAll('.cover-option').forEach(function(o){
       o.onclick=function(){document.querySelectorAll('.cover-option').forEach(function(c){c.classList.remove('selected');});this.classList.add('selected');};
@@ -873,12 +880,13 @@ function renderCoverStep(content,actions){
 }
 function coverOption(sel,style,title,label,desc,isJP){
   var cls=sel?'selected':'';
-  return '<div class="cover-option '+cls+'" data-style="'+style+'"><div class="cover-preview '+style+'"><div class="cv-title">'+title+'</div><div class="cv-byline">'+(isJP?'用AI看图作图 · 創作センター':'用AI看图作图 · 创作中心')+'</div><div class="cv-accent"></div></div><div class="cover-label">'+label+'<br><span style="font-size:10px;font-weight:400;color:var(--ink-faint)">'+desc+'</span></div></div>';
+  return '<div class="cover-option '+cls+'" data-style="'+style+'"><div class="cover-preview '+style+'"><div class="cv-pattern"></div><div class="cv-title">'+title+'</div><div class="cv-byline">'+(isJP?'用AI看图作图 · 創作センター':'用AI看图作图 · 创作中心')+'</div><div class="cv-accent"></div></div><div class="cover-label">'+label+'<br><span style="font-size:10px;font-weight:400;color:var(--ink-faint)">'+desc+'</span></div></div>';
 }
 function confirmCover(){
   var sel=document.querySelector('.cover-option.selected');
   var style=sel?sel.dataset.style:'editorial';
   updateTask(S.taskId,{coverStyle:style});
+  saveLastPref('lastCover',style);
   actionNext(6);
 }
 
@@ -936,14 +944,16 @@ function confirmImages(){
 /* ── Step 6: Layout (WeChat only) ── */
 function renderStep6(content,actions){
   var isJP=jp(),t=getTask(S.taskId);
-  var theme=t&&t.layoutTheme?t.layoutTheme:'professional';
+  var prefs=getLastPrefs();
+  var theme=t&&t.layoutTheme?t.layoutTheme:(prefs.lastLayout||'professional');
   content.innerHTML='<h3 class="step-title">'+(isJP?'微信排版テーマ':'微信排版主题')+'</h3>'+
-    '<p class="step-desc">'+(isJP?'wewrite で使う排版テーマを選んでください。':'选择 wewrite 排版主题。')+'</p>'+
+    '<p class="step-desc">'+(isJP?'wewrite で使う排版テーマを選んでください。前回と同じものが自動選択されています。':'选择 wewrite 排版主题。上次选过的已自动选中。')+'</p>'+
     '<div class="layout-grid">'+
       layoutCard(theme==='professional','professional',isJP?'プロフェッショナル':'专业清爽',isJP?'ビジネス向け、余白多め':'商务风格，留白充足',isJP)+
       layoutCard(theme==='warm','warm',isJP?'あたたか':'温暖文艺',isJP?'個人ブログ向け、親しみやすい':'个人风格，温暖亲切',isJP)+
       layoutCard(theme==='bold','bold',isJP?'インパクト':'冲击大字',isJP?'見出し強調、SNSシェア向け':'大字强调，适合社交传播',isJP)+
-    '</div>';
+    '</div>'+
+    (prefs.lastLayout?'<p style="font-size:var(--t-caption);color:var(--ink-faint);margin-top:var(--s-sm)">'+(isJP?'前回の選択: ':'上次选择: ')+(prefs.lastLayout==='warm'?(isJP?'あたたか':'温暖'):prefs.lastLayout==='bold'?(isJP?'インパクト':'冲击'):(isJP?'プロ':'专业'))+' · '+(isJP?'今回も同じものが選ばれています':'本次已自动选中同款')+'</p>':'');
   actions.innerHTML='<button class="btn-back" onclick="actionBack(5)">← '+(isJP?'表紙に戻る':'返回封面')+'</button>'+
     '<button class="btn-next" onclick="confirmLayout()">'+(isJP?'排版を確定':'确认排版')+'</button>'+
     '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
@@ -958,7 +968,9 @@ function layoutCard(sel,theme,name,desc,isJP){
 }
 function confirmLayout(){
   var sel=document.querySelector('.layout-card.selected');
-  updateTask(S.taskId,{layoutTheme:sel?sel.dataset.theme:'professional'});
+  var theme=sel?sel.dataset.theme:'professional';
+  updateTask(S.taskId,{layoutTheme:theme});
+  saveLastPref('lastLayout',theme);
   actionNext(7);
 }
 
