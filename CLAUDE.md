@@ -143,7 +143,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 ## Before Editing Any File
 
 1. `curl -sI https://kb.snsaladdin.com/` — confirm `Server: cloudflare`
-2. Edit `functions/api/*.js`, NOT `netlify/functions/*.mjs`
+2. Edit `functions/api/*.js`, NOT `_legacy/netlify/functions/*.mjs`
 3. After deploy, verify: `curl "https://kb.snsaladdin.com/api/..."` with `?t=<timestamp>` to bypass CDN cache
 
 ## Security Constraints (EVERY code change must follow)

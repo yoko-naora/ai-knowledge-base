@@ -17,7 +17,8 @@ We will respond within 48 hours and work with you on a fix timeline.
 ## Scope
 
 - `kb.snsaladdin.com` — the production website
-- `netlify/functions/` — serverless API endpoints
+- `_legacy/netlify/functions/` — serverless API endpoints (LEGACY, delete after 2026-06-25)
+- `functions/api/` — active Cloudflare Functions
 - Stripe payment integration
 - Email delivery via Resend
 

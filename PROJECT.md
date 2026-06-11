@@ -226,7 +226,7 @@ kb-site/
 │   └── weekly-update.json      # Baseline state
 ├── images/                 # Article images
 ├── videos/                 # Article videos
-└── netlify/                # Legacy Netlify config (deprecated, not deployed)
+└── _legacy/netlify/        # Legacy — DELETE AFTER 2026-06-25
 
 ## Security (2026-06-05 审计后更新)
 
@@ -254,7 +254,7 @@ kb-site/
 
 ### 修改文件时注意
 - **实际部署平台**: Cloudflare Pages (不是 Netlify)
-- **函数目录**: `functions/api/` (不是 `netlify/functions/`)
+- **函数目录**: `functions/api/` (不是 `_legacy/netlify/functions/`)
 - **环境变量**: Cloudflare Dashboard → Workers & Pages → ai-knowledge-base-v3 → Settings
 - **敏感文件屏蔽**: `_redirects` + `_headers`
 - **验证部署**: `curl -sI https://kb.snsaladdin.com/` 检查 `Server: cloudflare`
