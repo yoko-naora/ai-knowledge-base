@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第049篇：【裏技】NotebookLM×Claude・MCP連携させたら面倒な仕事が消えました · 用AI看图作图</title>
+<link rel="stylesheet" href="../assets/css/style.css?v=6">
+</head>
+<body>
+<nav>
+  <a class="logo" href="../index.html">用AI看图作图</a>
+  <button class="menu-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.textContent==='☰'?'✕':'☰'" aria-label="Menu">☰</button>
+  <ul class="nav-links">
+    <li><a href="#"><span class="lang-content cn">大神工具</span><span class="lang-content jp">大神ツール</span></a></li>
+    <li><a href="../insights.html"><span class="lang-content cn">大神文章</span><span class="lang-content jp">大神文章</span></a></li>
+    <li><a href="../prompts/index.html"><span class="lang-content cn">大神提示词</span><span class="lang-content jp">大神プロンプト</span></a></li>
+    <li><a href="../insights.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a></li>
+  </ul>
+  <div class="lang-switch"><button class="active" onclick="switchLang('cn')">中文</button><button onclick="switchLang('jp')">日本語</button></div>
+</nav>
+<section class="article-hero">
+  <a href="../insights.html" class="back-link">← <span class="lang-content cn">返回首页</span><span class="lang-content jp">トップに戻る</span></a>
+  <h1><span class="lang-content cn">第049篇：【裏技】NotebookLM×Claude・MCP連携させたら面倒な仕事が消えました</span><span class="lang-content jp">第049回：【裏技】NotebookLM×Claude・MCP連携させたら面倒な仕事が消えました</span></h1>
+  <div class="meta">✏️ @Hoshino_Sokichi（ほしの） · Tue Jun 09</div>
+  <div class="source">📎 <a href="https://x.com/Hoshino_Sokichi/status/2064156105635455237" target="_blank"><span class="lang-content cn">查看原文</span><span class="lang-content jp">原文を見る</span></a></div>
+</section>
+<div class="article-content">
+  <div class="lang-cn">
+<div class="quote">📎 <strong>来源：</strong> <a href="https://x.com/Hoshino_Sokichi/status/2064156105635455237" target="_blank">@Hoshino_Sokichi 原帖</a></div>
+<p><img src="images/049/cover.jpg" alt="cover" style="max-width:100%;border-radius:8px;margin:12px 0;"></p>
+<p>意外な組み合わせによる最強の連携術。
+NotebookLM×ClaudeをMCPさせる。この2つを連結させると、NotebookLMはノートブックの作成からソース収集、ポッドキャストやスライドの生成までやってくれて、最後にClaudeへの一言伝えるだけで仕事が完結します。</p>
+<p>この記事を読み終わる頃には、面倒な作業の景色が変わっています。</p>
+<p>※本記事の情報は2026年6月6日時点で、GitHub・Google公式ヘルプ・Anthropic公式ヘルプを確認して書いています。</p>
+<h2>第1章：NotebookLMとClaudeの「往復地獄」、まだ続けますか</h2>
+<p>僕は中小企業向けにAIコンサルをしていますが、最近の相談で本当によく聞く悩みがあります。</p>
+<p>「NotebookLMで調べて、答えをClaudeにコピペして、文章に仕上げています」</p>
+<p>正直、これはもったいないです。</p>
+<p>NotebookLMは、アップロードした資料だけを根拠に、出典付きで答えてくれるAIです。</p>
+<p>ハルシネーション対策としては、一番信頼できる設計だと思っています。</p>
+<p>ただ、弱点もあります。</p>
+<p>回答を提案書や記事の文章に仕上げる力は、Claudeに及びません。</p>
+<p>一方のClaudeは、日本語の自然さが圧倒的に他のAIと違います。</p>
+<p>でも、手元の資料だけを根拠に答えさせる仕組みは持っていません。</p>
+<p>だから両方を使う人ほど、タブを往復してコピペ転記する時間が積み上がります。</p>
+<p>仮に1日20分の往復なら、年間で約80時間です。</p>
+<p>丸2週間分の労働時間が、コピペに消えている計算になります。</p>
+<p>この往復を丸ごと消す方法が、MCPによる直結です。</p>
+<h2>第2章：MCPで何が起きるのか｜ClaudeにNotebookLMの「操作権限」を渡します</h2>
+<p>MCPは、AIに外部ツールの操作権限を渡すための共通規格です。</p>
+<p>Anthropicが提唱して、NotionやGitHubなど主要ツールが続々と対応している、AI連携の標準ルールになっています。</p>
+<p>以前Notion×Claudeの記事でも書きましたが、イメージとしては「Claudeに鍵を渡す」感覚が近いです。</p>
+<p>鍵を渡されたClaudeは、NotebookLMを自分で開けて、中を直接操作できるようになります。</p>
+<p>具体的には、こんな指示が全部通ります。</p>
+<p>「○○というノートブックを作って」</p>
+<p>「このURLをソースに追加して」</p>
+<p>「この資料の要点をNotebookLMに聞いて」</p>
+<p>「ポッドキャストを生成して」</p>
+<p>操作はすべて、Claudeのチャット画面からの一言で完結します。</p>
+<p>ここで、大事な前提をひとつ共有します。</p>
+<p>このNotebookLM用MCPは、Google公式ではありません。</p>
+<p>開発者Jacob Ben-David氏が公開しているコミュニティ製のツールで、GitHubでスター4,700超を集めている人気リポジトリです。</p>
+<p>2026年6月2日にも更新されている現役のプロジェクトで、Claudeから操作できるツールは35種類もあります。</p>
+<p>ただし、非公式ゆえの注意点があるので、そこは第7章で正直に書きます。</p>
+<h2>第3章：導入は10分で終わります｜拡張機能とターミナルの2ルートがあります</h2>
+<p>導入方法は2つあります。</p>
+<p>①ワンクリック拡張（一番簡単です）</p>
+<p>→ GitHubの配布ページから.mcpbという拡張ファイルをダウンロードして、ダブルクリックするだけです。</p>
+<p>→ Claude Desktopに拡張機能として組み込まれます。</p>
+<p>②ターミナル経由</p>
+<p>→ uv tool install notebooklm-mcp-cliでインストールします。</p>
+<p>→ nlm loginを実行すると、ブラウザが開いてGoogleアカウント認証ができます。</p>
+<p>→ nlm setup add claude-desktopで、Claude側の接続設定まで自動で終わります。</p>
+<p>ターミナルと聞くと身構える人が多いですが、やることはコマンドのコピペ3回です。</p>
+<p>僕も「黒い画面はエンジニアの世界」と思い込んでいた側なので、気持ちはめちゃくちゃわかります。</p>
+<p>でも実際にやってみたら、認証のブラウザログインを含めて10分かかりませんでした。</p>
+<p>「え、もう終わり？」と拍子抜けしたのを覚えています。</p>
+<p>ひとつだけ、運用ルールがあります。</p>
+<p>認証用のCookieは、開発元のドキュメントによると2〜4週間ほどで切れます。</p>
+<p>動かなくなったら、nlm loginをもう一度実行するだけで復活します。</p>
+<p>僕はベンチャー企業で15年間働いていた時代、初期設定をサボってツールが現場で「使えない認定」される光景を何度も見てきました。</p>
+<p>道具のせいではなく、最初の10分を惜しんだ側の問題でした。</p>
+<p>ここだけは、丁寧にやってください。</p>
+<h2>第4章：裏技①｜「ノートブック作って、ソースも集めて」が一言で終わります</h2>
+<p>一番感動するのが、ここです。</p>
+<p>今までのNotebookLMは、ノートブックを作って、ソースを1つずつ探して、URLを貼って、という手作業が前提でした。</p>
+<p>MCP経由なら、Claudeにこう頼むだけです。</p>
+<p>「中小企業のAI導入事例というノートブックを作って、信頼できるソースを探して10件追加して」</p>
+<p>ClaudeがWeb調査を行い、見つけたソースをNotebookLMへ流し込むところまで自動で進みます。</p>
+<p>Deep Research（深掘り調査）と連動させて、調査結果の上位ソースをまとめてインポートする使い方もできます。</p>
+<p>商談前のリサーチで考えてみてください。</p>
+<p>相手企業の記事、決算情報、業界レポートを集めたノートブックが、移動中の指示ひとつで出来上がります。</p>
+<p>採用面接の前なら、候補者の発信や登壇情報を集めたノートブックも同じ要領で作れます。</p>
+<p>企画の仕事なら、競合3社の公開情報を1冊にまとめるところまでが一言です。</p>
+<p>僕の運営しているサロンでこの流れを見せたとき、一番リアクションが大きかったのもこの機能でした。</p>
+<p>「ソース集めが一番面倒だったのに」という声が、その場で続きました。</p>
+<p>リサーチの入口が変わると、そのあとの仕事全部の速度が変わります。</p>
+<h2>第5章：裏技②｜ポッドキャストもスライドも「チャット一言」で量産できます</h2>
+<p>NotebookLMのStudio機能には、音声概要（ポッドキャスト）、動画概要、スライド、マインドマップ、インフォグラフィック、クイズなどの生成ボタンがあります。</p>
+<p>MCP直結なら、このボタンを押す作業すらClaude経由になります。</p>
+<p>ここで、コピペで使えるプロンプト例の紹介です。</p>
+<p>研修や教育の仕事で考えると、これはかなり強烈です。</p>
+<p>資料を渡すだけで、「聴く教材」と「確認テスト」が同時に出来上がります。</p>
+<p>通勤や家事の合間に耳から学べる教材を、毎回の画面操作なしで量産できるわけです。</p>
+<p>ただ、白状すると、僕は最初の日に失敗しています。</p>
+<p>生成の完了を待たずに次の指示を連打して、エラーを連発しました。</p>
+<p>音声や動画の生成には数分かかります。</p>
+<p>プロンプトの最後に「完了したら報告して」の一文を必ず入れてください。</p>
+<p>ここまでで「作る系」は押さえました。</p>
+<p>次は、実務で一番効く「書く系」の合体技です。</p>
+<h2>第6章：裏技③｜NotebookLMの「根拠」とClaudeの「文章力」を合体させます</h2>
+<p>地味に見えて、毎日の仕事で一番効くのがこの使い方です。</p>
+<p>流れはこうです。</p>
+<p>①ClaudeがNotebookLMに質問を投げる</p>
+<p>→ アップロード済みの資料だけを根拠にした、出典付きの回答が返ってきます。</p>
+<p>②Claudeがその回答を踏まえて文章を書く</p>
+<p>→ 根拠はNotebookLM、文章はClaudeという分業が成立します。</p>
+<p>僕はAIを使う上で、ハルシネーションの排除を一番重視してきました。</p>
+<p>1万回以上AIと壁打ちしてきた中で、AIの一番怖い瞬間は「それっぽい嘘を堂々と書くとき」だと骨身に染みています。</p>
+<p>この合体技なら、主張の根拠が常に手元の資料に紐づきます。</p>
+<p>しかも、Claudeから投げた質問はNotebookLMのWeb画面のチャット履歴にも残ります。</p>
+<p>後から「この結論、どの資料が根拠だっけ」と確認できるのは、報告書を書く仕事では本当に安心材料です。</p>
+<p>社内レポートでも、企画書でも、クライアント向けの提案書でも使えます。</p>
+<p>「根拠を聞かれたら出典を見せられる文書」が、タブ往復ゼロで作れる時代になりました。</p>
+<h2>第7章：会社で使う前に読んでください｜非公式ゆえの線引きと料金の話です</h2>
+<p>ここまで読んでテンションが上がった人ほど、この章は飛ばさないでください。</p>
+<p>注意点を正直に書きます。</p>
+<p>①Google公式ではありません</p>
+<p>→ NotebookLMの内部APIを使う仕組みなので、Googleの仕様変更で予告なく動かなくなる可能性があります。</p>
+<p>②認証情報の管理が必要です</p>
+<p>→ GoogleアカウントのCookieを端末に保持する仕組みです。共用PCでの利用は避けてください。</p>
+<p>③機密資料との接続は慎重に判断してください</p>
+<p>→ 社外秘を入れたノートブックへ非公式ツールをつなぐかどうかは、情シス確認を挟むのが大人の判断です。</p>
+<p>④利用上限があります</p>
+<p>→ NotebookLM無料版は、ノートブック100個、1冊あたりソース50個、チャット1日50回、音声概要の生成1日3回までです（Google公式ヘルプで確認済みです）。</p>
+<p>ヘビーに使うなら、Google AI Pro経由のPro版（月額2,900円）で、ソース300個、チャット1日500回まで広がります。</p>
+<p>Claude側は、今回紹介したローカルMCPという仕組みの都合で、Claude Desktopアプリが前提になります（この接続方法はブラウザ版では使えません）。</p>
+<p>このあたりを知らずに放置すると、毎日のコピペ往復だけがずっと残り続けます。</p>
+<p>第1章の試算なら年間約80時間、つまり夏休みがもう1回取れる時間です。</p>
+<p>とはいえ、全員が今すぐやる必要はありません。</p>
+<p>非公式ツールに抵抗がある人は、無理に導入しなくて大丈夫です。</p>
+<p>まずは公開情報だけのノートブックで小さく試すのが、現実的なスタートです。</p>
+<h2>今日からできる3ステップです</h2>
+<p>①Claude Desktopを最新版にしてください</p>
+<p>→ claude.com/downloadから入れ直すのが確実です。</p>
+<p>②MCPを導入して、nlm loginまで終わらせてください</p>
+<p>→ 第3章の手順どおりで、全体で10分ほどです。</p>
+<p>③テスト用ノートブックを1つ、Claudeに作らせてください</p>
+<p>→ 「テスト用ノートブックを作って、好きなニュース記事を1本追加して」で十分です。</p>
+<p>「明日やろう」は、僕の経験上ほぼ全員が忘れます。</p>
+<p>最初の1回だけ、今日中に動かしてみてください。</p>
+<p>タブの往復が消えた瞬間、もう前のやり方には戻れません。</p>
+<p>最後までご覧いただきありがとうございました！</p>
+<p>オプチャでは無料でプロンプト200選&amp;Gem20選&amp;Claudeスキル7選をプレゼントしています。</p>
+<p>またXでは絶対に発信しないマル秘情報も配信しています 。 ぜひこちらからご参加ください。🎁🎁</p>
+<p><a href="https://t.co/tbImZUrVLA">https://t.co/tbImZUrVLA</a></p>
+  </div>
+  <div class="lang-jp">
+<div class="quote">📎 <strong>出典：</strong> <a href="https://x.com/Hoshino_Sokichi/status/2064156105635455237" target="_blank">@Hoshino_Sokichi 原文</a></div>
+<p>（日本語講準備中）</p>
+  </div>
+</div>
+
+<div class="article-nav">
+  <a href="048.html" class="art-nav-link prev"><span class="lang-content cn">← 第048篇</span><span class="lang-content jp">← 第048回</span></a>
+  <a href="050.html" class="art-nav-link next"><span class="lang-content cn">第050篇 →</span><span class="lang-content jp">第050回 →</span></a>
+</div>
+
+<footer style="background:#1a1814;color:rgba(250,249,246,.35);padding:36px 60px;display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.06em;flex-wrap:wrap;gap:16px">
+  <span>© 2026 用AI看图作图</span>
+  <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+    <a href="https://www.snsaladdin.com/" style="color:rgba(250,249,246,.35);text-decoration:none">SNS Aladdin</a>
+    <a href="../tokushoho.html" style="color:rgba(250,249,246,.35);text-decoration:none">特定商取引法に基づく表記</a>
+    <span style="color:rgba(250,249,246,.35)">Community:</span>
+    <a href="mailto:info@snsaladdin.com" style="background:#2e7d32;color:#fff;padding:6px 14px;border-radius:20px;font-size:11px;text-decoration:none">Email 📮</a>
+    <a href="https://x.com/NaoraYoko" target="_blank" style="background:#2e7d32;color:#fff;padding:6px 14px;border-radius:20px;font-size:11px;text-decoration:none">X：Yoko｜Ai_shukyaku</a>
+    <span style="color:rgba(250,249,246,.35)"><span class="lang-content cn">Line官方帳號</span><span class="lang-content jp">LINE公式アカウント</span></span>
+  </div>
+  <div style="width:100%">
+    <img src="../line-qr.png" alt="Line" style="width:100px;border-radius:6px">
+  </div>
+</footer>
+<script src="../assets/js/main.js?v=6"></script>
+</body>
+</html>

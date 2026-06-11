@@ -469,15 +469,15 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <div class="angle-inputs">
         <div class="angle-row">
           <span class="angle-label">A</span>
-          <textarea id="angleA" placeholder="角度A..."></textarea>
+          <textarea id="angleA" placeholder="角度A — 例：天气情绪营销，大雨天需要厚重感，这杯是解药"></textarea>
         </div>
         <div class="angle-row">
           <span class="angle-label">B</span>
-          <textarea id="angleB" placeholder="角度B..."></textarea>
+          <textarea id="angleB" placeholder="角度B — 例：产品研发故事，试了23次配比才找到这个味道"></textarea>
         </div>
         <div class="angle-row">
           <span class="angle-label">C</span>
-          <textarea id="angleC" placeholder="角度C..."></textarea>
+          <textarea id="angleC" placeholder="角度C — 例：场景数据，雨天外卖涨40%，咖啡奶茶是雨天之王"></textarea>
         </div>
       </div>
       <p class="angle-select-hint"><span class="lang-content cn">选一个角度 →</span><span class="lang-content jp">1つ選んで →</span></p>
@@ -865,7 +865,11 @@ function confirmAngle(label) {
     C: document.getElementById('angleC').value.trim()
   };
   var selected = angles[label];
-  if (!selected) return;
+  if (!selected) {
+    var isJP = document.body.classList.contains('show-jp');
+    alert(isJP ? '角度 ' + label + ' が空です。先に内容を書いてから選んでください。' : '角度 ' + label + ' 是空的，请先填写内容再选择。');
+    return;
+  }
   var tasks = getTasks();
   var task = tasks.find(function(t) { return t.id === fragState.taskId; });
   if (task) {
@@ -1025,12 +1029,14 @@ function renderDocList() {
     var item = document.createElement('div');
     item.className = 'doc-item' + (t.status === 'done' ? ' clickable' : '');
     var platform = isJP ? (pJP[t.platform] || t.platform) : (pCN[t.platform] || t.platform);
-    var statusText = t.status === 'done' ? (isJP ? '完了' : '已完成') : (isJP ? '作成中' : '制作中');
+    var st = t.status;
+    var statusText = st === 'done' ? (isJP ? '完了' : '已完成') : st === 'collecting' ? (isJP ? '素材中' : '素材中') : (isJP ? '作成中' : '制作中');
+    var statusClass = st === 'done' ? 'done' : 'working';
     var d = new Date(t.createdAt), dateStr = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     item.innerHTML = '<div class="doc-platform">' + platform + '</div>' +
       '<div class="doc-info"><div class="doc-topic">' + (t.topic || '—') + '</div>' +
       '<div class="doc-meta"><span>' + dateStr + '</span><span>' + (isJP ? sJP[t.style] : sCN[t.style]) + '</span></div></div>' +
-      '<span class="doc-status ' + (t.status === 'done' ? 'done' : 'working') + '">' + statusText + '</span>' +
+      '<span class="doc-status ' + statusClass + '">' + statusText + '</span>' +
       '<button class="doc-delete" onclick="event.stopPropagation();deleteDoc(\'' + t.id + '\')">✕</button>';
     if (t.status === 'done') item.onclick = function() { showResult(t.id); };
     list.appendChild(item);
