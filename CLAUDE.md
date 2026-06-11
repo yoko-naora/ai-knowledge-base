@@ -135,8 +135,8 @@ User → Cloudflare Pages → Static HTML/JS/CSS
                          Gmail (info@snsaladdin.com)
 ```
 
-- **Platform:** Cloudflare Pages (NOT Netlify — `netlify/` is legacy, DO NOT EDIT)
-- **Functions dir:** `functions/api/*.js` (deployed) — `netlify/functions/*.mjs` is source only
+- **Platform:** Cloudflare Pages (NOT Netlify — `_legacy/netlify/` is legacy, DO NOT EDIT, auto-delete after 2026-06-25)
+- **Functions dir:** `functions/api/*.js` (deployed) — `_legacy/netlify/functions/*.mjs` is source only
 - **Verify platform:** `curl -sI https://kb.snsaladdin.com` → `Server: cloudflare`
 - **Env vars:** Cloudflare Dashboard → Workers & Pages → `ai-knowledge-base-v3` → Settings → Environment Variables
 
@@ -243,6 +243,18 @@ Full test manual: `TEST.md`.
 - After finish: `git add -A && git commit -m "[AgentName] <description>" && git push`
 - Never `git push --force`
 
+### Dead File Protocol（死文件处理规则）
+
+**When any agent identifies a dead/legacy file, DON'T silently note it — follow this protocol:**
+
+1. **Confirm** — verify it's truly unused (check imports, git log, deployment target)
+2. **Move** — `git mv <file> _legacy/<path>/`
+3. **Mark** — create `_legacy/<path>/DELETE-AFTER-YYYY-MM-DD.md` with reason + expiry (default: 2 weeks)
+4. **Update references** — CLAUDE.md, AGENTS.md, HERMES-RULES.md as needed
+5. **Delete on expiry** — on or after the date, `git rm -r _legacy/<path>/` and commit
+
+**Why `_legacy/` instead of direct delete:** git can restore deleted files, but only if you know what to restore. The 2-week quarantine gives all agents (and humans) time to discover hidden dependencies.
+
 ### 任务分配规则
 > ⚠️ **待定** — 三端如何拆分任务、避免冲突，稍后讨论追加。
 
@@ -290,7 +302,7 @@ kb-site/
 ├── output/                 ← Layer 4 · Output
 ├── functions/api/          ← Cloudflare Functions
 ├── assets/                 ← CSS/JS/images
-└── netlify/                ← LEGACY — DO NOT EDIT
+└── _legacy/netlify/        ← LEGACY — DELETE AFTER 2026-06-25
 ```
 
 ## Key Links
@@ -315,7 +327,7 @@ kb-site/
 
 ## Quick Reference: Common Pitfalls
 
-1. **DON'T** edit `netlify/functions/` — legacy, not deployed
+1. **DON'T** edit `_legacy/netlify/functions/` — legacy, not deployed
 2. **DON'T** create a second `switchLang` function — use `langchange` event
 3. **DON'T** use `rem` units — use `px`
 4. **DON'T** hardcode secrets — use env vars
