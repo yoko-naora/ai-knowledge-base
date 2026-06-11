@@ -1040,8 +1040,13 @@ function renderDocList() {
 function deleteDoc(taskId) { saveTasks(getTasks().filter(function(t) { return t.id !== taskId; })); renderDocList(); }
 
 function startWriting() {
+  console.log('startWriting called', state.viewingTaskId);
   var tasks = getTasks(), task = tasks.find(function(t) { return t.id === state.viewingTaskId; });
-  if (!task || !task.fragments) return;
+  console.log('task found', !!task, task ? task.fragments ? task.fragments.length : 'no fragments' : 'no task');
+  if (!task || !task.fragments || task.fragments.length === 0) {
+    alert('没有素材数据，请重新走一遍流程。');
+    return;
+  }
   var isJP = document.body.classList.contains('show-jp');
   var pName = {wechat: (isJP?'公众号長文':'公众号长文'), xhs: (isJP?'小紅書カルーセル':'小红书滚图'), moments: (isJP?'朋友圈':'朋友圈')};
   var modeName = task.mode === 'ref' ? (isJP?'参考記事から':'参考改写') : (isJP?'ゼロから':'从0开始');
