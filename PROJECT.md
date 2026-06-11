@@ -95,10 +95,14 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 - [ ] **创作中心后端 API** — /api/create-task, task-status, task-result, my-tasks（当前 MVP 用 localStorage 模拟）
 - [ ] **success.html → creator.html token 集成**
-- [ ] **大神工具页** — 待建
-- [x] **大神工具页 tools.html** — 完成。6条生产线公开橱窗页，每条标注Skill链+模板积木。全站38页nav同步更新。
 
-## Completed (2026-06-10)
+## Completed (2026-06-11)
+
+- [x] **大神工具页 tools.html** — 完成。6条生产线公开橱窗页，每条标注Skill链+模板积木。全站38页nav同步更新。
+- [x] **creator.html 完整重写** — 五步向导（登录→列表→7步管线→结果→重做+下载）。进度条+3封面CSS预览+角度/标题AI生成选项+参考模式文章分析+上次同款记忆+file://兼容复制+下载.md/.txt
+- [x] **全站nav更新** — 38页 大神工具 `href="#"` → `tools.html`
+- [x] **交叉检查** — Codex 24项检查，23✅/1⚠️→CORS已修，最终24/24✅
+- [x] **工作准则追加** — ⑥约束优先 + ⑦交叉检查（Claude↔Codex互相审查）
 
 - [x] **creator.html 设计完成** — huashu-design Junior→Full Pass，三平台真实logo，分组底色，左缘识别色，4pt间距+1.25字级，手机横排卡片
 - [x] **成品展示页重设计** — 公众号暗底封面+小红书卡片网格+朋友圈post样式，平台badge
