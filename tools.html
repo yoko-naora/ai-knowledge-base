@@ -75,6 +75,7 @@ nav{
 .pipe-card.wx::before{background:var(--wechat)}
 .pipe-card.mm::before{background:var(--moments)}
 .pipe-card.xh::before{background:var(--xhs)}
+.pipe-card{cursor:pointer}
 .pipe-card:hover{transform:translateY(-2px);box-shadow:0 4px 24px rgba(26,24,20,.10);border-color:var(--border)}
 .pipe-card:hover::before{width:6px}
 
@@ -161,7 +162,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
     <div class="pipeline-grid">
 
       <!-- 1. 公众号长文 -->
-      <div class="pipe-card wx">
+      <div class="pipe-card wx" onclick="location.href='creator.html?platform=wechat&mode=scratch'">
         <div class="card-top">
           <div class="card-icon"><img src="assets/platform-icons/wechat.svg" alt=""></div>
           <span class="card-mode">scratch</span>
@@ -182,7 +183,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       </div>
 
       <!-- 2. 朋友圈图文 -->
-      <div class="pipe-card mm">
+      <div class="pipe-card mm" onclick="location.href='creator.html?platform=moments&mode=scratch'">
         <div class="card-top">
           <div class="card-icon"><img src="assets/platform-icons/moments.svg" alt=""></div>
           <span class="card-mode">scratch</span>
@@ -202,7 +203,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       </div>
 
       <!-- 3. 小红书滚图 -->
-      <div class="pipe-card xh">
+      <div class="pipe-card xh" onclick="location.href='creator.html?platform=xhs&mode=scratch'">
         <div class="card-top">
           <div class="card-icon"><img src="assets/platform-icons/xiaohongshu.svg" alt=""></div>
           <span class="card-mode">scratch</span>
@@ -234,7 +235,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
     <div class="pipeline-grid">
 
       <!-- 4. 公众号仿写 -->
-      <div class="pipe-card wx">
+      <div class="pipe-card wx" onclick="location.href='creator.html?platform=wechat&mode=ref'">
         <div class="card-top">
           <div class="card-icon"><img src="assets/platform-icons/wechat.svg" alt=""></div>
           <span class="card-mode">reference</span>
@@ -257,7 +258,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       </div>
 
       <!-- 5. 朋友圈改编 -->
-      <div class="pipe-card mm">
+      <div class="pipe-card mm" onclick="location.href='creator.html?platform=moments&mode=ref'">
         <div class="card-top">
           <div class="card-icon"><img src="assets/platform-icons/moments.svg" alt=""></div>
           <span class="card-mode">reference</span>
@@ -279,7 +280,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       </div>
 
       <!-- 6. 小红书仿写 -->
-      <div class="pipe-card xh">
+      <div class="pipe-card xh" onclick="location.href='creator.html?platform=xhs&mode=ref'">
         <div class="card-top">
           <div class="card-icon"><img src="assets/platform-icons/xiaohongshu.svg" alt=""></div>
           <span class="card-mode">reference</span>

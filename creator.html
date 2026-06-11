@@ -672,11 +672,19 @@ document.addEventListener('langchange', function() {
 
 loadState();
 var urlParams = new URLSearchParams(window.location.search), token = urlParams.get('token');
+var entryPlatform = urlParams.get('platform'), entryMode = urlParams.get('mode');
+
+function autoSelectEntry() {
+  if (!entryPlatform || !entryMode) return;
+  var card = document.querySelector('.entry-card[data-platform="' + entryPlatform + '"][data-mode="' + entryMode + '"]');
+  if (card) { selectEntry(card); document.getElementById('entrySection').classList.remove('hidden'); }
+}
+
 if (token) {
   fetch('/api/check-subscription?token=' + encodeURIComponent(token) + '&t=' + Date.now())
     .then(function(r) { return r.json(); })
-    .then(function(d) { if (d.subscribed && d.email) { state.email = d.email; state.prefix = d.email.split('@')[0]; state.authenticated = true; saveState(); showMain(); window.history.replaceState({}, '', '/creator.html'); } }).catch(function(){});
-} else if (state.authenticated) { showMain(); }
+    .then(function(d) { if (d.subscribed && d.email) { state.email = d.email; state.prefix = d.email.split('@')[0]; state.authenticated = true; saveState(); showMain(); autoSelectEntry(); window.history.replaceState({}, '', '/creator.html'); } }).catch(function(){});
+} else if (state.authenticated) { showMain(); autoSelectEntry(); }
 </script>
 </body>
 </html>
