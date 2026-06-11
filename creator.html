@@ -159,6 +159,10 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .angle-label{font-family:var(--serif);font-size:var(--t-h3);color:var(--gold);min-width:36px;padding-top:8px;font-weight:600}
 .angle-row textarea{flex:1;min-height:52px;padding:var(--s-sm);border:none;background:transparent;font-family:var(--sans);font-size:var(--t-body);line-height:1.6;outline:none;resize:vertical}
 .angle-row textarea::placeholder{color:var(--ink-faint)}
+.angle-row.selectable{cursor:pointer;transition:all .2s var(--ease)}
+.angle-row.selectable:hover{border-color:var(--gold);background:var(--gold-light)}
+.angle-row.selectable.selected{border-color:var(--gold);background:var(--gold-light);box-shadow:0 2px 12px rgba(184,146,90,.15)}
+.angle-row.selectable .angle-text{flex:1;padding:var(--s-sm) 0;font-size:var(--t-body);line-height:1.7}
 .angle-select-row{display:flex;gap:var(--s-sm);flex-wrap:wrap;align-items:center}
 .btn-angle{padding:12px var(--s-xl);background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-body);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s}
 .btn-angle:hover{background:#333}
@@ -693,48 +697,148 @@ function renderFragCollected(){
   document.getElementById('fragItems').innerHTML=html||'<p style="font-size:var(--t-caption);color:var(--ink-faint);font-style:italic">'+(isJP?'まだ回答がありません':'还没有回答')+'</p>';
 }
 
+/* ── Angle Generation ── */
+function generateAngles(topic,fragments){
+  var kw=topic||'';var firstFrag=fragments&&fragments[0]?fragments[0].a:'';
+  return [
+    {label:'A',text:'从「'+kw+'」出发，聊聊它为什么能打动人心——从情绪和体验切入，让读者产生"对，就是这个感觉"的共鸣。'},
+    {label:'B',text:'换个角度看「'+kw+'」——'+(firstFrag?'从「'+firstFrag.slice(0,20)+'」展开':'从一个意想不到的细节展开')+'，给读者新鲜感。'},
+    {label:'C',text:'「'+kw+'」的实用指南——不讲虚的，直接给出方法、步骤、数据，让读者看完就能用。'}
+  ];
+}
+
 /* ── Step 3: Angles ── */
+var generatedAngles=[];
 function renderStep3(content,actions){
   var isJP=jp(),t=getTask(S.taskId);
-  var angles=t&&t.angles?t.angles:{};
-  content.innerHTML='<h3 class="step-title">'+(isJP?'选题を決める':'确定选题角度')+'</h3>'+
-    '<p class="step-desc">'+(isJP?'3つの角度を書いて、1つ選んでください。':'写3个选题角度，选一个。')+'</p>'+
+  if(!generatedAngles.length||(t&&t._regenerateAngles)){
+    generatedAngles=generateAngles(t?t.topic:'',t?t.fragments:[]);
+    if(t){t._regenerateAngles=false;updateTask(S.taskId,{_regenerateAngles:false});}
+  }
+  var sel=t&&t.selectedAngle?t.selectedAngle:'';
+  content.innerHTML='<h3 class="step-title">'+(isJP?'选题を選ぶ':'选择选题角度')+'</h3>'+
+    '<p class="step-desc">'+(isJP?'AIが3つの角度を生成しました。気に入らない場合は「再生成」を押してください。':'AI 生成了 3 个角度。选一个，不满意点「重新生成」。')+'</p>'+
     '<div class="angle-grid">'+
-      '<div class="angle-row"><span class="angle-label">A</span><textarea id="angleA" placeholder="'+(isJP?'角度A — 例：天気に寄せた感情マーケティング':'角度A — 例：天气情绪营销，雨天需要厚重感')+'">'+(angles.A||'')+'</textarea></div>'+
-      '<div class="angle-row"><span class="angle-label">B</span><textarea id="angleB" placeholder="'+(isJP?'角度B — 例：商品開発ストーリー':'角度B — 例：产品研发故事，试了23次配比')+'">'+(angles.B||'')+'</textarea></div>'+
-      '<div class="angle-row"><span class="angle-label">C</span><textarea id="angleC" placeholder="'+(isJP?'角度C — 例：シーンデータ分析':'角度C — 例：场景数据，雨天订单涨40%')+'">'+(angles.C||'')+'</textarea></div>'+
+      generatedAngles.map(function(a){
+        var cls=sel===a.label?' selected':'';
+        return '<div class="angle-row selectable '+cls+'" data-angle="'+a.label+'" onclick="selectAngleCard(this,\''+a.label+'\')"><span class="angle-label">'+a.label+'</span><div class="angle-text">'+a.text+'</div></div>';
+      }).join('')+
     '</div>'+
-    '<p style="font-size:var(--t-caption);color:var(--ink-muted);margin-bottom:var(--s-sm)">'+(isJP?'角度を選ぶ →':'选哪个角度？')+'</p>'+
-    '<div class="angle-select-row"><button class="btn-angle" onclick="confirmAngle(\'A\')">A</button><button class="btn-angle" onclick="confirmAngle(\'B\')">B</button><button class="btn-angle" onclick="confirmAngle(\'C\')">C</button></div>';
-  actions.innerHTML='<button class="btn-back" onclick="actionBack(2)">← '+(isJP?'素材に戻る':'返回素材')+'</button>'+
+    '<div class="angle-select-row">'+
+      '<button class="btn-angle" id="btnConfirmAngle" onclick="confirmAngle()" '+(sel?'':'disabled')+'>'+(isJP?'この角度で決定 →':'选这个 →')+'</button>'+
+      '<button class="btn-outline" onclick="regenerateAngles()">🔄 '+(isJP?'再生成':'重新生成')+'</button>'+
+      '<button class="btn-outline" onclick="manualAngles()">✎ '+(isJP?'自分で書く':'自己写')+'</button>'+
+    '</div>';
+  actions.innerHTML='<button class="btn-back" onclick="generatedAngles=[];actionBack(2)">← '+(isJP?'素材に戻る':'返回素材')+'</button>'+
     '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
 }
-function confirmAngle(label){
+function selectAngleCard(el,label){
+  document.querySelectorAll('.angle-row.selectable').forEach(function(r){r.classList.remove('selected');});
+  el.classList.add('selected');
+  document.getElementById('btnConfirmAngle').disabled=false;
+  S._selectedAngleLabel=label;
+  S._selectedAngleText=el.querySelector('.angle-text').textContent;
+}
+function confirmAngle(){
+  if(!S._selectedAngleLabel)return;
+  updateTask(S.taskId,{selectedAngle:S._selectedAngleLabel,selectedAngleText:S._selectedAngleText,angles:{A:generatedAngles[0]?generatedAngles[0].text:'',B:generatedAngles[1]?generatedAngles[1].text:'',C:generatedAngles[2]?generatedAngles[2].text:''}});
+  generatedAngles=[];
+  actionNext(4);
+}
+function regenerateAngles(){
+  generatedAngles=[];
+  updateTask(S.taskId,{_regenerateAngles:true});
+  renderStep3(document.getElementById('stepContent'),document.getElementById('wizActions'));
+}
+function manualAngles(){
+  /* Switch to manual mode */
+  var isJP=jp(),t=getTask(S.taskId);
+  document.getElementById('stepContent').innerHTML='<h3 class="step-title">'+(isJP?'角度を自分で書く':'自己写角度')+'</h3>'+
+    '<p class="step-desc">'+(isJP?'3つの角度を入力してください。':'请输入3个角度。')+'</p>'+
+    '<div class="angle-grid">'+
+      '<div class="angle-row"><span class="angle-label">A</span><textarea id="angleA" placeholder="角度A..."></textarea></div>'+
+      '<div class="angle-row"><span class="angle-label">B</span><textarea id="angleB" placeholder="角度B..."></textarea></div>'+
+      '<div class="angle-row"><span class="angle-label">C</span><textarea id="angleC" placeholder="角度C..."></textarea></div>'+
+    '</div>'+
+    '<div class="angle-select-row"><button class="btn-angle" onclick="confirmManualAngle(\'A\')">A</button><button class="btn-angle" onclick="confirmManualAngle(\'B\')">B</button><button class="btn-angle" onclick="confirmManualAngle(\'C\')">C</button></div>';
+}
+function confirmManualAngle(label){
   var angles={A:document.getElementById('angleA').value.trim(),B:document.getElementById('angleB').value.trim(),C:document.getElementById('angleC').value.trim()};
   var sel=angles[label];
-  if(!sel){alert(jp()?'角度 '+label+' が空です。先に内容を書いてください。':'角度 '+label+' 是空的，请先填写内容。');return;}
+  if(!sel){alert(jp()?'角度 '+label+' が空です。':'角度 '+label+' 是空的。');return;}
   updateTask(S.taskId,{angles:angles,selectedAngle:label,selectedAngleText:sel});
+  generatedAngles=[];
   actionNext(4);
 }
 
+/* ── Title Generation ── */
+function generateTitles(topic,angleText,fragments){
+  var kw=topic||'';
+  return [
+    '为什么'+kw+'？'+(fragments&&fragments[0]?'从「'+fragments[0].a.slice(0,15)+'」说起':'一篇讲清'),
+    kw+'的'+(Math.floor(Math.random()*3)+3)+'个方法，第'+(Math.floor(Math.random()*3)+1)+'个最实用',
+    '别再说'+kw+'了——试试这个新思路'
+  ];
+}
+
 /* ── Step 4: Title ── */
+var generatedTitles=[];
 function renderStep4(content,actions){
   var isJP=jp(),t=getTask(S.taskId);
-  content.innerHTML='<h3 class="step-title">'+(isJP?'題名をつける':'起标题')+'</h3>'+
-    '<p class="step-desc">'+(isJP?'あなたの文章の題名を入力してください。':'给你的文章起一个标题。')+'</p>'+
-    '<input type="text" class="title-input" id="titleInput" placeholder="'+(isJP?'例：大雨の日、なぜ私はこの「コーヒー奶茶」を飲むのか':'例：大雨天，为什么我偏要喝这杯「咖啡奶茶」')+'" value="'+(t&&t.title?t.title:'')+'">';
-  actions.innerHTML='<button class="btn-back" onclick="actionBack(3)">← '+(isJP?'选题に戻る':'返回选题')+'</button>'+
-    '<button class="btn-next" onclick="confirmTitle()">'+(isJP?'確認':'确认标题')+'</button>'+
+  if(!generatedTitles.length||(t&&t._regenerateTitles)){
+    generatedTitles=generateTitles(t?t.topic:'',t?t.selectedAngleText:'',t?t.fragments:[]);
+    if(t){t._regenerateTitles=false;updateTask(S.taskId,{_regenerateTitles:false});}
+  }
+  var sel=t&&t.title?t.title:'';
+  content.innerHTML='<h3 class="step-title">'+(isJP?'題名を選ぶ':'选择标题')+'</h3>'+
+    '<p class="step-desc">'+(isJP?'AIが3つの題名候補を生成しました。選ぶか、自分で書いてください。':'AI 生成了 3 个标题候选。选一个，或点「自己写」。')+'</p>'+
+    generatedTitles.map(function(tt,i){
+      var cls=sel===tt?' selected':'';
+      return '<div class="angle-row selectable '+cls+'" data-title="'+escapeAttr(tt)+'" onclick="selectTitleCard(this)" style="cursor:pointer"><span class="angle-label">'+(i+1)+'</span><div class="angle-text" style="font-family:var(--serif);font-size:var(--t-body);font-weight:600">'+tt+'</div></div>';
+    }).join('')+
+    '<div class="angle-select-row" style="margin-top:var(--s-md)">'+
+      '<button class="btn-angle" id="btnConfirmTitle" onclick="confirmTitleCard()" '+(sel?'':'disabled')+'>'+(isJP?'この題名で決定 →':'选这个 →')+'</button>'+
+      '<button class="btn-outline" onclick="regenerateTitles()">🔄 '+(isJP?'再生成':'重新生成')+'</button>'+
+      '<button class="btn-outline" onclick="manualTitle()">✎ '+(isJP?'自分で書く':'自己写')+'</button>'+
+    '</div>';
+  actions.innerHTML='<button class="btn-back" onclick="generatedTitles=[];actionBack(3)">← '+(isJP?'选题に戻る':'返回选题')+'</button>'+
+    '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
+}
+function selectTitleCard(el){
+  document.querySelectorAll('.angle-row.selectable').forEach(function(r){r.classList.remove('selected');});
+  el.classList.add('selected');
+  document.getElementById('btnConfirmTitle').disabled=false;
+  S._selectedTitle=el.dataset.title;
+}
+function confirmTitleCard(){
+  if(!S._selectedTitle)return;
+  updateTask(S.taskId,{title:S._selectedTitle});
+  generatedTitles=[];
+  var next=S.platform==='wechat'?5:5;
+  actionNext(next);
+}
+function regenerateTitles(){
+  generatedTitles=[];
+  updateTask(S.taskId,{_regenerateTitles:true});
+  renderStep4(document.getElementById('stepContent'),document.getElementById('wizActions'));
+}
+function manualTitle(){
+  var isJP=jp(),t=getTask(S.taskId);
+  document.getElementById('stepContent').innerHTML='<h3 class="step-title">'+(isJP?'題名を自分で書く':'自己写标题')+'</h3>'+
+    '<p class="step-desc">'+(isJP?'題名を入力してください。':'请输入标题。')+'</p>'+
+    '<input type="text" class="title-input" id="titleInput" placeholder="'+(isJP?'題名を入力...':'输入标题...')+'" value="'+(t&&t.title?t.title:'')+'">';
+  document.querySelector('#wizActions').innerHTML='<button class="btn-back" onclick="actionBack(3)">← '+(isJP?'选题に戻る':'返回选题')+'</button>'+
+    '<button class="btn-next" onclick="confirmManualTitle()">'+(isJP?'確認':'确认标题')+'</button>'+
     '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
   setTimeout(function(){document.getElementById('titleInput').focus();},100);
 }
-function confirmTitle(){
+function confirmManualTitle(){
   var title=document.getElementById('titleInput').value.trim();
   if(!title){alert(jp()?'題名を入力してください。':'请输入标题。');return;}
-  updateTask(S.taskId,{title:title});
-  if(S.platform==='wechat')actionNext(5);
-  else actionNext(5);  /* share step 5 for images */
+  updateTask(S.taskId,{title:title});generatedTitles=[];
+  actionNext(S.platform==='wechat'?5:5);
 }
+function escapeAttr(s){return s.replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 
 /* ── Step 5: Cover (WeChat) or Images (XHS/Moments) ── */
 function renderStep5(content,actions){
