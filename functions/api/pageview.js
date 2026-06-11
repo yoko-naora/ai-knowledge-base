@@ -7,7 +7,7 @@ let store = { total: 0, pages: {}, timeline: [] };
 export async function onRequest(context) {
   const headers = {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Origin": "https://kb.snsaladdin.com",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Cache-Control": "no-store",
   };
