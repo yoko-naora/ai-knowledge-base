@@ -445,11 +445,13 @@ function verifyEmail(e) {
   if (!email) return;
   btn.disabled = true; msg.className = 'login-msg'; msg.textContent = '...';
 
+  var hasEntry = !!(entryPlatform && entryMode);
+
   if (email === 'yokonaora@gmail.com') {
     state.email = email; state.prefix = 'yokonaora'; state.authenticated = true; saveState();
     msg.className = 'login-msg success';
     msg.textContent = document.body.classList.contains('show-jp') ? '認証成功。ようこそ！' : '验证成功。欢迎！';
-    setTimeout(function() { showMain(); }, 400);
+    setTimeout(function() { showMain(hasEntry); if (hasEntry) autoSelectEntry(); }, 400);
     return;
   }
 
@@ -460,7 +462,7 @@ function verifyEmail(e) {
         state.email = email; state.prefix = email.split('@')[0]; state.authenticated = true; saveState();
         msg.className = 'login-msg success';
         msg.textContent = document.body.classList.contains('show-jp') ? '認証成功。ようこそ！' : '验证成功。欢迎！';
-        setTimeout(function() { showMain(); }, 400);
+        setTimeout(function() { showMain(hasEntry); if (hasEntry) autoSelectEntry(); }, 400);
       } else {
         msg.className = 'login-msg error';
         msg.textContent = document.body.classList.contains('show-jp') ? 'このメールアドレスでは購読が確認できませんでした。' : '未找到此邮箱的订阅记录。';
@@ -471,14 +473,20 @@ function verifyEmail(e) {
       state.email = email; state.prefix = email.split('@')[0]; state.authenticated = true; saveState();
       msg.className = 'login-msg success';
       msg.textContent = document.body.classList.contains('show-jp') ? '認証成功（開発モード）。ようこそ！' : '验证成功（开发模式）。欢迎！';
-      setTimeout(function() { showMain(); }, 400);
+      setTimeout(function() { showMain(hasEntry); if (hasEntry) autoSelectEntry(); }, 400);
     });
 }
 
-function showMain() {
+function showMain(skipDocList) {
   document.getElementById('loginWrap').style.display = 'none';
   document.getElementById('mainContent').style.display = 'block';
-  updateDocTitle(); renderDocList();
+  updateDocTitle();
+  if (skipDocList) {
+    document.getElementById('docList').classList.add('hidden');
+    document.getElementById('btnNew').disabled = true;
+  } else {
+    renderDocList();
+  }
 }
 
 function updateDocTitle() {
@@ -680,11 +688,12 @@ function autoSelectEntry() {
   if (card) { selectEntry(card); document.getElementById('entrySection').classList.remove('hidden'); }
 }
 
+var hasEntry = !!(entryPlatform && entryMode);
 if (token) {
   fetch('/api/check-subscription?token=' + encodeURIComponent(token) + '&t=' + Date.now())
     .then(function(r) { return r.json(); })
-    .then(function(d) { if (d.subscribed && d.email) { state.email = d.email; state.prefix = d.email.split('@')[0]; state.authenticated = true; saveState(); showMain(); autoSelectEntry(); window.history.replaceState({}, '', '/creator.html'); } }).catch(function(){});
-} else if (state.authenticated) { showMain(); autoSelectEntry(); }
+    .then(function(d) { if (d.subscribed && d.email) { state.email = d.email; state.prefix = d.email.split('@')[0]; state.authenticated = true; saveState(); showMain(hasEntry); if (hasEntry) autoSelectEntry(); window.history.replaceState({}, '', '/creator.html'); } }).catch(function(){});
+} else if (state.authenticated) { showMain(hasEntry); if (hasEntry) autoSelectEntry(); }
 </script>
 </body>
 </html>
