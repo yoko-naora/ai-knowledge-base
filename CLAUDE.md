@@ -251,7 +251,8 @@ Full test manual: `TEST.md`.
 2. **Move** — `git mv <file> _legacy/<path>/`
 3. **Mark** — create `_legacy/<path>/DELETE-AFTER-YYYY-MM-DD.md` with reason + expiry (default: 2 weeks)
 4. **Update references** — CLAUDE.md, AGENTS.md, HERMES-RULES.md as needed
-5. **Delete on expiry** — on or after the date, `git rm -r _legacy/<path>/` and commit
+5. **Verify completeness** — run `git ls-files` or glob `**/<dead-name>*` to catch remaining files that match the same pattern but weren't in the same directory (e.g., `netlify.toml` outside of `netlify/`). Commit any stragglers.
+6. **Delete on expiry** — on or after the date, `git rm -r _legacy/<path>/` and commit
 
 **Why `_legacy/` instead of direct delete:** git can restore deleted files, but only if you know what to restore. The 2-week quarantine gives all agents (and humans) time to discover hidden dependencies.
 
