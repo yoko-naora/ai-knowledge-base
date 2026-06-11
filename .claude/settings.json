@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\":\"🔴 TASK GATE — 30秒回答：\\nQ1 什么任务→什么skill？\\nQ2 什么模板/积木？（_blocks/ _skills/routes/ _context/）\\nQ3 改什么文件？（活代码functions/api/ 死文件_legacy/）\\n\\n答不出来 = 不许开工。读 _skills/task-gate.md\"}'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\":\"⏸ 暂停 — 你回答了 Q1/Q2/Q3 吗？读 _skills/task-gate.md\"}'",
+            "once": true
+          }
+        ]
+      }
+    ]
+  }
+}
