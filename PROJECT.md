@@ -96,6 +96,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [ ] **创作中心后端 API** — /api/create-task, task-status, task-result, my-tasks（当前 MVP 用 localStorage 模拟）
 - [ ] **success.html → creator.html token 集成**
 - [ ] **大神工具页** — 待建
+- [x] **大神工具页 tools.html** — 完成。6条生产线公开橱窗页，每条标注Skill链+模板积木。全站38页nav同步更新。
 
 ## Completed (2026-06-10)
 

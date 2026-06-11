@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大神工具 · 用AI看图作图</title>
+<meta name="description" content="6条AI内容生产线。从话题到成品，每条线严格走指定Skill和模板。">
+<link rel="icon" type="image/png" href="自己2026.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#faf9f6;--ink:#1a1814;--ink-muted:#5a5650;--ink-faint:#8a8580;
+  --gold:#b8925a;--gold-dark:#8B6E3C;
+  --border:rgba(26,24,20,.10);--border-lt:rgba(26,24,20,.06);
+  --serif:'Noto Serif JP',serif;--sans:'Noto Sans JP',sans-serif;
+  --s-xs:8px;--s-sm:12px;--s-md:16px;--s-lg:24px;--s-xl:32px;--s-2xl:48px;--s-3xl:64px;--s-4xl:96px;
+  --t-caption:12px;--t-small:14px;--t-body:16px;--t-lead:20px;--t-h3:25px;--t-h2:31px;--t-h1:39px;
+  --wechat:#07C160;--xhs:#FF2442;--moments:var(--gold);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:var(--t-body);line-height:1.7;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+.lang-content.cn{display:block}
+.lang-content.jp{display:none}
+body.show-jp .lang-content.cn{display:none}
+body.show-jp .lang-content.jp{display:block}
+
+/* Nav — same as creator.html */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 60px;display:flex;justify-content:space-between;align-items:center;
+  background:rgba(250,249,246,.94);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:var(--serif);font-size:15px;letter-spacing:.12em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav-links{display:flex;gap:28px;align-items:center;list-style:none}
+.nav-links a{font-size:var(--t-caption);color:var(--ink-muted);text-decoration:none;letter-spacing:.06em;transition:color .2s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-cta{font-size:var(--t-caption);font-weight:500;letter-spacing:.1em;padding:9px 22px;background:var(--gold);color:#fff;border:none;border-radius:2px;cursor:pointer;text-decoration:none;transition:background .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--gold-dark)}
+.lang-switch{display:flex;gap:6px;margin-left:12px}
+.lang-switch button{background:none;border:1px solid var(--border);border-radius:20px;padding:3px 10px;cursor:pointer;font-size:10px;font-family:var(--sans);color:var(--ink-muted);transition:all .2s}
+.lang-switch button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.menu-toggle{display:none;background:none;border:1px solid var(--border);padding:6px 12px;font-size:16px;cursor:pointer;color:var(--ink);font-family:var(--sans)}
+
+/* Hero */
+.hero{padding:160px 60px 80px;text-align:center;max-width:860px;margin:0 auto}
+.hero-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:var(--s-md)}
+.hero h1{font-family:var(--serif);font-size:var(--t-h1);font-weight:400;line-height:1.35;margin-bottom:var(--s-md)}
+.hero .lead{font-size:var(--t-lead);color:var(--ink-muted);line-height:1.9;max-width:580px;margin:0 auto}
+.hero .lead em{font-style:normal;color:var(--gold)}
+
+/* Pipeline Flow */
+.pipeline-strip{max-width:1080px;margin:0 auto var(--s-4xl);padding:0 var(--s-xl)}
+.pipeline-group{margin-bottom:var(--s-3xl)}
+.pipeline-label{font-size:var(--t-caption);font-weight:500;letter-spacing:.14em;color:var(--ink-faint);margin-bottom:var(--s-lg);padding-left:var(--s-xs)}
+.pipeline-label span{font-size:10px;font-weight:400;letter-spacing:.08em;color:var(--ink-faint)}
+.pipeline-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-sm)}
+
+/* Card */
+.pipe-card{
+  background:#fff;border:1px solid var(--border-lt);
+  padding:var(--s-2xl) var(--s-lg) var(--s-lg);
+  display:flex;flex-direction:column;gap:var(--s-md);
+  position:relative;overflow:hidden;
+  transition:all .25s ease-out;
+}
+.pipe-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;transition:width .25s}
+.pipe-card.wx::before{background:var(--wechat)}
+.pipe-card.mm::before{background:var(--moments)}
+.pipe-card.xh::before{background:var(--xhs)}
+.pipe-card:hover{transform:translateY(-2px);box-shadow:0 4px 24px rgba(26,24,20,.10);border-color:var(--border)}
+.pipe-card:hover::before{width:6px}
+
+.card-top{display:flex;align-items:center;gap:var(--s-sm)}
+.card-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+.card-icon img,.card-icon svg{width:100%;height:100%}
+.card-mode{
+  font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 10px;border:1px solid var(--border);color:var(--ink-faint);
+  margin-left:auto;
+}
+.card-title{font-family:var(--serif);font-size:var(--t-lead);font-weight:600;color:var(--ink);line-height:1.3}
+.card-desc{font-size:var(--t-small);color:var(--ink-muted);line-height:1.7;flex:1}
+
+/* Skill chain */
+.card-chain{margin-top:auto;padding-top:var(--s-md);border-top:1px solid var(--border-lt)}
+.chain-label{font-size:10px;font-weight:500;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:var(--s-xs)}
+.chain-flow{display:flex;flex-wrap:wrap;align-items:center;gap:4px}
+.chain-skill{font-size:var(--t-caption);color:var(--ink-muted);padding:2px 8px;background:rgba(26,24,20,.03);white-space:nowrap}
+.chain-arrow{font-size:10px;color:var(--ink-faint);margin:0 -2px}
+.card-template{font-size:var(--t-caption);color:var(--gold);font-family:var(--serif);margin-top:var(--s-xs)}
+
+/* CTA */
+.cta-strip{text-align:center;padding:0 var(--s-xl) var(--s-4xl)}
+.cta-strip p{font-size:var(--t-body);color:var(--ink-muted);margin-bottom:var(--s-lg)}
+.cta-btn{display:inline-block;padding:16px 40px;background:var(--ink);color:#fff;font-family:var(--sans);font-size:var(--t-body);font-weight:500;letter-spacing:.06em;text-decoration:none;transition:background .2s}
+.cta-btn:hover{background:#333}
+
+/* Footer — same as creator.html */
+footer-wrap{width:100%;border-top:1px solid var(--border);margin-top:auto}
+footer{padding:var(--s-xl) 60px;text-align:center;font-size:var(--t-caption);color:var(--ink-faint);display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px;row-gap:8px}
+footer a{color:var(--ink-faint);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--gold)}
+footer .sep{color:var(--border);margin:0 4px;font-size:9px}
+
+@media(max-width:900px){
+  nav{padding:12px 20px}
+  .menu-toggle{display:block}
+  .nav-links{display:none}
+  .hero{padding:120px 20px 48px}
+  .hero h1{font-size:var(--t-h2)}
+  .pipeline-grid{grid-template-columns:1fr}
+  .pipe-card{flex-direction:row;flex-wrap:wrap;padding:var(--s-lg)}
+  .pipe-card .card-top{width:100%}
+  .pipe-card .card-title{font-size:var(--t-body);flex:1}
+  .pipe-card .card-desc{width:100%;font-size:var(--t-caption)}
+  .pipe-card .card-chain{width:100%}
+  footer{padding:var(--s-lg) 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">用AI看图作图</a>
+  <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
+  <ul class="nav-links">
+    <li><a href="tools.html" class="active"><span class="lang-content cn">大神工具</span><span class="lang-content jp">大神ツール</span></a></li>
+    <li><a href="insights.html"><span class="lang-content cn">大神文章</span><span class="lang-content jp">大神文章</span></a></li>
+    <li><a href="prompts/index.html"><span class="lang-content cn">大神提示词</span><span class="lang-content jp">大神プロンプト</span></a></li>
+    <li><a href="index.html#pricing"><span class="lang-content cn">定价</span><span class="lang-content jp">料金</span></a></li>
+    <li class="lang-switch">
+      <button onclick="if(typeof switchLang==='function')switchLang('cn')" class="active">中文</button>
+      <button onclick="if(typeof switchLang==='function')switchLang('jp')">日本語</button>
+    </li>
+  </ul>
+  <a class="nav-cta" href="index.html#pricing"><span class="lang-content cn">立即订阅</span><span class="lang-content jp">今すぐ購読</span></a>
+</nav>
+
+<section class="hero">
+  <p class="hero-label"><span class="lang-content cn">6 条 AI 内容生产线</span><span class="lang-content jp">6 つの AI コンテンツ生産ライン</span></p>
+  <h1><span class="lang-content cn">每条线都指定了 <em>Skill</em> 和 <em>模板</em>，不是随便跑。</span><span class="lang-content jp">各ラインに <em>Skill</em> と <em>テンプレート</em> を指定。適当に回すものではありません。</span></h1>
+  <p class="lead"><span class="lang-content cn">从话题到成品，每一步都走固定管线。公众号 / 小红书 / 朋友圈，从0写或参考某文——选了入口，后面的 Skill 链就定死了。</span><span class="lang-content jp">トピックから完成品まで、全ステップ固定パイプライン。公众号 / 小紅書 / 朋友圈、ゼロから書くか記事を参考にするか——入口を選べば、後は Skill チェーンが決まっている。</span></p>
+</section>
+
+<section class="pipeline-strip">
+
+  <!-- Group: 从0开始 -->
+  <div class="pipeline-group">
+    <p class="pipeline-label">
+      <span class="lang-content cn">从 0 开始写</span><span class="lang-content jp">ゼロから書く</span>
+      <span>— scratch</span>
+    </p>
+    <div class="pipeline-grid">
+
+      <!-- 1. 公众号长文 -->
+      <div class="pipe-card wx">
+        <div class="card-top">
+          <div class="card-icon"><img src="assets/platform-icons/wechat.svg" alt=""></div>
+          <span class="card-mode">scratch</span>
+        </div>
+        <div class="card-title"><span class="lang-content cn">公众号长文</span><span class="lang-content jp">公众号長文</span></div>
+        <div class="card-desc"><span class="lang-content cn">话题 → 长文章 + 封面 + 微信排版 HTML。深度干货首选。</span><span class="lang-content jp">トピック → 長文 + カバー + WeChat HTML。深い内容に最適。</span></div>
+        <div class="card-chain">
+          <div class="chain-label">Skill 链</div>
+          <div class="chain-flow">
+            <span class="chain-skill">fragments</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">shape</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">ai-check</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">guizang</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">wewrite</span>
+          </div>
+          <div class="card-template">模板：editorial-card</div>
+        </div>
+      </div>
+
+      <!-- 2. 朋友圈图文 -->
+      <div class="pipe-card mm">
+        <div class="card-top">
+          <div class="card-icon"><img src="assets/platform-icons/moments.svg" alt=""></div>
+          <span class="card-mode">scratch</span>
+        </div>
+        <div class="card-title"><span class="lang-content cn">朋友圈图文</span><span class="lang-content jp">朋友圈画像＋文</span></div>
+        <div class="card-desc"><span class="lang-content cn">话题 → 短文案 + 配图。口语化，像跟朋友聊天。</span><span class="lang-content jp">トピック → 短文 + 画像。口語で、友達と話すように。</span></div>
+        <div class="card-chain">
+          <div class="chain-label">Skill 链</div>
+          <div class="chain-flow">
+            <span class="chain-skill">fragments</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">shape</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">qc</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">配图</span>
+          </div>
+          <div class="card-template">模板：swiss-card / cover-presets</div>
+        </div>
+      </div>
+
+      <!-- 3. 小红书滚图 -->
+      <div class="pipe-card xh">
+        <div class="card-top">
+          <div class="card-icon"><img src="assets/platform-icons/xiaohongshu.svg" alt=""></div>
+          <span class="card-mode">scratch</span>
+        </div>
+        <div class="card-title"><span class="lang-content cn">小红书滚图</span><span class="lang-content jp">小紅書カルーセル</span></div>
+        <div class="card-desc"><span class="lang-content cn">话题 → 5-8 张轮播图 + 发布文案。标题走 75 公式匹配。</span><span class="lang-content jp">トピック → 5-8枚の画像 + 投稿文。75公式から最適タイトルを選定。</span></div>
+        <div class="card-chain">
+          <div class="chain-label">Skill 链</div>
+          <div class="chain-flow">
+            <span class="chain-skill">fragments</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">shape</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">ai-check</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">xhs-title</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">配图</span>
+          </div>
+          <div class="card-template">模板：editorial-card / xhs-presets</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Group: 参考某文 -->
+  <div class="pipeline-group">
+    <p class="pipeline-label">
+      <span class="lang-content cn">参考某文改写</span><span class="lang-content jp">記事を参考に書く</span>
+      <span>— reference</span>
+    </p>
+    <div class="pipeline-grid">
+
+      <!-- 4. 公众号仿写 -->
+      <div class="pipe-card wx">
+        <div class="card-top">
+          <div class="card-icon"><img src="assets/platform-icons/wechat.svg" alt=""></div>
+          <span class="card-mode">reference</span>
+        </div>
+        <div class="card-title"><span class="lang-content cn">公众号仿写</span><span class="lang-content jp">公众号模寫</span></div>
+        <div class="card-desc"><span class="lang-content cn">文章 URL → 结构分析 → 3 选题 → 仿写。结构语气仿原文，内容用自己的。</span><span class="lang-content jp">記事URL → 構造分析 → 3选题 → 模寫。構造と語気は原文に、内容は自分で。</span></div>
+        <div class="card-chain">
+          <div class="chain-label">Skill 链</div>
+          <div class="chain-flow">
+            <span class="chain-skill">提取</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">edit-article</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">fragments</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">shape</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">ai-check</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">guizang</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">wewrite</span>
+          </div>
+          <div class="card-template">模板：editorial-card</div>
+        </div>
+      </div>
+
+      <!-- 5. 朋友圈改编 -->
+      <div class="pipe-card mm">
+        <div class="card-top">
+          <div class="card-icon"><img src="assets/platform-icons/moments.svg" alt=""></div>
+          <span class="card-mode">reference</span>
+        </div>
+        <div class="card-title"><span class="lang-content cn">朋友圈改编</span><span class="lang-content jp">朋友圈翻案</span></div>
+        <div class="card-desc"><span class="lang-content cn">原文 → 核心观点提取 → 口语化短文案。压缩到原文 20-30%。</span><span class="lang-content jp">原文 → コア抽出 → 口語短文。原文の20-30%に圧縮。</span></div>
+        <div class="card-chain">
+          <div class="chain-label">Skill 链</div>
+          <div class="chain-flow">
+            <span class="chain-skill">提取</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">edit-article</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">fragments</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">shape</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">qc</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">配图</span>
+          </div>
+          <div class="card-template">模板：swiss-card / cover-presets</div>
+        </div>
+      </div>
+
+      <!-- 6. 小红书仿写 -->
+      <div class="pipe-card xh">
+        <div class="card-top">
+          <div class="card-icon"><img src="assets/platform-icons/xiaohongshu.svg" alt=""></div>
+          <span class="card-mode">reference</span>
+        </div>
+        <div class="card-title"><span class="lang-content cn">小红书仿写</span><span class="lang-content jp">小紅書模寫</span></div>
+        <div class="card-desc"><span class="lang-content cn">原文 URL → 结构+视觉分析 → 仿写滚图。参考原文配图风格。</span><span class="lang-content jp">URL → 構造＋ビジュアル分析 → 模寫。原文の画像スタイルを参考に。</span></div>
+        <div class="card-chain">
+          <div class="chain-label">Skill 链</div>
+          <div class="chain-flow">
+            <span class="chain-skill">提取</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">edit-article</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">fragments</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">shape</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">ai-check</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">xhs-title</span><span class="chain-arrow">→</span>
+            <span class="chain-skill">配图</span>
+          </div>
+          <div class="card-template">模板：editorial-card / xhs-presets</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<section class="cta-strip">
+  <p><span class="lang-content cn">订阅后即可使用全部 6 条生产线，在创作中心选择入口开始。</span><span class="lang-content jp">購読後、全6ラインをご利用いただけます。創作センターで入口を選んで開始。</span></p>
+  <a class="cta-btn" href="index.html#pricing"><span class="lang-content cn">查看订阅方案</span><span class="lang-content jp">購読プランを見る</span></a>
+</section>
+
+<footer-wrap>
+<footer>
+  <span>© 2026 用AI看图作图</span>
+  <span class="sep">|</span>
+  <a href="https://www.snsaladdin.com/">SNS Aladdin</a>
+  <span class="sep">|</span>
+  <a href="tokushoho.html">特定商取引法に基づく表記</a>
+  <span class="sep">|</span>
+  <span>Community:</span>
+  <a href="mailto:info@snsaladdin.com" style="background:#2e7d32;color:#fff;padding:4px 12px;border-radius:20px;font-size:10px;text-decoration:none">Email 📮</a>
+  <a href="https://x.com/NaoraYoko" target="_blank" style="background:#2e7d32;color:#fff;padding:4px 12px;border-radius:20px;font-size:10px;text-decoration:none">X：Yoko｜Ai_shukyaku</a>
+  <span style="font-size:10px"><span class="lang-content cn">Line官方帳號</span><span class="lang-content jp">Line公式アカウント</span></span>
+  <div style="width:100%">
+    <img src="line-qr.png" alt="Line" style="width:80px;border-radius:6px;margin-top:8px">
+  </div>
+</footer>
+</footer-wrap>
+
+<script src="assets/js/main.js?v=7"></script>
+</body>
+</html>
