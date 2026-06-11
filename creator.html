@@ -485,6 +485,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
         <button class="btn-confirm-angle" onclick="confirmAngle('A')">A</button>
         <button class="btn-confirm-angle" onclick="confirmAngle('B')">B</button>
         <button class="btn-confirm-angle" onclick="confirmAngle('C')">C</button>
+        <button class="btn-skip" onclick="backToFragments()">← <span class="lang-content cn">返回素材</span><span class="lang-content jp">素材に戻る</span></button>
         <button class="btn-cancel" onclick="cancelTask()" style="margin-left:auto"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
       </div>
     </div>
@@ -500,7 +501,8 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       </div>
       <div style="display:flex;gap:var(--s-sm)">
         <button class="btn-confirm-angle" onclick="confirmTitle()"><span class="lang-content cn">确认标题，生成写作指令</span><span class="lang-content jp">題名を確定して執筆指示を生成</span></button>
-        <button class="btn-cancel" onclick="cancelTask()"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
+        <button class="btn-skip" onclick="backToAngle()">← <span class="lang-content cn">返回选题</span><span class="lang-content jp">选题に戻る</span></button>
+        <button class="btn-cancel" onclick="cancelTask()" style="margin-left:auto"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
       </div>
     </div>
 
@@ -816,17 +818,29 @@ function finishFragments() {
   if (idx < qs.length && answer) {
     fragState.collected.push({ q: qs[idx].q, qJP: qs[idx].qJP, a: answer });
   }
-  // Save fragments to task
   var tasks = getTasks();
   var task = tasks.find(function(t) { return t.id === fragState.taskId; });
   if (task) {
     task.fragments = fragState.collected.slice();
     saveTasks(tasks);
   }
-  // Move to angle step
+  showAngleStep();
+}
+
+function showAngleStep() {
   document.getElementById('fragmentsStep').classList.add('hidden');
+  document.getElementById('titleStep').classList.add('hidden');
+  document.getElementById('resultWrap').classList.add('hidden');
   updatePipelineStep(3);
   document.getElementById('angleStep').classList.remove('hidden');
+}
+
+function backToFragments() {
+  document.getElementById('angleStep').classList.add('hidden');
+  document.getElementById('titleStep').classList.add('hidden');
+  updatePipelineStep(2);
+  document.getElementById('fragmentsStep').classList.remove('hidden');
+  showCurrentQuestion();
 }
 
 function updatePipelineStep(n) {
@@ -836,6 +850,12 @@ function updatePipelineStep(n) {
     if (i < n) el.classList.add('done');
     if (i === n) el.classList.add('active');
   }
+}
+
+function backToAngle() {
+  document.getElementById('titleStep').classList.add('hidden');
+  updatePipelineStep(3);
+  document.getElementById('angleStep').classList.remove('hidden');
 }
 
 function confirmAngle(label) {
