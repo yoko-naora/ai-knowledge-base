@@ -4,6 +4,7 @@ These were the original Netlify Functions (`.mjs` format).
 Migrated to Cloudflare Pages → `functions/api/*.js` on 2026-05-22.
 
 ## Files
+- `netlify.toml` — Netlify build config (Cloudflare uses `_headers` + `_redirects` instead)
 - `functions/admin-customers.mjs`
 - `functions/check-subscription.mjs`
 - `functions/send-lead-email.mjs`
