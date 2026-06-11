@@ -551,6 +551,7 @@ function renderStep1(content,actions){
       entryCard('moments','ref','朋友圈改编','朋友圈翻案','原文→口语化短文案','原文→口語短文に翻案',isJP)+
       entryCard('xhs','ref','小红书仿写','小紅書模寫','URL→仿写滚图','URL→小紅書風に模寫',isJP)+
     '</div></div>'+
+    '<p style="font-size:var(--t-caption);color:var(--ink-faint);margin-bottom:var(--s-xs)" id="inputHint">'+(isJP?'トピックを入力':'输入话题')+'</p>'+
     '<p style="font-size:var(--t-caption);color:var(--ink-faint);margin-bottom:var(--s-xs)">'+(isJP?'スタイル':'风格')+'</p>'+
     '<div class="input-row">'+
       '<textarea id="topicInput" placeholder="'+(isJP?'例：一人企業がAIでコンテンツ集客する方法':'例：一人企业如何用AI做内容获客')+'"></textarea>'+
@@ -579,6 +580,17 @@ function selectEntry(card){
   card.classList.add('selected');
   S.platform=card.dataset.platform;S.mode=card.dataset.mode;
   document.getElementById('btnSubmit').disabled=false;
+  /* Update input placeholder based on mode */
+  var isJP=jp(),input=document.getElementById('topicInput'),hint=document.getElementById('inputHint');
+  if(card.dataset.mode==='ref'){
+    input.placeholder=isJP?'参考記事のURLを貼り付けるか、記事本文を直接貼り付けてください...':'粘贴参考文章URL，或直接把文章内容贴进来...';
+    input.style.minHeight='120px';
+    if(hint)hint.textContent=isJP?'参考記事のURL または 本文':'参考文章 URL 或直接贴文章';
+  }else{
+    input.placeholder=isJP?'例：一人企業がAIでコンテンツ集客する方法':'例：一人企业如何用AI做内容获客';
+    input.style.minHeight='88px';
+    if(hint)hint.textContent=isJP?'トピックを入力':'输入话题';
+  }
 }
 function submitStep1(){
   var topic=document.getElementById('topicInput').value.trim();
@@ -586,7 +598,12 @@ function submitStep1(){
   var style=document.getElementById('styleSelect').value;
   updateTask(S.taskId,{platform:S.platform,mode:S.mode,topic:topic,style:style});
   S.totalSteps=S.platform==='wechat'?7:6;
-  actionNext(2);
+  if(S.mode==='ref'){
+    /* Run client-side analysis then go to step 2 */
+    renderAnalysisStep(document.getElementById('stepContent'),document.getElementById('wizActions'));
+  }else{
+    actionNext(2);
+  }
 }
 function restoreStep1(){
   var t=getTask(S.taskId);if(!t||!t.platform)return;
@@ -595,6 +612,69 @@ function restoreStep1(){
   document.getElementById('styleSelect').value=t.style||'magazine';
   var card=document.querySelector('.entry-card[data-platform="'+t.platform+'"][data-mode="'+t.mode+'"]');
   if(card){card.classList.add('selected');document.getElementById('btnSubmit').disabled=false;}
+}
+
+/* ── Article Analysis Step (ref mode only) ── */
+function analyzeArticle(text){
+  var isURL=/^https?:\/\//.test(text);
+  var paras=text.split(/\n\n+/).filter(function(p){return p.trim();});
+  var words=text.replace(/\s/g,'').length;
+  var sentences=text.split(/[。！？.!?\n]/).filter(function(s){return s.trim();});
+  var avgSentenceLen=sentences.length?Math.round(words/sentences.length):0;
+  /* Tone detection */
+  var informal=text.match(/[嘛啦吧呢哈呀哎哦哇]/g)||[];
+  var formal=text.match(/[笔者认为综上所述由此可见]/g)||[];
+  var tone=informal.length>formal.length*2?'口语化':formal.length>informal.length*2?'正式':'适中';
+  /* Structure guess */
+  var headers=text.match(/^#{1,3}\s.+|^【.+】|^\d+[\.、]/gm)||[];
+  var structure=headers.length>=4?'有清晰分段结构':headers.length>=2?'有基本分段':'无明显分段结构';
+  /* Key phrases */
+  var keyPhrases=text.match(/「[^」]+」|"[^"]+"/g)||[];
+  return {
+    isURL:isURL,wordCount:words,paraCount:paras.length,
+    sentenceCount:sentences.length,avgSentenceLen:avgSentenceLen,
+    tone:tone,structure:structure,headers:headers.slice(0,5),
+    keyPhrases:keyPhrases.slice(0,5)
+  };
+}
+function renderAnalysisStep(content,actions){
+  var isJP=jp(),t=getTask(S.taskId);
+  var text=t?t.topic:'';
+  var analysis=analyzeArticle(text);
+  content.innerHTML='<h3 class="step-title">'+(isJP?'記事分析結果':'文章分析结果')+'</h3>'+
+    '<p class="step-desc">'+(isJP?'入力された記事を分析しました。以下の結果を元に質問を進めます。':'已分析你的文章。以下是分析结果，将据此提问。')+'</p>'+
+    '<div style="background:#fff;border:1px solid var(--border);padding:var(--s-lg);margin-bottom:var(--s-lg)">'+
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-md);margin-bottom:var(--s-md)">'+
+        '<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'文字数':'字数')+'</span><br><strong>'+analysis.wordCount+'</strong></div>'+
+        '<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'段落':'段落')+'</span><br><strong>'+analysis.paraCount+'</strong></div>'+
+        '<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'平均文長':'平均句长')+'</span><br><strong>'+analysis.avgSentenceLen+(isJP?'字':'字')+'</strong></div>'+
+        '<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'語調':'语气')+'</span><br><strong>'+(isJP?(analysis.tone==='口语化'?'口語':analysis.tone==='正式'?'フォーマル':'中間'):analysis.tone)+'</strong></div>'+
+        '<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'構成':'结构')+'</span><br><strong>'+(isJP?(analysis.structure.indexOf('清晰')>=0?'明確な構成':analysis.structure.indexOf('基本')>=0?'基本的な構成':'構成が不明瞭'):analysis.structure)+'</strong></div>'+
+        '<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'タイプ':'类型')+'</span><br><strong>'+(analysis.isURL?(isJP?'URL':'链接'):(isJP?'テキスト':'文本'))+'</strong></div>'+
+      '</div>'+
+      (analysis.headers.length?'<div style="margin-bottom:var(--s-xs)"><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'検出された見出し:':'检测到的标题:')+'</span><br><span style="font-size:var(--t-small)">'+analysis.headers.join(' · ')+'</span></div>':'')+
+      (analysis.keyPhrases.length?'<div><span style="font-size:var(--t-caption);color:var(--ink-faint)">'+(isJP?'キーフレーズ:':'关键短语:')+'</span><br><span style="font-size:var(--t-small)">'+analysis.keyPhrases.join(' · ')+'</span></div>':'')+
+    '</div>'+
+    '<p style="font-size:var(--t-caption);color:var(--ink-faint)">'+
+      (isJP?'※ 分析結果はブラウザ内で処理されました。より深い分析は「記事をClaudeに分析させる」ボタンで。':'※ 以上为浏览器本地分析。深度分析请点「交给Claude分析文章」按钮。')+
+    '</p>';
+  actions.innerHTML='<button class="btn-back" onclick="actionBack(1)">← '+(isJP?'入力に戻る':'返回输入')+'</button>'+
+    '<button class="btn-outline" onclick="copyForClaudeAnalysis()">🤖 '+(isJP?'Claudeに記事分析を依頼':'交给Claude分析文章')+'</button>'+
+    '<button class="btn-next" onclick="actionNext(2)">'+(isJP?'分析結果で質問を続ける →':'用分析结果继续提问 →')+'</button>'+
+    '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
+  /* Store analysis in task */
+  updateTask(S.taskId,{articleAnalysis:analysis});
+}
+function copyForClaudeAnalysis(){
+  var t=getTask(S.taskId);
+  var prompt=(jp()?'【記事分析依頼】\n':'【文章分析请求】\n')+
+    (jp()?'以下の記事をedit-articleスキルで分析してください：\n\n':'请用edit-article技能分析以下文章：\n\n')+
+    (t?t.topic:'')+'\n\n'+
+    (jp()?'分析項目：構造/語調/リズム/配图スタイル':'分析项：结构/语气/节奏/配图风格');
+  var ta=document.createElement('textarea');ta.value=prompt;ta.style.cssText='position:fixed;top:0;left:0;width:100%;height:200px;z-index:9999';
+  document.body.appendChild(ta);ta.select();
+  alert(jp()?'分析依頼をコピーしました。Claudeに貼り付けて分析を依頼してください。':'分析请求已复制。粘贴到Claude，请它深度分析。');
+  document.body.removeChild(ta);
 }
 
 /* ── Step 2: Fragments ── */
