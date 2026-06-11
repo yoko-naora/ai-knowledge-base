@@ -256,6 +256,8 @@ Full test manual: `TEST.md`.
 
 **Why `_legacy/` instead of direct delete:** git can restore deleted files, but only if you know what to restore. The 2-week quarantine gives all agents (and humans) time to discover hidden dependencies.
 
+**Enforcement:** `.git/hooks/pre-commit` blocks commits when a `DELETE-AFTER-*` date has passed. On fresh clone, run: `cp scripts/pre-commit-check-legacy.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit`
+
 ### 任务分配规则
 > ⚠️ **待定** — 三端如何拆分任务、避免冲突，稍后讨论追加。
 
