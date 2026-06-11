@@ -162,6 +162,31 @@ main{flex:1;max-width:920px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .fragments-result .btn-copy-all{padding:12px var(--s-xl);background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-small);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s;margin-top:var(--s-xl)}
 .fragments-result .btn-copy-all:hover{background:#333}
 
+/* ── Pipeline Step Indicator ── */
+.pipeline-steps{display:flex;gap:0;margin-bottom:var(--s-2xl);border-bottom:1px solid var(--border);padding-bottom:var(--s-lg)}
+.pipeline-step{flex:1;text-align:center;position:relative;font-size:var(--t-caption);color:var(--ink-faint);letter-spacing:.04em;padding:0 var(--s-xs)}
+.pipeline-step .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);margin:0 auto var(--s-xs)}
+.pipeline-step.done .step-dot{background:var(--gold)}
+.pipeline-step.active .step-dot{background:var(--ink);box-shadow:0 0 0 4px rgba(26,24,20,.06)}
+.pipeline-step.active{color:var(--ink);font-weight:500}
+
+/* ── Angle Step ── */
+.angle-inputs{display:flex;flex-direction:column;gap:var(--s-md);margin-bottom:var(--s-lg)}
+.angle-row{display:flex;align-items:flex-start;gap:var(--s-sm)}
+.angle-row .angle-label{font-family:var(--serif);font-size:var(--t-small);color:var(--gold);min-width:48px;padding-top:14px}
+.angle-row textarea{flex:1;min-height:56px;padding:var(--s-sm) var(--s-md);border:1px solid var(--border);background:#fff;font-family:var(--sans);font-size:var(--t-body);line-height:1.6;outline:none;resize:vertical;transition:border-color .2s}
+.angle-row textarea:focus{border-color:var(--gold)}
+.angle-select-hint{font-size:var(--t-small);color:var(--ink-muted);margin-bottom:var(--s-lg)}
+.btn-confirm-angle{padding:14px var(--s-2xl);background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-body);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s}
+.btn-confirm-angle:hover{background:#333}
+.btn-confirm-angle:disabled{background:var(--ink-faint);cursor:not-allowed}
+
+/* ── Title Step ── */
+.title-input-row{display:flex;gap:var(--s-sm);align-items:flex-start;margin-bottom:var(--s-lg)}
+.title-input-row input{flex:1;padding:14px var(--s-md);border:1px solid var(--border);background:#fff;font-family:var(--serif);font-size:var(--t-lead);outline:none;transition:border-color .2s}
+.title-input-row input:focus{border-color:var(--gold)}
+.title-input-row input::placeholder{color:var(--ink-faint);font-family:var(--sans);font-size:var(--t-body)}
+
 /* ── Status ── */
 .status-wrap{padding:var(--s-4xl) 0;text-align:center}
 .status-wrap.hidden{display:none}
@@ -408,6 +433,15 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <button class="btn-cancel" onclick="cancelTask()"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
     </div>
 
+    <!-- Pipeline Steps Indicator -->
+    <div class="pipeline-steps hidden" id="pipelineSteps">
+      <div class="pipeline-step done" id="step1"><div class="step-dot"></div><span class="lang-content cn">输入</span><span class="lang-content jp">入力</span></div>
+      <div class="pipeline-step active" id="step2"><div class="step-dot"></div><span class="lang-content cn">素材</span><span class="lang-content jp">素材</span></div>
+      <div class="pipeline-step" id="step3"><div class="step-dot"></div><span class="lang-content cn">选题</span><span class="lang-content jp">选题</span></div>
+      <div class="pipeline-step" id="step4"><div class="step-dot"></div><span class="lang-content cn">标题</span><span class="lang-content jp">題名</span></div>
+      <div class="pipeline-step" id="step5"><div class="step-dot"></div><span class="lang-content cn">生成</span><span class="lang-content jp">生成</span></div>
+    </div>
+
     <!-- Fragments Step -->
     <div class="fragments-step hidden" id="fragmentsStep">
       <div class="fragments-header">
@@ -424,6 +458,49 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <div class="fragments-collected" id="fragCollected">
         <p class="fragments-collected-label"><span class="lang-content cn">已收集</span><span class="lang-content jp">収集済み</span> (<span id="fragCount">0</span>)</p>
         <div id="fragList"></div>
+      </div>
+    </div>
+
+    <!-- Angle Step -->
+    <div class="fragments-step hidden" id="angleStep">
+      <div class="fragments-header">
+        <p class="fragments-progress"><span class="lang-content cn">选题确认 · 写3个角度，选1个</span><span class="lang-content jp">选题確認 · 3つの角度を書いて1つ選ぶ</span></p>
+      </div>
+      <div class="angle-inputs">
+        <div class="angle-row">
+          <span class="angle-label">A</span>
+          <textarea id="angleA" placeholder="角度A..."></textarea>
+        </div>
+        <div class="angle-row">
+          <span class="angle-label">B</span>
+          <textarea id="angleB" placeholder="角度B..."></textarea>
+        </div>
+        <div class="angle-row">
+          <span class="angle-label">C</span>
+          <textarea id="angleC" placeholder="角度C..."></textarea>
+        </div>
+      </div>
+      <p class="angle-select-hint"><span class="lang-content cn">选一个角度 →</span><span class="lang-content jp">1つ選んで →</span></p>
+      <div style="display:flex;gap:var(--s-sm);flex-wrap:wrap">
+        <button class="btn-confirm-angle" onclick="confirmAngle('A')">A</button>
+        <button class="btn-confirm-angle" onclick="confirmAngle('B')">B</button>
+        <button class="btn-confirm-angle" onclick="confirmAngle('C')">C</button>
+        <button class="btn-cancel" onclick="cancelTask()" style="margin-left:auto"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
+      </div>
+    </div>
+
+    <!-- Title Step -->
+    <div class="fragments-step hidden" id="titleStep">
+      <div class="fragments-header">
+        <p class="fragments-progress"><span class="lang-content cn">起标题</span><span class="lang-content jp">題名をつける</span></p>
+        <p class="fragments-question"><span class="lang-content cn">给你的文章起一个标题</span><span class="lang-content jp">記事の題名をつけてください</span></p>
+      </div>
+      <div class="title-input-row">
+        <input type="text" id="titleInput" placeholder="例：大雨天，为什么我偏要喝这杯「咖啡奶茶」">
+      </div>
+      <div style="display:flex;gap:var(--s-sm)">
+        <button class="btn-confirm-angle" onclick="confirmTitle()"><span class="lang-content cn">确认标题，生成写作指令</span><span class="lang-content jp">題名を確定して執筆指示を生成</span></button>
+        <button class="btn-cancel" onclick="cancelTask()"><span class="lang-content cn">取消</span><span class="lang-content jp">キャンセル</span></button>
       </div>
     </div>
 
@@ -644,6 +721,8 @@ function showFragmentsStep(taskId, platform, mode) {
   fragState.taskId = taskId;
   renderFragmentsList();
   showCurrentQuestion();
+  document.getElementById('pipelineSteps').classList.remove('hidden');
+  updatePipelineStep(2);
   document.getElementById('fragmentsStep').classList.remove('hidden');
 }
 
@@ -718,6 +797,9 @@ function cancelTask() {
   var tasks = getTasks(), task = tasks.find(function(t) { return t.id === state.currentTaskId; });
   if (task) { task.status = 'cancelled'; saveTasks(tasks); }
   document.getElementById('fragmentsStep').classList.add('hidden');
+  document.getElementById('angleStep').classList.add('hidden');
+  document.getElementById('titleStep').classList.add('hidden');
+  document.getElementById('pipelineSteps').classList.add('hidden');
   document.getElementById('btnNew').disabled = false;
   state.currentTaskId = null;
   renderDocList(); document.getElementById('docList').classList.remove('hidden');
@@ -730,15 +812,64 @@ function finishFragments() {
   if (idx < qs.length && answer) {
     fragState.collected.push({ q: qs[idx].q, qJP: qs[idx].qJP, a: answer });
   }
-  document.getElementById('fragmentsStep').classList.add('hidden');
+  // Save fragments to task
   var tasks = getTasks();
   var task = tasks.find(function(t) { return t.id === fragState.taskId; });
   if (task) {
-    task.status = 'done';
-    task.completedAt = new Date().toISOString();
     task.fragments = fragState.collected.slice();
     saveTasks(tasks);
   }
+  // Move to angle step
+  document.getElementById('fragmentsStep').classList.add('hidden');
+  updatePipelineStep(3);
+  document.getElementById('angleStep').classList.remove('hidden');
+}
+
+function updatePipelineStep(n) {
+  for (var i = 1; i <= 5; i++) {
+    var el = document.getElementById('step' + i);
+    el.classList.remove('done', 'active');
+    if (i < n) el.classList.add('done');
+    if (i === n) el.classList.add('active');
+  }
+}
+
+function confirmAngle(label) {
+  var angles = {
+    A: document.getElementById('angleA').value.trim(),
+    B: document.getElementById('angleB').value.trim(),
+    C: document.getElementById('angleC').value.trim()
+  };
+  var selected = angles[label];
+  if (!selected) return;
+  var tasks = getTasks();
+  var task = tasks.find(function(t) { return t.id === fragState.taskId; });
+  if (task) {
+    task.angles = angles;
+    task.selectedAngle = label;
+    task.selectedAngleText = selected;
+    saveTasks(tasks);
+  }
+  document.getElementById('angleStep').classList.add('hidden');
+  updatePipelineStep(4);
+  document.getElementById('titleStep').classList.remove('hidden');
+  document.getElementById('titleInput').focus();
+}
+
+function confirmTitle() {
+  var title = document.getElementById('titleInput').value.trim();
+  if (!title) return;
+  var tasks = getTasks();
+  var task = tasks.find(function(t) { return t.id === fragState.taskId; });
+  if (task) {
+    task.title = title;
+    task.status = 'done';
+    task.completedAt = new Date().toISOString();
+    saveTasks(tasks);
+  }
+  document.getElementById('titleStep').classList.add('hidden');
+  document.getElementById('pipelineSteps').classList.add('hidden');
+  updatePipelineStep(5);
   state.currentTaskId = null;
   document.getElementById('btnNew').disabled = false;
   showResult(fragState.taskId);
@@ -760,15 +891,30 @@ function showResult(taskId) {
   badge.className = 'result-badge ' + task.platform;
   badge.innerHTML = '<img src="' + icons[task.platform] + '" alt="">' + pNames[task.platform];
 
-  // Show fragments result if available
+  // Show pipeline result
   if (task.fragments && task.fragments.length > 0) {
-    var html = '<div class="fragments-result"><div class="topic-line">' + task.topic + '</div>';
+    var html = '<div class="fragments-result">';
+    // Topic
+    html += '<h2 style="font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-xs)">' + (isJP ? 'トピック' : '话题') + '</h2>';
+    html += '<p style="font-size:var(--t-body);margin-bottom:var(--s-2xl)">' + task.topic + '</p>';
+    // Selected angle
+    if (task.selectedAngle && task.selectedAngleText) {
+      html += '<h2 style="font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-xs)">' + (isJP ? '選んだ角度' : '选定角度') + ' (' + task.selectedAngle + ')</h2>';
+      html += '<p style="font-size:var(--t-body);margin-bottom:var(--s-2xl)">' + task.selectedAngleText + '</p>';
+    }
+    // Title
+    if (task.title) {
+      html += '<h2 style="font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-xs)">' + (isJP ? '題名' : '标题') + '</h2>';
+      html += '<p style="font-family:var(--serif);font-size:var(--t-lead);font-weight:600;margin-bottom:var(--s-2xl)">' + task.title + '</p>';
+    }
+    // Fragments
+    html += '<h2 style="font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-sm)">' + (isJP ? '素材' : '素材') + '</h2>';
     task.fragments.forEach(function(f, i) {
       html += '<div class="qa-block"><div class="qa-q">' + (i + 1) + '. ' + (isJP ? (f.qJP || f.q) : f.q) + '</div><div class="qa-a">' + f.a + '</div></div>';
     });
-    html += '<button class="btn-copy-all" onclick="startWriting()" style="font-size:var(--t-body);padding:16px 48px">' + (isJP ? '文章を書き始める →' : '开始写文章 →') + '</button></div>';
+    html += '<button class="btn-copy-all" onclick="startWriting()" style="font-size:var(--t-body);padding:16px 48px;margin-top:var(--s-2xl)">' + (isJP ? '文章を書き始める →' : '开始写文章 →') + '</button></div>';
     document.getElementById('resultContent').innerHTML = html;
-    document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? '次のステップ' : '下一步') + '</p><p style="font-size:var(--t-small);color:var(--ink-muted)">' + (isJP ? 'ボタンを押すと、Claude / Codex 用の執筆指示がコピーされます。' : '点击按钮，复制写作指令到 Claude/Codex 开始写文章。') + '</p>';
+    document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? '次のステップ' : '下一步') + '</p><p style="font-size:var(--t-small);color:var(--ink-muted)">' + (isJP ? 'ボタンを押すと、全工程の素材＋选题＋題名がコピーされ、Claude / Codex で文章化できます。' : '点击按钮复制全部：话题+选题+标题+素材，粘贴到 Claude/Codex 开始写文章。') + '</p>';
     return;
   }
 
@@ -887,8 +1033,14 @@ function startWriting() {
     prompt += '\nQ' + (i + 1) + ': ' + (isJP ? (f.qJP || f.q) : f.q) + '\n';
     prompt += 'A' + (i + 1) + ': ' + f.a + '\n';
   });
+  if (task.selectedAngle && task.selectedAngleText) {
+    prompt += '\n' + (isJP ? '【選んだ角度】' : '【选定角度】') + '\n' + task.selectedAngleText + '\n';
+  }
+  if (task.title) {
+    prompt += '\n' + (isJP ? '【題名】' : '【标题】') + '\n' + task.title + '\n';
+  }
   prompt += '\n---\n';
-  prompt += (isJP ? '上の素材を使って、writing-shape で「' : '请用 writing-shape 把以上素材写成「') + pName[task.platform] + (isJP ? '」を書いてください。' : '」。');
+  prompt += (isJP ? '上の素材＋选题＋題名を使って、writing-shape で「' : '请用 writing-shape 把以上素材+选题+标题写成「') + pName[task.platform] + (isJP ? '」を書いてください。' : '」。');
 
   navigator.clipboard.writeText(prompt).then(function() {
     alert(isJP ? '執筆指示をコピーしました！Claude / Codex に貼り付けて文章を書いてもらってください。' : '写作指令已复制！打开 Claude Code，粘贴即可开始写文章。');
