@@ -1066,9 +1066,16 @@ function startWriting() {
   prompt += '\n---\n';
   prompt += (isJP ? '上の素材＋选题＋題名を使って、writing-shape で「' : '请用 writing-shape 把以上素材+选题+标题写成「') + pName[task.platform] + (isJP ? '」を書いてください。' : '」。');
 
-  navigator.clipboard.writeText(prompt).then(function() {
-    alert(isJP ? '執筆指示をコピーしました！Claude / Codex に貼り付けて文章を書いてもらってください。' : '写作指令已复制！打开 Claude Code，粘贴即可开始写文章。');
-  });
+  // Show prompt directly (file:// blocks clipboard API)
+  var resultContent = document.getElementById('resultContent');
+  var isJP2 = document.body.classList.contains('show-jp');
+  var html = resultContent.innerHTML;
+  html += '<div style="margin-top:var(--s-2xl);padding:var(--s-lg);background:rgba(26,24,20,.02);border:1px solid var(--border);font-family:monospace;font-size:var(--t-small);line-height:1.8;white-space:pre-wrap;max-height:400px;overflow-y:auto">' + prompt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</div>';
+  html += '<p style="font-size:var(--t-caption);color:var(--ink-faint);margin-top:var(--s-sm)">' + (isJP2 ? '↑ 上の指示をコピーして Claude / Codex に貼り付けてください。' : '↑ 复制上面的指令，粘贴到 Claude Code 开始写文章。') + '</p>';
+  resultContent.innerHTML = html;
+  document.querySelector('.btn-copy-all').style.display = 'none';
+  // Also try clipboard as fallback
+  try { navigator.clipboard.writeText(prompt); } catch(e) {}
 }
 
 document.addEventListener('langchange', function() {
