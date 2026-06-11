@@ -766,9 +766,9 @@ function showResult(taskId) {
     task.fragments.forEach(function(f, i) {
       html += '<div class="qa-block"><div class="qa-q">' + (i + 1) + '. ' + (isJP ? (f.qJP || f.q) : f.q) + '</div><div class="qa-a">' + f.a + '</div></div>';
     });
-    html += '<button class="btn-copy-all" onclick="copyFragments()">' + (isJP ? '素材をコピー' : '复制全部素材') + '</button></div>';
+    html += '<button class="btn-copy-all" onclick="startWriting()" style="font-size:var(--t-body);padding:16px 48px">' + (isJP ? '文章を書き始める →' : '开始写文章 →') + '</button></div>';
     document.getElementById('resultContent').innerHTML = html;
-    document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? '次のステップ' : '下一步') + '</p><p style="font-size:var(--t-small);color:var(--ink-muted)">' + (isJP ? 'この素材をコピーして Claude / Codex に渡し、writing-shape で文章化してください。' : '复制这些素材，交给 Claude 或 Codex，用 writing-shape 写成文章。') + '</p>';
+    document.getElementById('resultFiles').innerHTML = '<p class="result-files-label">' + (isJP ? '次のステップ' : '下一步') + '</p><p style="font-size:var(--t-small);color:var(--ink-muted)">' + (isJP ? 'ボタンを押すと、Claude / Codex 用の執筆指示がコピーされます。' : '点击按钮，复制写作指令到 Claude/Codex 开始写文章。') + '</p>';
     return;
   }
 
@@ -869,17 +869,29 @@ function renderDocList() {
 
 function deleteDoc(taskId) { saveTasks(getTasks().filter(function(t) { return t.id !== taskId; })); renderDocList(); }
 
-function copyFragments() {
+function startWriting() {
   var tasks = getTasks(), task = tasks.find(function(t) { return t.id === state.viewingTaskId; });
   if (!task || !task.fragments) return;
   var isJP = document.body.classList.contains('show-jp');
-  var text = task.topic + '\n\n';
+  var pName = {wechat: (isJP?'公众号長文':'公众号长文'), xhs: (isJP?'小紅書カルーセル':'小红书滚图'), moments: (isJP?'朋友圈':'朋友圈')};
+  var modeName = task.mode === 'ref' ? (isJP?'参考記事から':'参考改写') : (isJP?'ゼロから':'从0开始');
+
+  // Build structured writing prompt
+  var prompt = (isJP ? '【執筆指示】\n' : '【写作指令】\n');
+  prompt += (isJP ? 'プラットフォーム: ' : '平台: ') + pName[task.platform] + '\n';
+  prompt += (isJP ? 'モード: ' : '模式: ') + modeName + '\n';
+  prompt += (isJP ? 'スタイル: ' : '风格: ') + task.style + '\n';
+  prompt += (isJP ? 'トピック: ' : '话题: ') + task.topic + '\n\n';
+  prompt += (isJP ? '【収集した素材】\n' : '【收集的素材】\n');
   task.fragments.forEach(function(f, i) {
-    text += 'Q' + (i + 1) + ': ' + (isJP ? (f.qJP || f.q) : f.q) + '\n';
-    text += 'A' + (i + 1) + ': ' + f.a + '\n\n';
+    prompt += '\nQ' + (i + 1) + ': ' + (isJP ? (f.qJP || f.q) : f.q) + '\n';
+    prompt += 'A' + (i + 1) + ': ' + f.a + '\n';
   });
-  navigator.clipboard.writeText(text).then(function() {
-    alert(isJP ? 'コピーしました！' : '已复制！');
+  prompt += '\n---\n';
+  prompt += (isJP ? '上の素材を使って、writing-shape で「' : '请用 writing-shape 把以上素材写成「') + pName[task.platform] + (isJP ? '」を書いてください。' : '」。');
+
+  navigator.clipboard.writeText(prompt).then(function() {
+    alert(isJP ? '執筆指示をコピーしました！Claude / Codex に貼り付けて文章を書いてもらってください。' : '写作指令已复制！打开 Claude Code，粘贴即可开始写文章。');
   });
 }
 
