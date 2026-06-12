@@ -282,12 +282,12 @@ function renderPrompt() {
     if (videoPrompt) {
       html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '🎬 视频提示词' : '🎬 動画プロンプト') + '</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div>' + copyBtnHtml + '</div>';
     }
-    if (text) {
+    if (text && text !== imagePrompt) {
       html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
     }
   } else if (hasImages && !hasVideo) {
     html += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="" loading="lazy"></div></div>';
-    if (text) {
+    if (text && text !== imagePrompt) {
       html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
     }
     html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📋 完整提示词' : '📋 プロンプト全文') + '</div><div class="prompt-content">';
@@ -296,6 +296,8 @@ function renderPrompt() {
     }
     if (realPrompt) {
       html += escapeHtml(realPrompt);
+    } else if (imagePrompt) {
+      html += escapeHtml(imagePrompt);
     } else {
       html += '<em>' + (isCn ? '提示词待补充' : 'プロンプト未補充') + '</em>';
     }
