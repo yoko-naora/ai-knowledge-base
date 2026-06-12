@@ -91,8 +91,19 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] Skill 同步基础设施修复：Hermes 50+ 损坏符号链接修复 + sync-skills.ps1 创建
 - [x] HERMES-RULES.md 创建：开工5条检查+Skill铁律+硬写禁令
 
+## Completed (2026-06-12)
+
+- [x] **大神工具-设计文档.md v2** — 8步工作流（主题→第一稿→加料→第二稿→质检→配图→封面→终稿）、数据模型、技能映射
+- [x] **大神工具-三端分工计划.md v1** — Claude/Hermes/Codex 三端分工、依赖链、测试清单、文件清单
+- [x] **5 个 API endpoint 写完并推送** — writing-fragments (Haiku) / writing-shape (Sonnet) / dbs-content (Haiku) / recommend-prompts (fetch+keyword) / generate-cover (fal.ai)
+- [x] **HANDOFF.md 更新** — 全模块状态表、环境变量配置状态、待办优先级
+- [x] **Phase 1 预研完成** — 读 prompts/data.json（9类57条）、STYLE-GUIDE.md（品牌路由）、CF Function 范式（stripe-webhook.js）
+
 ## In Progress
 
+- [ ] **generator.html** — Hermes 前端，8步状态机 UI（未开始）
+- [ ] **Cloudflare 环境变量配置** — ANTHROPIC_API_KEY + FAL_API_KEY（待配）
+- [ ] **5 个 endpoint curl 测试**（待环境变量配置后）
 - [ ] **创作中心后端 API** — /api/create-task, task-status, task-result, my-tasks（当前 MVP 用 localStorage 模拟）
 - [ ] **success.html → creator.html token 集成**
 
@@ -141,11 +152,14 @@ Layer 4 · Projects   → output/
 
 ## Next Actions (優先順) · 使用 Skill
 
-| # | 任务 | Skill | 说明 |
-|---|------|-------|------|
-| 1 | 创作中心前端 creator.html | `frontend-design` | **今日重点** — 订阅者输入话题→产出各平台成品 |
-| 2 | 大神工具页 | — | 待建 |
-| 3 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
+| # | 任务 | 负责 | 说明 |
+|---|------|------|------|
+| 1 | Cloudflare 配 ANTHROPIC_API_KEY + FAL_API_KEY | 手动 | 拿到 key 后在 CF Dashboard 配置 |
+| 2 | curl 测试 5 个 endpoint | Claude | 环境变量就绪后逐个验证 |
+| 3 | generator.html 前端 | Hermes | 先走 huashu-design 流程，再写代码 |
+| 4 | 联调 generator.html ↔ API | Claude+Hermes | 替换 mock 数据，端到端走 8 步 |
+| 5 | 交叉检查报告 | Codex | 终稿检查，24 项 |
+| 6 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
 
 ## Key Links
 
