@@ -169,20 +169,14 @@ main.js switchLang()          ← THE ONLY switchLang function. ONE.
 
 ## Design System
 
-| Element | Spec |
-|---------|------|
-| UI font | `'Noto Sans JP', sans-serif` |
-| Heading font | `'Noto Serif JP', serif` |
-| Mono font | `'Courier New', monospace` |
-| Nav links | 11px |
-| Body text | 14px |
-| Footer | 11px |
-| pre/code | 12px |
-| .quote/.tip | 13px |
-| Green badge | `#2e7d32` |
-| Orange accent | `#FF6B35` |
+所有设计变量的唯一来源是 `_context/BRAND.md` 和 `_blocks/STYLE-GUIDE.md`。
+**CLAUDE.md 不再维护独立的设计变量副本。**
+在开始任何视觉工作前，必须读取这两个文件。
 
-**Forbidden:** `Noto Sans SC`, `-apple-system`, `SF Mono`, font-weight 300, `rem` units (use `px`).
+| 文件 | 包含 |
+|------|------|
+| `_context/BRAND.md` | 品牌色、字体、语调、受众 |
+| `_blocks/STYLE-GUIDE.md` | 视觉路由、工具选择、禁止事项 |
 
 ## Work Principles (ALL agents must follow)
 
@@ -256,7 +250,8 @@ Full test manual: `TEST.md`.
 
 **Why `_legacy/` instead of direct delete:** git can restore deleted files, but only if you know what to restore. The 2-week quarantine gives all agents (and humans) time to discover hidden dependencies.
 
-**Enforcement:** `.git/hooks/pre-commit` blocks commits when a `DELETE-AFTER-*` date has passed. On fresh clone, run: `cp scripts/pre-commit-check-legacy.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit`
+**Enforcement:**
+**Also checks:** staged .html files must reference _blocks/STYLE-GUIDE.md or _context/BRAND.md. See scripts/pre-commit-check.sh. `.git/hooks/pre-commit` blocks commits when a `DELETE-AFTER-*` date has passed. On fresh clone, run: `cp scripts/pre-commit-check.sh .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit`
 
 ### 任务分配规则
 > ⚠️ **待定** — 三端如何拆分任务、避免冲突，稍后讨论追加。
@@ -341,3 +336,4 @@ kb-site/
 9. **DON'T** skip STYLE-GUIDE.md before visual production
 10. **DON'T** hand-write HTML/CSS for guizang cards — copy seed template
 11. **DON'T** use AI-generated images for text-accurate cards
+
