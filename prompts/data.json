@@ -143,28 +143,10 @@
     "image_prompt_ja": ""
   },
   {
-    "id": 102,
-    "cat": "教育/科普/图解",
-    "title": "2026-06-11T13:55:19.831099+09:00",
-    "text": "把自己三年来的 X 运营增长做了复盘，做了线下分享。\n\n如何从100做到11万关注，基于全量 X 帖子，用 Codex 做的数据分析。\n\n有些结论，甚至自己都没有意识到。\n\n果然分享才是最好的学习，完整的PPT见评论区。",
-    "text_ja": "",
-    "link": "https://x.com/vista8/status/2064258267878986233",
-    "date": "2026-06-11 13:55",
-    "author": "@vista8",
-    "images": [
-      "images/vista8_2064258267878986233_1.jpg"
-    ],
-    "videos": [],
-    "type": "image",
-    "free": true,
-    "image_prompt": "把自己三年来的 X 运营增长做了复盘，做了线下分享。\n\n如何从100做到11万关注，基于全量 X 帖子，用 Codex 做的数据分析。\n\n有些结论，甚至自己都没有意识到。\n\n果然分享才是最好的学习，完整的PPT见评论区。",
-    "image_prompt_ja": ""
-  },
-  {
     "id": 101,
     "cat": "视频制作/Seedance",
-    "title": "2026-06-11T13:55:19.765353+09:00",
-    "text": "Step 3: Seedance prompt\n\nHere is the core prompt I used:\n\nFirst-person broom-riding POV, cinematic ultra-fast one-take chase. Strictly follow the red flight path in the image. The Golden Snitch stays ahead as the main chase target, but it should not stay fixed in the center. It moves left, right, up, and down during the flight, making the chase feel more alive. Only show the broom handle, gloved hands, and red sleeves. Never show the rider’s face. Chase through the stadium, around the towers, over Black Lake, through the bridge arch, and back to the pitch for the final catch. No red lines, no arrows, no broken broom, no duplicate faces, no jump cuts.\n\nTip: you can also add useful refs, like a Golden Snitch ref or a first-person POV keyframe, to make the target and camera angle more stable.\n\nThanks for watching. \nMore AI video workflows at @MrLarus ⚡",
+    "title": "Seedance 完整工作流：分镜→角色→视频生成",
+    "text": "Step 1: Scene + path\n\nI started with one wide Hogwarts-style Quidditch scene.\n\nStadium, castle towers, Black Lake, bridge arch.\n\nThen I drew a red line on top of it.\n\nThat line became the broom path:\nstadium chase → towers → lake skim → bridge dive → back to the pitch.\n\nThe line is only for the model to read.\nIt gets removed in the final video.\n\nStep 2: Character refs\n\nI added separate red team and green team character refs.\n\nThey help the model understand:\n\n1. team colors\n2. uniform details\n3. different player faces\n4. different player silhouettes\n\nThis matters a lot in a fast sports scene.\n\nWithout refs, the players’ outfits can easily become inconsistent or wrong.\n\nStep 3: Seedance prompt\n\nHere is the core prompt I used:\n\nFirst-person broom-riding POV, cinematic ultra-fast one-take chase. Strictly follow the red flight path in the image. The Golden Snitch stays ahead as the main chase target, but it should not stay fixed in the center. It moves left, right, up, and down during the flight, making the chase feel more alive. Only show the broom handle, gloved hands, and red sleeves. Never show the rider’s face. Chase through the stadium, around the towers, over Black Lake, through the bridge arch, and back to the pitch for the final catch. No red lines, no arrows, no broken broom, no duplicate faces, no jump cuts.\n\nTip: you can also add useful refs, like a Golden Snitch ref or a first-person POV keyframe, to make the target and camera angle more stable.\n\nThanks for watching. \nMore AI video workflows at @MrLarus ⚡",
     "text_ja": "",
     "link": "https://x.com/MrLarus/status/2061585804045205636",
     "date": "2026-06-11 13:55",
@@ -175,80 +157,9 @@
     "videos": [],
     "type": "image",
     "free": true,
-    "image_prompt": "Step 3: Seedance prompt\n\nHere is the core prompt I used:\n\nFirst-person broom-riding POV, cinematic ultra-fast one-take chase. Strictly follow the red flight path in the image. The Golden Snitch stays ahead as the main chase target, but it should not stay fixed in the center. It moves left, right, up, and down during the flight, making the chase feel more alive. Only show the broom handle, gloved hands, and red sleeves. Never show the rider’s face. Chase through the stadium, around the towers, over Black Lake, through the bridge arch, and back to the pitch for the final catch. No red lines, no arrows, no broken broom, no duplicate faces, no jump cuts.\n\nTip: you can also add useful refs, like a Golden Snitch ref or a first-person POV keyframe, to make the target and camera angle more stable.\n\nThanks for watching. \nMore AI video workflows at @MrLarus ⚡",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 100,
-    "cat": "视频制作/Seedance",
-    "title": "2026-06-11T13:55:19.423649+09:00",
-    "text": "Step 2: Character refs\n\nI added separate red team and green team character refs.\n\nThey help the model understand:\n\n1. team colors\n2. uniform details\n3. different player faces\n4. different player silhouettes\n\nThis matters a lot in a fast sports scene.\n\nWithout refs, the players’ outfits can easily become inconsistent or wrong.",
-    "text_ja": "",
-    "link": "https://x.com/MrLarus/status/2061584935971090811",
-    "date": "2026-06-11 13:55",
-    "author": "@MrLarus",
-    "images": [
-      "images/MrLarus_2061584935971090811_1.jpg"
-    ],
-    "videos": [],
-    "type": "image",
-    "free": true,
-    "image_prompt": "Step 2: Character refs\n\nI added separate red team and green team character refs.\n\nThey help the model understand:\n\n1. team colors\n2. uniform details\n3. different player faces\n4. different player silhouettes\n\nThis matters a lot in a fast sports scene.\n\nWithout refs, the players’ outfits can easily become inconsistent or wrong.",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 99,
-    "cat": "视频制作/Seedance",
-    "title": "2026-06-11T13:55:19.194127+09:00",
-    "text": "Step 1: Scene + path\n\nI started with one wide Hogwarts-style Quidditch scene.\n\nStadium, castle towers, Black Lake, bridge arch.\n\nThen I drew a red line on top of it.\n\nThat line became the broom path:\nstadium chase → towers → lake skim → bridge dive → back to the pitch.\n\nThe line is only for the model to read.\nIt gets removed in the final video.",
-    "text_ja": "",
-    "link": "https://x.com/MrLarus/status/2061582190849175773",
-    "date": "2026-06-11 13:55",
-    "author": "@MrLarus",
-    "images": [
-      "images/MrLarus_2061582190849175773_1.jpg"
-    ],
-    "videos": [],
-    "type": "image",
-    "free": true,
-    "image_prompt": "Step 1: Scene + path\n\nI started with one wide Hogwarts-style Quidditch scene.\n\nStadium, castle towers, Black Lake, bridge arch.\n\nThen I drew a red line on top of it.\n\nThat line became the broom path:\nstadium chase → towers → lake skim → bridge dive → back to the pitch.\n\nThe line is only for the model to read.\nIt gets removed in the final video.",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 98,
-    "cat": "游戏/娱乐/影视",
-    "title": "2026-06-11T13:55:18.889782+09:00",
-    "text": "😱AI flight control is getting crazy!\n\nOne red line controlled this first-person Harry Potter-inspired Quidditch POV.\n\nRide the broom, chase the Golden Snitch, fly through Hogwarts-style towers, skim over Black Lake, dive through a bridge arch, and return for the final catch. 🧹\n\nWorkflow breakdown in the comments 👇",
-    "text_ja": "",
-    "link": "https://x.com/MrLarus/status/2061580244671442989",
-    "date": "2026-06-11 13:55",
-    "author": "@MrLarus",
-    "images": [
-      "images/MrLarus_2061580244671442989_1.jpg"
-    ],
-    "videos": [],
-    "type": "image",
-    "free": true,
-    "image_prompt": "😱AI flight control is getting crazy!\n\nOne red line controlled this first-person Harry Potter-inspired Quidditch POV.\n\nRide the broom, chase the Golden Snitch, fly through Hogwarts-style towers, skim over Black Lake, dive through a bridge arch, and return for the final catch. 🧹\n\nWorkflow breakdown in the comments 👇",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 97,
-    "cat": "视频制作/Seedance",
-    "title": "2026-06-11T13:55:18.511504+09:00",
-    "text": "AI storytelling is about to break internet 🔥\n\nI built this full anime storyboard with ChatGPT Image 2.0\n\nThen Seedance 2.0 turned it into this cinematic animated short in minutes.\n\nFull step by step tutorial with prompts: 👇",
-    "text_ja": "",
-    "link": "https://x.com/HeyAbhishek/status/2064333244510982588",
-    "date": "2026-06-11 13:55",
-    "author": "@HeyAbhishek",
-    "images": [
-      "images/HeyAbhishek_2064333244510982588_1.jpg"
-    ],
-    "videos": [],
-    "type": "image",
-    "free": true,
-    "image_prompt": "AI storytelling is about to break internet 🔥\n\nI built this full anime storyboard with ChatGPT Image 2.0\n\nThen Seedance 2.0 turned it into this cinematic animated short in minutes.\n\nFull step by step tutorial with prompts: 👇",
-    "image_prompt_ja": ""
+    "image_prompt": "Step 1: Scene + path\n\nI started with one wide Hogwarts-style Quidditch scene.\n\nStadium, castle towers, Black Lake, bridge arch.\n\nThen I drew a red line on top of it.\n\nThat line became the broom path:\nstadium chase → towers → lake skim → bridge dive → back to the pitch.\n\nThe line is only for the model to read.\nIt gets removed in the final video.\n\nStep 2: Character refs\n\nI added separate red team and green team character refs.\n\nThey help the model understand:\n\n1. team colors\n2. uniform details\n3. different player faces\n4. different player silhouettes\n\nThis matters a lot in a fast sports scene.\n\nWithout refs, the players’ outfits can easily become inconsistent or wrong.\n\nStep 3: Seedance prompt\n\nHere is the core prompt I used:\n\nFirst-person broom-riding POV, cinematic ultra-fast one-take chase. Strictly follow the red flight path in the image. The Golden Snitch stays ahead as the main chase target, but it should not stay fixed in the center. It moves left, right, up, and down during the flight, making the chase feel more alive. Only show the broom handle, gloved hands, and red sleeves. Never show the rider’s face. Chase through the stadium, around the towers, over Black Lake, through the bridge arch, and back to the pitch for the final catch. No red lines, no arrows, no broken broom, no duplicate faces, no jump cuts.\n\nTip: you can also add useful refs, like a Golden Snitch ref or a first-person POV keyframe, to make the target and camera angle more stable.\n\nThanks for watching. \nMore AI video workflows at @MrLarus ⚡",
+    "image_prompt_ja": "",
+    "video_prompt": "Step 3: Seedance prompt\n\nHere is the core prompt I used:\n\nFirst-person broom-riding POV, cinematic ultra-fast one-take chase. Strictly follow the red flight path in the image. The Golden Snitch stays ahead as the main chase target, but it should not stay fixed in the center. It moves left, right, up, and down during the flight, making the chase feel more alive. Only show the broom handle, gloved hands, and red sleeves. Never show the rider’s face. Chase through the stadium, around the towers, over Black Lake, through the bridge arch, and back to the pitch for the final catch. No red lines, no arrows, no broken broom, no duplicate faces, no jump cuts.\n\nTip: you can also add useful refs, like a Golden Snitch ref or a first-person POV keyframe, to make the target and camera angle more stable.\n\nThanks for watching. \nMore AI video workflows at @MrLarus ⚡"
   },
   {
     "id": 96,
@@ -304,54 +215,6 @@
     "type": "text",
     "free": true,
     "image_prompt": "一共37页PPT，浓缩了很多经验和方法，完整PDF见：\nhttps://xiangyangqiaomu.feishu.cn/wiki/OLC6wjCepiP1JVkDfrSc4FdInMg",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 93,
-    "cat": "教育/科普/图解",
-    "title": "2026-06-11T13:51:25.199872+09:00",
-    "text": "http://x.com/i/article/2063122986740412416",
-    "text_ja": "",
-    "link": "https://x.com/Hoshino_Sokichi/status/2064156105635455237",
-    "date": "2026-06-11 13:51",
-    "author": "@Hoshino_Sokichi",
-    "images": [],
-    "videos": [],
-    "type": "text",
-    "free": true,
-    "image_prompt": "http://x.com/i/article/2063122986740412416",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 92,
-    "cat": "教育/科普/图解",
-    "title": "2026-06-11T13:51:24.937819+09:00",
-    "text": "http://x.com/i/article/2064437821382049792",
-    "text_ja": "",
-    "link": "https://x.com/AI_masaou/status/2064440260822802885",
-    "date": "2026-06-11 13:51",
-    "author": "@AI_masaou",
-    "images": [],
-    "videos": [],
-    "type": "text",
-    "free": true,
-    "image_prompt": "http://x.com/i/article/2064437821382049792",
-    "image_prompt_ja": ""
-  },
-  {
-    "id": 91,
-    "cat": "教育/科普/图解",
-    "title": "2026-06-11T13:51:24.664764+09:00",
-    "text": "http://x.com/i/article/2064255475034591232",
-    "text_ja": "",
-    "link": "https://x.com/mirroraoaoao/status/2064256176351560035",
-    "date": "2026-06-11 13:51",
-    "author": "@mirroraoaoao",
-    "images": [],
-    "videos": [],
-    "type": "text",
-    "free": true,
-    "image_prompt": "http://x.com/i/article/2064255475034591232",
     "image_prompt_ja": ""
   },
   {
