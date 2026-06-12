@@ -282,18 +282,20 @@ function renderPrompt() {
     if (videoPrompt) {
       html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '🎬 视频提示词' : '🎬 動画プロンプト') + '</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div>' + copyBtnHtml + '</div>';
     }
-    if (text && text !== imagePrompt) {
-      html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
-    }
+
   } else if (hasImages && !hasVideo) {
-    html += '<div class="detail-media"><div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="" loading="lazy"></div></div>';
-    if (text && text !== imagePrompt) {
-      html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
+    html += '<div class="detail-media">';
+    if (p.images.length === 1) {
+      html += '<div class="single-image" style="text-align:center;"><img src="' + imgPath(p.images[0]) + '" alt="" loading="lazy"></div>';
+    } else {
+      html += '<div class="image-grid">';
+      for (var gi = 0; gi < p.images.length; gi++) {
+        html += '<img src="' + imgPath(p.images[gi]) + '" alt="" loading="lazy">';
+      }
+      html += '</div>';
     }
+    html += '</div>';
     html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📋 完整提示词' : '📋 プロンプト全文') + '</div><div class="prompt-content">';
-    for (var gi = 1; gi < p.images.length; gi++) {
-      html += '<img src="' + imgPath(p.images[gi]) + '" alt="" style="max-width:100%;border-radius:8px;margin:8px 0;" loading="lazy"><br>';
-    }
     if (realPrompt) {
       html += escapeHtml(realPrompt);
     } else if (imagePrompt) {
