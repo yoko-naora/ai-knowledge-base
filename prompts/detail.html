@@ -243,7 +243,7 @@ function renderPrompt() {
   var realPrompt = isCn ? (p.real_prompt || '') : (p.real_prompt_ja || p.real_prompt || '');
 
   var hasImages = p.images && p.images.length > 0;
-  var hasVideo = p.video ? true : false;
+  var hasVideo = p.video || (p.videos && p.videos.length > 0) ? true : false;
   var hasTextOnly = !hasImages && !hasVideo;
 
   function imgPath(name) {
