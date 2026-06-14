@@ -33,7 +33,7 @@ Layout: Clean hierarchical typography. Title takes center stage with breathing r
 Technical: High resolution, sharp typography, warm film-like color grading.`;
 }
 
-asyncexport async function onRequestPost(context) {
+export async function onRequestPost(context) {
   let body;
   try {
     body = await context.request.json();
