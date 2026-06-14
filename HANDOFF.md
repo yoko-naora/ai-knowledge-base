@@ -144,6 +144,23 @@ prompt-only              → 返回杂志封面 prompt + 平台信息，零成�
 - 3 个阻断性 bug 已修复: goToStep() 合并、Step 6/8 按钮调用错误
 - 仍缺: huashu-design CSS 润色 + Step 6 "60分跳过"按钮
 
+### generator.html API 对接状态（2026-06-14）
+
+| 步骤 | 功能 | 数据来源 | 状态 |
+|:----:|:----|:--------|:----:|
+| 1 | 主题输入 + 平台选择 | 用户填写 | ✅ |
+| 2 | 第一稿 | writing-fragments + writing-shape (DeepSeek) | ✅ |
+| 3 | 加料面板 | 勾选项 → writing-shape addons | ✅ |
+| 5 | 第二稿 | writing-shape + addons (DeepSeek) | ✅ |
+| 6 | 五维诊断 | dbs-content (DeepSeek) | ✅ |
+| 7 | 配图推荐 | recommend-prompts (本地映射) | ✅ |
+| 8 | 封面 | generate-cover (CSS渲染, 零成本) | ✅ |
+
+### 文档
+
+- crosscheck-report-大神工具.md: 已更新
+- HANDOFF.md: 待更新
+
 ### 下一步
 
 1. 等 Cloudflare 部署 prompt-only 的 generate-cover（~3 分钟）
