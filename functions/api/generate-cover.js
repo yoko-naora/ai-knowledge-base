@@ -6,7 +6,7 @@
 //   xiaohongshu → magazine editorial style, 3:4
 //   video       → magazine editorial style, 9:16
 //
-// Uses AI image generation (configurable via IMAGE_GEN_API_URL env var, defaults to fal.ai flux/dev).
+// Uses AI image generation (configurable via IMAGE_GEN_API_URL env var, defaults to OpenRouter DALL-E 3).
 // Cover prompt follows brand: Editorial Magazine × Ink Classic, warm palette, painterly rendering.
 //
 // TEST:
@@ -35,23 +35,25 @@ Technical: High resolution, sharp typography, warm film-like color grading.`;
 
 async function generateImage(apiKey, prompt, platform) {
   const imageGenUrl =
-    "https://fal.run/fal-ai/flux/dev";
+    "https://openrouter.ai/api/v1/images/generations";
 
   const imageSize =
     platform === "video"
-      ? "portrait_9_16"
-      : "portrait_4_3";
+      ? "1024x1792"
+      : "1024x1792";
 
   const res = await fetch(imageGenUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Key ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
+      "HTTP-Referer": "https://kb.snsaladdin.com",
     },
     body: JSON.stringify({
+      model: "openai/dall-e-3",
       prompt,
-      image_size: imageSize,
-      num_images: 1,
+      size: imageSize,
+      n: 1,
     }),
   });
 
@@ -61,7 +63,7 @@ async function generateImage(apiKey, prompt, platform) {
   }
 
   const data = await res.json();
-  const imageUrl = data.images?.[0]?.url;
+  const imageUrl = data.data?.[0]?.url;
   if (!imageUrl) {
     throw new Error("Image gen API returned no image URL");
   }
@@ -69,7 +71,7 @@ async function generateImage(apiKey, prompt, platform) {
 }
 
 export async function onRequestPost(context) {
-  const imageGenApiKey = context.env.FAL_API_KEY;
+  const imageGenApiKey = context.env.OPENROUTER_API_KEY;
   if (!imageGenApiKey) {
     return new Response(
       JSON.stringify({ error: "Service configuration error" }),
