@@ -100,7 +100,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 /* Responsive */
 @media(max-width:640px){.nav-wrap{top:8px;left:8px;right:8px;border-radius:14px}nav{height:48px}.nav-logo{font-size:14px}main{padding:84px 14px 40px;max-width:100%}.panel{padding:20px 16px}.prog-dot{width:26px;height:26px;font-size:11px}.prog-label{font-size:9px}.progress-track::before{top:13px;left:14px;right:14px}.form-row{flex-direction:column}.form-row label{padding-top:0}}
 
-</style>
+.debug-info{display:none;margin-top:14px;padding-top:10px;border-top:1px dashed var(--border);font-size:11px;color:var(--ink-faint);line-height:1.6}body.dev-mode .debug-info{display:block}.debug-label{font-weight:600;margin-right:4px}.debug-chain{color:var(--primary)}.debug-arrow{color:var(--ink-faint)}</style>
 </head>
 <body>
 <div class="nav-wrap"><nav>
@@ -112,7 +112,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
       <button onclick="switchLang('jp')">日本語</button>
     </div>
   </div>
-</nav></div>
+<button onclick="toggleDevMode()" style="background:none;border:none;font-size:11px;color:var(--ink-faint);cursor:pointer;vertical-align:middle;margin-left:2px" title="Dev mode">⚙</button></nav></div>
 <main>
 <div class="progress-wrap"><div class="progress-track" id="progressTrack"></div></div>
 
@@ -122,7 +122,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 <div class="form-row"><label><span class="lang-cn">主题</span><span class="lang-jp">テーマ</span></label><input class="input-text" id="topic-input" value="夏季口红推荐"></div>
 <div class="form-row"><label><span class="lang-cn">平台</span><span class="lang-jp">プラットフォーム</span></label><select class="input-text" id="platform-select"><option value="小红书">小红书</option><option value="公众号">公众号</option></select></div>
 <div class="btn-actions"><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(2)"><span class="lang-cn">开始创作</span><span class="lang-jp">作成開始</span> →</button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>User input</span></div></div>
 
 <div class="step" id="step-2"><div class="panel">
 <div class="panel-title"><span class="step-badge">02</span><span class="lang-cn">第一稿</span><span class="lang-jp">初稿</span></div>
@@ -130,7 +130,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 <div class="content-box"><h4><span class="lang-cn">标题</span><span class="lang-jp">タイトル</span></h4><div class="body-text" id="draft1-title"></div></div>
 <div class="content-box"><h4><span class="lang-cn">正文</span><span class="lang-jp">本文</span></h4><div class="body-text" id="draft1-body"></div></div>
 <div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(1)">← <span class="lang-cn">修改主题</span><span class="lang-jp">テーマ修正</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(3)"><span class="lang-cn">进入加料</span><span class="lang-jp">追記へ</span> →</button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>writing-fragments to writing-shape (DeepSeek)</span></div></div>
 
 <div class="step" id="step-3"><div class="panel">
 <div class="panel-title"><span class="step-badge">03</span><span class="lang-cn">加料面板</span><span class="lang-jp">追記パネル</span></div>
@@ -143,7 +143,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 </div>
 <textarea class="input-ta" id="custom-text" placeholder="在此输入自定义内容 / カスタム内容を入力"></textarea>
 <div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(2)">← <span class="lang-cn">返回第一稿</span><span class="lang-jp">初稿に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="generateDraft2()"><span class="lang-cn">生成第二稿</span><span class="lang-jp">第二稿を生成</span> →</button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>User input collection</span></div></div>
 
 <div class="step" id="step-5"><div class="panel">
 <div class="panel-title"><span class="step-badge">04</span><span class="lang-cn">第二稿</span><span class="lang-jp">第二稿</span></div>
@@ -151,21 +151,21 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 <div class="content-box"><h4><span class="lang-cn">标题</span><span class="lang-jp">タイトル</span></h4><div class="body-text" id="draft2-title"></div></div>
 <div class="content-box"><h4><span class="lang-cn">正文</span><span class="lang-jp">本文</span></h4><div class="body-text" id="draft2-body"></div></div>
 <div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(3)">← <span class="lang-cn">返回加料</span><span class="lang-jp">追記に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(6)"><span class="lang-cn">进入质检</span><span class="lang-jp">品質診断へ</span> →</button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>writing-shape (DeepSeek Sonnet)</span></div></div>
 
 <div class="step" id="step-6"><div class="panel">
 <div class="panel-title"><span class="step-badge">05</span><span class="lang-cn">五维诊断</span><span class="lang-jp">5次元診断</span></div>
 <div class="panel-desc"><span class="lang-cn">AI 从5个维度分析文章质量。</span><span class="lang-jp">AIが5つの観点から記事品質を分析します。</span></div>
 <div id="diagnosis-report"><div class="loading"><span class="spinner"></span><span class="lang-cn">诊断中...</span><span class="lang-jp">診断中...</span></div></div>
 <div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(5)">← <span class="lang-cn">返回第二稿</span><span class="lang-jp">第二稿に戻る</span></button><span class="spacer"></span><button class="btn btn-ghost" onclick="quickFix()" style="border-color:var(--primary);color:var(--primary)"><span class="lang-cn">60分跳过</span><span class="lang-jp">スキップ</span></button><button class="btn btn-primary" onclick="fixAll()"><span class="lang-cn">全部修复</span><span class="lang-jp">全て修正</span></button><button class="btn btn-ghost" onclick="goToStep(7)" style="border:none"><span class="lang-cn">跳过→</span><span class="lang-jp">スキップ→</span></button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>dbs-content (DeepSeek Haiku)</span></div></div>
 
 <div class="step" id="step-7"><div class="panel">
 <div class="panel-title"><span class="step-badge">06</span><span class="lang-cn">配图推荐</span><span class="lang-jp">画像提案</span></div>
 <div class="panel-desc"><span class="lang-cn">AI 推荐适合内容的配图风格。</span><span class="lang-jp">AIがコンテンツに合った画像スタイルを提案します。</span></div>
 <div id="rec-result"><div class="loading"><span class="spinner"></span><span class="lang-cn">加载中...</span><span class="lang-jp">読み込み中...</span></div></div>
 <div class="btn-actions" id="step7-actions" style="display:none"><button class="btn btn-ghost" onclick="goToStep(6)">← <span class="lang-cn">返回质检</span><span class="lang-jp">診断に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(8)"><span class="lang-cn">进入封面</span><span class="lang-jp">表紙へ</span> →</button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>recommend-prompts (local)</span></div></div>
 
 <div class="step" id="step-8"><div class="panel">
 <div class="panel-title"><span class="step-badge">07</span><span class="lang-cn">封面制作</span><span class="lang-jp">表紙作成</span></div>
@@ -179,7 +179,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 <div class="panel-title" style="justify-content:center"><span class="lang-cn">创作完成</span><span class="lang-jp">作成完了</span></div>
 <div class="done-summary"><span class="lang-cn">终稿已保存在本地，可随时返回查看。</span><span class="lang-jp">最終稿はローカルに保存されました。</span></div>
 <div class="btn-actions" style="justify-content:center;border:none"><button class="btn btn-primary" onclick="resetAll()"><span class="lang-cn">重新开始</span><span class="lang-jp">最初から</span></button></div>
-</div></div>
+</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>generate-cover (prompt-only)</span></div></div>
 </main>
 
 <script>
@@ -201,7 +201,7 @@ function quickFix(){goToStep(7)}
 function fixAll(){var r=S.diagnosis;if(!r){goToStep(7);return}document.getElementById("diagnosis-report").innerHTML="<div class=\"loading\"><span class=\"spinner\"></span><span class=\"lang-cn\">修复中...</span><span class=\"lang-jp\">修正中...</span></div>";var issues=[];var isJP=localStorage.getItem("kb-lang")==="jp";var lm={textCleanliness:(isJP?"テキスト品質":"文字洁癖"),headlineDiagnosis:(isJP?"タイトル診断":"标题诊断"),expressionEfficiency:(isJP?"表現効率":"表达效率"),cognitiveGap:(isJP?"認知ギャップ":"认知落差")};for(var k in r){if(k==="aiSuggestions")continue;if(r[k].grade&&r[k].grade!=="✅")issues.push((lm[k]||k)+": "+(r[k].detail||""))}var fixText=(isJP?"以下は診断で見つかった問題です。修正してください。 ":"以下是诊断发现的问题，请修改：")+issues.join("; ");if(r.aiSuggestions)fixText+=" "+(isJP?"AI 提案: ":"AI 建议: ")+r.aiSuggestions;var at=(S.draft2||S.draft1||{}).title||"",ab=(S.draft2||S.draft1||{}).body||"";callApi("writing-shape",{topic:S.topic,platform:S.platform,angles:S.angles||[],addons:[],userCustomText:fixText}).then(function(a){S.draft2={title:a.title,body:a.body};S.diagnosis=null;var h="<div class=\"content-box\" style=\"background:#EFF6FF;border:1px solid #DBEAFE\"><span class=\"lang-cn\">✅ 已根据诊断建议重新生成第二稿。</span><span class=\"lang-jp\">✅ 診断に基づいて第二稿を再生成しました。</span></div>"+("<div class=\"content-box\"><h4>"+(isJP?"タイトル":"标题")+"</h4><div class=\"body-text\">"+a.title+"</div></div>")+("<div class=\"content-box\"><h4>"+(isJP?"本文":"正文")+"</h4><div class=\"body-text\">"+a.body+"</div></div>");document.getElementById("diagnosis-report").innerHTML=h;saveState()}).catch(function(e){document.getElementById("diagnosis-report").innerHTML="<div class=\"error-msg\">"+(isJP?"修正失敗: ":"修复失败: ")+e.message+"</div>"})}
 function copyCoverPrompt(){var box=document.querySelector(".cover-prompt-box");if(!box)return;var r=document.createRange();r.selectNodeContents(box);var s=window.getSelection();s.removeAllRanges();s.addRange(r)}
 function finish(){showStep("done")}
-function resetAll(){localStorage.removeItem("generator_state");location.reload()}
+function toggleDevMode(){document.body.classList.toggle("dev-mode");localStorage.setItem("dev_mode",document.body.classList.contains("dev-mode"))}function resetAll(){localStorage.removeItem("generator_state");location.reload()}
 </script>
 </body>
 </html>
