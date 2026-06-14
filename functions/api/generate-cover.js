@@ -35,7 +35,7 @@ Technical: High resolution, sharp typography, warm film-like color grading.`;
 
 async function generateImage(apiKey, prompt, platform) {
   const imageGenUrl =
-    "https://openrouter.ai/api/v1/images/generations";
+    "https://openrouter.ai/api/v1/chat/completions";
 
   const imageSize =
     platform === "video"
@@ -50,10 +50,12 @@ async function generateImage(apiKey, prompt, platform) {
       "HTTP-Referer": "https://kb.snsaladdin.com",
     },
     body: JSON.stringify({
-      model: "openai/dall-e-3",
-      prompt,
-      size: imageSize,
-      n: 1,
+      model: "openai/gpt-5-image",
+      messages: [
+        { role: "user", content: `Generate a magazine cover image. ${prompt}` },
+      ],
+
+      max_tokens: 2000
     }),
   });
 
@@ -63,7 +65,7 @@ async function generateImage(apiKey, prompt, platform) {
   }
 
   const data = await res.json();
-  const imageUrl = data.data?.[0]?.url;
+  const imageUrl = data.images?.[0]?.image_url?.url;
   if (!imageUrl) {
     throw new Error("Image gen API returned no image URL");
   }
