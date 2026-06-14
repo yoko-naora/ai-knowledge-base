@@ -113,21 +113,12 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const prompt = buildCoverPrompt(
+        const prompt = buildCoverPrompt(
       article.title.trim(),
       article.body || "",
       platform
     );
-    const imageUrl = await generateImage(imageGenApiKey, prompt, platform);
-    return new Response(JSON.stringify({ imageUrl }), {
+    return new Response(JSON.stringify({ coverPrompt: prompt, platform: platform }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (err) {
-    console.error("generate-cover error:", err.message);
-    return new Response(
-      JSON.stringify({ error: "Cover generation failed. Please try again." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
-  }
-}
