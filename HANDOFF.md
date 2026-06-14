@@ -98,8 +98,55 @@ All use POST-only, Cloudflare Functions (onRequestPost)
 
 ## Pending Work
 
-- [ ] Configure ANTHROPIC_API_KEY + FAL_API_KEY in Cloudflare Dashboard
+- [x] ~~Configure ANTHROPIC_API_KEY + FAL_API_KEY~~ → Replaced with DEEPSEEK_API_KEY + OPENROUTER_API_KEY
 - [ ] Run dl_videos_today.py locally to download video files
-- [ ] Test 5 API endpoints with curl
+- [x] ~~Test 5 API endpoints with curl~~ → Tested and verified
 - [ ] generator.html -> huashu-design -> connect to real APIs
 - [ ] Add new URLs to Feishu to continue pipeline
+
+---
+
+## Update 2026-06-14 · 大神工具集成状态
+
+### API 端点变更
+
+| # | Endpoint | 模型/工具 | 状态 |
+|---|----------|----------|:----:|
+| 1 | POST /api/writing-fragments | **Anthropic Haiku → DeepSeek** (deepseek-chat) | ✅ 已部署 |
+| 2 | POST /api/writing-shape | **Anthropic Sonnet → DeepSeek** (deepseek-chat) | ✅ 已部署 |
+| 3 | POST /api/dbs-content | **Anthropic Haiku → DeepSeek** (deepseek-chat) | ✅ 已部署 |
+| 4 | POST /api/recommend-prompts | 本地分类匹配（无 LLM） | ✅ 已部署 |
+| 5 | POST /api/generate-cover | **fal.ai flux → OpenRouter DALL-E 3 → gpt-5-image → prompt-only** | ⚠️ prompt-only |
+
+### generate-cover 改修记录
+
+```
+fal.ai flux/dev          → 账户余额不足 ❌
+OpenRouter DALL-E 3      → OpenRouter 不支持 /images/generations 端点 ❌
+OpenRouter gpt-5-image   → 出图成功！但耗时 52-68s，超 CF 30s 限制 ❌
+OpenRouter gpt-5-image-mini → 推理占满 token，不出图 ❌
+prompt-only              → 返回杂志封面 prompt + 平台信息，零成本 ✅
+```
+
+用户可在自己的终端用 OpenRouter key + gpt-5-image 模型出图（已验证成功）。
+
+### 环境变量状态
+
+| 变量 | 状态 | 说明 |
+|------|:----:|------|
+| ~~FAL_API_KEY~~ | ❌ 已删除 | 替换为 OPENROUTER_API_KEY |
+| ~~ANTHROPIC_API_KEY~~ | ❌ 已删除 | key 无效，替换为 DeepSeek |
+| **DEEPSEEK_API_KEY** | ✅ 已配置 | 用于 3 个 endpoint |
+| **OPENROUTER_API_KEY** | ✅ 已配置 | 已充值 $10，gpt-5-image 可调用 |
+
+### generator.html 修复
+
+- 3 个阻断性 bug 已修复: goToStep() 合并、Step 6/8 按钮调用错误
+- 仍缺: huashu-design CSS 润色 + Step 6 "60分跳过"按钮
+
+### 下一步
+
+1. 等 Cloudflare 部署 prompt-only 的 generate-cover（~3 分钟）
+2. generator.html → huashu-design CSS 润色
+3. 补 Step 6 "60分跳过" + 逐项修复交互
+4. 如需真实封面出图: 用户本地调 OpenRouter gpt-5-image
