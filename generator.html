@@ -168,6 +168,19 @@ function showStep(stepNum) {
   saveState();
 }
 
+// ====================== API ======================
+const API_BASE = "";
+function callApi(ep, data) {
+  return fetch(API_BASE + "/api/" + ep, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }).then(function(r) {
+    if (!r.ok) return r.json().then(function(e) { throw new Error(e.error || "err " + r.status); });
+    return r.json();
+  });
+}
+
 // ====================== Mock 数据 ======================
 const MOCK = {
   draft1: {
@@ -191,41 +204,110 @@ const MOCK = {
 // ====================== 流程函数 ======================
 function goToStep(step) {
   if (step === 2) {
-    // Step 2: 生成第一稿
     state.topic = document.getElementById('topic-input').value;
     state.platform = document.getElementById('platform-select').value;
-    
-    state.draft1 = MOCK.draft1;
-    document.getElementById('draft1-title').innerHTML = state.draft1.title;
-    document.getElementById('draft1-body').innerHTML = state.draft1.body;
+    document.getElementById('draft1-title').innerHTML = '生成中...';
+    document.getElementById('draft1-body').innerHTML = '';
+    callApi('writing-fragments', { topic: state.topic, platform: state.platform })
+      .then(function(f) {
+        state.angles = f.angles || [];
+        return callApi('writing-shape', { topic: state.topic, platform: state.platform, angles: state.angles });
+      })
+      .then(function(a) {
+        state.draft1 = { title: a.title, body: a.body };
+        document.getElementById('draft1-title').innerHTML = a.title;
+        document.getElementById('draft1-body').innerHTML = a.body;
+        saveState();
+      })
+      .catch(function(e) {
+        document.getElementById('draft1-title').innerHTML = '失败';
+        document.getElementById('draft1-body').innerHTML = 'API: ' + e.message;
+      });
   }
   
   if (step === 6) {
-    // Step 6: 展示诊断报告
-    const report = MOCK.diagnosis;
-    let html = '';
-    for (let key in report) {
-      if (key === 'aiSuggestions') continue;
-      html += '<p><strong>' + key + '</strong>: ' + report[key].grade + ' — ' + report[key].detail + '</p>';
-    }
-    html += '<p><strong>AI建议：</strong>' + report.aiSuggestions + '</p>';
-    document.getElementById('diagnosis-report').innerHTML = html;
-    
-    state.diagnosis = report;
+    document.getElementById('diagnosis-report').innerHTML = '诊断中...';
+    var at = (state.draft2 || state.draft1 || {}).title || '';
+    var ab = (state.draft2 ? state.draft2.body : '') || (state.draft1 ? state.draft1.body : '');
+    callApi('dbs-content', { article: { title: at, body: ab } })
+      .then(function(r) {
+        state.diagnosis = r;
+        var h = '';
+        for (var k in r) {
+          if (k === 'aiSuggestions') continue;
+          h += '<p><strong>' + k + '</strong>: ' + (r[k].grade || '') + ' \u2014 ' + (r[k].detail || '') + '</p>';
+        }
+        h += '<p><strong>AI建议：</strong>' + r.aiSuggestions + '</p>';
+        document.getElementById('diagnosis-report').innerHTML = h;
+        saveState();
+      })
+      .catch(function(e) { document.getElementById('diagnosis-report').innerHTML = '诊断失败: ' + e.message; });
   }
   
   if (step === 7) {
-    document.getElementById('rec-categories').textContent = MOCK.recommendedCategories.join(' + ');
+    document.getElementById('rec-categories').textContent = '加载中...';
     state.imageSession = { hasUsedFreeQuota: false };
+    callApi('recommend-prompts', { topic: state.topic || '' })
+      .then(function(d) {
+        var cs = d.recommended || [];
+        document.getElementById('rec-categories').textContent = cs.length ? cs.map(function(c) { return c.cat; }).join(' + ') : '暂无推荐';
+        state.recommendedPrompts = d;
+        saveState();
+      })
+      .catch(function(e) { document.getElementById('rec-categories').textContent = '加载失败'; });
   }
   
   if (step === 8) {
-    document.getElementById('cover-result').innerHTML = '<p>封面生成入口（待接入）</p>';
+    document.getElementById('cover-result').innerHTML = '生成中...';
+    var at = (state.draft2 || state.draft1 || {}).title || '';
+    var ab = (state.draft2 ? state.draft2.body : '') || (state.draft1 ? state.draft1.body : '');
+    callApi('generate-cover', { article: { title: at, body: ab }, platform: state.platform === '视频号' ? 'video' : 'xiaohongshu' })
+      .then(function(d) {
+        if (d.coverHtml) {
+          document.getElementById('cover-result').innerHTML = '<iframe srcdoc="' + d.coverHtml.replace(/"/g, '&quot;') + '" style="width:300px;height:400px;border:1px solid #ccc;border-radius:4px;"></iframe>';
+        } else if (d.coverPrompt) {
+          document.getElementById('cover-result').innerHTML = '<pre style="background:#f5f5f5;padding:10px;font-size:12px;max-height:200px;overflow:auto;">' + d.coverPrompt.replace(/</g, '&lt;') + '</pre>';
+        } else {
+          document.getElementById('cover-result').innerHTML = '失败';
+        }
+        saveState();
+      })
+      .catch(function(e) { document.getElementById('cover-result').innerHTML = '失败: ' + e.message; });
   }
   
   showStep(step);
 }
 
+}
+
+function generateDraft2() {
+  state.selectedAddons = [];
+  if (document.getElementById('addon-case').checked) state.selectedAddons.push('case');
+  if (document.getElementById('addon-compare').checked) state.selectedAddons.push('compare');
+  if (document.getElementById('addon-tips').checked) state.selectedAddons.push('tips');
+  if (document.getElementById('addon-custom').checked) {
+    state.userCustomText = document.getElementById('custom-text').value;
+  }
+  document.getElementById('draft2-title').innerHTML = '生成中...';
+  document.getElementById('draft2-body').innerHTML = '';
+  callApi('writing-shape', {
+    topic: state.topic,
+    platform: state.platform,
+    angles: state.angles || [],
+    addons: state.selectedAddons,
+    userCustomText: state.userCustomText || '',
+  })
+    .then(function(a) {
+      state.draft2 = { title: a.title, body: a.body };
+      document.getElementById('draft2-title').innerHTML = a.title;
+      document.getElementById('draft2-body').innerHTML = a.body;
+      saveState();
+      showStep(5);
+    })
+    .catch(function(e) {
+      document.getElementById('draft2-title').innerHTML = '失败';
+      document.getElementById('draft2-body').innerHTML = 'API: ' + e.message;
+    });
 }
 
 function quickFix() {
@@ -250,7 +332,7 @@ function fixAll() {
 
 function finish() {
   showStep('done');
-  alert('流程结束！完整数据已保存在 localStorage');
+  alert('流程结束！\n标题: ' + ((state.draft2 || state.draft1 || {}).title || '') + '\n内容: ' + (((state.draft2 ? state.draft2.body.length : 0) || (state.draft1 ? state.draft1.body.length : 0)) + '字'));
 }
 
 function resetAll() {
