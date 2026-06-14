@@ -122,7 +122,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 <div class="form-row"><label><span class="lang-cn">主题</span><span class="lang-jp">テーマ</span></label><input class="input-text" id="topic-input" value="夏季口红推荐"></div>
 <div class="form-row"><label><span class="lang-cn">平台</span><span class="lang-jp">プラットフォーム</span></label><select class="input-text" id="platform-select"><option value="小红书">小红书</option><option value="公众号">公众号</option></select></div>
 <div class="btn-actions"><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(2)"><span class="lang-cn">开始创作</span><span class="lang-jp">作成開始</span> →</button></div>
-</div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>User input</span></div></div>
+</div></div>
 
 <div class="step" id="step-2"><div class="panel">
 <div class="panel-title"><span class="step-badge">02</span><span class="lang-cn">第一稿</span><span class="lang-jp">初稿</span></div>
@@ -178,7 +178,7 @@ select.input-text{cursor:pointer;appearance:none;background-image:url("data:imag
 <div class="done-icon">✓</div>
 <div class="panel-title" style="justify-content:center"><span class="lang-cn">创作完成</span><span class="lang-jp">作成完了</span></div>
 <div class="done-summary"><span class="lang-cn">终稿已保存在本地，可随时返回查看。</span><span class="lang-jp">最終稿はローカルに保存されました。</span></div>
-<div class="btn-actions" style="justify-content:center;border:none"><button class="btn btn-primary" onclick="resetAll()"><span class="lang-cn">重新开始</span><span class="lang-jp">最初から</span></button></div>
+<div class="btn-actions" style="justify-content:center;border:none;gap:10px"><button class="btn btn-ghost" onclick="downloadMD()"><span class="lang-cn">下载 .md</span><span class="lang-jp">.md 保存</span></button><button class="btn btn-ghost" onclick="downloadTXT()"><span class="lang-cn">下载指令 .txt</span><span class="lang-jp">指示 .txt 保存</span></button><button class="btn btn-primary" onclick="resetAll()"><span class="lang-cn">重新开始</span><span class="lang-jp">最初から</span></button></div>
 </div><div class=debug-info><span class=debug-label>SKILL: </span><span class=debug-chain>generate-cover (prompt-only)</span></div></div>
 </main>
 
@@ -200,7 +200,15 @@ function generateDraft2(){S.selectedAddons=[];if(document.getElementById("addon-
 function quickFix(){goToStep(7)}
 function fixAll(){var r=S.diagnosis;if(!r){goToStep(7);return}document.getElementById("diagnosis-report").innerHTML="<div class=\"loading\"><span class=\"spinner\"></span><span class=\"lang-cn\">修复中...</span><span class=\"lang-jp\">修正中...</span></div>";var issues=[];var isJP=localStorage.getItem("kb-lang")==="jp";var lm={textCleanliness:(isJP?"テキスト品質":"文字洁癖"),headlineDiagnosis:(isJP?"タイトル診断":"标题诊断"),expressionEfficiency:(isJP?"表現効率":"表达效率"),cognitiveGap:(isJP?"認知ギャップ":"认知落差")};for(var k in r){if(k==="aiSuggestions")continue;if(r[k].grade&&r[k].grade!=="✅")issues.push((lm[k]||k)+": "+(r[k].detail||""))}var fixText=(isJP?"以下は診断で見つかった問題です。修正してください。 ":"以下是诊断发现的问题，请修改：")+issues.join("; ");if(r.aiSuggestions)fixText+=" "+(isJP?"AI 提案: ":"AI 建议: ")+r.aiSuggestions;var at=(S.draft2||S.draft1||{}).title||"",ab=(S.draft2||S.draft1||{}).body||"";callApi("writing-shape",{topic:S.topic,platform:S.platform,angles:S.angles||[],addons:[],userCustomText:fixText}).then(function(a){S.draft2={title:a.title,body:a.body};S.diagnosis=null;var h="<div class=\"content-box\" style=\"background:#EFF6FF;border:1px solid #DBEAFE\"><span class=\"lang-cn\">✅ 已根据诊断建议重新生成第二稿。</span><span class=\"lang-jp\">✅ 診断に基づいて第二稿を再生成しました。</span></div>"+("<div class=\"content-box\"><h4>"+(isJP?"タイトル":"标题")+"</h4><div class=\"body-text\">"+a.title+"</div></div>")+("<div class=\"content-box\"><h4>"+(isJP?"本文":"正文")+"</h4><div class=\"body-text\">"+a.body+"</div></div>");document.getElementById("diagnosis-report").innerHTML=h;saveState()}).catch(function(e){document.getElementById("diagnosis-report").innerHTML="<div class=\"error-msg\">"+(isJP?"修正失敗: ":"修复失败: ")+e.message+"</div>"})}
 function copyCoverPrompt(){var box=document.querySelector(".cover-prompt-box");if(!box)return;var r=document.createRange();r.selectNodeContents(box);var s=window.getSelection();s.removeAllRanges();s.addRange(r)}
-function finish(){showStep("done")}
+function buildPrompt(){var t=S.draft2||S.draft1;if(!t)return"";var isJP=localStorage.getItem("kb-lang")==="jp";var p="";p+=(isJP?"【執筆指示】\n":"【写作指令】\n");p+=(isJP?"プラットフォーム: ":"平台: ")+S.platform+"\n";p+=(isJP?"トピック: ":"话题: ")+(S.topic||"")+"\n\n";p+=(isJP?"【タイトル】\n":"【标题】\n")+t.title+"\n\n";p+=(isJP?"【本文】\n":"【正文】\n")+t.body+"\n\n---\n";p+=(isJP?"※ 創作センターで生成":"※ 由创作中心生成")+"\n";return p}
+function downloadMD(){var t=S.draft2||S.draft1;if(!t)return;var isJP=localStorage.getItem("kb-lang")==="jp";var md="# "+t.title+"\n\n"+t.body+"\n\n---\n"+(isJP?"※ 創作センターで生成\n":"※ 由创作中心生成\n");var b=new Blob([md],{type:"text/markdown;charset=utf-8"});var u=URL.createObjectURL(b);var a=document.createElement("a");a.href=u;a.download=(t.title||"article")+".md";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u)}
+
+"+t.body+"
+
+---
+"+(isJP?"※ 創作センターで生成
+":"※ 由创作中心生成
+");var b=new Blob([md],{type:"text/markdown;charset=utf-8"});var u=URL.createObjectURL(b);var a=document.createElement("a");a.href=u;a.download=(t.title||"article")+".md";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u)}function downloadTXT(){var p=buildPrompt();if(!p)return;var b=new Blob([p],{type:"text/plain;charset=utf-8"});var u=URL.createObjectURL(b);var a=document.createElement("a");a.href=u;a.download="instruction.txt";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u)}
 function toggleDevMode(){document.body.classList.toggle("dev-mode");localStorage.setItem("dev_mode",document.body.classList.contains("dev-mode"))}function resetAll(){localStorage.removeItem("generator_state");location.reload()}
 </script>
 </body>
