@@ -2,7 +2,7 @@
 // POST /api/writing-fragments
 // 审题：给定 topic + platform，返回写作角度建议和素材缺口清单
 //
-// Model: Haiku (claude-haiku-4-5-20251001)
+// Model: Haiku (deepseek-chat)
 // Based on: writing-fragments SKILL.md → prompts/api-templates/writing-fragments.json
 //
 // TEST:
@@ -38,28 +38,29 @@ function buildUserMessage(topic, platform) {
 }
 
 async function callLLM(apiKey, topic, platform) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
+      "Authorization": `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
+      model: "deepseek-chat",
       max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: buildUserMessage(topic, platform) }],
+      
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: buildUserMessage(topic, platform) }],
     }),
   });
 
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
-    throw new Error(`Anthropic API ${res.status}: ${errText.slice(0, 200)}`);
+    throw new Error(`DeepSeek API ${res.status}: ${errText.slice(0, 200)}`);
   }
 
   const data = await res.json();
-  return data.content[0].text;
+  return data.choices[0].message.content;
 }
 
 function parseResponse(text) {
@@ -81,7 +82,7 @@ function parseResponse(text) {
 }
 
 export async function onRequestPost(context) {
-  const apiKey = context.env.ANTHROPIC_API_KEY;
+  const apiKey = context.env.DEEPSEEK_API_KEY;
   if (!apiKey) {
     return new Response(
       JSON.stringify({ error: "Service configuration error" }),

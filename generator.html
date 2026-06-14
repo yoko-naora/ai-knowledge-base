@@ -198,83 +198,32 @@ function goToStep(step) {
     document.getElementById('draft1-body').innerHTML = state.draft1.body;
   }
   
-  showStep(step);
-}
-
-function generateDraft2() {
-  // 收集加料选项
-  state.selectedAddons = [];
-  if (document.getElementById('addon-case').checked) state.selectedAddons.push('case');
-  if (document.getElementById('addon-compare').checked) state.selectedAddons.push('compare');
-  if (document.getElementById('addon-tips').checked) state.selectedAddons.push('tips');
-  if (document.getElementById('addon-custom').checked) {
-    state.userCustomText = document.getElementById('custom-text').value;
+  if (step === 6) {
+    // Step 6: 展示诊断报告
+    const report = MOCK.diagnosis;
+    let html = '';
+    for (let key in report) {
+      if (key === 'aiSuggestions') continue;
+      html += '<p><strong>' + key + '</strong>: ' + report[key].grade + ' — ' + report[key].detail + '</p>';
+    }
+    html += '<p><strong>AI建议：</strong>' + report.aiSuggestions + '</p>';
+    document.getElementById('diagnosis-report').innerHTML = html;
+    
+    state.diagnosis = report;
   }
-
-  // 生成第二稿（mock）
-  state.draft2 = MOCK.draft2;
-  document.getElementById('draft2-title').innerHTML = state.draft2.title;
-  document.getElementById('draft2-body').innerHTML = state.draft2.body;
-
-  showStep(5);
-}
-
-function goToStep6() {
-  // Step 6: 展示诊断报告
-  const report = MOCK.diagnosis;
-  let html = '';
-  for (let key in report) {
-    if (key === 'aiSuggestions') continue;
-    html += `<p><strong>${key}</strong>: ${report[key].grade} — ${report[key].detail}</p>`;
-  }
-  html += `<p><strong>AI建议：</strong>${report.aiSuggestions}</p>`;
-  document.getElementById('diagnosis-report').innerHTML = html;
   
-  state.diagnosis = report;
-  showStep(6);
-}
-
-function goToStep(step) {
   if (step === 7) {
     document.getElementById('rec-categories').textContent = MOCK.recommendedCategories.join(' + ');
     state.imageSession = { hasUsedFreeQuota: false };
   }
+  
+  if (step === 8) {
+    document.getElementById('cover-result').innerHTML = '<p>封面生成入口（待接入）</p>';
+  }
+  
   showStep(step);
 }
 
-function generateImage() {
-  if (state.imageSession && state.imageSession.hasUsedFreeQuota) {
-    alert('免费额度已用完');
-    return;
-  }
-  
-  document.getElementById('image-result').innerHTML = `
-    <p>已生成图片（模拟）</p>
-    <img src="https://placehold.co/360x480?text=小红书3:4" style="max-width:200px">
-    <img src="https://placehold.co/270x480?text=视频号9:16" style="max-width:150px">
-    <p><button onclick="copyPrompt()">复制 Prompt</button></p>
-  `;
-  
-  state.imageSession.hasUsedFreeQuota = true;
-  saveState();
-}
-
-function handleNotSatisfied() {
-  document.getElementById('image-result').innerHTML = `
-    <p style="color:#c00">已选择不满意，本次不再生成第二张图。</p>
-    <pre>完整 Prompt 已复制到剪贴板（模拟）</pre>
-    <button onclick="copyPrompt()">复制 Prompt</button>
-  `;
-  // 这里严格遵守规则：不满意不出第二张
-}
-
-function copyPrompt() {
-  alert('Prompt 已复制（模拟）');
-}
-
-function goToStep8() {
-  document.getElementById('cover-result').innerHTML = '<p>封面生成入口（待接入）</p>';
-  showStep(8);
 }
 
 function finish() {

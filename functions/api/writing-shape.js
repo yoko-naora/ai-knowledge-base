@@ -2,7 +2,7 @@
 // POST /api/writing-shape
 // 写正文：给定 topic + platform + angles + 可选素材，输出完整文章标题和正文
 //
-// Model: Sonnet (claude-sonnet-4-6)
+// Model: Sonnet (deepseek-chat)
 // Based on: writing-shape SKILL.md → prompts/api-templates/writing-shape.json
 //
 // TEST:
@@ -51,33 +51,30 @@ function buildUserMessage(topic, platform, angles, addons, userCustomText) {
 }
 
 async function callLLM(apiKey, topic, platform, angles, addons, userCustomText) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
+  const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": "2023-06-01",
+      "Authorization": `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: "claude-sonnet-4-6",
+      model: "deepseek-chat",
       max_tokens: 4096,
-      system: SYSTEM_PROMPT,
+      
       messages: [
-        {
-          role: "user",
-          content: buildUserMessage(topic, platform, angles, addons, userCustomText),
-        },
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: buildUserMessage(topic, platform, angles, addons, userCustomText) },
       ],
     }),
   });
 
   if (!res.ok) {
     const errText = await res.text().catch(() => "");
-    throw new Error(`Anthropic API ${res.status}: ${errText.slice(0, 200)}`);
+    throw new Error(`DeepSeek API ${res.status}: ${errText.slice(0, 200)}`);
   }
 
   const data = await res.json();
-  return data.content[0].text;
+  return data.choices[0].message.content;
 }
 
 function parseResponse(text) {
@@ -95,7 +92,7 @@ function parseResponse(text) {
 }
 
 export async function onRequestPost(context) {
-  const apiKey = context.env.ANTHROPIC_API_KEY;
+  const apiKey = context.env.DEEPSEEK_API_KEY;
   if (!apiKey) {
     return new Response(
       JSON.stringify({ error: "Service configuration error" }),
