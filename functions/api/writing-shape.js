@@ -59,7 +59,7 @@ async function callLLM(apiKey, topic, platform, angles, addons, userCustomText) 
     },
     body: JSON.stringify({
       model: "deepseek-chat",
-      max_tokens: 2048,
+      max_tokens: 1024,
       
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
