@@ -91,6 +91,8 @@
   <div class="mock-box" id="diagnosis-report"></div>
   <div class="nav">
     <button onclick="goToStep(5)">← 返回第二稿</button>
+    <button onclick="quickFix()">60分跳过</button>
+    <button onclick="fixAll()">全部修复</button>
     <button onclick="goToStep(7)">进入配图 →</button>
   </div>
 </div>
@@ -224,6 +226,26 @@ function goToStep(step) {
   showStep(step);
 }
 
+}
+
+function quickFix() {
+  goToStep(7);
+}
+
+function fixAll() {
+  var r = MOCK.diagnosis;
+  for (var k in r) {
+    if (k === 'aiSuggestions') continue;
+    r[k].grade = '✅';
+    r[k].detail += '(已修复)';
+  }
+  var h = '';
+  for (var k in r) {
+    if (k === 'aiSuggestions') continue;
+    h += '<p><strong>' + k + '</strong>: ' + r[k].grade + ' \u2014 ' + r[k].detail + '</p>';
+  }
+  h += '<p><strong>AI\u5efa\u8bae\uff1a</strong>' + r.aiSuggestions + '</p>';
+  document.getElementById('diagnosis-report').innerHTML = h;
 }
 
 function finish() {
