@@ -33,92 +33,34 @@ Layout: Clean hierarchical typography. Title takes center stage with breathing r
 Technical: High resolution, sharp typography, warm film-like color grading.`;
 }
 
-async function generateImage(apiKey, prompt, platform) {
-  const imageGenUrl =
-    "https://openrouter.ai/api/v1/chat/completions";
-
-  const imageSize =
-    platform === "video"
-      ? "1024x1792"
-      : "1024x1792";
-
-  const res = await fetch(imageGenUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-      "HTTP-Referer": "https://kb.snsaladdin.com",
-    },
-    body: JSON.stringify({
-      model: "openai/gpt-5-image",
-      messages: [
-        { role: "user", content: `Generate a magazine cover image. ${prompt}` },
-      ],
-
-      max_tokens: 2000
-    }),
-  });
-
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(`Image gen API ${res.status}: ${errText.slice(0, 200)}`);
-  }
-
-  const data = await res.json();
-  const imageUrl = data.images?.[0]?.image_url?.url;
-  if (!imageUrl) {
-    throw new Error("Image gen API returned no image URL");
-  }
-  return imageUrl;
-}
-
-export async function onRequestPost(context) {
-  const imageGenApiKey = context.env.OPENROUTER_API_KEY;
-  if (!imageGenApiKey) {
-    return new Response(
-      JSON.stringify({ error: "Service configuration error" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
+asyncexport async function onRequestPost(context) {
   let body;
   try {
     body = await context.request.json();
   } catch {
     return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
+      status: 400, headers: { "Content-Type": "application/json" },
     });
   }
-
-  const { article, platform } = body || {};
-
+  const p = body || {};
+  const article = p.article;
+  const platform = p.platform;
   if (!article || typeof article !== "object") {
-    return new Response(
-      JSON.stringify({ error: "article is required ({ title, body })" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
-  }
-  if (!article.title || typeof article.title !== "string" || !article.title.trim()) {
-    return new Response(
-      JSON.stringify({ error: "article.title is required (string)" }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
-  }
-  if (!platform || !["xiaohongshu", "video"].includes(platform)) {
-    return new Response(
-      JSON.stringify({ error: 'platform must be "xiaohongshu" or "video"' }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
-  try {
-        const prompt = buildCoverPrompt(
-      article.title.trim(),
-      article.body || "",
-      platform
-    );
-    return new Response(JSON.stringify({ coverPrompt: prompt, platform: platform }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
+    return new Response(JSON.stringify({ error: "article required" }), {
+      status: 400, headers: { "Content-Type": "application/json" },
     });
+  }
+  if (!article.title || typeof article.title !== "string") {
+    return new Response(JSON.stringify({ error: "title required" }), {
+      status: 400, headers: { "Content-Type": "application/json" },
+    });
+  }
+  const coverPrompt = buildCoverPrompt(
+    article.title.trim(),
+    article.body || "",
+    platform || "xiaohongshu"
+  );
+  return new Response(JSON.stringify({ coverPrompt, platform }), {
+    status: 200, headers: { "Content-Type": "application/json" },
+  });
+}
