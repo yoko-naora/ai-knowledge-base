@@ -1,36 +1,121 @@
 // Cloudflare Pages Function: generate-cover
 // POST /api/generate-cover
-// 封面生成：根据文章内容 + 平台生成封面图
+// 封面生成：返回杂志风封面 HTML（CSS 渲染，零成本）
 //
-// Routes per STYLE-GUIDE.md:
-//   xiaohongshu → magazine editorial style, 3:4
-//   video       → magazine editorial style, 9:16
-//
-// Uses AI image generation (configurable via IMAGE_GEN_API_URL env var, defaults to OpenRouter DALL-E 3).
-// Cover prompt follows brand: Editorial Magazine × Ink Classic, warm palette, painterly rendering.
+// 基于 STYLE-GUIDE.md:
+//   小红书封面 → guizang-social-card-skill → editorial-card.html + Ink Classic
+//   视频号封面 → baoyu-cover-image（后补）
+//   公众号封面 → guizang-social-card-skill（后补）
 //
 // TEST:
 //   curl -s -X POST "https://kb.snsaladdin.com/api/generate-cover" \
 //     -H "Content-Type: application/json" \
-//     -d '{"article":{"title":"夏季口红推荐","body":"..."},"platform":"xiaohongshu"}'
-//   预期: 200, { imageUrl: "..." }
+//     -d "{"article":{"title":"夏季口红推荐","body":"正文"},"platform":"xiaohongshu"}"
 
-function buildCoverPrompt(title, body, platform) {
-  const aspectLabel = platform === "video" ? "9:16 vertical video cover" : "3:4 vertical portrait cover";
+function buildCoverHtml(title, body, platform) {
+  const isVideo = platform === "video";
+  const width = isVideo ? "540" : "600";
+  const height = isVideo ? "960" : "800";
 
-  // Extract first ~100 chars of body for context
-  const snippet = (body || "").replace(/\n/g, " ").slice(0, 100).trim();
+  return `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: ${width}px;
+    height: ${height}px;
+    background: #faf9f6;
+    font-family: "Noto Serif SC", "Noto Serif JP", Georgia, "Times New Roman", serif;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .top-bar {
+    height: 6px;
+    background: #b8925a;
+    flex-shrink: 0;
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 48px;
+    position: relative;
+  }
+  .issue-line {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b8925a;
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+  .title {
+    font-size: ${isVideo ? "42px" : "52px"};
+    font-weight: 700;
+    color: #1a1814;
+    line-height: 1.15;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    max-width: 90%;
+  }
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: #b8925a;
+    margin-bottom: 20px;
+  }
+  .subtitle {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: ${isVideo ? "13px" : "14px"};
+    color: #6b6560;
+    letter-spacing: 2px;
+    line-height: 1.6;
+    max-width: 80%;
+  }
+  .bottom-bar {
+    height: 4px;
+    background: #b8925a;
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+  .gold-corner {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    border-right: 2px solid #b8925a;
+    border-bottom: 2px solid #b8925a;
+  }
+</style>
+</head>
+<body>
+  <div class="top-bar"></div>
+  <div class="content">
+    <div class="issue-line">Editorial &middot; Summer 2026</div>
+    <h1 class="title">${escapeHtml(title)}</h1>
+    <div class="divider"></div>
+    <div class="subtitle">${isVideo ? "Featured Story" : "READ MORE INSIDE"}</div>
+    <div class="gold-corner"></div>
+  </div>
+  <div class="bottom-bar"></div>
+</body>
+</html>`;
+}
 
-  return `Editorial magazine cover design. ${aspectLabel}. Japanese magazine aesthetic (Ushio, Brutus, Casa Brutus).
-
-Title: "${title}"
-Context: ${snippet || title}
-
-Style: Editorial Magazine × Ink Classic. Warm paper-textured background (#faf9f6 family), deep ink-black (#1a1814) typography, gold accent details (#b8925a). Painterly rendering, not mechanical. Minimal decoration, generous negative space. The title should be the hero element — large, confident serif typography with generous letter-spacing. Film grain texture overlay.
-
-Layout: Clean hierarchical typography. Title takes center stage with breathing room. No emoji, no icons, no clip art. No busy backgrounds. The image should feel like a premium magazine cover — sophisticated, editorial, timeless.
-
-Technical: High resolution, sharp typography, warm film-like color grading.`;
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 export async function onRequestPost(context) {
@@ -42,9 +127,8 @@ export async function onRequestPost(context) {
       status: 400, headers: { "Content-Type": "application/json" },
     });
   }
-  const p = body || {};
-  const article = p.article;
-  const platform = p.platform;
+
+  const { article, platform } = body || {};
   if (!article || typeof article !== "object") {
     return new Response(JSON.stringify({ error: "article required" }), {
       status: 400, headers: { "Content-Type": "application/json" },
@@ -55,12 +139,16 @@ export async function onRequestPost(context) {
       status: 400, headers: { "Content-Type": "application/json" },
     });
   }
-  const coverPrompt = buildCoverPrompt(
+
+  const plat = platform === "video" ? "video" : "xiaohongshu";
+  const coverHtml = buildCoverHtml(
     article.title.trim(),
     article.body || "",
-    platform || "xiaohongshu"
+    plat
   );
-  return new Response(JSON.stringify({ coverPrompt, platform }), {
-    status: 200, headers: { "Content-Type": "application/json" },
+
+  return new Response(JSON.stringify({ coverHtml, platform: plat }), {
+    status: 200,
+    headers: { "Content-Type": "application/json" },
   });
 }
