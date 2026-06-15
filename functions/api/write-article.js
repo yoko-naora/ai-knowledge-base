@@ -49,7 +49,7 @@ export async function onRequestPost(context) {
         max_tokens: 2048,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: "主题：" + topic.trim() + "\n平台：" + platform }
+          { role: "user", content: "当前日期：2026年6月15日\n主题：" + topic.trim() + "\n平台：" + platform }
         ]
       })
     });

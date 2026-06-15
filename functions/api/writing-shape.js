@@ -50,7 +50,7 @@ const SYSTEM_PROMPT = `你是 writing-shape，一个内容创作写作助手。
 ## 输出格式`;
 
 function buildUserMessage(topic, platform, angles, addons, userCustomText) {
-  let msg = `主题：${topic}\n平台：${platform}\n写作角度：${angles.join("、")}`;
+  let msg = `当前日期：2026年6月15日\n主题：${topic}\n平台：${platform}\n写作角度：${angles.join("、")}`;
   if (addons && addons.length > 0) {
     msg += `\n追加素材：${addons.join("、")}`;
   }
