@@ -49,11 +49,12 @@ const SYSTEM_PROMPT = `你是 writing-shape，一个内容创作写作助手。
 
 ## 输出格式`;
 
-function buildUserMessage(topic, platform, angles, addons, userCustomText) {
+function buildUserMessage(topic, platform, angles, addons, userCustomText, modifications) {
   let msg = `当前日期：2026年6月15日\n主题：${topic}\n平台：${platform}\n写作角度：${angles.join("、")}`;
   if (addons && addons.length > 0) {
     msg += `\n追加素材：${addons.join("、")}`;
   }
+  if (modifications && modifications.trim()) { msg += "\n\n修改要求（直接按照要求修改，不要忽略）：" + modifications.trim(); }
   if (userCustomText && userCustomText.trim()) {
     msg += `\n用户自写段落（直接插入正文，不改写）：\n${userCustomText.trim()}`;
   }
@@ -120,7 +121,7 @@ export async function onRequestPost(context) {
     });
   }
 
-  const { topic, platform, angles, addons, userCustomText } = body || {};
+  const { topic, platform, angles, addons, userCustomText, modifications } = body || {};
 
   if (!topic || typeof topic !== "string" || !topic.trim()) {
     return new Response(

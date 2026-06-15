@@ -36,7 +36,7 @@ export async function onRequestPost(context) {
   let body;
   try { body = await context.request.json(); }
   catch { return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: { "Content-Type": "application/json" } }); }
-  const { topic, platform } = body || {};
+  const { topic, platform, notes } = body || {};
   if (!topic || typeof topic !== "string" || !topic.trim()) {
     return new Response(JSON.stringify({ error: "topic is required (string)" }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
@@ -49,7 +49,7 @@ export async function onRequestPost(context) {
         max_tokens: 2048,
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: "当前日期：2026年6月15日\n主题：" + topic.trim() + "\n平台：" + platform }
+          { role: "user", content: "当前日期：2026年6月15日\n主题：" + topic.trim() + "\n平台：" + platform + (notes && notes.trim() ? "\n\n补充要求（直接满足，不要忽略）：" + notes.trim() : "") }
         ]
       })
     });
