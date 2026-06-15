@@ -297,7 +297,9 @@
     "image_prompt_ja": "",
     "video_prompt": "",
     "video_prompt_ja": "",
-    "images": [],
+    "images": [
+      "images/MrLarus_2052278749937156465_1.jpg"
+    ],
     "video": "",
     "type": "image",
     "author": "@MrLarus",
