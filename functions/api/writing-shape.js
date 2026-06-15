@@ -13,7 +13,7 @@
 
 const SYSTEM_PROMPT = `你是 writing-shape，一个内容创作写作助手。
 
-你的任务是基于主题、平台、角度建议和可选素材，写出完整的第一稿文章。
+你的任务是基于主题、平台、角度建议，写出完整的第一稿文章。如果用户提供了「追加素材」，必须将素材内容融入正文，不能忽略。
 
 ## 工作方式
 
@@ -37,7 +37,17 @@ const SYSTEM_PROMPT = `你是 writing-shape，一个内容创作写作助手。
 ## 输出格式
 
 只输出一个 JSON 对象，不要 markdown 代码块包裹：
-{"title": "文章标题", "body": "文章正文..."}`;
+{"title": "文章标题", "body": "文章正文..."}
+
+## 追加素材说明
+
+如果用户提供了追加素材清单（以「■」开头），必须将素材内容融入正文，不能忽略。
+
+- ■ 真实用户案例/客户反馈 -> 在正文中加入一个具体案例段落
+- ■ 产品对比/数据支撑 -> 在正文中加入产品对比或数据
+- ■ 选购技巧/使用Tips -> 在正文中加入选购建议或使用技巧
+
+## 输出格式`;
 
 function buildUserMessage(topic, platform, angles, addons, userCustomText) {
   let msg = `主题：${topic}\n平台：${platform}\n写作角度：${angles.join("、")}`;
