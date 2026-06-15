@@ -1,0 +1,222 @@
+import pathlib, textwrap
+
+CSS = """/* UI/UX Pro Max v2 - Glassmorphism + Flat Design */
+:root{--primary:#2563EB;--primary-dark:#1D4ED8;--primary-lt:#EFF6FF;--secondary:#3B82F6;--cta:#F97316;--cta-hover:#EA580C;--bg:#F8FAFC;--card:#FFFFFF;--ink:#1E293B;--ink-muted:#64748B;--ink-faint:#94A3B8;--border:#E2E8F0;--radius:16px;--shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.06)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Open Sans",sans-serif;font-size:15px;line-height:1.7;min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 20% 10%,rgba(37,99,235,.04),transparent),radial-gradient(ellipse 50% 30% at 80% 90%,rgba(249,115,22,.03),transparent);pointer-events:none;z-index:0}
+.lang-cn,.lang-jp{display:none}
+body.show-cn .lang-cn{display:inline}
+body.show-jp .lang-jp{display:inline}
+
+/* Glass Nav */
+.nav-wrap{position:fixed;top:12px;left:12px;right:12px;z-index:100;max-width:800px;margin:0 auto;background:rgba(255,255,255,.72);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(226,232,240,.6);border-radius:20px;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;height:56px}
+.nav-logo{font-family:"Poppins",sans-serif;font-size:15px;font-weight:600;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.nav-logo span{color:var(--primary)}
+.nav-links{display:flex;gap:12px;align-items:center}
+.nav-links a{font-size:12px;font-weight:500;color:var(--ink-muted);text-decoration:none;padding:6px 12px;border-radius:10px;transition:all .2s}
+.nav-links a:hover{color:var(--primary);background:var(--primary-lt)}
+.lang-switch{display:flex;gap:3px;margin-left:4px}
+.lang-switch button{background:none;border:1px solid var(--border);padding:4px 10px;cursor:pointer;font-size:11px;font-family:"Open Sans",sans-serif;font-weight:500;color:var(--ink-muted);border-radius:10px;transition:all .2s}
+.lang-switch button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* Main */
+main{position:relative;z-index:1;flex:1;max-width:720px;margin:0 auto;padding:100px 20px 60px;width:100%}
+
+/* Progress */
+.progress-wrap{margin-bottom:36px}
+.progress-track{display:flex;justify-content:space-between;position:relative;padding:0}
+.progress-track::before{content:"";position:absolute;top:16px;left:18px;right:18px;height:2px;background:var(--border);z-index:0;border-radius:2px}
+.prog-step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;min-width:0}
+.prog-dot{width:32px;height:32px;border-radius:50%;background:var(--card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--ink-faint);transition:all .3s;font-family:"Poppins",sans-serif}
+.prog-step.done .prog-dot{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.prog-step.current .prog-dot{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:0 0 0 6px rgba(30,41,59,.08)}
+.prog-label{font-size:10px;font-weight:500;color:var(--ink-faint);letter-spacing:.02em;white-space:nowrap}
+.prog-step.done .prog-label,.prog-step.current .prog-label{color:var(--ink)}
+
+/* Panel */
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 32px;margin-bottom:16px;box-shadow:var(--shadow)}
+.panel-title{font-family:"Poppins",sans-serif;font-size:18px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.panel-title .step-badge{font-size:10px;font-weight:600;background:var(--primary-lt);color:var(--primary);padding:3px 10px;border-radius:8px;letter-spacing:.04em}
+.panel-desc{font-size:13px;color:var(--ink-muted);margin-bottom:20px;line-height:1.6}
+
+/* Forms */
+.input-text,.input-ta{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);font-family:"Open Sans",sans-serif;font-size:14px;color:var(--ink);outline:none;transition:all .2s;resize:vertical}
+.input-text:focus,.input-ta:focus{border-color:var(--primary);background:var(--card);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-ta{min-height:88px;line-height:1.7}
+select.input-text{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%2394A3B8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.form-row{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:12px}
+.form-row label{font-size:13px;font-weight:500;color:var(--ink-muted);min-width:54px;padding-top:12px}
+.form-row .input-text{flex:1;min-width:180px}
+
+/* Checkbox Groups */
+.check-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.check-row{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s}
+.check-row:hover{border-color:var(--primary);background:var(--primary-lt)}
+.check-row input[type=checkbox]{margin-top:3px;accent-color:var(--primary);width:16px;height:16px;flex-shrink:0;cursor:pointer}
+.check-row .cl{font-size:14px;line-height:1.5;font-weight:500}
+.check-row .cl-sub{font-size:12px;color:var(--ink-muted);margin-top:1px}
+
+/* Buttons */
+.btn{padding:10px 22px;border:none;border-radius:12px;font-family:"Open Sans",sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;letter-spacing:.01em;transition:all .2s}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 1px 4px rgba(37,99,235,.2)}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 2px 8px rgba(37,99,235,.3);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--ink-muted)}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-lt)}
+.btn-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border)}
+.btn-actions .spacer{flex:1}
+
+/* Content */
+.content-box{background:var(--bg);border-radius:10px;padding:16px 18px;margin-bottom:10px;line-height:1.8;font-size:14px}
+.content-box h4{font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.content-box .body-text{color:var(--ink)}
+.loading{color:var(--ink-faint);font-size:13px;padding:24px 0;text-align:center}
+.loading .spinner{display:inline-block;width:18px;height:18px;border:2.5px solid var(--border);border-top-color:var(--primary);border-radius:50%;vertical-align:middle;margin-right:8px}
+.error-msg{color:#DC2626;font-size:13px;padding:12px 14px;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;margin-bottom:10px}
+
+/* Diagnosis */
+.diag-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.diag-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-radius:10px;font-size:13px;line-height:1.6;background:var(--bg);border:1px solid var(--border)}
+.diag-grade{font-size:16px;flex-shrink:0;width:28px;text-align:center}
+.diag-content{flex:1}
+.diag-label{font-weight:600;margin-bottom:1px}
+.diag-detail{color:var(--ink-muted)}
+.cover-prompt-box{background:var(--bg);border-radius:10px;padding:16px;font-family:"Open Sans",monospace;font-size:12px;line-height:1.6;max-height:220px;overflow:auto;white-space:pre-wrap;word-break:break-all;border:1px solid var(--border)}
+
+/* Done */
+#step-done .done-icon{font-size:44px;text-align:center;margin-bottom:12px;padding-top:16px;color:var(--primary)}
+#step-done .done-summary{font-size:14px;color:var(--ink-muted);margin-bottom:16px}
+
+/* Responsive */
+@media(max-width:640px){.nav-wrap{top:8px;left:8px;right:8px;border-radius:14px}nav{height:48px}.debug-info{display:none;margin-top:16px;padding-top:10px;border-top:1px dashed var(--border);font-size:11px;color:var(--ink-faint);line-height:1.6}body.dev-mode .debug-info{display:block}.debug-label{font-weight:600;margin-right:4px;color:var(--ink-muted)}.debug-chain{color:var(--primary)}.debug-arrow{margin:0 4px;color:var(--ink-faint)}.nav-logo{font-size:14px}main{padding:84px 14px 40px;max-width:100%}.panel{padding:20px 16px}.prog-dot{width:26px;height:26px;font-size:11px}.prog-label{font-size:9px}.progress-track::before{top:13px;left:14px;right:14px}.form-row{flex-direction:column}.form-row label{padding-top:0}}
+"""
+
+HTML_HEADER = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>大神工具 · 创作中心</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+""" + CSS + """
+</style>
+</head>
+<body>
+<div class="nav-wrap"><nav>
+  <a class="nav-logo" href="tools.html"><span>大神</span>工具</a>
+  <div class="nav-links">
+    <a href="creator.html">Creator</a>
+    <div class="lang-switch">
+      <button onclick="switchLang('cn')" class="active">中文</button>
+      <button onclick="switchLang('jp')">日本語</button>
+    </div>
+  </div>
+<button onclick="toggleDevMode()" style="background:none;border:none;font-size:11px;color:var(--ink-faint);cursor:pointer;padding:2px 6px" title="Toggle dev mode">⚙</button></nav></div>
+<main>
+<div class="progress-wrap"><div class="progress-track" id="progressTrack"></div></div>
+"""
+
+STEPS_HTML = """
+<div class="step" id="step-1"><div class="panel">
+<div class="panel-title"><span class="step-badge">01</span><span class="lang-cn">输入主题</span><span class="lang-jp">テーマを入力</span></div>
+<div class="panel-desc"><span class="lang-cn">输入创作主题，从第一稿到配图封面全程生成。</span><span class="lang-jp">テーマを入力してください。初稿から画像・表紙まで生成します。</span></div>
+<div class="form-row"><label><span class="lang-cn">主题</span><span class="lang-jp">テーマ</span></label><input class="input-text" id="topic-input" value="夏季口红推荐"></div>
+<div class="form-row"><label><span class="lang-cn">平台</span><span class="lang-jp">プラットフォーム</span></label><select class="input-text" id="platform-select"><option value="小红书">小红书</option><option value="公众号">公众号</option></select></div>
+<div class="btn-actions"><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(2)"><span class="lang-cn">开始创作</span><span class="lang-jp">作成開始</span> →</button></div>
+</div></div>
+
+<div class="step" id="step-2"><div class="panel">
+<div class="panel-title"><span class="step-badge">02</span><span class="lang-cn">第一稿</span><span class="lang-jp">初稿</span></div>
+<div class="panel-desc"><span class="lang-cn">AI 分析主题并撰写初稿。</span><span class="lang-jp">AIがテーマを分析し、初稿を作成しています。</span></div>
+<div class="content-box"><h4><span class="lang-cn">标题</span><span class="lang-jp">タイトル</span></h4><div class="body-text" id="draft1-title"></div></div>
+<div class="content-box"><h4><span class="lang-cn">正文</span><span class="lang-jp">本文</span></h4><div class="body-text" id="draft1-body"></div></div>
+<div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(1)">← <span class="lang-cn">修改主题</span><span class="lang-jp">テーマ修正</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(3)"><span class="lang-cn">进入加料</span><span class="lang-jp">追記へ</span> →</button></div>
+</div></div>
+
+<div class="step" id="step-3"><div class="panel">
+<div class="panel-title"><span class="step-badge">03</span><span class="lang-cn">加料面板</span><span class="lang-jp">追記パネル</span></div>
+<div class="panel-desc"><span class="lang-cn">补充内容或自行添加。</span><span class="lang-jp">追加内容を選ぶか、自分で入力してください。</span></div>
+<div class="check-group">
+<div class="check-row"><input type="checkbox" id="addon-case"><div><div class="cl"><span class="lang-cn">加客诉/真实案例</span><span class="lang-jp">お客様の声/実例</span></div><div class="cl-sub"><span class="lang-cn">让内容更有说服力</span><span class="lang-jp">説得力を高める</span></div></div></div>
+<div class="check-row"><input type="checkbox" id="addon-compare"><div><div class="cl"><span class="lang-cn">加产品对比/数据</span><span class="lang-jp">製品比較/データ</span></div><div class="cl-sub"><span class="lang-cn">提供决策依据</span><span class="lang-jp">判断材料を提供</span></div></div></div>
+<div class="check-row"><input type="checkbox" id="addon-tips"><div><div class="cl"><span class="lang-cn">加选购技巧/Tips</span><span class="lang-jp">選び方/ヒント</span></div><div class="cl-sub"><span class="lang-cn">增加实用价值</span><span class="lang-jp">実用性向上</span></div></div></div>
+<div class="check-row"><input type="checkbox" id="addon-custom"><div><div class="cl"><span class="lang-cn">自己写一段...</span><span class="lang-jp">自分で入力...</span></div></div></div>
+</div>
+<textarea class="input-ta" id="custom-text" placeholder="在此输入自定义内容 / カスタム内容を入力"></textarea>
+<div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(2)">← <span class="lang-cn">返回第一稿</span><span class="lang-jp">初稿に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="generateDraft2()"><span class="lang-cn">生成第二稿</span><span class="lang-jp">第二稿を生成</span> →</button></div>
+</div></div>
+
+<div class="step" id="step-5"><div class="panel">
+<div class="panel-title"><span class="step-badge">04</span><span class="lang-cn">第二稿</span><span class="lang-jp">第二稿</span></div>
+<div class="panel-desc"><span class="lang-cn">已加入补充内容。</span><span class="lang-jp">追記内容を反映しました。</span></div>
+<div class="content-box"><h4><span class="lang-cn">标题</span><span class="lang-jp">タイトル</span></h4><div class="body-text" id="draft2-title"></div></div>
+<div class="content-box"><h4><span class="lang-cn">正文</span><span class="lang-jp">本文</span></h4><div class="body-text" id="draft2-body"></div></div>
+<div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(3)">← <span class="lang-cn">返回加料</span><span class="lang-jp">追記に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(6)"><span class="lang-cn">进入质检</span><span class="lang-jp">品質診断へ</span> →</button></div>
+</div></div>
+
+<div class="step" id="step-6"><div class="panel">
+<div class="panel-title"><span class="step-badge">05</span><span class="lang-cn">五维诊断</span><span class="lang-jp">5次元診断</span></div>
+<div class="panel-desc"><span class="lang-cn">AI 从5个维度分析文章质量。</span><span class="lang-jp">AIが5つの観点から記事品質を分析します。</span></div>
+<div id="diagnosis-report"><div class="loading"><span class="spinner"></span><span class="lang-cn">诊断中...</span><span class="lang-jp">診断中...</span></div></div>
+<div class="btn-actions"><button class="btn btn-ghost" onclick="goToStep(5)">← <span class="lang-cn">返回第二稿</span><span class="lang-jp">第二稿に戻る</span></button><span class="spacer"></span><button class="btn btn-ghost" onclick="quickFix()" style="border-color:var(--primary);color:var(--primary)"><span class="lang-cn">60分跳过</span><span class="lang-jp">スキップ</span></button><button class="btn btn-primary" onclick="fixAll()"><span class="lang-cn">全部修复</span><span class="lang-jp">全て修正</span></button><button class="btn btn-ghost" onclick="goToStep(7)" style="border:none"><span class="lang-cn">跳过→</span><span class="lang-jp">スキップ→</span></button></div>
+</div></div>
+
+<div class="step" id="step-7"><div class="panel">
+<div class="panel-title"><span class="step-badge">06</span><span class="lang-cn">配图推荐</span><span class="lang-jp">画像提案</span></div>
+<div class="panel-desc"><span class="lang-cn">AI 推荐适合内容的配图风格。</span><span class="lang-jp">AIがコンテンツに合った画像スタイルを提案します。</span></div>
+<div id="rec-result"><div class="loading"><span class="spinner"></span><span class="lang-cn">加载中...</span><span class="lang-jp">読み込み中...</span></div></div>
+<div class="btn-actions" id="step7-actions" style="display:none"><button class="btn btn-ghost" onclick="goToStep(6)">← <span class="lang-cn">返回质检</span><span class="lang-jp">診断に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="goToStep(8)"><span class="lang-cn">进入封面</span><span class="lang-jp">表紙へ</span> →</button></div>
+</div></div>
+
+<div class="step" id="step-8"><div class="panel">
+<div class="panel-title"><span class="step-badge">07</span><span class="lang-cn">封面制作</span><span class="lang-jp">表紙作成</span></div>
+<div class="panel-desc"><span class="lang-cn">生成适合平台的封面。</span><span class="lang-jp">プラットフォームに合った表紙を生成します。</span></div>
+<div id="cover-result"><div class="loading"><span class="spinner"></span><span class="lang-cn">生成中...</span><span class="lang-jp">生成中...</span></div></div>
+<div class="btn-actions" id="step8-actions" style="display:none"><button class="btn btn-ghost" onclick="goToStep(7)">← <span class="lang-cn">返回配图</span><span class="lang-jp">画像に戻る</span></button><span class="spacer"></span><button class="btn btn-primary" onclick="finish()"><span class="lang-cn">完成</span><span class="lang-jp">完了</span> →</button></div>
+</div></div>
+
+<div class="step" id="step-done"><div class="panel" style="text-align:center">
+<div class="done-icon">✓</div>
+<div class="panel-title" style="justify-content:center"><span class="lang-cn">创作完成</span><span class="lang-jp">作成完了</span></div>
+<div class="done-summary"><span class="lang-cn">终稿已保存在本地，可随时返回查看。</span><span class="lang-jp">最終稿はローカルに保存されました。</span></div>
+<div class="btn-actions" style="justify-content:center;border:none"><button class="btn btn-primary" onclick="resetAll()"><span class="lang-cn">重新开始</span><span class="lang-jp">最初から</span></button></div>
+</div></div>
+</main>
+"""
+
+JS = """
+<script>
+var S={currentStep:"input",topic:"",platform:"",draft1:null,draft2:null,diagnosis:null,angles:[],selectedAddons:[],userCustomText:"",imageSession:null,recommendedPrompts:null};
+function saveState(){try{localStorage.setItem("generator_state",JSON.stringify(S))}catch(e){}}
+function loadState(){try{var s=localStorage.getItem("generator_state");if(s)S=JSON.parse(s)}catch(e){}}
+function showStep(n){document.querySelectorAll(".step").forEach(function(e){e.style.display="none"});var el=document.getElementById("step-"+n);if(el)el.style.display="block";S.currentStep=n==="done"?"done":"step-"+n;saveState();updateProgress(n)}
+function updateProgress(n){var lb=["","<span class=\\"lang-cn\\">主题</span><span class=\\"lang-jp\\">テーマ</span>","<span class=\\"lang-cn\\">第一稿</span><span class=\\"lang-jp\\">初稿</span>","<span class=\\"lang-cn\\">加料</span><span class=\\"lang-jp\\">追記</span>","<span class=\\"lang-cn\\">第二稿</span><span class=\\"lang-jp\\">第二稿</span>","<span class=\\"lang-cn\\">诊断</span><span class=\\"lang-jp\\">診断</span>","<span class=\\"lang-cn\\">配图</span><span class=\\"lang-jp\\">画像</span>","<span class=\\"lang-cn\\">封面</span><span class=\\"lang-jp\\">表紙</span>"];var idx=[1,2,3,5,6,7,8];var h="";for(var i=0;i<idx.length;i++){var si=idx[i],done=si<n||(si==2&&S.draft1),cur=si==n;var cl="prog-step"+(done?" done":"")+(cur?" current":"");h+="<div class=\\"prog-step "+cl+"\\"><div class=\\"prog-dot\\">"+(done?"✓":String(i+1).padStart(2,"0"))+"</div><div class=\\"prog-label\\">"+lb[i]+"</div></div>"}document.getElementById("progressTrack").innerHTML=h}
+function switchLang(l){document.body.classList.remove("show-cn","show-jp");document.body.classList.add("show-"+l);document.querySelectorAll(".lang-switch button").forEach(function(b){b.classList.toggle("active",b.textContent===(l==="cn"?"中文":"日本語"))});localStorage.setItem("kb-lang",l)}
+document.addEventListener("DOMContentLoaded",function(){var s=localStorage.getItem("kb-lang")||"cn";switchLang(s);updateProgress(1)})
+var API_BASE="";function callApi(ep,data){return fetch(API_BASE+"/api/"+ep,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)}).then(function(r){if(!r.ok)return r.json().then(function(e){throw new Error(e.error||"err "+r.status)});return r.json()})}
+function goToStep(n){showStep(n)
+if(n==2){S.topic=document.getElementById("topic-input").value;S.platform=document.getElementById("platform-select").value;document.getElementById("draft1-title").innerHTML="<div class=\\"loading\\"><span class=\\"spinner\\"></span><span class=\\"lang-cn\\">生成中...</span><span class=\\"lang-jp\\">生成中...</span></div>";document.getElementById("draft1-body").innerHTML="";callApi("writing-fragments",{topic:S.topic,platform:S.platform}).then(function(f){S.angles=f.angles||[];return callApi("writing-shape",{topic:S.topic,platform:S.platform,angles:S.angles})}).then(function(a){S.draft1={title:a.title,body:a.body};document.getElementById("draft1-title").innerHTML=a.title;document.getElementById("draft1-body").innerHTML=a.body;saveState();updateProgress(2)}).catch(function(e){document.getElementById("draft1-title").innerHTML="<span class=\\"error-msg\\">"+(localStorage.getItem("kb-lang")==="jp"?"API エラー: ":"API 失败: ")+e.message+"</span>"})}
+if(n==6){document.getElementById("diagnosis-report").innerHTML="<div class=\\"loading\\"><span class=\\"spinner\\"></span><span class=\\"lang-cn\\">诊断中...</span><span class=\\"lang-jp\\">診断中...</span></div>";var at=(S.draft2||S.draft1||{}).title||"",ab=(S.draft2||S.draft1||{}).body||"";callApi("dbs-content",{article:{title:at,body:ab}}).then(function(r){S.diagnosis=r;var h="<div class=\\"diag-grid\\">";var lm={textCleanliness:{cn:"文字洁癖",jp:"テキスト品質"},headlineDiagnosis:{cn:"标题诊断",jp:"タイトル診断"},expressionEfficiency:{cn:"表达效率",jp:"表現効率"},cognitiveGap:{cn:"认知落差",jp:"認知ギャップ"}};var isJP=localStorage.getItem("kb-lang")==="jp";for(var k in r){if(k==="aiSuggestions")continue;var lb=lm[k]?lm[k][isJP?"jp":"cn"]:k;h+="<div class=\\"diag-item\\"><div class=\\"diag-grade\\">"+(r[k].grade||"")+"</div><div class=\\"diag-content\\"><div class=\\"diag-label\\">"+lb+"</div><div class=\\"diag-detail\\">"+(r[k].detail||"")+"</div></div></div>"}h+="</div>";if(r.aiSuggestions)h+="<div style=\\"background:#EFF6FF;border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.6;border:1px solid #DBEAFE\\"><strong style=\\"color:#2563EB\\">"+(isJP?"AI 提案:":"AI 建议:")+"</strong><br>"+(r.aiSuggestions||"")+"</div>";document.getElementById("diagnosis-report").innerHTML=h;saveState()}).catch(function(e){document.getElementById("diagnosis-report").innerHTML="<div class=\\"error-msg\\">"+(localStorage.getItem("kb-lang")==="jp"?"診断失敗: ":"诊断失败: ")+e.message+"</div>"})}
+if(n==7){document.getElementById("rec-result").innerHTML="<div class=\\"loading\\"><span class=\\"spinner\\"></span><span class=\\"lang-cn\\">加载中...</span><span class=\\"lang-jp\\">読み込み中...</span></div>";document.getElementById("step7-actions").style.display="none";callApi("recommend-prompts",{topic:S.topic||""}).then(function(d){S.recommendedPrompts=d;var isJP=localStorage.getItem("kb-lang")==="jp";var cs=d.recommended||[];var h="<div class=\\"content-box\\"><strong>"+(isJP?"おすすめカテゴリー:":"推荐分类:")+"</strong> "+(cs.length?cs.map(function(c){return c.cat}).join(" + "):(isJP?"該当なし":"暂无推荐"))+"</div>";if(cs.length){h+="<div class=\\"check-group\\">";cs.forEach(function(c){var ps=c.prompts||[];ps.slice(0,2).forEach(function(p){h+="<div class=\\"check-row\\" style=\\"cursor:default\\"><div><div class=\\"cl\\">"+c.cat+" #"+(p.id||"")+"</div><div class=\\"cl-sub\\" style=\\"overflow:hidden;text-overflow:ellipsis;max-height:2.8em\\">"+(p.title||"")+"</div></div></div>"})});h+="</div>"}h+="<div style=\\"font-size:13px;color:var(--ink-faint);margin-top:8px\\">"+(isJP?"画像生成はまもなく対応予定です。提案を参考にしてください。":"图片生成即将上线，请先参考推荐。")+"</div>";document.getElementById("rec-result").innerHTML=h;document.getElementById("step7-actions").style.display="flex";saveState()}).catch(function(e){document.getElementById("rec-result").innerHTML="<div class=\\"error-msg\\">"+(localStorage.getItem("kb-lang")==="jp"?"読み込み失敗: ":"加载失败: ")+e.message+"</div>"})}
+if(n==8){document.getElementById("cover-result").innerHTML="<div class=\\"loading\\"><span class=\\"spinner\\"></span><span class=\\"lang-cn\\">生成中...</span><span class=\\"lang-jp\\">生成中...</span></div>";document.getElementById("step8-actions").style.display="none";var at=(S.draft2||S.draft1||{}).title||"",ab=(S.draft2||S.draft1||{}).body||"";callApi("generate-cover",{article:{title:at,body:ab},platform:S.platform==="视频号"?"video":"xiaohongshu"}).then(function(d){var isJP=localStorage.getItem("kb-lang")==="jp";var h="";if(d.coverHtml){h+="<iframe srcdoc=\\""+d.coverHtml.replace(/"/g,"&quot;")+"\\" style=\\"width:100%;max-width:300px;height:360px;border:1px solid var(--border);border-radius:12px;margin:0 auto;display:block\\"></iframe>"}else if(d.coverPrompt){h+="<div class=\\"cover-prompt-box\\">"+d.coverPrompt.replace(/</g,"&lt;")+"</div><div style=\\"margin-top:12px\\"><button class=\\"btn btn-ghost\\" onclick=\\"copyCoverPrompt()\\">📋 "+(isJP?"プロンプトをコピー":"复制封面指令")+"</button></div>"}else{h+="<div class=\\"error-msg\\">"+(isJP?"生成失敗":"生成失败")+"</div>"}document.getElementById("cover-result").innerHTML=h;document.getElementById("step8-actions").style.display="flex";saveState()}).catch(function(e){document.getElementById("cover-result").innerHTML="<div class=\\"error-msg\\">"+(localStorage.getItem("kb-lang")==="jp"?"生成失敗: ":"生成失败: ")+e.message+"</div>"})}}
+function generateDraft2(){S.selectedAddons=[];if(document.getElementById("addon-case").checked)S.selectedAddons.push("case");if(document.getElementById("addon-compare").checked)S.selectedAddons.push("compare");if(document.getElementById("addon-tips").checked)S.selectedAddons.push("tips");if(document.getElementById("addon-custom").checked)S.userCustomText=document.getElementById("custom-text").value;document.getElementById("draft2-title").innerHTML="<div class=\\"loading\\"><span class=\\"spinner\\"></span><span class=\\"lang-cn\\">生成中...</span><span class=\\"lang-jp\\">生成中...</span></div>";document.getElementById("draft2-body").innerHTML="";callApi("writing-shape",{topic:S.topic,platform:S.platform,angles:S.angles||[],addons:S.selectedAddons,userCustomText:S.userCustomText||""}).then(function(a){S.draft2={title:a.title,body:a.body};document.getElementById("draft2-title").innerHTML=a.title;document.getElementById("draft2-body").innerHTML=a.body;saveState();showStep(5)}).catch(function(e){document.getElementById("draft2-title").innerHTML="<span class=\\"error-msg\\">"+(localStorage.getItem("kb-lang")==="jp"?"API エラー: ":"API 失败: ")+e.message+"</span>"})}
+function quickFix(){goToStep(7)}
+function fixAll(){var r=S.diagnosis;if(!r){goToStep(7);return}document.getElementById("diagnosis-report").innerHTML="<div class=\\"loading\\"><span class=\\"spinner\\"></span><span class=\\"lang-cn\\">修复中...</span><span class=\\"lang-jp\\">修正中...</span></div>";var issues=[];var isJP=localStorage.getItem("kb-lang")==="jp";var lm={textCleanliness:(isJP?"テキスト品質":"文字洁癖"),headlineDiagnosis:(isJP?"タイトル診断":"标题诊断"),expressionEfficiency:(isJP?"表現効率":"表达效率"),cognitiveGap:(isJP?"認知ギャップ":"认知落差")};for(var k in r){if(k==="aiSuggestions")continue;if(r[k].grade&&r[k].grade!=="✅")issues.push((lm[k]||k)+": "+(r[k].detail||""))}var fixText=(isJP?"以下は診断で見つかった問題です。修正してください。 ":"以下是诊断发现的问题，请修改：")+issues.join("; ");if(r.aiSuggestions)fixText+=" "+(isJP?"AI 提案: ":"AI 建议: ")+r.aiSuggestions;var at=(S.draft2||S.draft1||{}).title||"",ab=(S.draft2||S.draft1||{}).body||"";callApi("writing-shape",{topic:S.topic,platform:S.platform,angles:S.angles||[],addons:[],userCustomText:fixText}).then(function(a){S.draft2={title:a.title,body:a.body};S.diagnosis=null;var h="<div class=\\"content-box\\" style=\\"background:#EFF6FF;border:1px solid #DBEAFE\\"><span class=\\"lang-cn\\">✅ 已根据诊断建议重新生成第二稿。</span><span class=\\"lang-jp\\">✅ 診断に基づいて第二稿を再生成しました。</span></div>"+("<div class=\\"content-box\\"><h4>"+(isJP?"タイトル":"标题")+"</h4><div class=\\"body-text\\">"+a.title+"</div></div>")+("<div class=\\"content-box\\"><h4>"+(isJP?"本文":"正文")+"</h4><div class=\\"body-text\\">"+a.body+"</div></div>");document.getElementById("diagnosis-report").innerHTML=h;saveState()}).catch(function(e){document.getElementById("diagnosis-report").innerHTML="<div class=\\"error-msg\\">"+(isJP?"修正失敗: ":"修复失败: ")+e.message+"</div>"})}
+function copyCoverPrompt(){var box=document.querySelector(".cover-prompt-box");if(!box)return;var r=document.createRange();r.selectNodeContents(box);var s=window.getSelection();s.removeAllRanges();s.addRange(r)}
+function finish(){showStep("done")}
+
+if(location.search.includes('dev')||localStorage.getItem('dev_mode')){document.body.classList.add('dev-mode')}
+function toggleDevMode(){document.body.classList.toggle("dev-mode");localStorage.setItem("dev_mode",document.body.classList.contains("dev-mode"))}function resetAll(){localStorage.removeItem("generator_state");location.reload()}
+</script>
+</body>
+</html>
+"""
+
+full = HTML_HEADER + STEPS_HTML + JS
+pathlib.Path(r"C:\Users\jding\kb-site\generator.html").write_text(full, encoding="utf-8")
+print("Wrote %d bytes" % len(full))
