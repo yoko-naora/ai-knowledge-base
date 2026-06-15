@@ -197,7 +197,8 @@
     "free": true,
     "image_prompt": "想让 AI 做出专业级动画，你得先学会怎么跟它描述\n\nLinear 设计工程师 Emil Kowalski 整理了 90+ 个动画术语，涵盖弹性动画、交互反馈等 12 个分类。做网站、做视频动画都能用\nhttp://animations.dev/vocabulary\n\n为了方便理解每个术语的实际效果，我用 Claude 做了一个双语预览站 \n👇 http://animation-words.vercel.app",
     "image_prompt_ja": "",
-    "real_prompt": "想让 AI 做出专业级动画，你得先学会怎么跟它描述\n\nLinear 设计工程师 Emil Kowalski 整理了 90+ 个动画术语，涵盖弹性动画、交互反馈等 12 个分类。做网站、做视频动画都能用\nhttp://animations.dev/vocabulary\n\n为了方便理解每个术语的实际效果，我用 Claude 做了一个双语预览站 \n👇 http://animation-words.vercel.app"
+    "real_prompt": "想让 AI 做出专业级动画，你得先学会怎么跟它描述\n\nLinear 设计工程师 Emil Kowalski 整理了 90+ 个动画术语，涵盖弹性动画、交互反馈等 12 个分类。做网站、做视频动画都能用\nhttp://animations.dev/vocabulary\n\n为了方便理解每个术语的实际效果，我用 Claude 做了一个双语预览站 \n👇 http://animation-words.vercel.app",
+    "video": "videos/Saccc_c_2064206181778731228.mp4"
   },
   {
     "id": 95,
