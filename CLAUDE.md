@@ -5,13 +5,31 @@
 AI知识库会员制サイト。月額 ¥2,980 / 年額 ¥30,000 購読。
 URL: https://kb.snsaladdin.com | GitHub: yoko-naora/ai-knowledge-base (main)
 
-## 核心铁律
+## 开工/收工协议（三端共享，必守）
 
-### 0. 开工第一步 — 直接执行，不要问
+用户说「开工」时：
 ```
-.\scripts\preflight.ps1
+1. 读 C:\Users\jding\PROJECTS.md（固定路径，禁止 Glob 搜索）
+2. 读各项目 PROJECT.md（路径在 PROJECTS.md 里）
+3. 出简报：全项目状态 + 今日最优先任务
+4. 简报后才问「做什么」——禁止跳过直接接任务
+5. kb-site 专属：简报后跑 .\scripts\preflight.ps1
 ```
-跑完再继续。不等用户确认。
+
+用户说「收工」时：
+```
+只有被说话的那一端执行写操作。另一端不抢写。
+
+Step 1: 更新 PROJECT.md（已完成→[x] / Issues更新 / Next重排序）
+Step 2: 更新 DELIVERABLES.md（新成果追加 / 删除的打消线）
+Step 3: git status 确认 + 未push通知
+Step 4: 简报（今日成果一行 + 明日第一步一行）
+Step 5: 交叉检查手渡し（格式见工作准则⑦）
+```
+
+---
+
+## 核心铁律
 
 ### 1. 工作目录
 `C:\Users\jding\kb-site`。不搞双目录。
