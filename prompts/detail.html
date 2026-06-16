@@ -349,7 +349,7 @@ document.addEventListener('langchange', function(e) {
     }
   } catch(e) {}
 
-  fetch('data.json')
+  fetch('/prompts/data.json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}

@@ -602,10 +602,10 @@ function renderPromptCards() {
       '</div>' +
       '<div class="prompt-copy-area" id="' + copyId + '">' +
         '<pre class="copy-content">' + escapeHTML(copyContent) + '</pre>' +
-        '<button class="btn-copy-inline" onclick="copyPromptContent(\'' + copyId + '\')">' + (j ? '📋 コピー' : '📋 复制内容') + '</button>' +
+        '<button class="btn-copy-inline" onclick="copyPromptContent(this)">' + (j ? '📋 コピー' : '📋 复制内容') + '</button>' +
       '</div>' +
       '<div class="prompt-actions">' +
-        '<a class="btn-link" href="prompts/detail.html?id=' + idx + '">' + (j ? '元の投稿を見る' : '查看原文') + '</a>' +
+        '<a class="btn-link" href="javascript:void(0)" onclick="toggleDetail(this,\'' + t.key + '\',' + idx + ')">' + (j ? '元の投稿を見る' : '查看原文') + '</a>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -662,21 +662,72 @@ function buildCopyContent(p) {
   return lines.join('\n');
 }
 
-function copyPromptContent(copyId) {
-  var el = document.getElementById(copyId);
-  if (!el) return;
-  var pre = el.querySelector('.copy-content');
+function copyPromptContent(btn) {
+  var pre = btn.parentElement.querySelector('.copy-content');
   if (!pre) return;
   var text = pre.textContent;
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function(){ showToast(); });
+    navigator.clipboard.writeText(text).then(function(){ showToast(); }).catch(function(){
+      // Fallback for clipboard permission denied
+      fallbackCopy(text);
+    });
   } else {
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); showToast(); } catch(e){}
-    document.body.removeChild(ta);
+    fallbackCopy(text);
   }
+}
+function toggleDetail(btn, typeKey, idx) {
+  var card = btn.closest('.prompt-card');
+  var existing = card.querySelector('.prompt-detail-expand');
+  if (existing) { existing.remove(); return; }
+
+  // Find the prompt in the pool
+  var pool = typePools[typeKey];
+  var pick = null;
+  for (var i = 0; i < pool.length; i++) {
+    if (pool[i].idx === idx) { pick = pool[i]; break; }
+  }
+  if (!pick) return;
+  var p = pick.prompt;
+  var j = jp();
+
+  var detail = document.createElement('div');
+  detail.className = 'prompt-detail-expand';
+
+  var html = '<div style="border-top:1px solid var(--border);padding:var(--s-md);margin-top:var(--s-xs)">';
+  // Full text
+  var fullText = j ? (p.text_ja || p.text) : p.text;
+  if (fullText) {
+    html += '<div style="font-size:var(--t-small);color:var(--ink-muted);line-height:1.8;margin-bottom:var(--s-md);white-space:pre-wrap">' + escapeHTML(fullText) + '</div>';
+  }
+  // Image prompt
+  var imgPrompt = j ? (p.image_prompt_ja || p.image_prompt) : (p.image_prompt || '');
+  if (imgPrompt) {
+    html += '<div style="margin-bottom:var(--s-sm)"><span style="font-weight:600;font-size:var(--t-caption);color:var(--ink)">' + (j ? '📷 画像プロンプト' : '📷 图片提示词') + '</span><pre style="font-size:11px;line-height:1.6;color:var(--ink-muted);white-space:pre-wrap;word-break:break-all;background:#fff;padding:var(--s-xs);border:1px solid var(--border-lt);margin-top:4px">' + escapeHTML(imgPrompt) + '</pre></div>';
+  }
+  // Video prompt
+  var vidPrompt = j ? (p.video_prompt_ja || p.video_prompt) : (p.video_prompt || '');
+  if (vidPrompt) {
+    html += '<div style="margin-bottom:var(--s-sm)"><span style="font-weight:600;font-size:var(--t-caption);color:var(--ink)">' + (j ? '🎬 動画プロンプト' : '🎬 视频提示词') + '</span><pre style="font-size:11px;line-height:1.6;color:var(--ink-muted);white-space:pre-wrap;word-break:break-all;background:#fff;padding:var(--s-xs);border:1px solid var(--border-lt);margin-top:4px">' + escapeHTML(vidPrompt) + '</pre></div>';
+  }
+  // Real prompt
+  var realP = j ? (p.real_prompt_ja || p.real_prompt) : (p.real_prompt || '');
+  if (realP && realP !== imgPrompt) {
+    html += '<div style="margin-bottom:var(--s-sm)"><span style="font-weight:600;font-size:var(--t-caption);color:var(--ink)">' + (j ? '📝 実プロンプト' : '📝 实际提示词') + '</span><pre style="font-size:11px;line-height:1.6;color:var(--ink-muted);white-space:pre-wrap;word-break:break-all;background:#fff;padding:var(--s-xs);border:1px solid var(--border-lt);margin-top:4px">' + escapeHTML(realP) + '</pre></div>';
+  }
+  // Meta
+  html += '<div style="font-size:10px;color:var(--ink-faint);margin-top:var(--s-sm)">' + (p.author || '') + ' · ' + (p.date || '') + ' · ' + (p.cat || '') + '</div>';
+  html += '</div>';
+
+  detail.innerHTML = html;
+  card.appendChild(detail);
+}
+
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showToast(); } catch(e){}
+  document.body.removeChild(ta);
 }
 
 function renderToolCards() {
