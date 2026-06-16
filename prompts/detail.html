@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>提示词详情 · AI知识库</title>
+<!-- deploy-test-v2 -->
 <link rel="stylesheet" href="../assets/css/style.css">
 <style>
 /* Detail page styles */
@@ -322,17 +323,16 @@ document.addEventListener('langchange', function(e) {
 // ── Initial load ──
 (function() {
   var root = document.getElementById('detailRoot');
-  var loading = document.getElementById('loading');
   var id = getParam('id');
-  if (id === null || id === '') {
-    loading.innerHTML = '<div class="detail-error">缺少参数，<a href="index.html">返回提示词列表</a></div>';
+  if (!id) {
+    root.innerHTML = '<div class="detail-error">缺少参数，<a href="index.html">返回提示词列表</a></div>';
     return;
   }
+  var idx = parseInt(id, 10);
 
-  function loadAndRender(data) {
-    var idx = parseInt(id, 10);
+  function showDetail(data) {
     if (isNaN(idx) || idx < 0 || idx >= data.length) {
-      loading.innerHTML = '<div class="detail-error">未找到该提示词，<a href="index.html">返回列表</a></div>';
+      root.innerHTML = '<div class="detail-error">未找到该提示词（ID=' + idx + '），<a href="index.html">返回列表</a></div>';
       return;
     }
     cachedData = data;
@@ -340,41 +340,22 @@ document.addEventListener('langchange', function(e) {
     renderPrompt();
   }
 
-  // Check sessionStorage cache first (set by creator-simple.html)
-  var loaded = false;
+  // 1. Try sessionStorage (instant, set by creator-simple)
   try {
     var cached = sessionStorage.getItem('kb-prompt-cache');
-    if (cached) {
-      loadAndRender(JSON.parse(cached));
-      loaded = true;
-      return;
-    }
+    if (cached) { showDetail(JSON.parse(cached)); return; }
   } catch(e) {}
 
-  // Timeout fallback — if fetch hangs, show error after 8s
-  var timeout = setTimeout(function() {
-    if (!loaded) {
-      loading.innerHTML = '<div class="detail-error">加载超时，<a href="index.html">返回列表</a><br><small>请确保通过创作中心进入，或直接访问提示词列表</small></div>';
-    }
-  }, 8000);
-
+  // 2. Fetch from network
+  root.innerHTML = '<div style="text-align:center;padding:60px 20px"><p style="color:#888;font-size:14px">読み込み中...</p></div>';
   fetch('/prompts/data.json')
-    .then(function(r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
+    .then(function(r) { return r.json(); })
     .then(function(data) {
-      clearTimeout(timeout);
-      loaded = true;
       try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}
-      loadAndRender(data);
+      showDetail(data);
     })
-    .catch(function(err) {
-      clearTimeout(timeout);
-      if (!loaded) {
-        loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a><br><small>' + (err.message || '网络错误') + '</small></div>';
-        console.error('Detail load error:', err);
-      }
+    .catch(function() {
+      root.innerHTML = '<div class="detail-error">データの読み込みに失敗しました<br><a href="index.html">プロンプト一覧に戻る</a></div>';
     });
 
   // Copy button handler (event delegation — survives re-render)
