@@ -13,7 +13,7 @@ URL: https://kb.snsaladdin.com | GitHub: yoko-naora/ai-knowledge-base (main)
   2. 读 git log -3（看最近改动）
   3. 开工分级：
      - 新功能/大改动 → 读 C:\Users\jding\PROJECTS.md + 各 PROJECT.md + 跑 preflight.ps1
-     - 小修/文案/错字/明确请求 → 跳过全项目简报和 preflight，直接做
+     - 小修/文案/错字/明确请求 → 跳过全项目简报和 preflight
   4. 判断标准：涉及支付/安全/生成器逻辑/新文件 → 完整开工；纯文案/样式/错字/注释 → 快速开工
   ═══════════════════════════════════════════════
   5. 闸门 — 输出状态摘要，等用户指定方向再动手。
