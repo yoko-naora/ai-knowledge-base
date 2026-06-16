@@ -164,6 +164,7 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .tool-name{font-family:var(--serif);font-size:var(--t-small);font-weight:600;line-height:1.3}
 .tool-chain{font-size:10px;color:var(--ink-faint);line-height:1.5}
 .tool-chain span{color:var(--ink-muted)}
+.tool-usage{font-size:10px;color:var(--ink-faint);line-height:1.5;margin-top:4px;font-style:italic}
 .tool-coming-tag{font-size:9px;color:var(--ink-faint);font-style:italic}
 
 /* ══════════════ EMPTY / LOADING ══════════════ */
@@ -378,10 +379,10 @@ function classifyPrompt(cat) {
 
 /* ══════════════ TOOL DATA ══════════════ */
 var TOOLS = [
-  { id:'wechat',  nameCN:'公众号长文', nameJP:'公众号長文',  descCN:'长文+配图，深度干货', descJP:'長文+画像、深い内容に', cls:'t-wechat',  chain:'fragments→shape→ai-check→guizang→wewrite', url:'creator.html?platform=wechat&mode=scratch', icon:'assets/platform-icons/wechat.svg' },
-  { id:'moments', nameCN:'朋友圈图文', nameJP:'朋友圈画像＋文', descCN:'短文+配图，像跟朋友聊天', descJP:'短文+画像、友達と話すように', cls:'t-moments', chain:'fragments→shape→qc→配图', url:'creator.html?platform=moments&mode=scratch', icon:'assets/platform-icons/moments.svg' },
-  { id:'xhs',     nameCN:'小红书滚图', nameJP:'小紅書カルーセル', descCN:'短文+滚图，5-8张轮播', descJP:'短文+カルーセル、5-8枚', cls:'t-xhs', chain:'fragments→shape→ai-check→xhs-title→配图', url:'creator.html?platform=xhs&mode=scratch', icon:'assets/platform-icons/xiaohongshu.svg' },
-  { id:'video',   nameCN:'短视频',   nameJP:'ショート動画',   descCN:'即将上线', descJP:'近日公開予定', cls:'t-video', chain:'coming soon', url:null, icon:null, coming:true }
+  { id:'wechat',  nameCN:'公众号长文', nameJP:'公众号長文',  useCN:'输入：提示词详情页的标题+URL', useJP:'入力：提示詞詳細ページのタイトル+URL', cls:'t-wechat',  chain:'fragments→shape→ai-check→guizang→wewrite', url:'creator.html?platform=wechat&mode=scratch', icon:'assets/platform-icons/wechat.svg' },
+  { id:'moments', nameCN:'朋友圈图文', nameJP:'朋友圈画像＋文', useCN:'输入：提示词详情页的标题+URL', useJP:'入力：提示詞詳細ページのタイトル+URL', cls:'t-moments', chain:'fragments→shape→qc→配图', url:'creator.html?platform=moments&mode=scratch', icon:'assets/platform-icons/moments.svg' },
+  { id:'xhs',     nameCN:'小红书滚图', nameJP:'小紅書カルーセル', useCN:'输入：提示词详情页的标题+URL', useJP:'入力：提示詞詳細ページのタイトル+URL', cls:'t-xhs', chain:'fragments→shape→ai-check→xhs-title→配图', url:'creator.html?platform=xhs&mode=scratch', icon:'assets/platform-icons/xiaohongshu.svg' },
+  { id:'video',   nameCN:'短视频',   nameJP:'ショート動画',   useCN:'输入：提示词详情页的标题+URL', useJP:'入力：提示詞詳細ページのタイトル+URL', cls:'t-video', chain:'coming soon', url:null, icon:null, coming:true }
 ];
 
 /* ══════════════ HELPERS ══════════════ */
@@ -610,7 +611,7 @@ function renderPromptCards() {
         '<div class="prompt-meta"><span>' + cat + '</span><span>' + (dateDisplay || author) + '</span></div>' +
       '</div>' +
       '<div class="prompt-actions">' +
-        '<button class="btn-link" onclick="showDetailModal(\'' + t.key + '\',' + idx + ')">' + (j ? '元の投稿を見る' : '查看原文') + '</button>' +
+        '<button class="btn-link" onclick="showDetailModal(\'' + t.key + '\',' + idx + ')">' + (j ? '元の投稿を見る' : '查看原文提示词') + '</button>' +
       '</div>' +
       '<div class="prompt-copy-area" id="' + copyAreaId + '">' +
         '<pre class="copy-content"></pre>' +
@@ -778,13 +779,13 @@ function showDetailModal(typeKey, idx) {
   var copyToCardBtn = document.createElement('button');
   copyToCardBtn.className = 'btn-copy-inline';
   copyToCardBtn.style.flex = '1';
-  copyToCardBtn.textContent = j ? '📋 复制原文' : '📋 复制原文';
+  copyToCardBtn.textContent = j ? '📋 复制原文提示词' : '📋 复制原文提示词';
   copyToCardBtn.onclick = function() {
     var parts = [];
-    if (fullText) parts.push(fullText);
     if (imgPrompt) parts.push((j?'【画像プロンプト】':'【图片提示词】')+'\n'+imgPrompt);
     if (vidPrompt) parts.push((j?'【動画プロンプト】':'【视频提示词】')+'\n'+vidPrompt);
     if (realP && realP!==imgPrompt && realP!==vidPrompt) parts.push((j?'【実プロンプト】':'【实际提示词】')+'\n'+realP);
+    if (parts.length===0 && fullText) parts.push(fullText);
     var allContent = parts.join('\n\n');
     // Populate card's copy area
     var copyAreaId = 'ca-' + typeKey + '-' + idx;
@@ -823,7 +824,7 @@ function renderToolCards() {
   grid.innerHTML = TOOLS.map(function(t){
     var card = '<a class="tool-card ' + t.cls + (t.coming ? ' coming-soon' : '') + '"';
     if (t.url && !t.coming) {
-      card += ' href="' + t.url + '"';
+      card += ' href="' + t.url + '" target="_blank"';
     } else {
       card += ' href="javascript:void(0)" onclick="return false"';
     }
@@ -831,6 +832,7 @@ function renderToolCards() {
     card += (t.icon ? '<img class="tool-icon" src="' + t.icon + '" alt="">' : '<div class="tool-icon"></div>');
     card += '<div class="tool-name">' + (j ? t.nameJP : t.nameCN) + '</div>';
     card += '<div class="tool-chain">' + t.chain.split('→').map(function(s){ return '<span>' + s.trim() + '</span>'; }).join(' → ') + '</div>';
+    card += '<div class="tool-usage">' + (j ? t.useJP : t.useCN) + '</div>';
     if (t.coming) card += '<div class="tool-coming-tag">' + (j ? '近日公開' : '即将上线') + '</div>';
     card += '</a>';
     return card;
