@@ -341,23 +341,40 @@ document.addEventListener('langchange', function(e) {
   }
 
   // Check sessionStorage cache first (set by creator-simple.html)
+  var loaded = false;
   try {
     var cached = sessionStorage.getItem('kb-prompt-cache');
     if (cached) {
       loadAndRender(JSON.parse(cached));
+      loaded = true;
       return;
     }
   } catch(e) {}
 
+  // Timeout fallback — if fetch hangs, show error after 8s
+  var timeout = setTimeout(function() {
+    if (!loaded) {
+      loading.innerHTML = '<div class="detail-error">加载超时，<a href="index.html">返回列表</a><br><small>请确保通过创作中心进入，或直接访问提示词列表</small></div>';
+    }
+  }, 8000);
+
   fetch('/prompts/data.json')
-    .then(function(r) { return r.json(); })
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
     .then(function(data) {
+      clearTimeout(timeout);
+      loaded = true;
       try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}
       loadAndRender(data);
     })
     .catch(function(err) {
-      loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a></div>';
-      console.error('Detail load error:', err);
+      clearTimeout(timeout);
+      if (!loaded) {
+        loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a><br><small>' + (err.message || '网络错误') + '</small></div>';
+        console.error('Detail load error:', err);
+      }
     });
 
   // Copy button handler (event delegation — survives re-render)
