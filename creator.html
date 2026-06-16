@@ -1112,9 +1112,6 @@ function renderStep7(content,actions){
     '<button class="btn-next" onclick="finishWizard()">'+(isJP?'完了して結果を見る':'完成，查看结果')+'</button>'+
     '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
 }
-  var box=document.getElementById('promptBox');
-  box.style.display=box.style.display==='none'?'block':'none';
-}
 function finishWizard(){
   updateTask(S.taskId,{status:'done',completedAt:new Date().toISOString()});
   showResult(S.taskId);
@@ -1174,8 +1171,6 @@ function renderResult(taskId){
       '<button class="btn-back" onclick="showDocList()">← '+(isJP?'一覧に戻る':'返回列表')+'</button>'+
     '</div>';
   S.taskId=taskId;
-}
-  box.style.display=box.style.display==='none'?'block':'none';
 }
 function copyPrompt(){
   var t=getTask(S.taskId);if(!t)return;
