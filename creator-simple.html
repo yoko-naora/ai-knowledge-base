@@ -252,7 +252,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <textarea id="topicInput" placeholder="例如：夏季口红推广方案 / 例：夏のリッププロモーション企画"></textarea>
     </div>
 
-    <button class="search-btn" id="searchBtn" onclick="handleSearch()"><span class="lang-content cn">查找灵感</span><span class="lang-content jp">インスピレーションを探す</span></button>
+    <button class="search-btn" id="searchBtn" onclick="handleSearch()">查找灵感</button>
 
     <div class="logout-link">
       <button onclick="doLogout()"><span class="lang-content cn">退出登录</span><span class="lang-content jp">ログアウト</span></button>
@@ -636,11 +636,14 @@ function handleSearch() {
 var origSwitchLang = window.switchLang;
 window.switchLang = function(lang) {
   if (origSwitchLang) origSwitchLang(lang);
+  var j = jp();
+  // Update search button text
+  var btn = document.getElementById('searchBtn');
+  if (btn && !btn.disabled) btn.textContent = j ? 'インスピレーションを探す' : '查找灵感';
   // If results are showing, re-render
   if (document.getElementById('resultsWrap').style.display === 'block') {
     renderPromptCards();
     renderToolCards();
-    var j = jp();
     var ctx = document.getElementById('resultsContext');
     ctx.innerHTML = (j ? '「<em>' + currentIndustry + '</em>」業種 · 「<em>' + currentTopic + '</em>」' : '为「<em>' + currentIndustry + '</em>」行业 · 「<em>' + currentTopic + '</em>」');
   }
