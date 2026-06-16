@@ -99,12 +99,20 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 - [x] **HANDOFF.md 更新** — 全模块状态表、环境变量配置状态、待办优先级
 - [x] **Phase 1 预研完成** — 读 prompts/data.json（9类57条）、STYLE-GUIDE.md（品牌路由）、CF Function 范式（stripe-webhook.js）
 
+## Completed (2026-06-16)
+
+- [x] **creator-simple.html** — 最小可卖产品页上线。登录→行业+话题→三类型推荐（人设·行业产品·大众话题）+ 弹窗查看原文提示词 + 复制回填 + 工具卡片（4格式×Skill链+使用方法）
+- [x] **提示词推荐引擎** — 57条预分类、16行业×类别映射、日期优先排序、Top 8 智能换一批（行业感知随机抽）
+- [x] **detail.html 极简重写** — 80行纯HTML+JS，零外部依赖，sessionStorage秒开
+- [x] **creator-simple.html modal** — 纯DOM API构建弹窗，展示原文+图片+提示词+详情链接
+- [x] **5 skill更新** — notebooklm/skill-creator/frontend-design/runninghub 更新成功，baoyu-article-illustrator路径修复
+- [x] **skill-update-workflow 记忆** — Claude执行更新+Hermes检测审计の標準流程確立
+
 ## In Progress
 
-- [ ] **generator.html** — Hermes 前端，8步状态机 UI（未开始）
+- [ ] **提示词库扩充** — 5缺口行業（家装/餐饮/旅游/医疗/宠物）各补2-4条提示词到 data.json
+- [ ] **generator.html** — 已放弃，被 creator-simple.html 替代
 - [ ] **Cloudflare 环境变量配置** — ANTHROPIC_API_KEY + FAL_API_KEY（待配）
-- [ ] **5 个 endpoint curl 测试**（待环境变量配置后）
-- [ ] **创作中心后端 API** — /api/create-task, task-status, task-result, my-tasks（当前 MVP 用 localStorage 模拟）
 - [ ] **success.html → creator.html token 集成**
 
 ## Completed (2026-06-11)
@@ -154,11 +162,11 @@ Layer 4 · Projects   → output/
 
 | # | 任务 | 负责 | 说明 |
 |---|------|------|------|
-| 1 | Cloudflare 配 ANTHROPIC_API_KEY + FAL_API_KEY | 手动 | 拿到 key 后在 CF Dashboard 配置 |
-| 2 | curl 测试 5 个 endpoint | Claude | 环境变量就绪后逐个验证 |
-| 3 | generator.html 前端 | Hermes | 先走 huashu-design 流程，再写代码 |
-| 4 | 联调 generator.html ↔ API | Claude+Hermes | 替换 mock 数据，端到端走 8 步 |
-| 5 | 交叉检查报告 | Codex | 终稿检查，24 项 |
+| 1 | 提示词库扩充5行业 | 手动+Claude | 家装/餐饮/旅游/医疗/宠物，各2-4条 → data.json |
+| 2 | 工具卡 GitHubURL 填入 | 手动 | 4个Skill的真实GitHub地址 |
+| 3 | 定价页/注册流程 | Claude | 把 creator-simple 接入付费墙 |
+| 4 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图 |
+| 5 | Cloudflare 配 ANTHROPIC_API_KEY + FAL_API_KEY | 手动 | 拿到 key 后在 CF Dashboard 配置 |
 | 6 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
 
 ## Key Links
