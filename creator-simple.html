@@ -730,6 +730,21 @@ function showDetailModal(typeKey, idx) {
     scroll.appendChild(pre);
   }
 
+  // Images
+  if (p.images && p.images.length > 0) {
+    var imgTitle = document.createElement('h4');
+    imgTitle.textContent = j ? '🖼 参考画像' : '🖼 参考图片';
+    imgTitle.style.cssText = 'font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 8px';
+    scroll.appendChild(imgTitle);
+    p.images.forEach(function(im) {
+      var imgEl = document.createElement('img');
+      imgEl.src = 'prompts/' + im;
+      imgEl.loading = 'lazy';
+      imgEl.style.cssText = 'max-width:100%;border-radius:4px;margin-bottom:8px;display:block';
+      scroll.appendChild(imgEl);
+    });
+  }
+
   if (fullText) {
     var pEl = document.createElement('p');
     pEl.className = 'detail-text';
@@ -750,6 +765,14 @@ function showDetailModal(typeKey, idx) {
   var copyBtn = document.createElement('button');
   copyBtn.className = 'btn-copy-inline';
   copyBtn.textContent = j ? '📋 コピー' : '📋 复制';
+  // Link to full detail page
+  var detailLink = document.createElement('a');
+  detailLink.href = 'prompts/detail.html?id=' + idx;
+  detailLink.textContent = j ? '📄 詳細ページで見る' : '📄 在详情页查看';
+  detailLink.style.cssText = 'display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--gold);text-decoration:none';
+  detailLink.target = '_blank';
+  scroll.appendChild(detailLink);
+
   copyBtn.onclick = function() {
     var pres = scroll.querySelectorAll('.detail-pre');
     var all = '';
