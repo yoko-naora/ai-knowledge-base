@@ -502,10 +502,15 @@ function getCatKeywords(cat) { return CAT_KEYWORDS[cat] || []; }
 
 function loadPrompts() {
   if (promptCache) return Promise.resolve(promptCache);
+  // Check sessionStorage first (may have been cached by another page)
+  try {
+    var cached = sessionStorage.getItem('kb-prompt-cache');
+    if (cached) { promptCache = JSON.parse(cached); return Promise.resolve(promptCache); }
+  } catch(e) {}
   return fetch('/prompts/data.json').then(function(r){ return r.json(); }).then(function(data){
-    // Tag each prompt with its array index for detail links
     data.forEach(function(p, i){ p._idx = i; });
     promptCache = data;
+    try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}
     return data;
   });
 }
@@ -600,7 +605,7 @@ function renderPromptCards() {
         '<button class="btn-copy-inline" onclick="copyPromptContent(\'' + copyId + '\')">' + (j ? '📋 コピー' : '📋 复制内容') + '</button>' +
       '</div>' +
       '<div class="prompt-actions">' +
-        '<a class="btn-link" href="prompts/index.html">' + (j ? 'すべてのプロンプトを見る' : '浏览全部提示词') + '</a>' +
+        '<a class="btn-link" href="prompts/detail.html?id=' + idx + '">' + (j ? '元の投稿を見る' : '查看原文') + '</a>' +
       '</div>' +
     '</div>';
   }).join('');

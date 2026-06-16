@@ -329,17 +329,31 @@ document.addEventListener('langchange', function(e) {
     return;
   }
 
+  function loadAndRender(data) {
+    var idx = parseInt(id, 10);
+    if (isNaN(idx) || idx < 0 || idx >= data.length) {
+      loading.innerHTML = '<div class="detail-error">未找到该提示词，<a href="index.html">返回列表</a></div>';
+      return;
+    }
+    cachedData = data;
+    currentIdx = idx;
+    renderPrompt();
+  }
+
+  // Check sessionStorage cache first (set by creator-simple.html)
+  try {
+    var cached = sessionStorage.getItem('kb-prompt-cache');
+    if (cached) {
+      loadAndRender(JSON.parse(cached));
+      return;
+    }
+  } catch(e) {}
+
   fetch('data.json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      var idx = parseInt(id, 10);
-      if (isNaN(idx) || idx < 0 || idx >= data.length) {
-        loading.innerHTML = '<div class="detail-error">未找到该提示词，<a href="index.html">返回列表</a></div>';
-        return;
-      }
-      cachedData = data;
-      currentIdx = idx;
-      renderPrompt();
+      try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}
+      loadAndRender(data);
     })
     .catch(function(err) {
       loading.innerHTML = '<div class="detail-error">加载失败，<a href="index.html">返回列表</a></div>';
