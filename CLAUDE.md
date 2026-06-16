@@ -7,8 +7,11 @@ URL: https://kb.snsaladdin.com | GitHub: yoko-naora/ai-knowledge-base (main)
 
 ## 核心铁律
 
-### 0. 开工
-`.\scripts\preflight.ps1` — 不跑 = 不开工。不一致会自动修+commit。
+### 0. 开工第一步 — 直接执行，不要问
+```
+.\scripts\preflight.ps1
+```
+跑完再继续。不等用户确认。
 
 ### 1. 工作目录
 `C:\Users\jding\kb-site`。不搞双目录。
