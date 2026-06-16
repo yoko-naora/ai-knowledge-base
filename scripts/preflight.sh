@@ -7,12 +7,19 @@ cd "$(dirname "$0")/.."
 
 echo -e "\033[36m=== preflight ===\033[0m"
 
-# 1. 数文章
-ids=($(ls articles/*.html 2>/dev/null | sed 's|articles/||;s|\.html||' | sort -n))
+# 1. 数文章 (find 比 ls 可靠，WSL 下不会漏)
+ids=($(find articles/ -maxdepth 1 -name '*.html' -printf '%f\n' | sed 's|\.html||' | sort -n))
 actual=${#ids[@]}
+if [ "$actual" -eq 0 ]; then
+    echo -e "\033[31m[✗] articles/ 下未找到 HTML 文件，目录对吗？\033[0m"
+    exit 1
+fi
 max_id=${ids[-1]}
 range=$(printf "001-%03d" "$max_id")
-echo -e "\033[90marticles/*.html: ${actual} 篇 (范围 ${range})\033[0m"
+
+# 自检：范围ID跨度 vs 实际文件数不能矛盾（如 001-031 ≠ 35）
+range_span=$((max_id - ${ids[0]} + 1))
+echo -e "\033[90marticles/: ${actual} 篇, ID范围 ${range}, 跨度${range_span}个ID, 缺${range_span}-${actual}个号\033[0m"
 
 # 2. 读 PROJECT.md 写的内容
 raw=$(cat PROJECT.md)
