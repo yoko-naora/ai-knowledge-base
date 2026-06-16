@@ -373,6 +373,25 @@ var CONTENT_TYPES = {
   viral:    ['游戏/娱乐/影视','全景/3D/空间','健康/生活/实用工具','视频制作/Seedance']
 };
 
+// Industry boosts: prompts in these categories get score bonus
+var INDUSTRY_BOOST = {
+  '美容/美妆': ['穿搭/形象/造型','自拍类'],
+  '餐饮': ['电商/商业海报'],
+  '电商': ['电商/商业海报','品牌/VI/包装'],
+  '教育': ['教育/科普/图解'],
+  '服装': ['穿搭/形象/造型'],
+  '科技': ['教育/科普/图解','品牌/VI/包装'],
+  '游戏/娱乐': ['游戏/娱乐/影视','视频制作/Seedance'],
+  '旅游': ['全景/3D/空间','自拍类'],
+  '医疗/健康': ['健康/生活/实用工具'],
+  '家装': ['全景/3D/空间','电商/商业海报'],
+  '摄影': ['自拍类','电商/商业海报'],
+  '宠物': ['电商/商业海报','自拍类'],
+  '母婴': ['电商/商业海报'],
+  '金融': ['教育/科普/图解','品牌/VI/包装'],
+  '本地生活': ['电商/商业海报']
+};
+
 function classifyPrompt(cat) {
   for (var key in CONTENT_TYPES) {
     if (CONTENT_TYPES[key].indexOf(cat) !== -1) return key;
@@ -530,15 +549,20 @@ function loadPrompts() {
   });
 }
 
-function buildPools(topic, prompts) {
+function buildPools(topic, industry, prompts) {
   // Reset pools
   typePools = { persona:[], product:[], viral:[] };
   poolIdx = { persona:0, product:0, viral:0 };
+
+  // Industry boost: score bonus for matching categories
+  var boostCats = INDUSTRY_BOOST[industry] || [];
 
   // Classify and score all prompts
   var allScored = prompts.map(function(p){
     var type = classifyPrompt(p.cat);
     var score = scorePrompt(topic, p);
+    // Boost score if prompt category matches industry
+    if (boostCats.indexOf(p.cat) !== -1) score += 100;
     return { prompt:p, type:type, score:score, idx:p._idx };
   });
 
@@ -861,7 +885,7 @@ function handleSearch() {
   btn.disabled = true; btn.textContent = '...';
 
   loadPrompts().then(function(prompts){
-    buildPools(topic, prompts);
+    buildPools(topic, industry, prompts);
     renderPromptCards();
     renderToolCards();
 
