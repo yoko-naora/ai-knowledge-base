@@ -30,20 +30,29 @@ Write-Host "PROJECT.md: range=articles/$docRange  count=$docCount" -ForegroundCo
 $lastCommit = git log --oneline -1
 Write-Host "git HEAD: $lastCommit" -ForegroundColor Gray
 
-# 4. 对比 & 修复
+# 4. 对比 & 修复（安全网：扫到更少 → 拒绝修改）
 $changed = $false
+$blocked = $false
 
-if ($docRange -ne $range) {
-    Write-Host "[!] 范围不一致: 实际 $range vs 文档 $docRange" -ForegroundColor Yellow
-    $raw = $raw -replace [regex]::Escape("articles/$docRange"), "articles/$range"
-    $changed = $true
+if ($actual -lt $docCount) {
+    Write-Host "[✗] 安全阻断: 只扫到 $actual 篇，但 PROJECT.md 记录了 $docCount 篇" -ForegroundColor Red
+    Write-Host "    当前环境可能看不到全部文件。拒绝修改 PROJECT.md。" -ForegroundColor Red
+    $blocked = $true
 }
 
-$expectedCount = $actual
-if ($docCount -ne $expectedCount) {
-    Write-Host "[!] 计数不一致: 实际 $expectedCount vs 文档 $docCount" -ForegroundColor Yellow
-    $raw = $raw -replace "$docCount articles\)", "$expectedCount articles)"
-    $changed = $true
+if (-not $blocked) {
+    if ($docRange -ne $range) {
+        Write-Host "[!] 范围不一致: 实际 $range vs 文档 $docRange" -ForegroundColor Yellow
+        $raw = $raw -replace [regex]::Escape("articles/$docRange"), "articles/$range"
+        $changed = $true
+    }
+
+    $expectedCount = $actual
+    if ($docCount -ne $expectedCount) {
+        Write-Host "[!] 计数不一致: 实际 $expectedCount vs 文档 $docCount" -ForegroundColor Yellow
+        $raw = $raw -replace "$docCount articles\)", "$expectedCount articles)"
+        $changed = $true
+    }
 }
 
 if ($changed) {

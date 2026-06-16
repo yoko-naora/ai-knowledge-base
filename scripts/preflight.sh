@@ -37,27 +37,38 @@ echo -e "\033[90mgit HEAD: ${last_commit}\033[0m"
 
 # 4. 对比 & 修复
 changed=false
+blocked=false
 
-if [ "$doc_range" != "$range" ]; then
-    echo -e "\033[33m[!] 范围不一致: 实际 ${range} vs 文档 ${doc_range}\033[0m"
-    raw=$(echo "$raw" | sed "s|articles/${doc_range}|articles/${range}|g")
-    changed=true
+# 安全网：如果扫到的文件数比文档记录的还少，说明文件系统视图不完整，禁止修改
+if [ "$actual" -lt "$doc_count" ]; then
+    echo -e "\033[31m[✗] 安全阻断: 只扫到 ${actual} 篇，但 PROJECT.md 记录了 ${doc_count} 篇"
+    echo -e "    当前环境可能看不到全部文件（WSL /mnt/ 缓存？）。"
+    echo -e "    拒绝修改 PROJECT.md。请在能访问完整文件的终端重试。\033[0m"
+    blocked=true
 fi
 
-if [ "$doc_count" != "$actual" ]; then
-    echo -e "\033[33m[!] 计数不一致: 实际 ${actual} vs 文档 ${doc_count}\033[0m"
-    raw=$(echo "$raw" | sed "s|${doc_count} articles)|${actual} articles)|g")
-    changed=true
-fi
+if ! $blocked; then
+    if [ "$doc_range" != "$range" ]; then
+        echo -e "\033[33m[!] 范围不一致: 实际 ${range} vs 文档 ${doc_range}\033[0m"
+        raw=$(echo "$raw" | sed "s|articles/${doc_range}|articles/${range}|g")
+        changed=true
+    fi
 
-if $changed; then
-    echo "$raw" > PROJECT.md
-    echo -e "\033[32m[✓] PROJECT.md 已更新\033[0m"
-    git add PROJECT.md scripts/preflight.sh 2>/dev/null || true
-    git commit -m "preflight: PROJECT.md 文章数修正 ${doc_count}→${actual}"
-    echo -e "\033[32m[✓] committed\033[0m"
-else
-    echo -e "\033[32m[✓] PROJECT.md 与实际一致\033[0m"
+    if [ "$doc_count" != "$actual" ]; then
+        echo -e "\033[33m[!] 计数不一致: 实际 ${actual} vs 文档 ${doc_count}\033[0m"
+        raw=$(echo "$raw" | sed "s|${doc_count} articles)|${actual} articles)|g")
+        changed=true
+    fi
+
+    if $changed; then
+        echo "$raw" > PROJECT.md
+        echo -e "\033[32m[✓] PROJECT.md 已更新\033[0m"
+        git add PROJECT.md scripts/preflight.sh 2>/dev/null || true
+        git commit -m "preflight: PROJECT.md 文章数修正 ${doc_count}→${actual}"
+        echo -e "\033[32m[✓] committed\033[0m"
+    else
+        echo -e "\033[32m[✓] PROJECT.md 与实际一致\033[0m"
+    fi
 fi
 
 # 5. git remote
