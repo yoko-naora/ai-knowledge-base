@@ -150,6 +150,16 @@ Layer 4 · Projects   → output/
 
 語言切換現在是單一機制：`main.js switchLang()` → body class + localStorage + `dispatchEvent('langchange')`。各頁面如需要跟隨語言刷新內容，監聽 `langchange` 事件即可。**不要再寫第二個 switchLang 函數。** See memory: `kb-site-architecture`.
 
+## Generator Status (2026-06)
+
+- 01 + 02 已合并为一个面板（主题 + 写作要求直接生成第一稿）
+- 去掉旧「加料面板」checkbox，改用自由文本输入
+- 新增 `write-article` endpoint（审题 + 写作一次完成）
+- AP 新增 `notes` / `modifications` 参数
+- 整体步骤从 7 步缩减为 6 步
+- 平台选择新增「朋友圈」
+- API 已注入 2026 年日期
+
 ## Known Issues
 
 | # | Issue | Priority | Status |
