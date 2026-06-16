@@ -693,10 +693,9 @@ function showDetailModal(typeKey, idx) {
   var p = pick.prompt;
   var j = jp();
 
-  var fullText = j ? (p.text_ja || p.text) : (p.text || '');
-  var imgPrompt = j ? (p.image_prompt_ja || p.image_prompt) : (p.image_prompt || '');
-  var vidPrompt = j ? (p.video_prompt_ja || p.video_prompt) : (p.video_prompt || '');
-  var realP = j ? (p.real_prompt_ja || p.real_prompt) : (p.real_prompt || '');
+  // Remove existing overlay
+  var ex = document.querySelector('.detail-overlay');
+  if (ex) ex.remove();
 
   var overlay = document.createElement('div');
   overlay.className = 'detail-overlay';
@@ -705,17 +704,66 @@ function showDetailModal(typeKey, idx) {
   var box = document.createElement('div');
   box.className = 'detail-box';
 
-  var html = '<button class="detail-close" onclick="this.closest(\'.detail-overlay\').remove()">&times;</button>';
-  html += '<div class="detail-scroll">';
-  if (fullText) { html += '<p class="detail-text">' + escapeHTML(fullText) + '</p>'; }
-  if (imgPrompt) { html += '<h4>' + (j ? '📷 画像プロンプト' : '📷 图片提示词') + '</h4><pre class="detail-pre">' + escapeHTML(imgPrompt) + '</pre>'; }
-  if (vidPrompt) { html += '<h4>' + (j ? '🎬 動画プロンプト' : '🎬 视频提示词') + '</h4><pre class="detail-pre">' + escapeHTML(vidPrompt) + '</pre>'; }
-  if (realP && realP !== imgPrompt && realP !== vidPrompt) { html += '<h4>' + (j ? '📝 実プロンプト' : '📝 实际提示词') + '</h4><pre class="detail-pre">' + escapeHTML(realP) + '</pre>'; }
-  html += '<p class="detail-meta-text">' + (p.author || '') + ' · ' + (p.date || '') + ' · ' + (p.cat || '') + '</p>';
-  html += '<button class="btn-copy-inline" onclick="var pres=this.parentElement.querySelectorAll(\'.detail-pre\');var all=\'\';pres.forEach(function(pr){all+=pr.textContent+\'\\n\\n\'});if(navigator.clipboard){navigator.clipboard.writeText(all)}else{var ta=document.createElement(\'textarea\');ta.value=all;ta.style.position=\'fixed\';ta.style.left=\'-9999px\';document.body.appendChild(ta);ta.select();document.execCommand(\'copy\');document.body.removeChild(ta)};this.textContent=\'' + (j ? '✓ コピーしました' : '✓ 已复制') + '\';var b=this;setTimeout(function(){b.textContent=\'' + (j ? '📋 コピー' : '📋 复制') + '\'},2000)">' + (j ? '📋 コピー' : '📋 复制') + '</button>';
-  html += '</div>';
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'detail-close';
+  closeBtn.textContent = '×';
+  closeBtn.onclick = function() { overlay.remove(); };
+  box.appendChild(closeBtn);
 
-  box.innerHTML = html;
+  var scroll = document.createElement('div');
+  scroll.className = 'detail-scroll';
+
+  var fullText = j ? (p.text_ja || p.text) : (p.text || '');
+  var imgPrompt = j ? (p.image_prompt_ja || p.image_prompt) : (p.image_prompt || '');
+  var vidPrompt = j ? (p.video_prompt_ja || p.video_prompt) : (p.video_prompt || '');
+  var realP = j ? (p.real_prompt_ja || p.real_prompt) : (p.real_prompt || '');
+
+  function addSection(title, content) {
+    if (!content) return;
+    var h4 = document.createElement('h4');
+    h4.textContent = title;
+    h4.style.cssText = 'font-size:14px;font-weight:600;color:var(--ink);margin:16px 0 4px';
+    scroll.appendChild(h4);
+    var pre = document.createElement('pre');
+    pre.className = 'detail-pre';
+    pre.textContent = content;
+    scroll.appendChild(pre);
+  }
+
+  if (fullText) {
+    var pEl = document.createElement('p');
+    pEl.className = 'detail-text';
+    pEl.textContent = fullText;
+    scroll.appendChild(pEl);
+  }
+  addSection(j ? '📷 画像プロンプト' : '📷 图片提示词', imgPrompt);
+  addSection(j ? '🎬 動画プロンプト' : '🎬 视频提示词', vidPrompt);
+  if (realP && realP !== imgPrompt && realP !== vidPrompt) {
+    addSection(j ? '📝 実プロンプト' : '📝 实际提示词', realP);
+  }
+
+  var meta = document.createElement('p');
+  meta.className = 'detail-meta-text';
+  meta.textContent = (p.author || '') + ' · ' + (p.date || '') + ' · ' + (p.cat || '');
+  scroll.appendChild(meta);
+
+  var copyBtn = document.createElement('button');
+  copyBtn.className = 'btn-copy-inline';
+  copyBtn.textContent = j ? '📋 コピー' : '📋 复制';
+  copyBtn.onclick = function() {
+    var pres = scroll.querySelectorAll('.detail-pre');
+    var all = '';
+    pres.forEach(function(pr) { all += pr.textContent + '\n\n'; });
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(all).then(function(){
+        copyBtn.textContent = j ? '✓ コピーしました' : '✓ 已复制';
+        setTimeout(function(){ copyBtn.textContent = j ? '📋 コピー' : '📋 复制'; }, 2000);
+      });
+    }
+  };
+  scroll.appendChild(copyBtn);
+
+  box.appendChild(scroll);
   overlay.appendChild(box);
   document.body.appendChild(overlay);
 }
