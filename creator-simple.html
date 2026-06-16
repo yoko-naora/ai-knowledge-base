@@ -123,7 +123,9 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .type-viral .prompt-type-badge{color:var(--type-viral);background:rgba(46,125,50,.08)}
 .prompt-excerpt{font-size:var(--t-small);color:var(--ink-muted);line-height:1.7;flex:1;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 .prompt-meta{font-size:10px;color:var(--ink-faint);display:flex;justify-content:space-between;align-items:center;margin-top:auto}
-.prompt-actions{display:flex;gap:var(--s-xs);padding:0 var(--s-md) var(--s-md)}
+.prompt-actions{display:flex;gap:var(--s-xs);padding:0 var(--s-md) var(--s-xs)}
+.prompt-copy-area{padding:0 var(--s-md) var(--s-md);display:none}
+.prompt-copy-area.open{display:block}
 .btn-copy{flex:1;padding:9px 0;border:1px solid var(--border);background:transparent;font-family:var(--sans);font-size:var(--t-caption);color:var(--ink-muted);cursor:pointer;transition:all .2s;text-align:center}
 .btn-copy:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-light)}
 .btn-link{flex:1;padding:9px 0;border:1px solid var(--border);background:transparent;font-family:var(--sans);font-size:var(--t-caption);color:var(--ink-faint);cursor:pointer;text-decoration:none;text-align:center;transition:all .2s}
@@ -597,8 +599,7 @@ function renderPromptCards() {
     var promptType = p.type || 'image';
     var dateDisplay = p.date ? p.date.substring(0,10) : '';
 
-    // Build smart copy content
-    var copyContent = buildCopyContent(p);
+    var copyAreaId = 'ca-' + t.key + '-' + idx;
 
     return '<div class="prompt-card type-' + t.key + '">' +
       '<div class="prompt-type-badge">' + (j ? t.labelJP : t.labelCN) + '</div>' +
@@ -608,12 +609,12 @@ function renderPromptCards() {
         '<p class="prompt-excerpt">' + escapeHTML(excerpt) + '</p>' +
         '<div class="prompt-meta"><span>' + cat + '</span><span>' + (dateDisplay || author) + '</span></div>' +
       '</div>' +
-      '<div class="prompt-copy-area">' +
-        '<pre class="copy-content">' + escapeHTML(copyContent) + '</pre>' +
-        '<button class="btn-copy-inline" onclick="copyPromptContent(this)">' + (j ? '📋 コピー' : '📋 复制内容') + '</button>' +
-      '</div>' +
       '<div class="prompt-actions">' +
         '<button class="btn-link" onclick="showDetailModal(\'' + t.key + '\',' + idx + ')">' + (j ? '元の投稿を見る' : '查看原文') + '</button>' +
+      '</div>' +
+      '<div class="prompt-copy-area" id="' + copyAreaId + '">' +
+        '<pre class="copy-content"></pre>' +
+        '<button class="btn-copy-inline" onclick="copyPromptContent(this)">' + (j ? '📋 コピー' : '📋 复制内容') + '</button>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -762,9 +763,6 @@ function showDetailModal(typeKey, idx) {
   meta.textContent = (p.author || '') + ' · ' + (p.date || '') + ' · ' + (p.cat || '');
   scroll.appendChild(meta);
 
-  var copyBtn = document.createElement('button');
-  copyBtn.className = 'btn-copy-inline';
-  copyBtn.textContent = j ? '📋 コピー' : '📋 复制';
   // Link to full detail page
   var detailLink = document.createElement('a');
   detailLink.href = 'prompts/detail.html?id=' + idx;
@@ -773,18 +771,38 @@ function showDetailModal(typeKey, idx) {
   detailLink.target = '_blank';
   scroll.appendChild(detailLink);
 
-  copyBtn.onclick = function() {
-    var pres = scroll.querySelectorAll('.detail-pre');
-    var all = '';
-    pres.forEach(function(pr) { all += pr.textContent + '\n\n'; });
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(all).then(function(){
-        copyBtn.textContent = j ? '✓ コピーしました' : '✓ 已复制';
-        setTimeout(function(){ copyBtn.textContent = j ? '📋 コピー' : '📋 复制'; }, 2000);
-      });
-    }
+  // Button row: 复制原文 + 关闭
+  var btnRow = document.createElement('div');
+  btnRow.style.cssText = 'display:flex;gap:8px;margin-top:16px';
+
+  var copyToCardBtn = document.createElement('button');
+  copyToCardBtn.className = 'btn-copy-inline';
+  copyToCardBtn.style.flex = '1';
+  copyToCardBtn.textContent = j ? '📋 复制原文' : '📋 复制原文';
+  copyToCardBtn.onclick = function() {
+    var parts = [];
+    if (fullText) parts.push(fullText);
+    if (imgPrompt) parts.push((j?'【画像プロンプト】':'【图片提示词】')+'\n'+imgPrompt);
+    if (vidPrompt) parts.push((j?'【動画プロンプト】':'【视频提示词】')+'\n'+vidPrompt);
+    if (realP && realP!==imgPrompt && realP!==vidPrompt) parts.push((j?'【実プロンプト】':'【实际提示词】')+'\n'+realP);
+    var allContent = parts.join('\n\n');
+    // Populate card's copy area
+    var copyAreaId = 'ca-' + typeKey + '-' + idx;
+    var ca = document.getElementById(copyAreaId);
+    if (ca) { ca.querySelector('.copy-content').textContent = allContent; ca.classList.add('open'); }
+    if (navigator.clipboard) { navigator.clipboard.writeText(allContent); }
+    overlay.remove();
   };
-  scroll.appendChild(copyBtn);
+  btnRow.appendChild(copyToCardBtn);
+
+  var closeBtn2 = document.createElement('button');
+  closeBtn2.className = 'btn-copy-inline';
+  closeBtn2.style.cssText = 'flex:1;border-color:var(--border);color:var(--ink-muted)';
+  closeBtn2.textContent = j ? '閉じる' : '关闭';
+  closeBtn2.onclick = function() { overlay.remove(); };
+  btnRow.appendChild(closeBtn2);
+
+  scroll.appendChild(btnRow);
 
   box.appendChild(scroll);
   overlay.appendChild(box);
