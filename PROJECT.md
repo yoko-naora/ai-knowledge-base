@@ -177,7 +177,6 @@ Layer 4 · Projects   → output/
 | 3 | 定价页/注册流程 | Claude | 把 creator-simple 接入付费墙 |
 | 4 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图 |
 | 5 | Cloudflare 配 ANTHROPIC_API_KEY + FAL_API_KEY | 手动 | 拿到 key 后在 CF Dashboard 配置 |
-| 6 | TikTok 復帰配信 | `video-use` | 已有脚本+滚图
 
 ## Key Links
 
@@ -264,6 +263,7 @@ kb-site/
 ├── images/                 # Article images
 ├── videos/                 # Article videos
 └── _legacy/netlify/        # Legacy — DELETE AFTER 2026-06-25
+```
 
 ## Security (2026-06-05 审计后更新)
 
@@ -296,4 +296,3 @@ kb-site/
 - **敏感文件屏蔽**: `_redirects` + `_headers`
 - **验证部署**: `curl -sI https://kb.snsaladdin.com/` 检查 `Server: cloudflare`
 - **无硬编码**: 所有密钥走 `context.env.XXX`，代码中不存在 `|| "default"` 回退值
-```
