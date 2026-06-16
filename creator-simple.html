@@ -314,6 +314,39 @@ var poolIdx = { persona:0, product:0, viral:0 };       // current display index
 var currentIndustry = '', currentTopic = '';
 
 /* ══════════════ CONTENT TYPE CLASSIFICATION ══════════════ */
+/* ══════════════ INDUSTRY LABELS (for bilingual select) ══════════════ */
+var INDUSTRY_LABELS = {
+  '美容/美妆': {cn:'美容/美妆', jp:'美容/メイク'},
+  '餐饮': {cn:'餐饮', jp:'飲食'},
+  '电商': {cn:'电商', jp:'EC'},
+  '教育': {cn:'教育', jp:'教育'},
+  '服装': {cn:'服装', jp:'アパレル'},
+  '科技': {cn:'科技', jp:'テクノロジー'},
+  '游戏/娱乐': {cn:'游戏/娱乐', jp:'ゲーム/エンタメ'},
+  '旅游': {cn:'旅游', jp:'旅行'},
+  '医疗/健康': {cn:'医疗/健康', jp:'医療/ヘルスケア'},
+  '家装': {cn:'家装', jp:'インテリア'},
+  '摄影': {cn:'摄影', jp:'写真'},
+  '宠物': {cn:'宠物', jp:'ペット'},
+  '母婴': {cn:'母婴', jp:'ママ・ベビー'},
+  '金融': {cn:'金融', jp:'金融'},
+  '本地生活': {cn:'本地生活', jp:'ローカル'},
+  '其他': {cn:'其他（手动输入）', jp:'その他（手動入力）'}
+};
+function updateIndustryLabels() {
+  var j = jp();
+  var sel = document.getElementById('industrySelect');
+  var opts = sel.options;
+  for (var i = 0; i < opts.length; i++) {
+    var labels = INDUSTRY_LABELS[opts[i].value];
+    if (labels) opts[i].textContent = j ? labels.jp : labels.cn;
+  }
+}
+function updateCustomPlaceholder() {
+  var inp = document.getElementById('customIndustry');
+  inp.placeholder = jp() ? '業種を入力してください' : '请输入你的行业';
+}
+
 var CONTENT_TYPES = {
   persona:  ['自拍类'],
   product:  ['电商/商业海报','穿搭/形象/造型','教育/科普/图解','品牌/VI/包装'],
@@ -637,6 +670,8 @@ var origSwitchLang = window.switchLang;
 window.switchLang = function(lang) {
   if (origSwitchLang) origSwitchLang(lang);
   var j = jp();
+  updateIndustryLabels();
+  updateCustomPlaceholder();
   // Update search button text
   var btn = document.getElementById('searchBtn');
   if (btn && !btn.disabled) btn.textContent = j ? 'インスピレーションを探す' : '查找灵感';
@@ -651,6 +686,8 @@ window.switchLang = function(lang) {
 
 /* ══════════════ INIT ══════════════ */
 document.addEventListener('DOMContentLoaded', function(){
+  updateIndustryLabels();
+  updateCustomPlaceholder();
   restoreAuth();
 });
 </script>
