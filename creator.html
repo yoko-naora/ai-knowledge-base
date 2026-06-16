@@ -99,14 +99,14 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 /* Progress Bar */
-.progress-bar{display:flex;gap:0;margin-bottom:var(--s-3xl);position:relative}
+.progress-bar{display:flex;gap:0;margin-bottom:var(--s-lg);position:relative}
 .progress-bar::after{content:'';position:absolute;top:11px;left:0;right:0;height:1px;background:var(--border);z-index:0}
 .progress-step{flex:1;text-align:center;position:relative;z-index:1;cursor:default;min-width:0}
-.progress-dot{width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--border);margin:0 auto 8px;position:relative;z-index:1;transition:all .3s var(--ease)}
+.progress-dot{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--border);margin:0 auto 4px;position:relative;z-index:1;transition:all .3s var(--ease);font-size:8px;line-height:16px;text-align:center;color:var(--ink-faint);font-family:var(--sans);font-weight:600}
 .progress-step.done .progress-dot{background:var(--gold);border-color:var(--gold)}
-.progress-step.current .progress-dot{background:var(--ink);border-color:var(--ink);box-shadow:0 0 0 6px rgba(26,24,20,.06);width:12px;height:12px;margin-top:-1px}
-.progress-label{font-size:10px;color:var(--ink-faint);letter-spacing:.04em;white-space:nowrap;transition:color .3s}
-.progress-step.done .progress-label,.progress-step.current .progress-label{color:var(--ink);font-weight:500}
+.progress-step.current .progress-dot{background:var(--ink);border-color:var(--ink);box-shadow:0 0 0 8px rgba(26,24,20,.08);width:18px;height:18px;margin-top:-1px;line-height:18px;font-size:9px;color:#fff}
+.progress-label{font-size:12px;color:var(--ink-faint);letter-spacing:.02em;white-space:nowrap;transition:color .3s}
+.progress-step.done .progress-label,.progress-step.current .progress-label{color:var(--ink);font-weight:600}
 
 /* Step Content */
 .step-content{min-height:320px;animation:slideIn .3s var(--ease)}
@@ -150,7 +150,7 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .frag-collected{margin-top:var(--s-lg);padding-top:var(--s-md);border-top:1px solid var(--border-lt);max-height:200px;overflow-y:auto}
 .frag-item{padding:var(--s-xs) 0;font-size:var(--t-small);border-bottom:1px solid var(--border-lt)}
 .frag-item .fq{color:var(--ink-muted);margin-bottom:2px}
-.frag-item .fa{color:var(--ink);line-height:1.6}
+.frag-item .fa{color:var(--ink);line-height:1.6}.frag-example{font-size:var(--t-caption);color:var(--ink-faint);background:var(--gold-light);padding:var(--s-sm) var(--s-md);line-height:1.6;margin-bottom:var(--s-sm)}.frag-edit-btn{position:absolute;top:2px;right:0;cursor:pointer;font-size:10px;color:var(--ink-faint);padding:2px 6px;border-radius:3px;display:none}.frag-item:hover .frag-edit-btn{display:block}.frag-edit-btn:hover{color:var(--gold);background:var(--gold-light)}.frag-item .fa-edit-wrap{background:#fff;border:1px solid var(--gold);border-radius:4px;padding:var(--s-xs);margin-top:2px}.frag-item .fa-edit-wrap textarea{width:100%;border:none;outline:none;font-family:var(--sans);font-size:var(--t-small);resize:vertical;min-height:40px;background:transparent}.frag-item .fa-edit-wrap .edit-actions{text-align:right;margin-top:var(--s-xs)}.frag-item .fa-edit-wrap .edit-actions button{font-size:10px;padding:2px 8px;border:1px solid var(--border);border-radius:3px;cursor:pointer;background:#fff;color:var(--ink-muted);margin-left:4px}.frag-item .fa-edit-wrap .edit-actions button:hover{background:var(--gold);color:#fff;border-color:var(--gold)}.frag-review{animation:slideIn .3s var(--ease)}.frag-review-item{margin-bottom:var(--s-lg)}.frag-review-q{font-family:var(--serif);font-size:var(--t-body);font-weight:600;margin-bottom:var(--s-xs);color:var(--ink)}.frag-review-a{padding:var(--s-sm) var(--s-md);background:var(--gold-light);border-radius:4px;font-size:var(--t-body);line-height:1.7;color:var(--ink);cursor:pointer;transition:background .2s;white-space:pre-wrap}.frag-review-a:hover{background:rgba(184,146,90,.2)}.frag-review-a.editing{background:#fff;border:1px solid var(--gold);padding:0;overflow:hidden}.frag-review-a.editing textarea{width:100%;padding:var(--s-sm) var(--s-md);border:none;outline:none;font-family:var(--sans);font-size:var(--t-body);line-height:1.7;resize:vertical;min-height:60px;background:transparent}
 
 /* Angle Inputs */
 .angle-grid{display:flex;flex-direction:column;gap:var(--s-md);margin-bottom:var(--s-lg)}
@@ -212,6 +212,8 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .layout-card .lt-name{font-family:var(--serif);font-size:var(--t-body);font-weight:600;margin-bottom:4px}
 .layout-card .lt-desc{font-size:var(--t-caption);color:var(--ink-muted)}
 
+/* Article Draft */
+.article-draft{margin-top:var(--s-md);padding:var(--s-lg);background:#fff;border:1px solid var(--border);font-family:"Courier New",monospace;font-size:var(--t-small);line-height:1.8;white-space:pre-wrap;max-height:420px;overflow-y:auto}
 /* Wizard Actions */
 .wiz-actions{display:flex;gap:var(--s-sm);flex-wrap:wrap;align-items:center;margin-top:var(--s-2xl);padding-top:var(--s-lg);border-top:1px solid var(--border)}
 .btn-back{padding:10px var(--s-lg);background:none;border:1px solid var(--border);font-family:var(--sans);font-size:var(--t-small);color:var(--ink-muted);cursor:pointer;transition:all .2s}
@@ -237,7 +239,6 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .result-section .qa-block{margin-bottom:var(--s-md);padding:var(--s-sm) 0}
 .result-section .qa-q{font-size:var(--t-small);color:var(--ink-muted);margin-bottom:2px}
 .result-section .qa-a{font-size:var(--t-body);line-height:1.8}
-.result-prompt-box{margin-top:var(--s-2xl);padding:var(--s-lg);background:rgba(26,24,20,.02);border:1px solid var(--border);font-family:'Courier New',monospace;font-size:var(--t-small);line-height:1.8;white-space:pre-wrap;max-height:360px;overflow-y:auto;display:none}
 .result-actions{display:flex;gap:var(--s-sm);flex-wrap:wrap;margin-top:var(--s-2xl);padding-top:var(--s-lg);border-top:1px solid var(--border)}
 .btn-gold{padding:14px var(--s-2xl);background:var(--gold);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-body);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s}
 .btn-gold:hover{background:var(--gold-dark)}
@@ -436,6 +437,7 @@ function showDocList(){
   document.getElementById('docListView').style.display='block';
   document.getElementById('docPrefix').textContent=S.prefix;
   renderDocList();
+  if(entryPlatform&&entryMode){var _p=entryPlatform,_m=entryMode;entryPlatform=null;entryMode=null;startNewWith(_p,_m);}
 }
 function showWizard(step){
   hideAll();
@@ -493,6 +495,13 @@ function startNew(){
   var ts=getTasks();ts.unshift(task);saveTasks(ts);
   showWizard(1);
 }
+function startNewWith(platform,mode){
+  S.taskId='task-'+Date.now();S.platform=platform;S.mode=mode;S.totalSteps=platform==='wechat'?7:6;
+  var pn={wechat:'公众号',moments:'朋友圈',xhs:'小红书'};
+  var task={id:S.taskId,platform:platform,mode:mode,topic:'',style:'magazine',status:'collecting',createdAt:new Date().toISOString(),fragments:[],angles:{},version:0};
+  var ts=getTasks();ts.unshift(task);saveTasks(ts);
+  showWizard(1);
+}
 
 /* ══════════════ PROGRESS BAR ══════════════ */
 function getStepLabels(){
@@ -511,7 +520,7 @@ function renderProgress(){
   var html='';
   for(var i=1;i<=total;i++){
     var cls=i<S.step?'done':i===S.step?'current':'';
-    html+='<div class="progress-step '+cls+'"><div class="progress-dot"></div><div class="progress-label">'+labels[i-1]+'</div></div>';
+    html+='<div class="progress-step '+cls+'"><div class="progress-dot">'+i+'</div><div class="progress-label">'+labels[i-1]+'</div></div>';
   }
   bar.innerHTML=html;
 }
@@ -527,7 +536,7 @@ function renderStep(n){
   else if(n===3)renderStep3(content,actions);
   else if(n===4)renderStep4(content,actions);
   else if(n===5)renderStep5(content,actions);
-  else if(n===6)renderStep6(content,actions);
+  if(n===6&&S.platform!=='wechat'){renderStep7(content,actions);}else if(n===6)renderStep6(content,actions);
   else if(n===7)renderStep7(content,actions);
   renderProgress();
 }
@@ -731,7 +740,7 @@ function renderStep2(content,actions){
     '<p class="step-desc">'+(isJP?'以下の質問に答えてください。スキップもできます。':'回答下面的问题，可以跳过。')+'</p>'+
     '<div class="frag-q-block"><div class="frag-q-num" id="fragQNum">1/'+fragQs.length+'</div>'+
     '<div class="frag-q-text" id="fragQText"></div>'+
-    '<div class="frag-example" id="fragEx" style="display:none;font-size:var(--t-caption);color:var(--ink-faint);background:var(--gold-light);padding:var(--s-sm) var(--s-md);margin-bottom:var(--s-sm);line-height:1.6"></div>'+
+    '<div class="frag-example" id="fragEx"><div id="fragExText"></div></div>'+
     '<textarea class="frag-a-input" id="fragAInput" placeholder="'+(isJP?'あなたの考えを書いてください...':'写下你的想法...')+'"></textarea></div>'+
     '<div class="frag-collected" id="fragCollectedList"><p style="font-size:var(--t-caption);color:var(--ink-faint);margin-bottom:var(--s-xs)">'+(isJP?'収集済み ':'已收集 ')+'<span id="fragCount">'+fragCollected.length+'</span></p><div id="fragItems"></div></div>';
   actions.innerHTML='<button class="btn-back" onclick="actionBack(1)">← '+(isJP?'入力に戻る':'返回输入')+'</button>'+
@@ -758,7 +767,8 @@ function showFragQuestion(){
   document.getElementById('fragQText').textContent=jp()?(q.qJP||q.q):q.q;
   var ex=jp()?(q.exJP||q.ex||''):(q.ex||'');
   var exEl=document.getElementById('fragEx');
-  if(ex){exEl.textContent=ex;exEl.style.display='block';}
+  var exText=document.getElementById('fragExText');
+  if(ex){exEl.style.display='';exText.textContent=ex;}
   else{exEl.style.display='none';}
   document.getElementById('fragAInput').value='';
   document.getElementById('fragAInput').focus();
@@ -774,17 +784,29 @@ function skipFragment(){fragQIdx++;renderFragCollected();showFragQuestion();}
 function finishFragments(){
   var a=document.getElementById('fragAInput').value.trim();
   if(a&&fragQIdx<fragQs.length){fragCollected.push({q:fragQs[fragQIdx].q,qJP:fragQs[fragQIdx].qJP,a:a});}
-  updateTask(S.taskId,{fragments:fragCollected.slice()});
-  actionNext(3);
+  showFragmentReview();
 }
 function renderFragCollected(){
   document.getElementById('fragCount').textContent=fragCollected.length;
   var html='',isJP=jp();
   fragCollected.forEach(function(f,i){
-    html+='<div class="frag-item"><div class="fq">'+(i+1)+'. '+(isJP?(f.qJP||f.q):f.q)+'</div><div class="fa">'+f.a+'</div></div>';
+    html+='<div class="frag-item"><div class="fq">'+(i+1)+'. '+(isJP?(f.qJP||f.q):f.q)+'</div><div class="fa" id="fa-'+i+'">'+f.a+'</div><span class="frag-edit-btn" onclick="editFragment('+i+')">\u270E</span></div>';
   });
   document.getElementById('fragItems').innerHTML=html||'<p style="font-size:var(--t-caption);color:var(--ink-faint);font-style:italic">'+(isJP?'まだ回答がありません':'还没有回答')+'</p>';
 }
+
+
+
+/* -- Fragment Editing & Review -- */
+function editFragment(idx){var febEl=document.getElementById('feb-'+idx);if(febEl&&febEl.style.display==='none')return;var faEl=document.getElementById('fa-'+idx);if(!faEl)return;if(febEl)febEl.style.display='none';var cur=escapeHtml(fragCollected[idx].a);faEl.innerHTML='<div class=\"fa-edit-wrap\"><textarea id=\"fa-edit-'+idx+'\">'+cur+'</textarea><div class=\"edit-actions\"><button onclick=\"saveFragment('+idx+')\">'+(jp()?'保存':'保存')+'</button><button onclick=\"cancelFragmentEdit('+idx+')\">'+(jp()?'キャンセル':'取消')+'</button></div></div>';setTimeout(function(){document.getElementById('fa-edit-'+idx).focus();},100);}
+function saveFragment(idx){var val=document.getElementById('fa-edit-'+idx).value.trim();if(val)fragCollected[idx].a=val;renderFragCollected();}
+function cancelFragmentEdit(idx){renderFragCollected();}
+function escapeHtml(s){if(typeof s!=='string')return '';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showFragmentReview(){var isJP=jp(),content=document.getElementById('stepContent'),actions=document.getElementById('wizActions');if(fragCollected.length===0){updateTask(S.taskId,{fragments:[]});actionNext(3);return;}var html='<h3 class=\"step-title\">'+(isJP?'素材を確認':'确认素材')+'</h3>'+'<p class=\"step-desc\">'+(isJP?'以下の内容で進みます。各回答をクリックして編集できます。':'确认以下内容，点击可编辑。')+'</p>'+'<div class=\"frag-review\">';fragCollected.forEach(function(f,i){html+='<div class=\"frag-review-item\"><div class=\"frag-review-q\">'+(i+1)+'. '+(isJP?(f.qJP||f.q):f.q)+'</div>'+'<div class=\"frag-review-a\" id=\"fra-'+i+'\" onclick=\"reviewEdit('+i+')\">'+escapeHtml(f.a)+'</div></div>';});html+='</div>';content.innerHTML=html;actions.innerHTML='<button class=\"btn-back\" onclick=\"actionBack(2)\">\u2190 '+(isJP?'質問に戻る':'返回问答')+'</button>'+'<button class=\"btn-gold\" onclick=\"confirmFragments()\">'+(isJP?'確認して進む \u2192':'确认进入选题 \u2192')+'</button>'+'<button class=\"btn-cancel\" onclick=\"actionCancel()\">'+(isJP?'キャンセル':'取消')+'</button>';}
+var reviewEditIdx=-1;
+function reviewEdit(idx){if(reviewEditIdx===idx){var val=document.getElementById('rea-'+idx).value.trim();if(val)fragCollected[idx].a=val;reviewEditIdx=-1;showFragmentReview();return;}reviewEditIdx=idx;var el=document.getElementById('fra-'+idx);if(!el)return;el.innerHTML='<textarea id=\"rea-'+idx+'\" style=\"width:100%;padding:var(--s-sm) var(--s-md);border:none;outline:none;font-family:var(--sans);font-size:var(--t-body);line-height:1.7;resize:vertical;min-height:60px;background:transparent\">'+escapeHtml(fragCollected[idx].a)+'</textarea>';el.className='frag-review-a editing';el.onclick=null;setTimeout(function(){document.getElementById('rea-'+idx).focus();},100);var a=document.getElementById('wizActions');if(a){a.innerHTML='<button class=\"btn-back\" onclick=\"actionBack(2)\">\u2190 '+(jp()?'質問に戻る':'返回问答')+'</button>'+'<button class=\"btn-outline\" onclick=\"reviewEdit('+idx+')\">'+(jp()?'保存':'保存')+'</button>'+'<button class=\"btn-cancel\" onclick=\"cancelReview()\">'+(jp()?'キャンセル':'取消')+'</button>';}}
+function cancelReview(){reviewEditIdx=-1;showFragmentReview();}
+function confirmFragments(){updateTask(S.taskId,{fragments:fragCollected.slice()});actionNext(3);}
 
 /* ── Angle Generation ── */
 function generateAngles(topic,fragments){
@@ -1085,15 +1107,11 @@ function renderStep7(content,actions){
     var isJP2=t&&t.imageStyle==='sketch'?'手描き':t&&t.imageStyle==='tech'?'テック':t&&t.imageStyle==='warm'?'あたたか':'雑誌';
     content.innerHTML+='<div class="result-section"><h3>'+(isJP?'配图':'配图')+'</h3><div class="rv">'+(isJP?isJP2:isCN)+' — '+(t&&t.imageCount||6)+(isJP?'枚':'张')+'</div></div>';
   }
-  /* build prompt */
   var prompt=buildPrompt(t);
-  content.innerHTML+='<button class="btn-gold" onclick="togglePrompt()" style="margin-top:var(--s-lg);width:100%">'+(isJP?'執筆指示を表示 / 非表示':'展开/收起 写作指令')+'</button>'+
-    '<div class="result-prompt-box" id="promptBox">'+escapeHtml(prompt)+'</div>';
   actions.innerHTML='<button class="btn-back" onclick="actionBack(S.platform===\'wechat\'?6:5)">← '+(isJP?'戻る':'返回上一步')+'</button>'+
     '<button class="btn-next" onclick="finishWizard()">'+(isJP?'完了して結果を見る':'完成，查看结果')+'</button>'+
     '<button class="btn-cancel" onclick="actionCancel()">'+(isJP?'キャンセル':'取消')+'</button>';
 }
-function togglePrompt(){
   var box=document.getElementById('promptBox');
   box.style.display=box.style.display==='none'?'block':'none';
 }
@@ -1148,8 +1166,6 @@ function renderResult(taskId){
     '<div class="result-section"><h3>'+(isJP?'素材':'素材')+' ('+(t.fragments||[]).length+')</h3>'+
       (t.fragments||[]).map(function(f,i){return '<div class="qa-block"><div class="qa-q">'+(i+1)+'. '+(isJP?(f.qJP||f.q):f.q)+'</div><div class="qa-a">'+f.a+'</div></div>';}).join('')+
     '</div>'+
-    '<button class="btn-gold" onclick="toggleResultPrompt()" style="width:100%;margin-top:var(--s-lg)">'+(isJP?'執筆指示を表示':'展开写作指令')+'</button>'+
-    '<div class="result-prompt-box" id="resultPromptBox">'+escapeHtml(prompt)+'</div>'+
     '<div class="result-actions">'+
       '<button class="btn-gold" onclick="copyPrompt()">📋 '+(isJP?'コピー':'复制指令')+'</button>'+
       '<button class="btn-outline" onclick="downloadMD()">↓ .md</button>'+
@@ -1159,8 +1175,6 @@ function renderResult(taskId){
     '</div>';
   S.taskId=taskId;
 }
-function toggleResultPrompt(){
-  var box=document.getElementById('resultPromptBox');
   box.style.display=box.style.display==='none'?'block':'none';
 }
 function copyPrompt(){
