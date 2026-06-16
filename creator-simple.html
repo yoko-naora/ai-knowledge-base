@@ -116,7 +116,8 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .prompt-thumb{width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--gold-light);display:block}
 .prompt-thumb-placeholder{width:100%;aspect-ratio:16/10;background:var(--gold-light);display:flex;align-items:center;justify-content:center;color:var(--ink-faint);font-family:var(--serif);font-size:var(--t-h3)}
 .prompt-body{padding:var(--s-md) var(--s-md) var(--s-sm);flex:1;display:flex;flex-direction:column;gap:var(--s-xs)}
-.prompt-type-badge{font-size:10px;font-weight:500;letter-spacing:.1em;padding:2px 8px;display:inline-block;width:fit-content}
+.prompt-type-badge{font-size:var(--t-small);font-weight:700;letter-spacing:.04em;padding:4px 12px;display:inline-block;width:fit-content;margin-bottom:var(--s-xs)}
+.prompt-type-sub{font-size:var(--t-caption);font-weight:400;color:var(--ink-faint);display:block;margin-bottom:var(--s-xs)}
 .type-persona .prompt-type-badge{color:var(--type-persona);background:rgba(196,77,52,.08)}
 .type-product .prompt-type-badge{color:var(--type-product);background:rgba(139,110,60,.08)}
 .type-viral .prompt-type-badge{color:var(--type-viral);background:rgba(46,125,50,.08)}
@@ -127,6 +128,10 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .btn-copy:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-light)}
 .btn-link{flex:1;padding:9px 0;border:1px solid var(--border);background:transparent;font-family:var(--sans);font-size:var(--t-caption);color:var(--ink-faint);cursor:pointer;text-decoration:none;text-align:center;transition:all .2s}
 .btn-link:hover{border-color:var(--ink-muted);color:var(--ink)}
+.prompt-copy-area{padding:var(--s-sm) var(--s-md);border-top:1px solid var(--border-lt);background:rgba(250,249,246,.6)}
+.copy-content{font-family:var(--sans);font-size:11px;line-height:1.6;color:var(--ink-muted);white-space:pre-wrap;word-break:break-all;max-height:120px;overflow-y:auto;margin-bottom:var(--s-xs);padding:var(--s-xs);background:#fff;border:1px solid var(--border-lt)}
+.btn-copy-inline{display:block;width:100%;padding:6px 0;border:1px solid var(--gold);background:transparent;font-family:var(--sans);font-size:var(--t-caption);color:var(--gold);cursor:pointer;transition:all .2s;text-align:center}
+.btn-copy-inline:hover{background:var(--gold);color:#fff}
 .copy-toast{position:fixed;bottom:var(--s-lg);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px var(--s-lg);font-size:var(--t-caption);font-family:var(--sans);opacity:0;transition:opacity .3s;pointer-events:none;z-index:200}
 .copy-toast.show{opacity:1}
 
@@ -498,6 +503,8 @@ function getCatKeywords(cat) { return CAT_KEYWORDS[cat] || []; }
 function loadPrompts() {
   if (promptCache) return Promise.resolve(promptCache);
   return fetch('/prompts/data.json').then(function(r){ return r.json(); }).then(function(data){
+    // Tag each prompt with its array index for detail links
+    data.forEach(function(p, i){ p._idx = i; });
     promptCache = data;
     return data;
   });
@@ -512,14 +519,19 @@ function buildPools(topic, prompts) {
   var allScored = prompts.map(function(p){
     var type = classifyPrompt(p.cat);
     var score = scorePrompt(topic, p);
-    return { prompt:p, type:type, score:score };
+    return { prompt:p, type:type, score:score, idx:p._idx };
   });
 
-  // Fill each type pool, sorted by score
+  // Fill each type pool, sorted by date (newest first), score as tiebreaker
   ['persona','product','viral'].forEach(function(type){
     typePools[type] = allScored
       .filter(function(item){ return item.type === type; })
-      .sort(function(a,b){ return b.score - a.score; });
+      .sort(function(a,b){
+        var da = a.prompt.date || ''; var db = b.prompt.date || '';
+        if (da > db) return -1;
+        if (da < db) return 1;
+        return b.score - a.score;
+      });
     // Always include at least 3 items per pool for reshuffle, fallback to random
     if (typePools[type].length < 3) {
       var remaining = allScored.filter(function(item){ return item.type !== type; });
@@ -553,36 +565,113 @@ function renderPromptCards() {
   var grid = document.getElementById('promptGrid');
   var j = jp();
   var types = [
-    { key:'persona',  labelCN:'人设',    labelJP:'人設',    descCN:'自拍·露脸·建立信任',        descJP:'自撮り·顔出し·信頼構築' },
-    { key:'product',  labelCN:'行业产品', labelJP:'業界·商品', descCN:'秀专业·秀产品·增加销售',    descJP:'専門性·商品·販売促進' },
-    { key:'viral',    labelCN:'大众话题', labelJP:'大衆話題', descCN:'故事·vlog·热点·破圈涨粉',   descJP:'ストーリー·vlog·話題·拡散' }
+    { key:'persona',  labelCN:'人设（建立信任）',  labelJP:'人設（信頼構築）',  subCN:'自拍·Vlog·动画',           subJP:'自撮り·Vlog·アニメ' },
+    { key:'product',  labelCN:'行业/产品（提高销售）', labelJP:'業界·商品（販売促進）', subCN:'秀产品·秀流程·秀使用场景',   subJP:'商品·工程·使用シーンの見せ方' },
+    { key:'viral',    labelCN:'出圈/涨粉',          labelJP:'拡散·フォロワー増',  subCN:'Vlog·追热点·秀颜值',         subJP:'Vlog·トレンド·美しさ' }
   ];
 
   grid.innerHTML = types.map(function(t){
     var pick = getCurrentPick(t.key);
-    if (!pick) return '<div class="empty-state"><div class="empty-mark">—</div><p>' + (j ? 'このタイプのプロンプトがまだありません' : '该类型暂无提示词') + '</p></div>';
+    if (!pick) return '<div class="empty-state"><div class="empty-mark">&mdash;</div><p>' + (j ? 'このタイプのプロンプトがまだありません' : '该类型暂无提示词') + '</p></div>';
     var p = pick.prompt;
+    var idx = pick.idx; // array index for detail link
     var img = (p.images && p.images[0]) ? 'prompts/' + p.images[0] : '';
     var desc = (j ? (p.text_ja || p.text) : p.text) || '';
     var excerpt = desc.length > 100 ? desc.substring(0,100) + '...' : desc;
-    var promptText = escapeAttr(p.real_prompt || p.image_prompt || '');
     var author = p.author ? p.author.replace('@','') : '';
-    var link = p.link || '';
     var cat = p.cat || '';
+    var promptType = p.type || 'image';
+    var dateDisplay = p.date ? p.date.substring(0,10) : '';
+
+    // Build smart copy content
+    var copyContent = buildCopyContent(p);
+    var copyId = 'copy-area-' + t.key + '-' + idx;
 
     return '<div class="prompt-card type-' + t.key + '">' +
-      '<div class="prompt-type-badge">' + (j ? t.labelJP : t.labelCN) + ' <span style="font-weight:400;opacity:.7;font-size:9px">' + (j ? t.descJP : t.descCN) + '</span></div>' +
+      '<div class="prompt-type-badge">' + (j ? t.labelJP : t.labelCN) + '</div>' +
+      '<div class="prompt-type-sub">' + (j ? t.subJP : t.subCN) + '</div>' +
       (img ? '<img class="prompt-thumb" src="' + img + '" loading="lazy" alt="">' : '<div class="prompt-thumb-placeholder">' + (j ? '画像なし' : '无图片') + '</div>') +
       '<div class="prompt-body">' +
         '<p class="prompt-excerpt">' + escapeHTML(excerpt) + '</p>' +
-        '<div class="prompt-meta"><span>' + cat + '</span><span>' + author + '</span></div>' +
+        '<div class="prompt-meta"><span>' + cat + '</span><span>' + (dateDisplay || author) + '</span></div>' +
+      '</div>' +
+      '<div class="prompt-copy-area" id="' + copyId + '">' +
+        '<pre class="copy-content">' + escapeHTML(copyContent) + '</pre>' +
+        '<button class="btn-copy-inline" onclick="copyPromptContent(\'' + copyId + '\')">' + (j ? '📋 コピー' : '📋 复制内容') + '</button>' +
       '</div>' +
       '<div class="prompt-actions">' +
-        '<button class="btn-copy" data-prompt="' + promptText + '" onclick="copyPrompt(this)" title="' + (j ? 'プロンプトをコピー' : '复制提示词') + '">' + (j ? '📋 コピー' : '📋 复制提示词') + '</button>' +
-        (link ? '<a class="btn-link" href="' + link + '" target="_blank" rel="noopener">' + (j ? '元投稿' : '查看原文') + '</a>' : '') +
+        '<a class="btn-link" href="prompts/detail.html?id=' + idx + '">' + (j ? '元の投稿を見る' : '查看原文') + '</a>' +
       '</div>' +
     '</div>';
   }).join('');
+}
+
+/* Build smart copy content: image type → prompt+image refs; video type → prompt+cover+video refs */
+function buildCopyContent(p) {
+  var lines = [];
+  var isVideo = p.type === 'video';
+  var isJP = jp();
+
+  // Main prompt
+  var mainPrompt = p.real_prompt || p.image_prompt || '';
+  if (mainPrompt) {
+    lines.push(isJP ? '【プロンプト】' : '【提示词】');
+    lines.push(mainPrompt);
+    lines.push('');
+  }
+
+  // Image references
+  if (p.images && p.images.length > 0) {
+    lines.push(isJP ? '【参考画像】' : '【参考图片】');
+    p.images.forEach(function(im) {
+      lines.push('![](' + im + ')');
+    });
+    lines.push('');
+  }
+
+  // Video-specific
+  if (isVideo) {
+    if (p.image_prompt) {
+      lines.push(isJP ? '【画像生成プロンプト】' : '【图片提示词】');
+      lines.push(p.image_prompt);
+      lines.push('');
+    }
+    if (p.video_prompt) {
+      lines.push(isJP ? '【動画生成プロンプト】' : '【视频提示词】');
+      lines.push(p.video_prompt);
+      lines.push('');
+    }
+    if (p.video) {
+      lines.push(isJP ? '【動画ファイル】' : '【视频文件】');
+      lines.push(p.video);
+      lines.push('');
+    }
+    if (p.videos && p.videos.length > 0) {
+      p.videos.forEach(function(v) {
+        lines.push(isJP ? '動画URL: ' + v : '视频链接: ' + v);
+      });
+      lines.push('');
+    }
+  }
+
+  return lines.join('\n');
+}
+
+function copyPromptContent(copyId) {
+  var el = document.getElementById(copyId);
+  if (!el) return;
+  var pre = el.querySelector('.copy-content');
+  if (!pre) return;
+  var text = pre.textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function(){ showToast(); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); showToast(); } catch(e){}
+    document.body.removeChild(ta);
+  }
 }
 
 function renderToolCards() {
@@ -603,19 +692,6 @@ function renderToolCards() {
     card += '</a>';
     return card;
   }).join('');
-}
-
-function copyPrompt(btn) {
-  var text = btn.getAttribute('data-prompt');
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(function(){ showToast(); });
-  } else {
-    var ta = document.createElement('textarea');
-    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); showToast(); } catch(e){}
-    document.body.removeChild(ta);
-  }
 }
 
 function showToast() {
