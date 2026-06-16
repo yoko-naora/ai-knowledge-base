@@ -6,6 +6,9 @@ Set-Location $PSScriptRoot\..
 
 Write-Host "=== preflight ===" -ForegroundColor Cyan
 
+# 0. 先拉最新
+git pull --ff-only 2>$null
+
 # 1. 数文章
 $ids    = Get-ChildItem articles\*.html | ForEach-Object { $_.BaseName } | Sort-Object
 $actual = $ids.Count
@@ -34,7 +37,13 @@ Write-Host "git HEAD: $lastCommit" -ForegroundColor Gray
 $changed = $false
 $blocked = $false
 
-if ($actual -lt $docCount) {
+# 快照校验
+$snapshotCount = if (Test-Path .preflight-snapshot) { (Get-Content .preflight-snapshot).Count } else { 0 }
+if ($snapshotCount -gt 0 -and $actual -lt $snapshotCount) {
+    Write-Host "[✗] 安全阻断: 只扫到 $actual 篇，快照有 $snapshotCount 篇" -ForegroundColor Red
+    Write-Host "    当前环境看不到全部文件。先 git pull 后重试。" -ForegroundColor Red
+    $blocked = $true
+} elseif ($actual -lt $docCount) {
     Write-Host "[✗] 安全阻断: 只扫到 $actual 篇，但 PROJECT.md 记录了 $docCount 篇" -ForegroundColor Red
     Write-Host "    当前环境可能看不到全部文件。拒绝修改 PROJECT.md。" -ForegroundColor Red
     $blocked = $true

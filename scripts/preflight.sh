@@ -7,6 +7,9 @@ cd "$(dirname "$0")/.."
 
 echo -e "\033[36m=== preflight ===\033[0m"
 
+# 0. 先拉最新，确保读到正确的 PROJECT.md 和快照
+git pull --ff-only 2>/dev/null || true
+
 # 1. 数文章 (find 比 ls 可靠，WSL 下不会漏)
 ids=($(find articles/ -maxdepth 1 -name '*.html' -printf '%f\n' | sed 's|\.html||' | sort -n))
 actual=${#ids[@]}
@@ -39,10 +42,15 @@ echo -e "\033[90mgit HEAD: ${last_commit}\033[0m"
 changed=false
 blocked=false
 
-# 安全网：如果扫到的文件数比文档记录的还少，说明文件系统视图不完整，禁止修改
-if [ "$actual" -lt "$doc_count" ]; then
+# 安全网：用快照校验文件系统视图是否完整
+snapshot_count=$(wc -l < .preflight-snapshot 2>/dev/null || echo 0)
+if [ "$snapshot_count" -gt 0 ] && [ "$actual" -lt "$snapshot_count" ]; then
+    echo -e "\033[31m[✗] 安全阻断: 只扫到 ${actual} 篇，快照有 ${snapshot_count} 篇"
+    echo -e "    当前环境看不到全部文件（WSL /mnt/ 缓存？请先 git pull 后重试）。"
+    echo -e "    拒绝修改 PROJECT.md。\033[0m"
+    blocked=true
+elif [ "$actual" -lt "$doc_count" ]; then
     echo -e "\033[31m[✗] 安全阻断: 只扫到 ${actual} 篇，但 PROJECT.md 记录了 ${doc_count} 篇"
-    echo -e "    当前环境可能看不到全部文件（WSL /mnt/ 缓存？）。"
     echo -e "    拒绝修改 PROJECT.md。请在能访问完整文件的终端重试。\033[0m"
     blocked=true
 fi
