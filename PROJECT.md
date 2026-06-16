@@ -27,7 +27,7 @@ User → Cloudflare Pages → Static HTML/JS/CSS
 
 - [x] DNS: CNAME `kb` → `ai-knowledge-base-v3.pages.dev.` (value-domain, TTL 180s)
 - [x] SSL: Cloudflare 自動証明書
-- [x] 全ページ静的生成 (index, articles/001-026, prompts/index, detail, checkout, success, admin, tokushoho, free-prompts)
+- [x] 全ページ静的生成 (index, articles/001-037, prompts/index, detail, checkout, success, admin, tokushoho, free-prompts)
 - [x] 中日バイリンガル対応 (nav, footer, article, prompts)
 - [x] Stripe Payment Links (月額 ¥2,980 / 年額 ¥30,000)
 - [x] Stripe Webhook → Resend 購読完了メール (2026-05-30 再検証・全リンク正常確認済)
@@ -225,7 +225,7 @@ kb-site/
 ├── CLAUDE.md               # 三端共享规则（真源）
 ├── AGENTS.md               # 薄桥接 → CLAUDE.md（Codex 入口）
 ├── TEST.md                 # テスト手順・テストデータ (see: feedback-test-rule)
-├── articles/               # 001.html - 026.html (27 articles)
+├── articles/               # 001.html - 037.html (35 articles)
 ├── prompts/
 │   ├── index.html          # Prompt listing
 │   ├── detail.html         # Prompt detail (copy btn, lang switch)
