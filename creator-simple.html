@@ -593,11 +593,23 @@ function getCurrentPick(type) {
 }
 
 function doReshuffle() {
+  // Pick randomly from top 8 of each pool, avoiding repeats when possible
+  var topN = 8;
   ['persona','product','viral'].forEach(function(type){
-    poolIdx[type] = (poolIdx[type] + 1) % typePools[type].length;
+    var pool = typePools[type];
+    if (pool.length <= 1) return;
+    var limit = Math.min(topN, pool.length);
+    var prevIdx = poolIdx[type];
+    // Pick a random index from 0..limit-1, different from current if possible
+    var newIdx;
+    if (limit <= 1) { newIdx = 0; }
+    else {
+      do { newIdx = Math.floor(Math.random() * limit); }
+      while (newIdx === prevIdx && limit > 1);
+    }
+    poolIdx[type] = newIdx;
   });
   renderPromptCards();
-  // Brief highlight
   var btn = document.getElementById('reshuffleBtn');
   btn.style.borderColor = 'var(--gold)';
   btn.style.color = 'var(--gold)';
