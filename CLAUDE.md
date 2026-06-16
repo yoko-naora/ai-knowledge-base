@@ -7,6 +7,9 @@ URL: https://kb.snsaladdin.com | GitHub: yoko-naora/ai-knowledge-base (main)
 
 ## 核心铁律
 
+### 0. 开工
+`.\scripts\preflight.ps1` — 不跑 = 不开工。不一致会自动修+commit。
+
 ### 1. 工作目录
 `C:\Users\jding\kb-site`。不搞双目录。
 
@@ -22,6 +25,18 @@ URL: https://kb.snsaladdin.com | GitHub: yoko-naora/ai-knowledge-base (main)
 
 ### 5. 变更即提交
 改完就 `git add -A && git commit -m "<简述>" && git push`
+
+---
+
+## generator.html 当前流程（2026-06）
+
+- 01 + 02 已合并为一个面板（主题 + 写作要求直接生成第一稿）
+- 去掉旧「加料面板」checkbox，改用自由文本输入
+- 新增 `write-article` endpoint（审题 + 写作一次完成）
+- AP 新增 `notes` / `modifications` 参数
+- 整体步骤从 7 步缩减为 6 步
+- 平台选择新增「朋友圈」
+- API 已注入 2026 年日期
 
 ---
 
