@@ -278,7 +278,9 @@ function renderPrompt() {
     if (videoPrompt) {
       html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '🎬 视频提示词' : '🎬 動画プロンプト') + '</div><div class="prompt-content">' + escapeHtml(videoPrompt) + '</div>' + copyBtnHtml + '</div>';
     }
-    if (text) {
+    
+    }
+  } else if (hasImages && !hasVideo) {
       html += '<div class="prompt-block"><div class="prompt-label">' + (isCn ? '📝 帖子文案' : '📝 投稿キャプション') + '</div><div class="prompt-content">' + escapeHtml(text) + '</div>' + copyBtnHtml + '</div>';
     }
   } else if (hasImages && !hasVideo) {
