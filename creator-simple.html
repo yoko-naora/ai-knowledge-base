@@ -401,10 +401,10 @@ function classifyPrompt(cat) {
 
 /* ══════════════ TOOL DATA ══════════════ */
 var TOOLS = [
-  { id:'wechat',  nameCN:'公众号长文', nameJP:'公众号長文',  chain:'fragments→shape→ai-check→guizang→wewrite', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-wechat',  icon:'assets/platform-icons/wechat.svg' },
-  { id:'moments', nameCN:'朋友圈图文', nameJP:'朋友圈画像＋文', chain:'fragments→shape→qc→配图', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-moments', icon:'assets/platform-icons/moments.svg' },
-  { id:'xhs',     nameCN:'小红书滚图', nameJP:'小紅書カルーセル', chain:'fragments→shape→ai-check→xhs-title→配图', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-xhs', icon:'assets/platform-icons/xiaohongshu.svg' },
-  { id:'video',   nameCN:'短视频',   nameJP:'ショート動画',   chain:'coming soon', useCN:'即将上线', useJP:'近日公開予定', cls:'t-video', icon:null, coming:true }
+  { id:'wechat',  nameCN:'公众号长文', nameJP:'公众号長文',  chain:'fragments→shape→ai-check→guizang→wewrite', href:'tools.html', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-wechat',  icon:'assets/platform-icons/wechat.svg' },
+  { id:'moments', nameCN:'朋友圈图文', nameJP:'朋友圈画像＋文', chain:'fragments→shape→qc→配图', href:'tools.html', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-moments', icon:'assets/platform-icons/moments.svg' },
+  { id:'xhs',     nameCN:'小红书滚图', nameJP:'小紅書カルーセル', chain:'fragments→shape→ai-check→xhs-title→配图', href:'tools.html', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-xhs', icon:'assets/platform-icons/xiaohongshu.svg' },
+  { id:'video',   nameCN:'短视频',   nameJP:'ショート動画',   chain:'coming soon', href:'', useCN:'即将上线', useJP:'近日公開予定', cls:'t-video', icon:null, coming:true }
 ];
 
 /* ══════════════ HELPERS ══════════════ */
@@ -865,7 +865,7 @@ function renderToolCards() {
     card += (t.icon ? '<img class="tool-icon" src="' + t.icon + '" alt="">' : '<div class="tool-icon"></div>');
     card += '<div class="tool-name">' + (j ? t.nameJP : t.nameCN) + '</div>';
     if (!t.coming) {
-      card += '<div class="tool-skill-line"><span class="tool-label">Skill：</span>GitHubURL  ' + t.chain.split('→').map(function(s){ return '<span>' + s.trim() + '</span>'; }).join(' → ') + '</div>';
+      card += '<div class="tool-skill-line"><span class="tool-label">Skill：</span>' + t.chain.split('→').map(function(s){ return '<span>' + s.trim() + '</span>'; }).join(' → ') + (t.href ? ' <a href="' + t.href + '" target="_blank" style="font-size:10px;color:var(--gold);text-decoration:none">' + (j ? '詳細→' : '详情→') + '</a>' : '') + '</div>';
     }
     card += '<div class="tool-usage">' + (j ? t.useJP : t.useCN) + '</div>';
     if (t.coming) card += '<div class="tool-coming-tag">' + (j ? '近日公開' : '即将上线') + '</div>';
