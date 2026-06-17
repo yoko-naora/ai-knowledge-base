@@ -576,6 +576,10 @@ function buildPools(topic, industry, prompts) {
     typePools[type] = allScored
       .filter(function(item){ return item.type === type; })
       .sort(function(a,b){
+        // Entries with images first, then by date (newest first), then by score
+        var aImg = (a.prompt.images && a.prompt.images.length > 0) ? 1 : 0;
+        var bImg = (b.prompt.images && b.prompt.images.length > 0) ? 1 : 0;
+        if (aImg !== bImg) return bImg - aImg;
         var da = a.prompt.date || ''; var db = b.prompt.date || '';
         if (da > db) return -1;
         if (da < db) return 1;
