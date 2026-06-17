@@ -1333,7 +1333,9 @@
     "link": "",
     "date": "2026-06-17 09:00",
     "author": "SNS Aladdin",
-    "images": [],
+    "images": [
+      "images/SNSAladdin_gap_200.png"
+    ],
     "videos": [],
     "type": "image",
     "free": true,
@@ -1350,7 +1352,9 @@
     "link": "",
     "date": "2026-06-17 09:01",
     "author": "SNS Aladdin",
-    "images": [],
+    "images": [
+      "images/SNSAladdin_gap_201.png"
+    ],
     "videos": [],
     "type": "image",
     "free": true,
@@ -1365,7 +1369,9 @@
     "link": "",
     "date": "2026-06-17 09:02",
     "author": "SNS Aladdin",
-    "images": [],
+    "images": [
+      "images/SNSAladdin_gap_202.png"
+    ],
     "videos": [],
     "type": "image",
     "free": true,
