@@ -227,7 +227,7 @@
     var html = '';
 
     filtered.forEach(function(p) {
-      var realIndex = prompts.indexOf(p);
+      var realId = p.id;
       var isFree = p.free === true;
       var desc = p[descKey] || p.text || '';
       desc = desc.replace(/\\n/g, ' ').substring(0, 100);
@@ -249,7 +249,7 @@
       var author = p.author || '@MrLarus';
       var link = p.link || '#';
 
-      html += '<div class="prompt-card" onclick="location.href=\'detail.html?id=' + realIndex + '\'">';
+      html += '<div class="prompt-card" onclick="location.href=\'detail.html?id=' + realId + '\'">';
       // 2026-06-03: 全開放
       html += '<span class="prompt-badge free">' + (isJp ? '無料' : '免费') + '</span>';
       html += imgHtml;

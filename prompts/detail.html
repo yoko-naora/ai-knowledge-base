@@ -28,28 +28,26 @@ var m = document.getElementById('m');
 var raw = location.search.match(/[?&]id=([^&]*)/);
 var id = raw ? raw[1] : null;
 if (!id) { m.innerHTML = '<div class="error">缺少参数<br><br><a class="back" href="index.html">← 返回列表</a></div>'; }
-var idx = parseInt(id, 10);
+var targetId = parseInt(id, 10);
 
 (function tryCache() {
   try {
     var c = sessionStorage.getItem('kb-prompt-cache');
-    if (c) { show(JSON.parse(c)); return true; }
+    if (c) { show(JSON.parse(c)); }
   } catch(e) {}
-  return false;
-})() || fetch('/prompts/data.json')
+})();
+fetch('/prompts/data.json')
   .then(function(r) { return r.json(); })
   .then(function(data) {
     try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}
     show(data);
   })
-  .catch(function() { m.innerHTML = '<div class="error">加载失败<br><br><a class="back" href="index.html">← 返回列表</a></div>'; });
+  .catch(function() { /* cache already shown, swallow */ });
 
 function show(data) {
-  if (isNaN(idx) || idx < 0 || idx >= data.length) {
-    m.innerHTML = '<div class="error">未找到 #' + idx + '<br><br><a class="back" href="index.html">← 返回列表</a></div>';
-    return;
-  }
-  var p = data[idx], jp = (localStorage.getItem('kb-lang')||'cn')==='jp';
+  var p = data.find(function(item) { return item.id === targetId; });
+  if (!p) { m.innerHTML = '<div class="error">未找到 #' + targetId + '<br><br><a class="back" href="index.html">← 返回列表</a></div>'; return; }
+  var jp = (localStorage.getItem('kb-lang')||'cn')==='jp';
   var text = jp ? (p.text_ja||p.text||'') : (p.text||'');
   var imp = jp ? (p.image_prompt_ja||p.image_prompt||'') : (p.image_prompt||'');
   var vip = jp ? (p.video_prompt_ja||p.video_prompt||'') : (p.video_prompt||'');
