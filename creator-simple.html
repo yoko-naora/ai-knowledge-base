@@ -436,7 +436,10 @@ function handleLogin(e){
         msg.className = 'login-msg success'; msg.textContent = jp() ? '認証成功。ようこそ！' : '验证成功。欢迎！';
         setTimeout(function(){ showInput(); }, 400);
       } else {
-        msg.className = 'login-msg error'; msg.textContent = jp() ? 'このメールアドレスでは購読が確認できませんでした。' : '未找到此邮箱的订阅记录。';
+        msg.className = 'login-msg error';
+        msg.innerHTML = (jp()
+          ? 'このメールアドレスでは購読が確認できませんでした。<br><a href="checkout.html?redirect=creator-simple" style="display:inline-block;margin-top:8px;padding:8px 20px;background:var(--gold);color:#fff;text-decoration:none;border-radius:2px;font-size:12px">今すぐ購読する →</a>'
+          : '未找到此邮箱的订阅记录。<br><a href="checkout.html?redirect=creator-simple" style="display:inline-block;margin-top:8px;padding:8px 20px;background:var(--gold);color:#fff;text-decoration:none;border-radius:2px;font-size:12px">立即订阅 →</a>');
         btn.disabled = false;
       }
     })

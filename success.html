@@ -165,6 +165,16 @@ function switchLang(lang) {
     document.querySelector('.success-icon').textContent = '🔓';
     codeBox.style.display = '';
     noSession.style.display = 'none';
+	  // Check if user came from creator-simple login -> checkout
+	  var redirectTo = '';
+	  try { redirectTo = sessionStorage.getItem('checkout-redirect'); sessionStorage.removeItem('checkout-redirect'); } catch(e) {}
+	  if (redirectTo === 'creator-simple') {
+	    var cta = document.querySelector('.cta-btn');
+	    if (cta) {
+	      cta.href = 'creator-simple.html';
+	      cta.innerHTML = '<span class="lang-content cn">去灵感推荐 <span>→</span></span><span class="lang-content jp">インスピレーション推荐へ <span>→</span></span>';
+	    }
+	  }
   }
 })();
 </script>

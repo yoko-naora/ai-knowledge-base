@@ -298,7 +298,12 @@ document.getElementById('stripe-pay-btn').addEventListener('click', function(e) 
 	    alert('決済リンクを準備中です。まもなく公開されますので、しばらくお待ちください。\n\nご質問は SNS Aladdin までお問い合わせください。');
 	    return;
 	  }
-	  window.location.assign(url);
+	  		  // Save redirect preference so success page can route user back
+		  try {
+		    var redirectTo = new URLSearchParams(window.location.search).get('redirect');
+		    if (redirectTo) sessionStorage.setItem('checkout-redirect', redirectTo);
+		  } catch(e) {}
+		  window.location.assign(url);
 	});
 </script>
 <script src="assets/js/main.js?v=6"></script>
