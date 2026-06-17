@@ -17,6 +17,13 @@ h1{font-size:20px;margin:0 0 8px}
 .back:hover{text-decoration:underline}
 .error{text-align:center;padding:60px 20px;color:#888}
 .spin{text-align:center;padding:60px 20px;color:#888}
+/* Floating prev/next arrows */
+.floating-arrow{position:fixed;top:50%;transform:translateY(-50%);padding:8px 14px;background:rgba(26,24,20,.78);color:#faf9f6;border-radius:22px;display:flex;align-items:center;gap:6px;font-size:.8rem;z-index:999;text-decoration:none;cursor:pointer;white-space:nowrap;transition:opacity .2s,background .2s;opacity:.55}
+.floating-arrow:hover{opacity:1;background:#1a1814}
+.floating-arrow-left{left:16px}
+.floating-arrow-right{right:16px}
+.floating-arrow .arrow-icon{font-size:1.1rem}
+@media(max-width:768px){.floating-arrow{display:none}}
 </style>
 </head>
 <body>
@@ -77,6 +84,33 @@ function show(data) {
   if (rp && rp!==imp && rp!==vip) sec(jp?'📝 実プロンプト':'📝 实际提示词', rp);
 
   m.innerHTML = h;
+
+  // Add floating prev/next arrows
+  injectArrows(data);
+}
+
+function injectArrows(data) {
+  // Remove any existing arrows
+  document.querySelectorAll('.floating-arrow').forEach(function(el){ el.remove(); });
+  var idx = data.findIndex(function(item){ return item.id === targetId; });
+  if (idx === -1) return;
+  var jp = (localStorage.getItem('kb-lang')||'cn')==='jp';
+  if (idx > 0) {
+    var prev = data[idx - 1];
+    var left = document.createElement('a');
+    left.className = 'floating-arrow floating-arrow-left';
+    left.href = 'detail.html?id=' + prev.id;
+    left.innerHTML = '<span class="arrow-icon">←</span><span>' + (jp?'前のページ':'上一页') + '</span>';
+    document.body.appendChild(left);
+  }
+  if (idx < data.length - 1) {
+    var next = data[idx + 1];
+    var right = document.createElement('a');
+    right.className = 'floating-arrow floating-arrow-right';
+    right.href = 'detail.html?id=' + next.id;
+    right.innerHTML = '<span>' + (jp?'次のページ':'下一页') + '</span><span class="arrow-icon">→</span>';
+    document.body.appendChild(right);
+  }
 }
 </script>
 </body>
