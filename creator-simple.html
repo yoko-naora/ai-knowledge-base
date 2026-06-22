@@ -557,7 +557,7 @@ function loadPrompts() {
     var cached = sessionStorage.getItem('kb-prompt-cache');
     if (cached) { promptCache = JSON.parse(cached); return Promise.resolve(promptCache); }
   } catch(e) {}
-  return fetch('/prompts/data.json').then(function(r){ return r.json(); }).then(function(data){
+  return fetch('prompts/data.json').then(function(r){ return r.json(); }).then(function(data){
     data.forEach(function(p, i){ p._idx = p.id; });
     promptCache = data;
     try { sessionStorage.setItem('kb-prompt-cache', JSON.stringify(data)); } catch(e) {}
