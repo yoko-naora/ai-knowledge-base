@@ -85,6 +85,20 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .input-group textarea{min-height:100px;resize:vertical;line-height:1.7}
 .input-group textarea::placeholder{color:var(--ink-faint)}
 .input-group .custom-industry{display:none;margin-top:var(--s-xs)}
+/* Purpose toggles */
+.purpose-group{display:flex;gap:var(--s-sm);margin-bottom:var(--s-lg)}
+.purpose-btn{flex:1;padding:16px var(--s-sm);border:2px solid var(--border);background:#fff;cursor:pointer;text-align:center;transition:all .15s var(--ease);font-family:var(--sans);display:flex;flex-direction:column;align-items:center;gap:4px;min-height:88px;justify-content:center;user-select:none;-webkit-tap-highlight-color:transparent}
+.purpose-btn .purpose-icon{font-size:26px;line-height:1}
+.purpose-btn .purpose-label{font-size:var(--t-small);font-weight:600;color:var(--ink);line-height:1.3}
+.purpose-btn .purpose-sub{font-size:10px;color:var(--ink-faint);line-height:1.3;max-width:120px}
+.purpose-btn:active{transform:scale(.97)}
+.purpose-btn.selected.p-persona{border-color:var(--type-persona);background:rgba(196,77,52,.05)}
+.purpose-btn.selected.p-persona .purpose-label{color:var(--type-persona)}
+.purpose-btn.selected.p-product{border-color:var(--type-product);background:rgba(139,110,60,.05)}
+.purpose-btn.selected.p-product .purpose-label{color:var(--type-product)}
+.purpose-btn.selected.p-viral{border-color:var(--type-viral);background:rgba(46,125,50,.05)}
+.purpose-btn.selected.p-viral .purpose-label{color:var(--type-viral)}
+.purpose-hint{font-size:10px;color:var(--ink-faint);text-align:center;margin-bottom:var(--s-md)}
 .search-btn{display:block;width:100%;padding:16px;background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-body);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s;margin-top:var(--s-md)}
 .search-btn:hover{background:#333}
 .search-btn:disabled{background:var(--ink);opacity:.55;cursor:wait;position:relative}
@@ -205,6 +219,10 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
 @media(max-width:500px){
   .tools-grid{grid-template-columns:1fr}
   .login-form{flex-direction:column}
+  .purpose-group{flex-wrap:wrap}
+  .purpose-btn{min-width:100px;min-height:72px;padding:12px var(--s-xs)}
+  .purpose-btn .purpose-icon{font-size:22px}
+  .purpose-btn .purpose-sub{display:none}
 }
 </style>
 </head>
@@ -242,8 +260,28 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
 
   <!-- ══════════════ INPUT VIEW ══════════════ -->
   <div class="input-wrap" id="inputWrap" style="display:none">
-    <h2><span class="lang-content cn">你想创作什么？</span><span class="lang-content jp">何を作りたいですか？</span></h2>
-    <p class="input-sub"><span class="lang-content cn">选择行业和话题，为你推荐最适合的 AI 提示词</span><span class="lang-content jp">業種とトピックを選ぶと、最適なAIプロンプトをおすすめします</span></p>
+    <h2><span class="lang-content cn">你想达成什么？</span><span class="lang-content jp">何を達成したいですか？</span></h2>
+    <p class="input-sub"><span class="lang-content cn">选择目标，再选行业，为你推荐最合适的 AI 提示词</span><span class="lang-content jp">目標を選び、業種を選ぶと、最適なAIプロンプトをおすすめします</span></p>
+
+    <div class="purpose-group" id="purposeGroup">
+      <div class="purpose-btn p-persona selected" data-purpose="persona" onclick="togglePurpose(this)">
+        <div class="purpose-icon">🧑</div>
+        <div class="purpose-label"><span class="lang-content cn">立人设 · 涨粉</span><span class="lang-content jp">人設 · フォロワー増</span></div>
+        <div class="purpose-sub"><span class="lang-content cn">自拍·Vlog·个人IP</span><span class="lang-content jp">自撮り·Vlog·個人IP</span></div>
+      </div>
+      <div class="purpose-btn p-product selected" data-purpose="product" onclick="togglePurpose(this)">
+        <div class="purpose-icon">🛒</div>
+        <div class="purpose-label"><span class="lang-content cn">卖货 · 做海报</span><span class="lang-content jp">販売 · 広告制作</span></div>
+        <div class="purpose-sub"><span class="lang-content cn">电商·穿搭·品牌VI</span><span class="lang-content jp">EC·ファッション·ブランド</span></div>
+      </div>
+      <div class="purpose-btn p-viral selected" data-purpose="viral" onclick="togglePurpose(this)">
+        <div class="purpose-icon">🔥</div>
+        <div class="purpose-label"><span class="lang-content cn">追热点 · 出圈</span><span class="lang-content jp">トレンド · 拡散</span></div>
+        <div class="purpose-sub"><span class="lang-content cn">游戏·影视·实用工具</span><span class="lang-content jp">ゲーム·映画·实用ツール</span></div>
+      </div>
+    </div>
+    <p class="purpose-hint"><span class="lang-content cn">点击取消不需要的类型，可多选</span><span class="lang-content jp">不要なタイプをクリックで解除、複数選択可</span></p>
+
     <p class="email-badge"><span class="lang-content cn">已登录：</span><span class="lang-content jp">ログイン中：</span><span id="emailBadge"></span></p>
 
     <div class="input-group">
@@ -269,12 +307,7 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
       <input type="text" class="custom-industry" id="customIndustry" placeholder="请输入你的行业 / 業種を入力してください" oninput="S.customIndustry=this.value">
     </div>
 
-    <div class="input-group">
-      <label><span class="lang-content cn">你想创作什么？</span><span class="lang-content jp">何を作りたいですか？</span></label>
-      <textarea id="topicInput" placeholder="例如：夏季口红推广方案 / 例：夏のリッププロモーション企画"></textarea>
-    </div>
-
-    <button class="search-btn" id="searchBtn" onclick="handleSearch()">查找灵感</button>
+    <button class="search-btn" id="searchBtn" onclick="handleSearch()"><span class="lang-content cn">查找灵感</span><span class="lang-content jp">インスピレーションを探す</span></button>
 
     <div class="logout-link">
       <button onclick="doLogout()"><span class="lang-content cn">退出登录</span><span class="lang-content jp">ログアウト</span></button>
@@ -329,11 +362,20 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
 <script src="assets/js/main.js?v=7"></script>
 <script>
 /* ══════════════ STATE ══════════════ */
-var S = { email:'', auth:false, customIndustry:'' };
+var S = { email:'', auth:false, customIndustry:'', purposes:['persona','product','viral'] };
 var promptCache = null;
 var typePools = { persona:[], product:[], viral:[] };  // scored pools per type
 var poolIdx = { persona:0, product:0, viral:0 };       // current display index
-var currentIndustry = '', currentTopic = '';
+var currentIndustry = '';
+
+function togglePurpose(el) {
+  var p = el.getAttribute('data-purpose');
+  var idx = S.purposes.indexOf(p);
+  if (idx === -1) { S.purposes.push(p); el.classList.add('selected'); }
+  else if (S.purposes.length > 1) { S.purposes.splice(idx, 1); el.classList.remove('selected'); }
+  // else: last one — keep selected, don't allow deselecting all
+}
+function getPurposeCount() { return S.purposes.length; }
 
 /* ══════════════ CONTENT TYPE CLASSIFICATION ══════════════ */
 /* ══════════════ INDUSTRY LABELS (for bilingual select) ══════════════ */
@@ -507,38 +549,7 @@ function getIndustry(){
   return sel.value;
 }
 
-/* ══════════════ MATCHING ══════════════ */
-function scorePrompt(topic, prompt) {
-  var text = (prompt.text + ' ' + (prompt.real_prompt || prompt.image_prompt || '') + ' ' + (prompt.text_ja || '')).toLowerCase();
-  var topicLower = topic.toLowerCase();
-  var score = 0;
-  // Score by character-level bigram overlap (works well for CJK)
-  var keywords = topicLower.split(/[\s,，、]+/).filter(function(w){ return w.length >= 1; });
-  keywords.forEach(function(word) {
-    if (word.length >= 2 && text.indexOf(word) !== -1) score += word.length;
-  });
-  // Bonus for category keyword match
-  var catKW = getCatKeywords(prompt.cat);
-  catKW.forEach(function(kw) {
-    if (topicLower.indexOf(kw) !== -1) score += kw.length * 2;
-  });
-  return score;
-}
-
-var CAT_KEYWORDS = {
-  '自拍类':['自拍','人像','写真','头像','颜值','美颜'],
-  '电商/商业海报':['电商','商业','海报','产品','广告','品牌','营销','促销','商品','店铺','卖货'],
-  '穿搭/形象/造型':['穿搭','形象','造型','时尚','服装','搭配','风格','穿衣','配色','口红','美妆','化妆','护肤','妆容','香水','美甲'],
-  '教育/科普/图解':['教育','科普','图解','学习','教程','知识','教学','课程','学校'],
-  '品牌/VI/包装':['品牌','VI','包装','logo','视觉','标识','设计系统'],
-  '游戏/娱乐/影视':['游戏','娱乐','影视','动漫','电影','视频','音乐','综艺','动画'],
-  '全景/3D/空间':['全景','3D','空间','VR','AR','三维','虚拟','建模'],
-  '健康/生活/实用工具':['健康','生活','实用','工具','健身','饮食','养生','运动','美容','减肥','瑜伽'],
-  '视频制作/Seedance':['视频','制作','Seedance','动画','剪辑','短视频','vlog','影片']
-};
-
-function getCatKeywords(cat) { return CAT_KEYWORDS[cat] || []; }
-
+/* ══════════════ DATA LOADING ══════════════ */
 function loadPrompts() {
   if (promptCache) return Promise.resolve(promptCache);
   // Check sessionStorage first (may have been cached by another page)
@@ -554,20 +565,18 @@ function loadPrompts() {
   });
 }
 
-function buildPools(topic, industry, prompts) {
+function buildPools(industry, prompts) {
   // Reset pools
   typePools = { persona:[], product:[], viral:[] };
   poolIdx = { persona:0, product:0, viral:0 };
 
-  // Industry boost: score bonus for matching categories
+  // Industry boost: matching categories get priority
   var boostCats = INDUSTRY_BOOST[industry] || [];
 
-  // Classify and score all prompts
+  // Classify and score all prompts (boost based on industry relevance)
   var allScored = prompts.map(function(p){
     var type = classifyPrompt(p.cat);
-    var score = scorePrompt(topic, p);
-    // Boost score if prompt category matches industry
-    if (boostCats.indexOf(p.cat) !== -1) score += 100;
+    var score = boostCats.indexOf(p.cat) !== -1 ? 100 : 0;
     return { prompt:p, type:type, score:score, idx:p._idx };
   });
 
@@ -604,7 +613,7 @@ function getCurrentPick(type) {
 function doReshuffle() {
   // Pick randomly from top 8 of each pool, avoiding repeats when possible
   var topN = 8;
-  ['persona','product','viral'].forEach(function(type){
+  S.purposes.forEach(function(type){
     var pool = typePools[type];
     if (pool.length <= 1) return;
     var limit = Math.min(topN, pool.length);
@@ -628,12 +637,15 @@ function doReshuffle() {
 /* ══════════════ RENDERING ══════════════ */
 function renderPromptCards() {
   var grid = document.getElementById('promptGrid');
+  // Adjust columns based on selected purpose count
+  grid.style.gridTemplateColumns = S.purposes.length === 1 ? '1fr' : (S.purposes.length === 2 ? 'repeat(2,1fr)' : 'repeat(3,1fr)');
   var j = jp();
-  var types = [
+  var allTypes = [
     { key:'persona',  labelCN:'人设（建立信任）',  labelJP:'人設（信頼構築）',  subCN:'自拍·Vlog·动画',           subJP:'自撮り·Vlog·アニメ' },
     { key:'product',  labelCN:'行业/产品（提高销售）', labelJP:'業界·商品（販売促進）', subCN:'秀产品·秀流程·秀使用场景',   subJP:'商品·工程·使用シーンの見せ方' },
     { key:'viral',    labelCN:'出圈/涨粉',          labelJP:'拡散·フォロワー増',  subCN:'Vlog·追热点·秀颜值',         subJP:'Vlog·トレンド·美しさ' }
   ];
+  var types = allTypes.filter(function(t){ return S.purposes.indexOf(t.key) !== -1; });
 
   grid.innerHTML = types.map(function(t){
     var pick = getCurrentPick(t.key);
@@ -894,35 +906,28 @@ function showToast() {
 /* ══════════════ SEARCH ══════════════ */
 function handleSearch() {
   var industry = getIndustry();
-  var topic = document.getElementById('topicInput').value.trim();
-  if (!topic) {
-    document.getElementById('topicInput').focus();
-    return;
-  }
+  if (S.purposes.length === 0) return;
+
   currentIndustry = industry;
-  currentTopic = topic;
 
   var btn = document.getElementById('searchBtn');
   btn.disabled = true; btn.textContent = '...';
 
   loadPrompts().then(function(prompts){
-    buildPools(topic, industry, prompts);
+    buildPools(industry, prompts);
     renderPromptCards();
     renderToolCards();
 
     // Update context header
     var j = jp();
     var ctx = document.getElementById('resultsContext');
-    ctx.innerHTML = (j ? '「<em>' + industry + '</em>」業種 · 「<em>' + topic + '</em>」' : '为「<em>' + industry + '</em>」行业 · 「<em>' + topic + '</em>」');
+    var purposeNames = { persona: j ? '人設' : '人设', product: j ? '販売' : '卖货', viral: j ? '拡散' : '出圈' };
+    var labels = S.purposes.map(function(p){ return purposeNames[p]; }).join(' + ');
+    ctx.innerHTML = (j ? '「<em>' + industry + '</em>」業種 · ' + labels : '「<em>' + industry + '</em>」行业 · ' + labels);
 
     showResults();
     btn.disabled = false;
-    btn.innerHTML = j ? '<span class="lang-content cn">查找灵感</span><span class="lang-content jp">インスピレーションを探す</span>' : btn.innerHTML;
-    // Re-render button text via lang pattern
-    var cnSpan = btn.querySelector('.lang-content.cn');
-    if (cnSpan) { cnSpan.style.display = j ? 'none' : 'inline'; }
-    var jpSpan = btn.querySelector('.lang-content.jp');
-    if (jpSpan) { jpSpan.style.display = j ? 'inline' : 'none'; }
+    btn.textContent = j ? 'インスピレーションを探す' : '查找灵感';
   }).catch(function(){
     alert(jp() ? 'データの読み込みに失敗しました' : '数据加载失败，请刷新重试');
     btn.disabled = false;
@@ -937,6 +942,21 @@ window.switchLang = function(lang) {
   var j = jp();
   updateIndustryLabels();
   updateCustomPlaceholder();
+  // Update purpose button labels
+  var purposeLabels = {
+    persona: { cnLabel:'立人设 · 涨粉', jpLabel:'人設 · フォロワー増', cnSub:'自拍·Vlog·个人IP', jpSub:'自撮り·Vlog·個人IP' },
+    product: { cnLabel:'卖货 · 做海报', jpLabel:'販売 · 広告制作', cnSub:'电商·穿搭·品牌VI', jpSub:'EC·ファッション·ブランド' },
+    viral:   { cnLabel:'追热点 · 出圈', jpLabel:'トレンド · 拡散', cnSub:'游戏·影视·实用工具', jpSub:'ゲーム·映画·实用ツール' }
+  };
+  document.querySelectorAll('.purpose-btn').forEach(function(btn){
+    var p = btn.getAttribute('data-purpose');
+    var labels = purposeLabels[p];
+    if (!labels) return;
+    btn.querySelector('.purpose-label .lang-content.cn').textContent = labels.cnLabel;
+    btn.querySelector('.purpose-label .lang-content.jp').textContent = labels.jpLabel;
+    btn.querySelector('.purpose-sub .lang-content.cn').textContent = labels.cnSub;
+    btn.querySelector('.purpose-sub .lang-content.jp').textContent = labels.jpSub;
+  });
   // Update search button text
   var btn = document.getElementById('searchBtn');
   if (btn && !btn.disabled) btn.textContent = j ? 'インスピレーションを探す' : '查找灵感';
@@ -944,8 +964,10 @@ window.switchLang = function(lang) {
   if (document.getElementById('resultsWrap').style.display === 'block') {
     renderPromptCards();
     renderToolCards();
+    var purposeNames = { persona: j ? '人設' : '人设', product: j ? '販売' : '卖货', viral: j ? '拡散' : '出圈' };
+    var labels = S.purposes.map(function(p){ return purposeNames[p]; }).join(' + ');
     var ctx = document.getElementById('resultsContext');
-    ctx.innerHTML = (j ? '「<em>' + currentIndustry + '</em>」業種 · 「<em>' + currentTopic + '</em>」' : '为「<em>' + currentIndustry + '</em>」行业 · 「<em>' + currentTopic + '</em>」');
+    ctx.innerHTML = (j ? '「<em>' + currentIndustry + '</em>」業種 · ' + labels : '「<em>' + currentIndustry + '</em>」行业 · ' + labels);
   }
 };
 
