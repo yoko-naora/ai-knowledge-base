@@ -149,6 +149,32 @@ main{flex:1;max-width:960px;margin:0 auto;padding:120px var(--s-xl) var(--s-4xl)
 .copy-content{font-family:var(--sans);font-size:11px;line-height:1.6;color:var(--ink-muted);white-space:pre-wrap;word-break:break-all;max-height:120px;overflow-y:auto;margin-bottom:var(--s-xs);padding:var(--s-xs);background:#fff;border:1px solid var(--border-lt)}
 .btn-copy-inline{display:block;width:100%;padding:6px 0;border:1px solid var(--gold);background:transparent;font-family:var(--sans);font-size:var(--t-caption);color:var(--gold);cursor:pointer;transition:all .2s;text-align:center}
 .btn-copy-inline:hover{background:var(--gold);color:#fff}
+/* Tool guide modal */
+.tool-guide-overlay{position:fixed;inset:0;z-index:200;background:rgba(26,24,20,.5);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s var(--ease)}
+.tool-guide-box{background:var(--paper);max-width:560px;width:calc(100% - 40px);max-height:85vh;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 16px 64px rgba(26,24,20,.25);position:relative}
+.tool-guide-close{position:absolute;top:12px;right:16px;background:none;border:none;font-size:24px;color:var(--ink-faint);cursor:pointer;z-index:10;line-height:1}
+.tool-guide-close:hover{color:var(--ink)}
+.tool-guide-scroll{overflow-y:auto;padding:var(--s-xl) var(--s-lg);flex:1}
+.tool-guide-blogger{display:flex;align-items:center;gap:var(--s-sm);margin-bottom:var(--s-md)}
+.tool-guide-avatar{width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px;font-weight:600;flex-shrink:0}
+.tool-guide-blogger-info{font-size:var(--t-small);line-height:1.5}
+.tool-guide-blogger-name{font-weight:600;color:var(--ink)}
+.tool-guide-blogger-handle{color:var(--ink-faint);font-size:11px}
+.tool-guide-intro{font-size:var(--t-small);color:var(--ink-muted);line-height:1.9;margin-bottom:var(--s-md)}
+.tool-guide-intro em{font-style:normal;color:var(--gold)}
+.tool-guide-actions{display:flex;gap:var(--s-sm);margin-bottom:var(--s-lg)}
+.tool-guide-link{flex:1;display:block;text-align:center;padding:10px var(--s-md);border:1px solid var(--border);font-size:var(--t-caption);color:var(--ink-muted);text-decoration:none;transition:all .2s;font-family:var(--sans)}
+.tool-guide-link:hover{border-color:var(--gold);color:var(--gold)}
+.tool-guide-link.x-link{border-color:var(--ink);color:var(--ink)}
+.tool-guide-link.x-link:hover{background:var(--ink);color:#fff}
+.tool-guide-reminder{font-size:11px;color:var(--ink-faint);text-align:center;padding:var(--s-sm);border-top:1px solid var(--border-lt);margin-bottom:var(--s-lg);line-height:1.6}
+.tool-guide-start{display:block;width:100%;padding:14px;background:var(--ink);color:#fff;border:none;font-family:var(--sans);font-size:var(--t-body);font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s;text-align:center}
+.tool-guide-start:hover{background:#333}
+.tool-guide-articles{list-style:none;margin-bottom:var(--s-md)}
+.tool-guide-articles li{margin-bottom:6px}
+.tool-guide-articles a{display:block;padding:10px var(--s-md);border:1px solid var(--border-lt);font-size:var(--t-caption);color:var(--ink-muted);text-decoration:none;transition:all .15s}
+.tool-guide-articles a:hover{border-color:var(--gold);color:var(--gold)}
+.tool-guide-empty{text-align:center;padding:var(--s-xl);color:var(--ink-faint);font-size:var(--t-small);line-height:1.8}
 /* Detail modal */
 .detail-overlay{position:fixed;inset:0;z-index:200;background:rgba(26,24,20,.5);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s var(--ease)}
 .detail-box{background:var(--paper);max-width:680px;width:calc(100% - 40px);max-height:85vh;border-radius:4px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 16px 64px rgba(26,24,20,.25);position:relative}
@@ -223,6 +249,9 @@ footer .sep{color:var(--border);margin:0 4px;font-size:9px}
   .purpose-btn{min-width:100px;min-height:72px;padding:12px var(--s-xs)}
   .purpose-btn .purpose-icon{font-size:22px}
   .purpose-btn .purpose-sub{display:none}
+  .tool-guide-box{max-width:100%;width:calc(100% - 16px);max-height:90vh}
+  .tool-guide-scroll{padding:var(--s-lg) var(--s-md)}
+  .tool-guide-actions{flex-direction:column}
 }
 </style>
 </head>
@@ -445,10 +474,67 @@ function classifyPrompt(cat) {
 
 /* ══════════════ TOOL DATA ══════════════ */
 var TOOLS = [
-  { id:'wechat',  nameCN:'公众号长文', nameJP:'公众号長文',  chain:'fragments→shape→ai-check→guizang→wewrite', href:'tools.html', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-wechat',  icon:'assets/platform-icons/wechat.svg' },
-  { id:'moments', nameCN:'朋友圈图文', nameJP:'朋友圈画像＋文', chain:'fragments→shape→qc→配图', href:'tools.html', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-moments', icon:'assets/platform-icons/moments.svg' },
-  { id:'xhs',     nameCN:'小红书滚图', nameJP:'小紅書カルーセル', chain:'fragments→shape→ai-check→xhs-title→配图', href:'tools.html', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-xhs', icon:'assets/platform-icons/xiaohongshu.svg' },
-  { id:'video',   nameCN:'短视频',   nameJP:'ショート動画',   chain:'coming soon', href:'', useCN:'即将上线', useJP:'近日公開予定', cls:'t-video', icon:null, coming:true }
+  { id:'wechat',  nameCN:'公众号长文', nameJP:'公众号長文',  chain:'fragments→shape→ai-check→guizang→wewrite', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-wechat',  icon:'assets/platform-icons/wechat.svg' },
+  { id:'moments', nameCN:'朋友圈图文', nameJP:'朋友圈画像＋文', chain:'fragments→shape→qc→配图', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-moments', icon:'assets/platform-icons/moments.svg' },
+  { id:'xhs',     nameCN:'小红书滚图', nameJP:'小紅書カルーセル', chain:'fragments→shape→ai-check→xhs-title→配图', useCN:'使用方法：复制提示词详情页的标题和URL，作为输入交给这些Skill', useJP:'使用方法：提示詞詳細ページのタイトルとURLをコピーして、これらのSkillに入力', cls:'t-xhs', icon:'assets/platform-icons/xiaohongshu.svg' },
+  { id:'video',   nameCN:'短视频',   nameJP:'ショート動画',   chain:'coming soon', useCN:'即将上线', useJP:'近日公開予定', cls:'t-video', icon:null, coming:true }
+];
+
+/* ══════════════ TOOL GUIDE ARTICLES ══════════════ */
+var TOOL_ARTICLES = {
+  wechat: {
+    blogger: '何适',
+    handle: '@snail_9106',
+    avatar: '何',
+    xUrl: 'https://x.com/snail_9106/status/2055878441455464825',
+    profileUrl: 'https://x.com/snail_9106',
+    introCN: '何适是公众号AI写作领域的顶尖博主。这篇文章拆解了<em>公众号长文从选题到发布的标准流程</em>——怎么选题、怎么搭框架、怎么用AI辅助写作、标题怎么取、封面怎么做。看完你会对"一篇好的公众号文章长什么样"有清晰判断。',
+    introJP: '何適は公衆号AI執筆分野のトップブロガーです。この記事は<em>公衆号長文のテーマ選びから公開までの標準フロー</em>を分解——テーマの決め方、枠組みの作り方、AI補助執筆の方法、タイトルの付け方、カバーの作り方まで。読めば「良い公衆号文章とは何か」が明確になります。',
+    reminderCN: '作者每月更新公众号写作方法论，建议关注博主主页。',
+    reminderJP: '作者は毎月公衆号執筆メソッドを更新しています。プロフィールをフォローすることをお勧めします。'
+  },
+  xhs: {
+    blogger: 'AYi_AInotes',
+    handle: '@AYi_AInotes',
+    avatar: 'A',
+    xUrl: 'https://x.com/AYi_AInotes/status/2064545362837229726',
+    profileUrl: 'https://x.com/AYi_AInotes',
+    introCN: 'AYi_AInotes 专注小红书AI内容创作。这篇文章讲解了<em>小红书滚图的正确做法</em>——标题怎么抓人、分页脚本怎么拆、配图每页该放什么、封面页和内页的区别。从话题到发布的全流程拆解。',
+    introJP: 'AYi_AInotesは小紅書AIコンテンツ制作に特化。この記事は<em>小紅書カルーセルの正しい作り方</em>を解説——タイトルの掴み方、ページ構成の分解方法、各ページに何を入れるか、カバーページと内ページの違いまで。トピックから公開までの全工程を分解。',
+    reminderCN: '作者每月更新小红书创作技巧，建议关注博主主页。',
+    reminderJP: '作者は毎月小紅書創作テクニックを更新しています。プロフィールをフォローすることをお勧めします。'
+  },
+  moments: {
+    blogger: '',
+    handle: '',
+    avatar: '',
+    xUrl: '',
+    profileUrl: '',
+    introCN: '朋友圈图文的正确流程和推荐博主还在整理中，稍后补上。',
+    introJP: '朋友圈の画像＋文の正しいフローとおすすめブロガーは準備中です。',
+    reminderCN: '',
+    reminderJP: ''
+  },
+  video: {
+    blogger: '',
+    handle: '',
+    avatar: '',
+    xUrl: '',
+    profileUrl: '',
+    introCN: '以下 6 篇文章覆盖了短视频 AI 生产的不同方法和思路，选择一篇作为参考：',
+    introJP: '以下の6記事はショート動画AI制作のさまざまな方法と考え方をカバーしています。参考に1つ選んでください：',
+    reminderCN: '',
+    reminderJP: '',
+    videoArticles: [
+      { title:'Codex + HyperFrames 正在吃掉剪辑行业', url:'articles/002.html' },
+      { title:'Seedance 2.0 过脸方法合集', url:'articles/008.html' },
+      { title:'GPT2: 文本转视觉 x 最强提示词 x 力荐', url:'articles/020.html' },
+      { title:'GPT Image 2提示词排行（第二弹）', url:'articles/029.html' },
+      { title:'Claude Fable 5が一般公開へ！格も次元も違う', url:'articles/030.html' },
+      { title:'Open Gemini / Grok / GPT Image 2.0', url:'articles/033.html' }
+    ]
+  }
+};
 ];
 
 /* ══════════════ HELPERS ══════════════ */
@@ -881,18 +967,153 @@ function fallbackCopy(text) {
 function renderToolCards() {
   var grid = document.getElementById('toolsGrid');
   var j = jp();
-  grid.innerHTML = TOOLS.map(function(t){
-    var card = '<div class="tool-card ' + t.cls + (t.coming ? ' coming-soon' : '') + '">';
+  grid.innerHTML = TOOLS.map(function(t, i){
+    var card = '<div class="tool-card ' + t.cls + (t.coming ? ' coming-soon' : '') + '"' + (!t.coming ? ' onclick="showToolGuide(\'' + t.id + '\')" style="cursor:pointer"' : '') + '>';
     card += (t.icon ? '<img class="tool-icon" src="' + t.icon + '" alt="">' : '<div class="tool-icon"></div>');
     card += '<div class="tool-name">' + (j ? t.nameJP : t.nameCN) + '</div>';
-    if (!t.coming) {
-      card += '<div class="tool-skill-line"><span class="tool-label">Skill：</span>' + t.chain.split('→').map(function(s){ return '<span>' + s.trim() + '</span>'; }).join(' → ') + (t.href ? ' <a href="' + t.href + '" target="_blank" style="font-size:10px;color:var(--gold);text-decoration:none">' + (j ? '詳細→' : '详情→') + '</a>' : '') + '</div>';
-    }
+    card += '<div class="tool-skill-line"><span class="tool-label">Skill：</span>' + t.chain.split('→').map(function(s){ return '<span>' + s.trim() + '</span>'; }).join(' → ') + '</div>';
     card += '<div class="tool-usage">' + (j ? t.useJP : t.useCN) + '</div>';
     if (t.coming) card += '<div class="tool-coming-tag">' + (j ? '近日公開' : '即将上线') + '</div>';
     card += '</div>';
     return card;
   }).join('');
+}
+
+/* ══════════════ TOOL GUIDE MODAL ══════════════ */
+function showToolGuide(toolId) {
+  var t = TOOL_ARTICLES[toolId];
+  if (!t) return;
+  var j = jp();
+
+  // Remove existing
+  var ex = document.querySelector('.tool-guide-overlay');
+  if (ex) ex.remove();
+
+  var overlay = document.createElement('div');
+  overlay.className = 'tool-guide-overlay';
+  overlay.onclick = function(e) { if (e.target === overlay) overlay.remove(); };
+
+  var box = document.createElement('div');
+  box.className = 'tool-guide-box';
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'tool-guide-close';
+  closeBtn.textContent = '×';
+  closeBtn.onclick = function() { overlay.remove(); };
+  box.appendChild(closeBtn);
+
+  var scroll = document.createElement('div');
+  scroll.className = 'tool-guide-scroll';
+
+  // Title
+  var heading = document.createElement('h3');
+  heading.style.cssText = 'font-family:var(--serif);font-size:var(--t-h3);font-weight:400;margin-bottom:var(--s-lg);text-align:center';
+  heading.textContent = j ? '正しい作り方を学ぶ' : '先学正确做法';
+  scroll.appendChild(heading);
+
+  // Blogger section (if has blogger)
+  if (t.blogger) {
+    var bloggerDiv = document.createElement('div');
+    bloggerDiv.className = 'tool-guide-blogger';
+
+    var avatar = document.createElement('div');
+    avatar.className = 'tool-guide-avatar';
+    avatar.textContent = t.avatar;
+    bloggerDiv.appendChild(avatar);
+
+    var info = document.createElement('div');
+    info.className = 'tool-guide-blogger-info';
+    info.innerHTML = '<div class="tool-guide-blogger-name">' + t.blogger + '</div><div class="tool-guide-blogger-handle">' + t.handle + '</div>';
+    bloggerDiv.appendChild(info);
+
+    scroll.appendChild(bloggerDiv);
+  }
+
+  // Intro
+  var intro = document.createElement('p');
+  intro.className = 'tool-guide-intro';
+  intro.innerHTML = j ? t.introJP : t.introCN;
+  scroll.appendChild(intro);
+
+  // Article links
+  var actions = document.createElement('div');
+  actions.className = 'tool-guide-actions';
+
+  if (t.xUrl) {
+    var xLink = document.createElement('a');
+    xLink.className = 'tool-guide-link x-link';
+    xLink.href = t.xUrl;
+    xLink.target = '_blank';
+    xLink.rel = 'noopener';
+    xLink.textContent = j ? 'Xで記事を読む →' : '在 X 阅读原文 →';
+    actions.appendChild(xLink);
+  }
+
+  if (t.profileUrl) {
+    var profileLink = document.createElement('a');
+    profileLink.className = 'tool-guide-link';
+    profileLink.href = t.profileUrl;
+    profileLink.target = '_blank';
+    profileLink.rel = 'noopener';
+    profileLink.textContent = j ? 'ブロガーをフォロー →' : '关注博主主页 →';
+    actions.appendChild(profileLink);
+  }
+
+  scroll.appendChild(actions);
+
+  // Video articles list
+  if (t.videoArticles) {
+    var ul = document.createElement('ul');
+    ul.className = 'tool-guide-articles';
+    t.videoArticles.forEach(function(a){
+      var li = document.createElement('li');
+      var link = document.createElement('a');
+      link.href = a.url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = a.title;
+      li.appendChild(link);
+      ul.appendChild(li);
+    });
+    scroll.appendChild(ul);
+  }
+
+  // Reminder
+  if (t.reminderCN) {
+    var reminder = document.createElement('p');
+    reminder.className = 'tool-guide-reminder';
+    reminder.textContent = j ? t.reminderJP : t.reminderCN;
+    scroll.appendChild(reminder);
+  }
+
+  // Empty state for moments
+  if (!t.blogger && !t.videoArticles) {
+    var empty = document.createElement('div');
+    empty.className = 'tool-guide-empty';
+    empty.textContent = j ? t.introJP : t.introCN;
+    scroll.appendChild(empty);
+  }
+
+  // Start button
+  if (!t.videoArticles || t.blogger) {
+    var startBtn = document.createElement('button');
+    startBtn.className = 'tool-guide-start';
+    startBtn.textContent = j ? '学んだ、作成を始める →' : '我学会了，开始创作 →';
+    startBtn.onclick = function() {
+      overlay.remove();
+      // Jump to creator with platform preset
+      var platformMap = { wechat:'wechat', xhs:'xhs', moments:'moments' };
+      var platform = platformMap[toolId] || '';
+      if (platform) {
+        window.open('creator.html?platform=' + platform + '&mode=scratch', '_blank');
+      }
+    };
+    scroll.appendChild(startBtn);
+  }
+
+  box.appendChild(scroll);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
 }
 
 function showToast() {
